@@ -1,0 +1,10 @@
+{
+  "name": "yacht-concierge",
+  "version": "1.0.0",
+  "description": "Operational logistics for superyachts — Montenegro",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "dev": "npx serve . -l 3000 --no-clipboard"
+  },
+  "keywords": ["yacht", "concierge", "montenegro", "logistics"]
+}
