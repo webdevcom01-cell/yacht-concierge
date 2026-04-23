@@ -115,6 +115,12 @@ function ProcessPage() {
 // ---------- Contact / Quote multi-step ----------
 function ContactPage() {
   const [step, setStep] = useState(0);
+  const [refNum] = useState(() => {
+    const now = new Date();
+    const date = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+    const rand = Math.random().toString(36).slice(2, 7).toUpperCase();
+    return `YC-${date}-${rand}`;
+  });
   const [data, setData] = useState({
     name: '', role: 'captain', yacht: '', loa: '', flag: '',
     eta: '', etd: '', port: 'Porto Montenegro',
@@ -134,7 +140,7 @@ function ContactPage() {
     if (step === 1) return data.yacht.trim() && data.loa;
     if (step === 2) return data.eta && data.port;
     if (step === 3) return data.services.length > 0;
-    if (step === 4) return data.email.trim();
+    if (step === 4) return data.email.trim() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email);
     return true;
   };
 
@@ -335,10 +341,10 @@ function ContactPage() {
                 </div>
                 <h2 className="serif" style={{ fontSize: 48, letterSpacing: '-0.02em', marginBottom: 20 }}>Brief received.</h2>
                 <p className="lede" style={{ margin: '0 auto', maxWidth: 440 }}>
-                  Reference №{Math.random().toString(36).slice(2, 9).toUpperCase()}. A coordinator will return a scoped service brief within four operational hours.
+                  Reference №{refNum}. A coordinator will return a scoped service brief within four operational hours.
                 </p>
                 <div className="mono mt-48" style={{ color: 'var(--fg-50)' }}>
-                  ↳ RESPONSE BY {new Date(Date.now() + 4 * 3600 * 1000).toISOString().slice(11, 16)} UTC
+                  ↳ RESPONSE WITHIN 4 OPERATIONAL HOURS · 06:00 – 22:00 CET
                 </div>
               </div>
             )}
@@ -356,7 +362,7 @@ function ContactPage() {
                     setSubmitting(true);
                     setSubmitError('');
                     try {
-                      await submitQuote(data);
+                      await submitQuote(data, refNum);
                       setStep(5);
                     } catch {
                       setSubmitError('Submission failed — please email info@yacht-concierge.com');

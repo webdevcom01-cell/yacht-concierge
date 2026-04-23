@@ -186,7 +186,7 @@ function ProvisioningPage() {
   });
 
   return (
-    <main style={{ paddingTop: 140 }}>
+    <main className="page-top">
       <div className="container">
         {/* Hero — reuses editorial split pattern */}
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 80 }}>
@@ -533,14 +533,20 @@ function OrderSummaryPage() {
   const [confirmed, setConfirmed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
-  const [refNum] = useState(() => Math.random().toString(36).slice(2, 9).toUpperCase());
+  const [refNum] = useState(() => {
+    const now = new Date();
+    const date = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
+    const rand = Math.random().toString(36).slice(2, 7).toUpperCase();
+    return `YC-${date}-${rand}`;
+  });
 
-  const vat = cart.subtotal * 0.07; // estimate, actual depends on tax-free split
-  const total = cart.subtotal + vat;
+  // VAT depends on item category and tax-free status — confirmed on coordinator invoice.
+  const taxFreeTotal = cart.cart.filter(i => i.taxFree).reduce((s, i) => s + i.price * i.qty, 0);
+  const taxableTotal = cart.subtotal - taxFreeTotal;
 
   if (cart.cart.length === 0 && !confirmed) {
     return (
-      <main style={{ paddingTop: 180 }}>
+      <main className="page-top">
         <div className="container" style={{ textAlign: 'center', padding: '96px 0' }}>
           <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>↳ EMPTY ORDER</div>
           <div className="serif" style={{ fontSize: 40 }}>No items to review.</div>
@@ -551,7 +557,7 @@ function OrderSummaryPage() {
   }
 
   return (
-    <main style={{ paddingTop: 140 }}>
+    <main className="page-top">
       <div className="container">
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 72 }}>
           <div>
@@ -609,12 +615,15 @@ function OrderSummaryPage() {
               </dl>
               <div className="rule" style={{ margin: '28px 0' }}/>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <RowMoney k="Subtotal" v={cart.subtotal}/>
-                <RowMoney k="VAT (est.)" v={vat}/>
+                <RowMoney k="Taxable items" v={taxableTotal}/>
+                <RowMoney k="Tax-free items" v={taxFreeTotal}/>
                 <div className="rule" style={{ margin: '8px 0' }}/>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                  <span className="mono">TOTAL</span>
-                  <span className="serif" style={{ fontSize: 32, letterSpacing: '-0.02em' }}>€ {total.toFixed(2)}</span>
+                  <span className="mono">SUBTOTAL</span>
+                  <span className="serif" style={{ fontSize: 32, letterSpacing: '-0.02em' }}>€ {cart.subtotal.toFixed(2)}</span>
+                </div>
+                <div className="mono" style={{ color: 'var(--fg-50)', fontSize: 9.5, marginTop: 4 }}>
+                  ↳ VAT CONFIRMED ON COORDINATOR INVOICE
                 </div>
               </div>
               <button
@@ -622,7 +631,7 @@ function OrderSummaryPage() {
                   setSubmitting(true);
                   setSubmitError('');
                   try {
-                    await submitOrder(cart.cart, cart.meta, refNum, total);
+                    await submitOrder(cart.cart, cart.meta, refNum, cart.subtotal);
                     setConfirmed(true);
                     window.scrollTo({ top: 0 });
                   } catch {

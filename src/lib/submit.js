@@ -1,5 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
+// text/plain avoids CORS preflight (OPTIONS) — Google Apps Script
+// does not respond to OPTIONS, so application/json would block all submissions.
 async function postJSON(payload) {
   if (!API_URL) {
     console.warn('[submit] VITE_API_URL not set — submission skipped in dev');
@@ -7,17 +9,18 @@ async function postJSON(payload) {
   }
   const res = await fetch(API_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify(payload),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
-export async function submitQuote(data) {
+export async function submitQuote(data, refNum) {
   return postJSON({
     _sheet:   'Quote Requests',
-    _subject: `Quote — ${data.yacht || 'Unknown'} — ${data.eta || 'TBD'}`,
+    _subject: `[${refNum}] Quote — ${data.yacht || 'Unknown'} — ${data.eta || 'TBD'}`,
+    ref:      refNum,
     name:     data.name,
     role:     data.role,
     email:    data.email,
