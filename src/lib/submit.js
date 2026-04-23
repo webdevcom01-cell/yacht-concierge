@@ -1,5 +1,6 @@
 // API_URL is baked in at build time from VITE_API_URL environment variable
 const API_URL = import.meta.env.VITE_API_URL;
+console.log('[submit] API_URL:', API_URL);
 
 // Google Apps Script does not return CORS headers on redirected responses.
 // mode: 'no-cors' sends the request without reading the response (opaque).
