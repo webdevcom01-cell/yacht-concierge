@@ -1,19 +1,20 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-// text/plain avoids CORS preflight (OPTIONS) — Google Apps Script
-// does not respond to OPTIONS, so application/json would block all submissions.
+// Google Apps Script does not return CORS headers on redirected responses.
+// mode: 'no-cors' sends the request without reading the response (opaque).
+// The submission reaches GAS and is written to the Sheet — we just assume success.
 async function postJSON(payload) {
   if (!API_URL) {
     console.warn('[submit] VITE_API_URL not set — submission skipped in dev');
     return { result: 'dev-skip' };
   }
-  const res = await fetch(API_URL, {
+  await fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify(payload),
+    mode: 'no-cors',
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.json();
+  return { result: 'ok' };
 }
 
 export async function submitQuote(data, refNum) {
