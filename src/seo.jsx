@@ -19,12 +19,12 @@ const SEO_DATA = {
   },
   process: {
     title: 'How It Works — Yacht Concierge Montenegro',
-    description: 'A 6-step operational protocol for seamless superyacht arrivals. From first contact to departure briefing — 24-hour response SLA guaranteed.',
+    description: 'A 4-phase operational protocol for seamless superyacht arrivals. From first contact to departure briefing — 24-hour response SLA guaranteed.',
     url: 'https://yacht-concierge.me/process',
   },
   fleet: {
     title: 'Berths & Fleet Tiers — Yacht Concierge Montenegro',
-    description: 'Berth availability and service tiers for superyachts from 30m to 120m+ in Montenegrin marinas. Real-time availability calendar.',
+    description: 'Service tiers for superyachts from 30m to 120m+ in Montenegrin marinas. Berth availability and tailored packages at Porto Montenegro, Herceg Novi, and Bar.',
     url: 'https://yacht-concierge.me/fleet',
   },
   contact: {
