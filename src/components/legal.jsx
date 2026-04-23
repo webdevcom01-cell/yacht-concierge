@@ -73,9 +73,9 @@ function LegalNoticePage() {
         confirmed only through written service briefs issued by our operations team.
       </p>
       <p>
-        This website does not use tracking cookies. Aggregated, anonymised analytics are
-        collected using Plausible Analytics, a privacy-respecting platform that does not
-        store personal data or set cookies.
+        This website uses Google Analytics 4 for aggregated, anonymised traffic measurement.
+        Analytics data does not identify individual visitors and is used solely to understand
+        how users navigate the site.
       </p>
 
       <h2>Online Dispute Resolution</h2>
@@ -138,8 +138,8 @@ function PrivacyPage() {
         </li>
         <li>
           <strong>Technical data:</strong> IP address and browser type retained in server
-          logs for security purposes for up to 30 days. No cookies are set. Analytics
-          are collected in aggregated, anonymised form using Plausible Analytics.
+          logs for security purposes for up to 30 days. Analytics data is collected in
+          aggregated, anonymised form using Google Analytics 4.
         </li>
       </ul>
 
@@ -185,9 +185,9 @@ function PrivacyPage() {
           delivery. Cloudflare participates in the EU–US Data Privacy Framework.
         </li>
         <li>
-          <strong>Plausible Analytics</strong> (EU — servers in Germany): Cookieless,
-          privacy-respecting web analytics. No personal data is collected or stored by
-          Plausible.
+          <strong>Google LLC</strong> (United States — Google Analytics 4): Aggregated,
+          anonymised web analytics. Data is processed under Google's standard contractual
+          clauses and the EU–US Data Privacy Framework.
         </li>
       </ul>
 
