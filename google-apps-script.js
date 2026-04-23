@@ -71,17 +71,39 @@ function doPost(e) {
   return output;
 }
 
-// Allow health-check GET (also confirms deployment is live)
+// Handles both form submissions (via ?payload=...) and health-check GETs.
+// Using GET because GAS internally redirects POST requests, which breaks
+// the no-cors fetch pattern from browsers.
 function doGet(e) {
-  return ContentService
-    .createTextOutput(JSON.stringify({ status: 'ok', service: 'Yacht Concierge API' }))
-    .setMimeType(ContentService.MimeType.JSON);
+  var output = ContentService.createTextOutput();
+  output.setMimeType(ContentService.MimeType.JSON);
+
+  try {
+    if (e.parameter && e.parameter.payload) {
+      var data = JSON.parse(e.parameter.payload);
+      var sheetName = data._sheet || 'Quote Requests';
+      var subject   = data._subject || 'New Submission — Yacht Concierge';
+      delete data._sheet;
+      delete data._subject;
+      writeRow(sheetName, data);
+      sendNotification(subject, data);
+      output.setContent(JSON.stringify({ result: 'ok' }));
+    } else {
+      // Health check
+      output.setContent(JSON.stringify({ status: 'ok', service: 'Yacht Concierge API' }));
+    }
+  } catch (err) {
+    console.error('Submission error: ' + err.toString());
+    output.setContent(JSON.stringify({ result: 'error', message: err.toString() }));
+  }
+
+  return output;
 }
 
 // ── Sheet writer ──────────────────────────────────────────────────────────────
 
 function writeRow(sheetName, data) {
-  var ss    = SpreadsheetApp.getActiveSpreadsheet();
+  var ss    = SpreadsheetApp.openById('1pLJ-0thQLh12DVbCHa9gsztoIM8iNwQRZhwrCDaoKVM');
   var sheet = ss.getSheetByName(sheetName);
 
   if (!sheet) {

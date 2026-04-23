@@ -1,21 +1,15 @@
 // API_URL is baked in at build time from VITE_API_URL environment variable
 const API_URL = import.meta.env.VITE_API_URL;
-console.log('[submit] API_URL:', API_URL);
 
-// Google Apps Script does not return CORS headers on redirected responses.
-// mode: 'no-cors' sends the request without reading the response (opaque).
-// The submission reaches GAS and is written to the Sheet — we just assume success.
+// GAS web apps redirect POST requests internally, which breaks no-cors mode.
+// Sending data as a GET request with URL-encoded payload is the reliable approach.
 async function postJSON(payload) {
   if (!API_URL) {
     console.warn('[submit] VITE_API_URL not set — submission skipped in dev');
     return { result: 'dev-skip' };
   }
-  await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(payload),
-    mode: 'no-cors',
-  });
+  const url = API_URL + '?payload=' + encodeURIComponent(JSON.stringify(payload));
+  await fetch(url, { mode: 'no-cors' });
   return { result: 'ok' };
 }
 
