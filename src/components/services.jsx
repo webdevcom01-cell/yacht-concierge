@@ -74,8 +74,8 @@ function ServicesPage() {
 function FleetTierSelector() {
   const [loa, setLoa] = useState(60);
   const tier =
-    loa < 40 ? { name: 'Tier I — Intimate', range: '24 – 40m LOA', price: '€ 4,800', desc: 'Single-coordinator coverage, daylight hours, up to 5 discipline requests per visit.' } :
-    loa < 70 ? { name: 'Tier II — Standard', range: '40 – 70m LOA', price: '€ 11,200', desc: 'Dedicated coordinator, 06:00–22:00 coverage, unlimited requests, provisioning concierge.' } :
+    loa < 40 ? { name: 'Tier I — Intimate', range: '24 – 40m LOA', price: 'On request', desc: 'Single-coordinator coverage, daylight hours, up to 5 discipline requests per visit.' } :
+    loa < 70 ? { name: 'Tier II — Standard', range: '40 – 70m LOA', price: 'On request', desc: 'Dedicated coordinator, 06:00–22:00 coverage, unlimited requests, provisioning concierge.' } :
                { name: 'Tier III — Flag', range: '70m+ LOA', price: 'Bespoke', desc: 'Named operations officer, 24h coverage, advance-team deployment, customs expediting, tender crew sourcing.' };
 
   return (

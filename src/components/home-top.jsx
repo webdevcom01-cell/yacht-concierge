@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { useApp, Icons, Reveal, SectionHeader } from './shared';
 import { SERVICES } from '../data/services';
 
@@ -147,12 +147,11 @@ function HeroVisual() {
       {/* Metadata overlay */}
       <div style={{ position: 'absolute', top: 20, left: 20, right: 20, display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(239,234,226,0.7)' }}>
         <span>BAY OF KOTOR / 42.43°N</span>
-        <span>FR / 04:18 UTC</span>
+        <span>EST. MMXVII</span>
       </div>
       <div style={{ position: 'absolute', bottom: 20, left: 20, right: 20, display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(239,234,226,0.7)' }}>
-        <span>SEA: 1.2M</span>
-        <span>WIND: 8KT NE</span>
-        <span>VIS: 12NM</span>
+        <span>TIVAT, MONTENEGRO</span>
+        <span>ADRIATIC SEA</span>
       </div>
     </div>
   );
@@ -210,11 +209,11 @@ function HeroStrip() {
 
 function HeroStripInline({ light = false }) {
   const items = [
-    { label: 'Active Yachts', value: '34' },
-    { label: 'Bay of Kotor', value: '42.43°N · 18.76°E' },
-    { label: 'Sea Conditions', value: 'Calm / 1.2m' },
-    { label: 'Wind', value: '8kt NE' },
-    { label: 'Season', value: 'OPEN · APR – OCT' },
+    { label: 'Operational Base', value: 'Porto Montenegro' },
+    { label: 'Coordinates', value: '42.43°N · 18.69°E' },
+    { label: 'Five Marinas', value: 'HN · PM · KT · BV · BAR' },
+    { label: 'Season', value: 'Apr – Oct' },
+    { label: 'Contact', value: '+382 67 144 555' },
   ];
   return (
     <div className="grid-stats-strip" style={{ gap: 24 }}>
@@ -294,55 +293,23 @@ function ServicesPreview() {
 }
 
 // ---------- Stats / SLA ----------
-function useCountUp(target, duration = 1600, trigger) {
-  const [val, setVal] = useState(0);
-  useEffect(() => {
-    if (!trigger) return;
-    let start = null;
-    let raf;
-    const tick = (ts) => {
-      if (!start) start = ts;
-      const p = Math.min(1, (ts - start) / duration);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setVal(target * eased);
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [trigger, target, duration]);
-  return val;
-}
-
 function StatsBlock() {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    if (!ref.current) return;
-    const obs = new IntersectionObserver(([e]) => e.isIntersecting && setVisible(true), { threshold: 0.3 });
-    obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
-  const a = useCountUp(80, 1600, visible);
-  const b = useCountUp(85, 1800, visible);
-  const c = useCountUp(10, 1400, visible);
-  const d = useCountUp(7, 1200, visible);
-
+  const items = [
+    { value: '6', label: 'Coordinated disciplines', sub: 'Berth · Customs · Provisioning · Laundry · Floristry · Maintenance' },
+    { value: '24h', label: 'Initial response SLA', sub: 'Quote returned within 24 operational hours' },
+    { value: 'Apr–Oct', label: 'Operational season', sub: 'Adriatic transit corridor · Montenegro' },
+    { value: '1', label: 'Coordinator per vessel', sub: 'One named contact · no switchboard · no transfers' },
+  ];
   return (
-    <section className="section" ref={ref} style={{ paddingTop: 80 }}>
+    <section className="section" style={{ paddingTop: 80 }}>
       <div className="container">
-        <SectionHeader num="02 / SLA" eyebrow="OPERATIONAL STANDARDS" title={<>Discretion, measured in minutes.</>} />
+        <SectionHeader num="02 / STANDARDS" eyebrow="OPERATIONAL STANDARDS" title={<>Discretion, by design.</>} />
         <div className="grid-4" style={{ gap: 0, borderTop: '1px solid var(--fg-08)', borderBottom: '1px solid var(--fg-08)' }}>
-          {[
-            { n: a, suffix: '+', label: 'Yachts served', sub: 'Since 2017' },
-            { n: b, suffix: '%', label: 'On-time delivery', sub: '24-month rolling avg.' },
-            { n: c, suffix: ' min', label: 'Avg. response', sub: '5–10 min · Capt. → Coord.' },
-            { n: d, suffix: 'd / 24h', label: 'Operating window', sub: 'Apr – Nov, dawn to dusk' },
-          ].map((s, i) => (
+          {items.map((s, i) => (
             <Reveal key={i} delay={i * 80}>
               <div style={{ padding: '56px 32px', borderRight: i < 3 ? '1px solid var(--fg-08)' : 'none' }}>
-                <div className="serif" style={{ fontSize: 72, lineHeight: 0.95, letterSpacing: '-0.02em' }}>
-                  {s.decimals ? s.n.toFixed(s.decimals) : Math.round(s.n)}<span style={{ fontSize: 28, color: 'var(--fg-50)' }}>{s.suffix}</span>
+                <div className="serif" style={{ fontSize: 64, lineHeight: 0.95, letterSpacing: '-0.02em' }}>
+                  {s.value}
                 </div>
                 <div className="mono mt-24" style={{ color: 'var(--fg-70)' }}>{s.label}</div>
                 <div style={{ fontSize: 12.5, color: 'var(--fg-50)', marginTop: 8 }}>{s.sub}</div>

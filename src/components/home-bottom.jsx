@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useApp, Icons, Reveal, SectionHeader } from './shared';
 import { HeroEditorial, HeroCinematic, HeroOversized, ServicesPreview, StatsBlock } from './home-top';
 
@@ -7,11 +7,11 @@ import { HeroEditorial, HeroCinematic, HeroOversized, ServicesPreview, StatsBloc
 function CoastMap() {
   const [selected, setSelected] = useState('porto-montenegro');
   const ports = [
-    { id: 'herceg-novi', name: 'Herceg Novi', x: 14, y: 32, coords: '42.45°N 18.54°E', berths: 120, available: 18, status: 'OPEN' },
-    { id: 'porto-montenegro', name: 'Porto Montenegro', x: 38, y: 52, coords: '42.43°N 18.69°E', berths: 450, available: 7, status: 'HIGH DEMAND' },
-    { id: 'kotor', name: 'Kotor', x: 54, y: 30, coords: '42.42°N 18.77°E', berths: 90, available: 12, status: 'OPEN' },
-    { id: 'budva', name: 'Budva', x: 70, y: 60, coords: '42.28°N 18.84°E', berths: 380, available: 24, status: 'OPEN' },
-    { id: 'bar', name: 'Bar', x: 88, y: 82, coords: '42.10°N 19.09°E', berths: 160, available: 9, status: 'OPEN' },
+    { id: 'herceg-novi', name: 'Herceg Novi', x: 14, y: 32, coords: '42.45°N 18.54°E', berths: 120 },
+    { id: 'porto-montenegro', name: 'Porto Montenegro', x: 38, y: 52, coords: '42.43°N 18.69°E', berths: 450 },
+    { id: 'kotor', name: 'Kotor', x: 54, y: 30, coords: '42.42°N 18.77°E', berths: 90 },
+    { id: 'budva', name: 'Budva', x: 70, y: 60, coords: '42.28°N 18.84°E', berths: 380 },
+    { id: 'bar', name: 'Bar', x: 88, y: 82, coords: '42.10°N 19.09°E', berths: 160 },
   ];
   const cur = ports.find(p => p.id === selected);
 
@@ -32,38 +32,19 @@ function CoastMap() {
                 ADRIATIC COAST · MONTENEGRO
               </div>
               <div style={{ position: 'absolute', top: 20, right: 20, fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--fg-50)' }}>
-                {new Date().toISOString().slice(0,10)} · 04:18 UTC
+                MONTENEGRIN COAST
               </div>
-              <div style={{ position: 'absolute', bottom: 20, left: 20, display: 'flex', gap: 16, fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)' }}/>
-                  Open
-                </span>
-                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--gold)' }}/>
-                  High demand
-                </span>
+              <div style={{ position: 'absolute', bottom: 20, left: 20, fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--fg-50)' }}>
+                SELECT A MARINA
               </div>
             </div>
           </Reveal>
           <div>
             <Reveal delay={120}>
               <div style={{ border: '1px solid var(--fg-08)', background: 'var(--bg-raised)', padding: 36 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: 28 }}>
-                  <div>
-                    <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 10 }}>{cur.coords}</div>
-                    <h3 className="serif" style={{ fontSize: 36, letterSpacing: '-0.01em' }}>{cur.name}</h3>
-                  </div>
-                  <span
-                    className="mono"
-                    style={{
-                      padding: '6px 10px',
-                      border: `1px solid ${cur.status === 'OPEN' ? 'var(--accent-line)' : 'rgba(212,183,143,0.5)'}`,
-                      color: cur.status === 'OPEN' ? 'var(--accent)' : 'var(--gold)',
-                    }}
-                  >
-                    {cur.status}
-                  </span>
+                <div style={{ marginBottom: 28 }}>
+                  <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 10 }}>{cur.coords}</div>
+                  <h3 className="serif" style={{ fontSize: 36, letterSpacing: '-0.01em' }}>{cur.name}</h3>
                 </div>
                 <div className="rule mb-24" style={{ marginTop: 8 }}/>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 28 }}>
@@ -72,41 +53,14 @@ function CoastMap() {
                     <div className="serif" style={{ fontSize: 40, marginTop: 6 }}>{cur.berths}</div>
                   </div>
                   <div>
-                    <div className="mono" style={{ color: 'var(--fg-50)' }}>Available</div>
-                    <div className="serif" style={{ fontSize: 40, marginTop: 6, color: 'var(--accent)' }}>{cur.available}</div>
+                    <div className="mono" style={{ color: 'var(--fg-50)' }}>Availability</div>
+                    <div className="serif" style={{ fontSize: 18, marginTop: 10, color: 'var(--fg-70)', lineHeight: 1.4 }}>Contact us for current berth availability</div>
                   </div>
                 </div>
-                {/* Availability bar */}
-                <div style={{ marginBottom: 28 }}>
-                  <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 10 }}>OCCUPANCY</div>
-                  <div style={{ height: 4, background: 'var(--fg-08)', position: 'relative' }}>
-                    <div style={{
-                      position: 'absolute',
-                      inset: 0,
-                      width: `${((cur.berths - cur.available) / cur.berths) * 100}%`,
-                      background: 'var(--fg)',
-                      transition: 'width 0.6s var(--ease)',
-                    }}/>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontSize: 12, color: 'var(--fg-50)' }}>
-                    <span>{Math.round(((cur.berths - cur.available) / cur.berths) * 100)}% occupied</span>
-                    <span>Next release: 14:00 UTC</span>
-                  </div>
-                </div>
-                <button className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-                  Hold a Berth <Icons.Arrow size={14}/>
+                <button className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }}
+                  onClick={() => {/* contact */}}>
+                  Enquire About Availability <Icons.Arrow size={14}/>
                 </button>
-              </div>
-            </Reveal>
-            <Reveal delay={200}>
-              <div style={{ marginTop: 24, padding: 24, border: '1px solid var(--fg-08)', display: 'flex', gap: 16, alignItems: 'start' }}>
-                <Icons.Compass size={20} stroke={1}/>
-                <div>
-                  <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 6 }}>OPERATIONAL NOTE</div>
-                  <div style={{ fontSize: 13.5, lineHeight: 1.5 }}>
-                    For vessels over 60m LOA arriving before June 1, Porto Montenegro B-Quay remains the recommended approach.
-                  </div>
-                </div>
               </div>
             </Reveal>
           </div>
@@ -147,15 +101,14 @@ function MapSVG({ ports, selected, onSelect }) {
       {/* Ports */}
       {ports.map(p => {
         const isSel = p.id === selected;
-        const isHigh = p.status === 'HIGH DEMAND';
         return (
           <g key={p.id} style={{ cursor: 'pointer' }} onClick={() => onSelect(p.id)}>
-            {isSel && <circle cx={p.x} cy={p.y} r="3.5" fill={isHigh ? 'var(--gold)' : 'var(--accent)'} opacity="0.2">
+            {isSel && <circle cx={p.x} cy={p.y} r="3.5" fill="var(--accent)" opacity="0.2">
               <animate attributeName="r" values="2.5;4.5;2.5" dur="2.4s" repeatCount="indefinite"/>
               <animate attributeName="opacity" values="0.35;0;0.35" dur="2.4s" repeatCount="indefinite"/>
             </circle>}
-            <circle cx={p.x} cy={p.y} r={isSel ? 1.2 : 0.9} fill={isHigh ? 'var(--gold)' : 'var(--accent)'}/>
-            <circle cx={p.x} cy={p.y} r="2.6" fill="none" stroke={isHigh ? 'var(--gold)' : 'var(--accent)'} strokeWidth="0.15" opacity={isSel ? 1 : 0.4}/>
+            <circle cx={p.x} cy={p.y} r={isSel ? 1.2 : 0.9} fill="var(--accent)"/>
+            <circle cx={p.x} cy={p.y} r="2.6" fill="none" stroke="var(--accent)" strokeWidth="0.15" opacity={isSel ? 1 : 0.4}/>
             <text
               x={p.x + 3.5}
               y={p.y + 0.8}
@@ -293,7 +246,6 @@ function HomePage() {
       <ServicesPreview/>
       <StatsBlock/>
       <CoastMap/>
-      <Testimonial/>
       <ProcessStrip/>
       <ClosingCTA/>
     </main>

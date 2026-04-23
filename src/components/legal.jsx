@@ -34,7 +34,7 @@ function LegalShell({ eyebrow, title, updated, children }) {
 // ─── Legal Notice ─────────────────────────────────────────────────────────────
 function LegalNoticePage() {
   return (
-    <LegalShell eyebrow="LEGAL NOTICE" title="Legal Notice." updated="1 January 2025">
+    <LegalShell eyebrow="LEGAL NOTICE" title="Legal Notice." updated="April 2026">
       <h2>Company Details</h2>
       <p>
         <strong>YACHT CONCIERGE D.O.O.</strong><br />
@@ -104,7 +104,7 @@ function LegalNoticePage() {
 // ─── Privacy Policy ───────────────────────────────────────────────────────────
 function PrivacyPage() {
   return (
-    <LegalShell eyebrow="PRIVACY POLICY" title="Privacy Policy." updated="1 January 2025">
+    <LegalShell eyebrow="PRIVACY POLICY" title="Privacy Policy." updated="April 2026">
       <h2>1. Data Controller</h2>
       <p>
         <strong>YACHT CONCIERGE D.O.O.</strong><br />
@@ -234,7 +234,7 @@ function PrivacyPage() {
 // ─── Terms of Service ─────────────────────────────────────────────────────────
 function TermsPage() {
   return (
-    <LegalShell eyebrow="TERMS OF SERVICE" title="Terms of Service." updated="1 January 2025">
+    <LegalShell eyebrow="TERMS OF SERVICE" title="Terms of Service." updated="April 2026">
       <h2>1. Scope of Services</h2>
       <p>
         Yacht Concierge D.O.O. ("we", "us", "the Company") provides maritime logistics

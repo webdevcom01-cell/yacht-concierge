@@ -408,7 +408,7 @@ function FleetPage() {
           </div>
           <Reveal delay={160}>
             <p className="lede">
-              Availability, occupancy, and operational notes across our five-marina footprint. Updated every thirty minutes during the operational season.
+              Our operational footprint spans five marinas along the Montenegrin coast. Contact us directly for current berth availability and seasonal rates.
             </p>
           </Reveal>
         </div>
