@@ -75,6 +75,7 @@ html, body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   transition: background 0.4s var(--ease), color 0.4s var(--ease);
+  overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -745,9 +746,10 @@ html { scroll-behavior: smooth; }
   .nav-links { display: none; }
   .nav-menu-btn { display: flex; }
 
-  /* Nav: smanji grid na 2 kolone (logo | desna strana), sakrij desktop CTA (dostupan u mobilnom meniju) */
-  .nav-inner { grid-template-columns: 1fr auto; }
   .nav-right .btn { display: none; }
+  .nav[data-style="glass"][data-scrolled="true"] .nav-inner,
+  .nav[data-style="solid"][data-scrolled="true"] .nav-inner,
+  .nav[data-style="line"][data-scrolled="true"] .nav-inner { padding: 14px 24px; }
 
   /* Hero strip: smanji gornji margin */
   .hero-strip { margin-top: 56px; }
@@ -863,4 +865,16 @@ html { scroll-behavior: smooth; }
 
   /* Service kartice: smanji padding i ukloni min-height */
   .service-card { padding: 24px 20px; min-height: 0; }
+}
+
+/* ============ Page top offset (responsive nav clearance) ============ */
+
+.page-top { padding-top: 140px; }
+
+@media (max-width: 900px) {
+  .page-top { padding-top: 100px; }
+}
+
+@media (max-width: 480px) {
+  .page-top { padding-top: 80px; }
 }

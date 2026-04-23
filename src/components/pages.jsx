@@ -41,7 +41,7 @@ function ProcessPage() {
   ];
 
   return (
-    <main style={{ paddingTop: 140 }}>
+    <main className="page-top">
       <div className="container">
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 120 }}>
           <div>
@@ -139,7 +139,7 @@ function ContactPage() {
   };
 
   return (
-    <main style={{ paddingTop: 140, minHeight: '100vh' }}>
+    <main className="page-top" style={{ minHeight: '100vh' }}>
       <div className="container">
         <div className="grid-contact" style={{ gap: 96, alignItems: 'start' }}>
           {/* Left: context */}
@@ -397,7 +397,7 @@ function StepWrap({ title, sub, children }) {
 // ---------- Berths / Fleet page (simple) ----------
 function FleetPage() {
   return (
-    <main style={{ paddingTop: 140 }}>
+    <main className="page-top">
       <div className="container">
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 96 }}>
           <div>

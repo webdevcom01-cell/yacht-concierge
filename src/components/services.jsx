@@ -8,7 +8,7 @@ import { ClosingCTA } from './home-bottom';
 function ServicesPage() {
   const { setRoute } = useApp();
   return (
-    <main style={{ paddingTop: 140 }}>
+    <main className="page-top">
       <div className="container">
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 96 }}>
           <div>
@@ -207,7 +207,7 @@ function ServiceDetailPage({ id }) {
   const otherServices = SERVICES.filter(x => x.id !== s.id);
 
   return (
-    <main style={{ paddingTop: 140 }}>
+    <main className="page-top">
       <div className="container">
         <Reveal>
           <a className="mono" onClick={() => setRoute({ page: 'services' })} style={{ display: 'inline-flex', gap: 10, color: 'var(--fg-70)', cursor: 'pointer', marginBottom: 64 }}>

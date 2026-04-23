@@ -222,7 +222,7 @@ function ProcessStrip() {
             <Reveal delay={80}><h2 className="h2">A considered protocol.</h2></Reveal>
           </div>
           <Reveal delay={160}>
-            <p className="lede" style={{ textAlign: 'right', marginLeft: 'auto' }}>
+            <p className="lede lede-right">
               Every yacht we serve moves through four measured steps. No rushed handoffs, no lost context.
             </p>
           </Reveal>

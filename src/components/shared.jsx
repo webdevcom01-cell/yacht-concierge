@@ -140,9 +140,7 @@ function Nav() {
           >
             {theme === 'dark' ? <Icons.Sun size={14} /> : <Icons.Moon size={14} />}
           </button>
-          <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}
-            style={{ display: 'flex' }}
-          >
+          <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}>
             Request Quote <Icons.Arrow size={14} />
           </button>
           <button
