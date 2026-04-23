@@ -621,6 +621,14 @@ html { scroll-behavior: smooth; }
 /* CTA button groups that stack on small screens */
 .btn-row { display: flex; gap: 16px; flex-wrap: wrap; }
 
+/* ============ Responsive Utilities ============ */
+
+/* Hero strip: desktop margin, overridden in breakpoints */
+.hero-strip { margin-top: 96px; }
+
+/* Right-aligned lede — desktop only, resets to left on mobile */
+.lede-right { text-align: right; margin-left: auto; }
+
 /* ============ Legal Prose ============ */
 
 .legal-prose {
@@ -736,6 +744,13 @@ html { scroll-behavior: smooth; }
   .nav-inner, .nav[data-scrolled="true"] .nav-inner { padding: 16px 24px; }
   .nav-links { display: none; }
   .nav-menu-btn { display: flex; }
+
+  /* Nav: smanji grid na 2 kolone (logo | desna strana), sakrij desktop CTA (dostupan u mobilnom meniju) */
+  .nav-inner { grid-template-columns: 1fr auto; }
+  .nav-right .btn { display: none; }
+
+  /* Hero strip: smanji gornji margin */
+  .hero-strip { margin-top: 56px; }
 }
 
 /* ============ Breakpoint 768px — Tablet / Large Phone ============ */
@@ -803,6 +818,12 @@ html { scroll-behavior: smooth; }
 
   /* Contact page: left sticky panel becomes static */
   .contact-sticky { position: static !important; top: auto !important; }
+
+  /* Services preview header: smanji gap i margin u single-column layoutu */
+  .services-preview-header { gap: 32px !important; margin-bottom: 48px !important; }
+
+  /* Right-aligned lede: lijevo poravnanje na single column */
+  .lede-right { text-align: left; margin-left: 0; }
 }
 
 /* ============ Breakpoint 480px — Small Phone ============ */
@@ -828,4 +849,18 @@ html { scroll-behavior: smooth; }
   /* CTA button rows: stack vertically, full-width */
   .btn-row { flex-direction: column; }
   .btn-row .btn { width: 100%; justify-content: center; }
+
+  /* Logo tekst: smanji na vrlo malim ekranima */
+  .logo-text-main { font-size: 14px; letter-spacing: 0.07em; }
+
+  /* Hero strip: kompaktan margin */
+  .hero-strip { margin-top: 40px; }
+
+  /* Services grid: 2-col → 1-col na telefonima */
+  .services-grid--standard,
+  .services-grid--loose,
+  .services-grid--dense { grid-template-columns: 1fr; }
+
+  /* Service kartice: smanji padding i ukloni min-height */
+  .service-card { padding: 24px 20px; min-height: 0; }
 }

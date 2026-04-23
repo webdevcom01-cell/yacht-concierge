@@ -202,7 +202,7 @@ function HorizonSVG() {
 
 function HeroStrip() {
   return (
-    <div style={{ marginTop: 96, padding: '24px 0', borderTop: '1px solid var(--fg-08)', borderBottom: '1px solid var(--fg-08)' }}>
+    <div className="hero-strip" style={{ padding: '24px 0', borderTop: '1px solid var(--fg-08)', borderBottom: '1px solid var(--fg-08)' }}>
       <HeroStripInline />
     </div>
   );
@@ -232,9 +232,9 @@ function HeroStripInline({ light = false }) {
 function ServicesPreview() {
   const { setRoute, serviceDensity } = useApp();
   return (
-    <section className="section" style={{ paddingTop: 160 }}>
+    <section className="section">
       <div className="container">
-        <div className="grid-2" style={{ gap: 96, marginBottom: 80, alignItems: 'end' }}>
+        <div className="grid-2 services-preview-header" style={{ alignItems: 'end' }}>
           <div>
             <Reveal>
               <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>
@@ -249,7 +249,7 @@ function ServicesPreview() {
             </Reveal>
           </div>
           <Reveal delay={160}>
-            <p className="lede" style={{ textAlign: 'right', marginLeft: 'auto' }}>
+            <p className="lede lede-right">
               Every request, from a late-arriving provisioning pallet to a hull wash before charter, routes through a single captain-facing coordinator.
             </p>
           </Reveal>
