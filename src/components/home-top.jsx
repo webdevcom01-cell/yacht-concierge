@@ -303,7 +303,7 @@ function StatsBlock() {
   return (
     <section className="section" style={{ paddingTop: 80 }}>
       <div className="container">
-        <SectionHeader num="02 / STANDARDS" eyebrow="OPERATIONAL STANDARDS" title={<>Discretion, by design.</>} />
+        <SectionHeader num="02" eyebrow="OPERATIONAL STANDARDS" title={<>Discretion, by design.</>} />
         <div className="grid-4" style={{ gap: 0, borderTop: '1px solid var(--fg-08)', borderBottom: '1px solid var(--fg-08)' }}>
           {items.map((s, i) => (
             <Reveal key={i} delay={i * 80}>

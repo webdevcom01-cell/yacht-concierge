@@ -113,7 +113,7 @@ function FleetTierSelector() {
               <div style={{ fontSize: 13, color: 'var(--fg-70)', marginTop: 16, maxWidth: '40ch' }}>{tier.desc}</div>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 8 }}>FROM / WEEK</div>
+              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 8 }}>PRICING</div>
               <div className="serif" style={{ fontSize: 40, letterSpacing: '-0.02em' }}>{tier.price}</div>
             </div>
           </div>
@@ -131,7 +131,7 @@ const SERVICE_DETAIL = {
     deliverables: ['Priority slot allocation', 'Concessioned seasonal holds', 'Shore-power & freshwater hook-up', 'Security liaison'],
     protocol: [
       { n: '01', step: 'INTAKE', body: 'Captain or manager provides ETA, LOA, beam, draft, call sign, flag state, intended stay length.' },
-      { n: '02', step: 'MATCH', body: 'Coordinator confirms slot across our marina network using real-time availability data and historical preference.' },
+      { n: '02', step: 'MATCH', body: 'Coordinator confirms slot across our marina network based on current availability and historical berth preferences.' },
       { n: '03', step: 'HOLD', body: 'Slot secured, confirmation issued with berth number, hook-up particulars, and arrival coordinates.' },
       { n: '04', step: 'RECEIVE', body: 'Shore team present at berth on ETA. Lines, power, water, provisioning staging all handled.' },
     ],
@@ -191,7 +191,7 @@ const SERVICE_DETAIL = {
     deliverables: ['Diagnostics', 'Parts sourcing', 'On-board work supervision', 'Sea-trial coordination'],
     protocol: [
       { n: '01', step: 'REPORT', body: 'Engineer or captain describes the fault. Where possible, a diagnostic is run on our in-house systems before dispatch.' },
-      { n: '02', step: 'DISPATCH', body: 'The right specialist, not the nearest. We maintain a vetted bench of roughly forty technicians across the coast.' },
+      { n: '02', step: 'DISPATCH', body: 'The right specialist, not the nearest. We maintain a vetted network of technicians across the Montenegrin coast.' },
       { n: '03', step: 'SUPERVISE', body: 'Our coordinator is present for the visit. Notes are kept, parts reconciled, warranty captured.' },
       { n: '04', step: 'DOCUMENT', body: 'Work report filed to the vessel log, with photographs and a parts ledger. Nothing left undocumented.' },
     ],

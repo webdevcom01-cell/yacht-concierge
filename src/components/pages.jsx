@@ -386,7 +386,7 @@ function ContactPage() {
 function StepWrap({ title, sub, children }) {
   return (
     <div>
-      <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>↳ THIS STEP</div>
+      <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>↳ REQUIRED INFORMATION</div>
       <h2 className="serif" style={{ fontSize: 36, letterSpacing: '-0.01em', marginBottom: 12 }}>{title}</h2>
       <p style={{ color: 'var(--fg-70)', fontSize: 14, marginBottom: 48, maxWidth: '54ch' }}>{sub}</p>
       {children}
@@ -401,7 +401,7 @@ function FleetPage() {
       <div className="container">
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 96 }}>
           <div>
-            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>↳ LIVE FOOTPRINT</div></Reveal>
+            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>↳ OPERATIONAL FOOTPRINT</div></Reveal>
             <Reveal delay={80}>
               <h1 className="display">Berths<br/>& <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>conditions</em>.</h1>
             </Reveal>

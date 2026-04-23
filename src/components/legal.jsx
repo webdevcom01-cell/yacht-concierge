@@ -4,7 +4,7 @@ import { Reveal } from './shared';
 // ─── Shared prose shell ───────────────────────────────────────────────────────
 function LegalShell({ eyebrow, title, updated, children }) {
   return (
-    <main style={{ paddingTop: 140, paddingBottom: 120 }}>
+    <main className="page-top" style={{ paddingBottom: 120 }}>
       <div className="container">
         <div style={{ maxWidth: 720, margin: '0 auto' }}>
           <Reveal>

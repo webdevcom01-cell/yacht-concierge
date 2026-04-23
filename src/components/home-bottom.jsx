@@ -20,9 +20,9 @@ function CoastMap() {
       <div className="container">
         <SectionHeader
           num="03 / FLEET"
-          eyebrow="LIVE BERTH AVAILABILITY"
+          eyebrow="BERTH AVAILABILITY"
           title={<>Five marinas. <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>One coast.</em></>}
-          lede="Real-time availability across our operational footprint in Montenegro. Updated at :00 and :30 past the hour."
+          lede="Our operational footprint spans five marinas along the Montenegrin coast. Contact us directly for current berth availability and seasonal rates."
         />
         <div className="grid-map" style={{ gap: 72, alignItems: 'start' }}>
           <Reveal>
@@ -124,39 +124,6 @@ function MapSVG({ ports, selected, onSelect }) {
   );
 }
 
-// ---------- Testimonial ----------
-function Testimonial() {
-  return (
-    <section className="section">
-      <div className="container">
-        <div className="grid-testimonial" style={{ gap: 72 }}>
-          <Reveal>
-            <div>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 20 }}>04 / LOG</div>
-              <div className="mono" style={{ color: 'var(--fg-70)' }}>
-                M/Y ATLAS<br/>
-                73M · CAYMAN ISLANDS<br/>
-                ↳ TIVAT · 14.VI.2025
-              </div>
-            </div>
-          </Reveal>
-          <Reveal delay={120}>
-            <blockquote style={{ margin: 0 }}>
-              <div className="serif" style={{ fontSize: 'clamp(28px, 3.4vw, 44px)', lineHeight: 1.25, letterSpacing: '-0.01em' }}>
-                <span style={{ color: 'var(--accent)' }}>"</span>We changed course from Corfu at 0200 with a twelve-person charter inbound. Customs cleared, provisioning re-routed, berth held at B-Quay — it was handled before we raised the captain for coffee.<span style={{ color: 'var(--accent)' }}>"</span>
-              </div>
-              <div className="mt-48" style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid var(--fg-08)', paddingTop: 24 }}>
-                <span className="mono" style={{ color: 'var(--fg-50)' }}>CAPT. B.H. ELLIS</span>
-                <span className="mono" style={{ color: 'var(--fg-50)' }}>FILE №2025-0614-AT</span>
-              </div>
-            </blockquote>
-          </Reveal>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ---------- Process preview strip ----------
 function ProcessStrip() {
   const { setRoute } = useApp();
@@ -252,4 +219,4 @@ function HomePage() {
   );
 }
 
-export { CoastMap, Testimonial, ProcessStrip, ClosingCTA, HomePage };
+export { CoastMap, ProcessStrip, ClosingCTA, HomePage };
