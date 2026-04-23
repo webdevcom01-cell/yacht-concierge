@@ -1,0 +1,12 @@
+{
+  "name": "Yacht Concierge Montenegro",
+  "short_name": "YC Montenegro",
+  "description": "Superyacht concierge services in the Adriatic",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF9F8",
+  "theme_color": "#001730",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

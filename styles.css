@@ -553,9 +553,279 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 html { scroll-behavior: smooth; }
 ::selection { background: var(--accent); color: var(--bg); }
 
+/* ============ Responsive Grid System ============ */
+
+/* Generic 2-column equal split — section headers across all pages */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; }
+
+/* Hero editorial (home A variant) — asymmetric split */
+.grid-hero { display: grid; grid-template-columns: 1.15fr 1fr; }
+
+/* Stats strip — 5 horizontal live-data items */
+.grid-stats-strip { display: grid; grid-template-columns: repeat(5, 1fr); }
+
+/* Services preview grid — density controlled via modifier classes */
+.services-grid                 { display: grid; }
+.services-grid--standard       { grid-template-columns: repeat(3, 1fr); }
+.services-grid--loose          { grid-template-columns: repeat(2, 1fr); }
+.services-grid--dense          { grid-template-columns: repeat(4, 1fr); }
+
+/* 4-column — stats block, process steps */
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); }
+
+/* 3-column — coverage/SLA strip */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); }
+
+/* 5-column — principles, cross-sell related services */
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); }
+
+/* Coast map — map panel + detail panel */
+.grid-map { display: grid; grid-template-columns: 1.4fr 1fr; }
+
+/* Testimonial — metadata + blockquote */
+.grid-testimonial { display: grid; grid-template-columns: 1fr 2fr; }
+
+/* Fleet tier calculator — copy + interactive slider */
+.grid-fleet-calc { display: grid; grid-template-columns: 1fr 1.3fr; }
+
+/* Contact / Quote page — sticky context + multi-step form */
+.grid-contact { display: grid; grid-template-columns: 1fr 1.4fr; }
+
+/* Contact step 1 — vessel name (wide) + LOA + flag */
+.grid-contact-vessel { display: grid; grid-template-columns: 2fr 1fr 1fr; }
+
+/* Process protocol — each individual timeline row */
+.grid-timeline-row { display: grid; grid-template-columns: 120px 1fr 1.5fr 1fr; }
+
+/* Order summary — items list + delivery panel */
+.grid-order-summary { display: grid; grid-template-columns: 1.5fr 1fr; }
+
+/* Footer columns — brand + 3 link columns */
+.grid-footer { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; }
+
+/* Base rules for classes already used in JSX (grid props extracted from inline) */
+.service-row { display: grid; grid-template-columns: 60px 60px 1.3fr 2fr 120px; }
+.shop-layout  { display: grid; grid-template-columns: 260px 1fr; }
+
+/* Footer bottom bar */
+.footer-bar {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-50);
+}
+
+/* CTA button groups that stack on small screens */
+.btn-row { display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* ============ Legal Prose ============ */
+
+.legal-prose {
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: var(--fg-70);
+}
+
+.legal-prose h2 {
+  font-family: var(--serif);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  margin: 56px 0 16px;
+  padding-top: 56px;
+  border-top: 1px solid var(--fg-08);
+}
+
+.legal-prose h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.legal-prose p {
+  margin: 0 0 20px;
+}
+
+.legal-prose p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-prose ul {
+  margin: 0 0 20px;
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legal-prose li {
+  padding-left: 4px;
+}
+
+.legal-prose a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.legal-prose a:hover {
+  border-bottom-color: var(--accent);
+}
+
+.legal-prose strong {
+  font-weight: 500;
+  color: var(--fg);
+}
+
+/* ============ Nav — Mobile Hamburger ============ */
+
+.nav-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.nav-mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--fg-08);
+  padding: 16px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  z-index: 99;
+  box-shadow: 0 16px 40px rgba(0, 23, 48, 0.12);
+}
+
+.nav-mobile-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-70);
+  padding: 16px 0;
+  border-bottom: 1px solid var(--fg-05);
+  cursor: pointer;
+  display: block;
+  transition: color 0.2s var(--ease), padding-left 0.2s var(--ease);
+}
+.nav-mobile-link:last-of-type { border-bottom: none; }
+.nav-mobile-link:hover,
+.nav-mobile-link[data-active="true"] { color: var(--fg); padding-left: 8px; }
+
+.nav-mobile-cta { margin-top: 20px; }
+
+/* ============ Breakpoint 900px ============ */
+
 @media (max-width: 900px) {
   .container { padding: 0 24px; }
   .section { padding: 80px 0; }
   .nav-inner, .nav[data-scrolled="true"] .nav-inner { padding: 16px 24px; }
   .nav-links { display: none; }
+  .nav-menu-btn { display: flex; }
+}
+
+/* ============ Breakpoint 768px — Tablet / Large Phone ============ */
+
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .section { padding: 64px 0; }
+
+  /* All 2-column and asymmetric page layouts collapse to single column */
+  .grid-2,
+  .grid-hero,
+  .grid-map,
+  .grid-testimonial,
+  .grid-fleet-calc,
+  .grid-contact,
+  .grid-contact-vessel,
+  .grid-order-summary {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer: 4-col → 2-col */
+  .grid-footer { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* Footer bar: horizontal → stacked */
+  .footer-bar { flex-direction: column; gap: 8px; align-items: flex-start; }
+
+  /* 4-column grids → 2-column */
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+
+  /* Services grids: dense/standard → 2-col; loose stays 2-col already */
+  .services-grid--standard,
+  .services-grid--dense { grid-template-columns: 1fr 1fr; }
+
+  /* Coverage/SLA strip: 3-col → 1-col (full-width stacked cards) */
+  .grid-3 { grid-template-columns: 1fr; }
+
+  /* Principles / cross-sell: 5-col → 2-col */
+  .grid-5 { grid-template-columns: 1fr 1fr; }
+
+  /* Stats strip: 5 → 2-col */
+  .grid-stats-strip { grid-template-columns: 1fr 1fr; }
+
+  /* Process timeline row: 4-col → 2-col, 3rd+4th children wrap below */
+  .grid-timeline-row {
+    grid-template-columns: 60px 1fr;
+    gap: 12px 24px;
+  }
+  .grid-timeline-row > *:nth-child(3),
+  .grid-timeline-row > *:nth-child(4) { grid-column: 1 / -1; }
+
+  /* Service listing row: 5-col → 3-col (num | title | arrow), desc wraps */
+  .service-row {
+    grid-template-columns: 40px 1fr auto !important;
+    gap: 12px !important;
+    padding: 28px 0 !important;
+    align-items: start !important;
+  }
+  .service-row > *:nth-child(4) { grid-column: 1 / -1; }
+
+  /* Provisioning shop: collapse sidebar, show filter toggle button */
+  .shop-layout { grid-template-columns: 1fr !important; }
+  .shop-filters { display: none; }
+  .shop-filters--open { display: block; margin-bottom: 32px; }
+  .shop-mobile-filters { display: block !important; }
+
+  /* Contact page: left sticky panel becomes static */
+  .contact-sticky { position: static !important; top: auto !important; }
+}
+
+/* ============ Breakpoint 480px — Small Phone ============ */
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .section { padding: 48px 0; }
+
+  /* Footer: 2-col → single column */
+  .grid-footer { grid-template-columns: 1fr; }
+
+  /* Stats block cells: reduce horizontal padding */
+  .grid-4 > * { padding-left: 20px !important; padding-right: 20px !important; }
+
+  /* Service row: fully stacked, hide redundant num and arrow */
+  .service-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+  .service-row > *:nth-child(1) { display: none; }
+  .service-row > *:nth-child(5) { display: none; }
+
+  /* CTA button rows: stack vertically, full-width */
+  .btn-row { flex-direction: column; }
+  .btn-row .btn { width: 100%; justify-content: center; }
 }

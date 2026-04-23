@@ -5,98 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Yacht Concierge — Pure Logistics. Montenegro.</title>
 <meta name="description" content="Operational logistics for superyachts transiting the Adriatic. Berth reservations, customs, provisioning, laundry, floristry, and maintenance — coordinated from a single desk in Tivat, Montenegro."/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;1,400&family=Fraunces:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#001730">
 <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 <div id="root"></div>
-
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
-<script type="text/babel" src="components/shared.jsx"></script>
-<script type="text/babel" src="components/home-top.jsx"></script>
-<script type="text/babel" src="components/home-bottom.jsx"></script>
-<script type="text/babel" src="components/services.jsx"></script>
-<script type="text/babel" src="components/pages.jsx"></script>
-<script type="text/babel" src="components/provisioning.jsx"></script>
-
-<script type="text/babel">
-const TWEAKS = {
-  "theme": "light",
-  "accent": "gold",
-  "navStyle": "glass",
-  "heroVariant": "editorial",
-  "serviceDensity": "standard",
-  "headingFont": "garamond"
-};
-
-const FONT_MAP = {
-  cormorant: "'Cormorant Garamond', Georgia, serif",
-  fraunces: "'Fraunces', Georgia, serif",
-  garamond: "'EB Garamond', Georgia, serif",
-};
-
-function App() {
-  const [route, setRouteState] = React.useState(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem('yc-route') || 'null');
-      return saved || { page: 'home' };
-    } catch { return { page: 'home' }; }
-  });
-  const setRoute = (r) => {
-    setRouteState(r);
-    localStorage.setItem('yc-route', JSON.stringify(r));
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  };
-
-  const [tweaks, setTweaks] = React.useState(TWEAKS);
-
-  React.useEffect(() => {
-    document.documentElement.setAttribute('data-theme', tweaks.theme);
-    document.documentElement.setAttribute('data-accent', tweaks.accent);
-    document.documentElement.style.setProperty('--serif', FONT_MAP[tweaks.headingFont] || FONT_MAP.garamond);
-  }, [tweaks.theme, tweaks.accent, tweaks.headingFont]);
-
-  const setTweak = (k, v) => setTweaks(prev => ({ ...prev, [k]: v }));
-
-  const ctx = {
-    route, setRoute,
-    theme: tweaks.theme,
-    setTheme: (t) => setTweak('theme', t),
-    accent: tweaks.accent,
-    navStyle: tweaks.navStyle,
-    heroVariant: tweaks.heroVariant,
-    serviceDensity: tweaks.serviceDensity,
-  };
-
-  let Page = null;
-  if (route.page === 'home') Page = <HomePage/>;
-  else if (route.page === 'services') Page = <ServicesPage/>;
-  else if (route.page === 'service') Page = <ServiceDetailPage id={route.id}/>;
-  else if (route.page === 'process') Page = <ProcessPage/>;
-  else if (route.page === 'contact') Page = <ContactPage/>;
-  else if (route.page === 'fleet') Page = <FleetPage/>;
-  else if (route.page === 'provisioning') Page = <ProvisioningPage/>;
-  else if (route.page === 'order-summary') Page = <OrderSummaryPage/>;
-  else Page = <HomePage/>;
-
-  return (
-    <AppCtx.Provider value={ctx}>
-      <div>
-        <Nav/>
-        {Page}
-        <Footer/>
-      </div>
-    </AppCtx.Provider>
-  );
-}
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App/>);
-</script>
+<script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
