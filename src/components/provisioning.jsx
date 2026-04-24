@@ -2,113 +2,34 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import { useApp, Icons, Reveal } from './shared';
 import { ClosingCTA } from './home-bottom';
 import { submitOrder } from '../lib/submit';
+import { PRODUCTS } from '../lib/products';
 
 // Provisioning Shop: catalog + filters + cart drawer + summary page
 // Integrates with existing AppCtx routing + .service-card, .btn, .field styles.
-// Future: replace PRODUCTS with Voli API / CSV fetch in useEffect.
-
-const PRODUCTS = [
-  // Fresh Produce — local Adriatic / Tivat market
-  { id: 'p01', name: 'Njeguški Tomatoes', cat: 'fresh', price: 3.40, unit: 'kg', taxFree: false, sameDay: true, diet: ['vegan'], origin: 'Bay of Kotor' },
-  { id: 'p02', name: 'Heirloom Courgettes', cat: 'fresh', price: 2.80, unit: 'kg', taxFree: false, sameDay: true, diet: ['vegan'], origin: 'Skadar Valley' },
-  { id: 'p03', name: 'Dalmatian Figs', cat: 'fresh', price: 9.20, unit: 'kg', taxFree: false, sameDay: true, diet: ['vegan'], origin: 'Adriatic coast' },
-  { id: 'p04', name: 'Lemon, Amalfi', cat: 'fresh', price: 6.10, unit: 'kg', taxFree: false, sameDay: false, diet: ['vegan'], origin: 'Italy' },
-  { id: 'p05', name: 'Rocket, wild', cat: 'fresh', price: 18.00, unit: 'kg', taxFree: false, sameDay: true, diet: ['vegan'], origin: 'Lovćen foothills' },
-  { id: 'p06', name: 'Avocado, Hass', cat: 'fresh', price: 4.20, unit: 'pc', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p07', name: 'Black Kale', cat: 'fresh', price: 7.40, unit: 'kg', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p08', name: 'Peaches, white', cat: 'fresh', price: 5.60, unit: 'kg', taxFree: false, sameDay: true, diet: ['vegan'] },
-
-  // Beverages — non-alcoholic
-  { id: 'p10', name: 'San Pellegrino 750ml', cat: 'beverages', price: 3.80, unit: 'bottle', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p11', name: 'Acqua Panna 750ml', cat: 'beverages', price: 3.60, unit: 'bottle', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p12', name: 'Fever-Tree Tonic 200ml', cat: 'beverages', price: 2.20, unit: 'bottle', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p13', name: 'Fresh Orange Juice 1L', cat: 'beverages', price: 8.50, unit: 'bottle', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p14', name: 'Cold-Brew Coffee 1L', cat: 'beverages', price: 14.00, unit: 'bottle', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p15', name: 'Kombucha, Ginger 330ml', cat: 'beverages', price: 4.80, unit: 'bottle', taxFree: false, sameDay: true, diet: ['vegan', 'gluten-free'] },
-  { id: 'p16', name: 'Coconut Water 1L', cat: 'beverages', price: 6.20, unit: 'bottle', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p17', name: 'Espresso beans, Piansa 1kg', cat: 'beverages', price: 38.00, unit: 'kg', taxFree: false, sameDay: false, diet: ['vegan'] },
-
-  // Alcohol — Tax-Free (Duty-free for yachts in transit)
-  { id: 'p20', name: 'Dom Pérignon Vintage 2013', cat: 'alcohol', price: 185.00, unit: 'bottle', taxFree: true, sameDay: false },
-  { id: 'p21', name: 'Château Margaux 2015', cat: 'alcohol', price: 720.00, unit: 'bottle', taxFree: true, sameDay: false },
-  { id: 'p22', name: 'Plantaže Vranac 2020', cat: 'alcohol', price: 12.00, unit: 'bottle', taxFree: true, sameDay: true, origin: 'Montenegro' },
-  { id: 'p23', name: 'Sancerre, Henri Bourgeois', cat: 'alcohol', price: 32.00, unit: 'bottle', taxFree: true, sameDay: false },
-  { id: 'p24', name: 'Hendricks Gin 1L', cat: 'alcohol', price: 42.00, unit: 'bottle', taxFree: true, sameDay: true },
-  { id: 'p25', name: 'Belvedere Vodka 1.75L', cat: 'alcohol', price: 68.00, unit: 'bottle', taxFree: true, sameDay: true },
-  { id: 'p26', name: 'Lagavulin 16yr', cat: 'alcohol', price: 94.00, unit: 'bottle', taxFree: true, sameDay: false },
-  { id: 'p27', name: 'Hennessy XO 700ml', cat: 'alcohol', price: 220.00, unit: 'bottle', taxFree: true, sameDay: false },
-  { id: 'p28', name: 'Krstač Drustvo Orahovo', cat: 'alcohol', price: 16.00, unit: 'bottle', taxFree: true, sameDay: true, origin: 'Crmnica, Montenegro' },
-  { id: 'p29', name: 'Prosecco, La Marca', cat: 'alcohol', price: 18.00, unit: 'bottle', taxFree: true, sameDay: true },
-
-  // Dairy & Eggs
-  { id: 'p30', name: 'Burrata di Andria 250g', cat: 'dairy', price: 8.40, unit: 'pc', taxFree: false, sameDay: true, diet: ['vegetarian'] },
-  { id: 'p31', name: 'Parmigiano Reggiano 24mo', cat: 'dairy', price: 58.00, unit: 'kg', taxFree: false, sameDay: false, diet: ['vegetarian'] },
-  { id: 'p32', name: 'Free-Range Eggs', cat: 'dairy', price: 6.80, unit: 'dozen', taxFree: false, sameDay: true, diet: ['vegetarian'], origin: 'Tivat' },
-  { id: 'p33', name: 'Njeguški Kajmak 500g', cat: 'dairy', price: 14.00, unit: 'pc', taxFree: false, sameDay: true, diet: ['vegetarian'], origin: 'Njeguši' },
-  { id: 'p34', name: 'Isle of Mull Cheddar', cat: 'dairy', price: 52.00, unit: 'kg', taxFree: false, sameDay: false, diet: ['vegetarian'] },
-  { id: 'p35', name: 'Greek Yoghurt 1kg', cat: 'dairy', price: 7.40, unit: 'pc', taxFree: false, sameDay: true, diet: ['vegetarian'] },
-  { id: 'p36', name: 'Oat Milk, Barista 1L', cat: 'dairy', price: 3.80, unit: 'bottle', taxFree: false, sameDay: true, diet: ['vegan'] },
-
-  // Meat & Fish
-  { id: 'p40', name: 'Adriatic Sea Bass (whole)', cat: 'meat', price: 42.00, unit: 'kg', taxFree: false, sameDay: true, origin: 'Bay of Kotor' },
-  { id: 'p41', name: 'Scampi, live', cat: 'meat', price: 88.00, unit: 'kg', taxFree: false, sameDay: true, origin: 'Adriatic' },
-  { id: 'p42', name: 'Chianina Ribeye', cat: 'meat', price: 96.00, unit: 'kg', taxFree: false, sameDay: false },
-  { id: 'p43', name: 'Pršut (dry-cured ham)', cat: 'meat', price: 58.00, unit: 'kg', taxFree: false, sameDay: true, origin: 'Njeguši' },
-  { id: 'p44', name: 'Wagyu Tenderloin A5', cat: 'meat', price: 360.00, unit: 'kg', taxFree: false, sameDay: false },
-  { id: 'p45', name: 'Octopus, fresh', cat: 'meat', price: 34.00, unit: 'kg', taxFree: false, sameDay: true, origin: 'Adriatic' },
-  { id: 'p46', name: 'Whole Turbot', cat: 'meat', price: 78.00, unit: 'kg', taxFree: false, sameDay: true, origin: 'Adriatic' },
-  { id: 'p47', name: 'Corn-fed Chicken', cat: 'meat', price: 18.00, unit: 'kg', taxFree: false, sameDay: true },
-  { id: 'p48', name: 'Lamb rack, local', cat: 'meat', price: 64.00, unit: 'kg', taxFree: false, sameDay: true, origin: 'Durmitor' },
-
-  // Pantry & Dry Goods
-  { id: 'p50', name: 'EVOO, Moulin Cauvin 500ml', cat: 'pantry', price: 28.00, unit: 'bottle', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p51', name: 'Maldon Sea Salt 250g', cat: 'pantry', price: 6.40, unit: 'pc', taxFree: false, sameDay: true, diet: ['vegan', 'gluten-free'] },
-  { id: 'p52', name: 'Rustichella Spaghetti', cat: 'pantry', price: 4.80, unit: 'pc', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p53', name: 'Acquerello Rice 1kg', cat: 'pantry', price: 22.00, unit: 'kg', taxFree: false, sameDay: false, diet: ['vegan', 'gluten-free'] },
-  { id: 'p54', name: 'Aged Balsamico 250ml', cat: 'pantry', price: 48.00, unit: 'bottle', taxFree: false, sameDay: false, diet: ['vegan'] },
-  { id: 'p55', name: 'Black Truffle, fresh', cat: 'pantry', price: 1400.00, unit: 'kg', taxFree: false, sameDay: false, diet: ['vegan'] },
-  { id: 'p56', name: 'Sourdough Loaf', cat: 'pantry', price: 6.40, unit: 'pc', taxFree: false, sameDay: true, diet: ['vegan'] },
-  { id: 'p57', name: 'Quinoa, tri-colour 1kg', cat: 'pantry', price: 11.50, unit: 'kg', taxFree: false, sameDay: true, diet: ['vegan', 'gluten-free'] },
-
-  // Cleaning
-  { id: 'p60', name: 'Starbrite Deck Cleaner 1L', cat: 'cleaning', price: 16.00, unit: 'bottle', taxFree: true, sameDay: true },
-  { id: 'p61', name: 'Teak Oil 500ml', cat: 'cleaning', price: 22.00, unit: 'bottle', taxFree: true, sameDay: true },
-  { id: 'p62', name: 'Chamois, XL', cat: 'cleaning', price: 8.00, unit: 'pc', taxFree: false, sameDay: true },
-  { id: 'p63', name: 'Biodegradable Dish Soap 5L', cat: 'cleaning', price: 24.00, unit: 'pc', taxFree: false, sameDay: true },
-  { id: 'p64', name: 'Stainless Polish 500ml', cat: 'cleaning', price: 18.00, unit: 'bottle', taxFree: true, sameDay: true },
-  { id: 'p65', name: 'Microfiber Cloths, 12-pack', cat: 'cleaning', price: 14.00, unit: 'pc', taxFree: false, sameDay: true },
-
-  // Personal Care
-  { id: 'p70', name: 'Aesop Hand Wash 500ml', cat: 'personal', price: 36.00, unit: 'bottle', taxFree: false, sameDay: true },
-  { id: 'p71', name: 'Sun SPF50, reef-safe', cat: 'personal', price: 28.00, unit: 'bottle', taxFree: false, sameDay: true },
-  { id: 'p72', name: 'Egyptian Cotton Towels', cat: 'personal', price: 48.00, unit: 'pc', taxFree: false, sameDay: false },
-  { id: 'p73', name: 'Malin+Goetz Shampoo 1L', cat: 'personal', price: 64.00, unit: 'bottle', taxFree: false, sameDay: false },
-  { id: 'p74', name: 'Molton Brown Soap', cat: 'personal', price: 12.00, unit: 'pc', taxFree: false, sameDay: true },
-  { id: 'p75', name: 'Aspirin 500mg, 20ct', cat: 'personal', price: 4.80, unit: 'pc', taxFree: false, sameDay: true },
-];
+// Products sourced from Voli FOOD SERVICE 2025. To refresh: run scripts/import-voli.py
 
 const CATEGORIES = [
-  { id: 'all', label: 'All Categories' },
-  { id: 'fresh', label: 'Fresh Produce' },
-  { id: 'beverages', label: 'Beverages' },
-  { id: 'alcohol', label: 'Alcohol (Tax-Free)' },
-  { id: 'dairy', label: 'Dairy & Eggs' },
-  { id: 'meat', label: 'Meat & Fish' },
-  { id: 'pantry', label: 'Pantry & Dry Goods' },
-  { id: 'cleaning', label: 'Cleaning Supplies' },
-  { id: 'personal', label: 'Personal Care' },
+  { id: 'all',         label: 'All Categories' },
+  { id: 'meat',        label: 'Premium Meat' },
+  { id: 'seafood',     label: 'Sea Products' },
+  { id: 'dairy',       label: 'Dairy & Cheese' },
+  { id: 'charcuterie', label: 'Charcuterie' },
+  { id: 'bakery',      label: 'Bakery & Breads' },
+  { id: 'pantry',      label: 'Pantry & Dry Goods' },
+  { id: 'asian',       label: 'Asian Food' },
+  { id: 'frozen',      label: 'Frozen' },
 ];
 
 // ---------- Product placeholder visual (no photos — abstract swatch by category) ----------
 const CAT_COLOR = {
-  fresh: ['#2E4A3A', '#556F47'],
-  beverages: ['#2A4657', '#436A7F'],
-  alcohol: ['#3C2A3F', '#5E3F5E'],
-  dairy: ['#EFE4D1', '#D4C1A3'],
-  meat: ['#5E2A2A', '#7A3F3F'],
-  pantry: ['#3E3328', '#5E4A36'],
-  cleaning: ['#2A4F52', '#416E70'],
-  personal: ['#3A3548', '#56506A'],
+  meat:        ['#5E2A2A', '#7A3F3F'],
+  seafood:     ['#1A3A4A', '#2E5F72'],
+  dairy:       ['#EFE4D1', '#D4C1A3'],
+  charcuterie: ['#4A2E1A', '#6B4227'],
+  bakery:      ['#4A3A28', '#6B5740'],
+  pantry:      ['#3E3328', '#5E4A36'],
+  asian:       ['#2A3A1A', '#4A5E2E'],
+  frozen:      ['#1A2A3A', '#2E4A5E'],
 };
 function ProductSwatch({ cat, name }) {
   const [a, b] = CAT_COLOR[cat] || ['#445', '#667'];
@@ -179,7 +100,7 @@ function ProvisioningPageContent() {
   const [cartOpen, setCartOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [cat, setCat] = useState('all');
-  const [priceMax, setPriceMax] = useState(1500);
+  const [priceMax, setPriceMax] = useState(250);
   const [taxFreeOnly, setTaxFreeOnly] = useState(false);
   const [sameDayOnly, setSameDayOnly] = useState(false);
   const [diet, setDiet] = useState([]);
@@ -277,7 +198,7 @@ function ProvisioningPageContent() {
 
             <FilterBlock label="Price Maximum">
               <div className="serif" style={{ fontSize: 24, marginBottom: 8 }}>€ {priceMax}</div>
-              <input type="range" min="5" max="1500" step="5" value={priceMax}
+              <input type="range" min="5" max="250" step="5" value={priceMax}
                 onChange={e => setPriceMax(Number(e.target.value))}
                 style={{ width: '100%', accentColor: 'var(--accent)' }}/>
             </FilterBlock>
@@ -294,7 +215,7 @@ function ProvisioningPageContent() {
             </FilterBlock>
 
             <button
-              onClick={() => { setCat('all'); setQuery(''); setPriceMax(1500); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
+              onClick={() => { setCat('all'); setQuery(''); setPriceMax(250); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
               className="mono"
               style={{ color: 'var(--fg-50)', marginTop: 24, cursor: 'pointer' }}
             >↳ RESET FILTERS</button>
