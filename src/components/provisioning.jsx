@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import { useApp, Icons, Reveal } from './shared';
 import { ClosingCTA } from './home-bottom';
 import { submitOrder } from '../lib/submit';
@@ -133,8 +133,10 @@ function ProductSwatch({ cat, name }) {
   );
 }
 
-// ---------- Cart store (localStorage-backed) ----------
-function useCart() {
+// ---------- Cart context (single instance shared across pages) ----------
+const CartContext = createContext(null);
+
+function CartProvider({ children }) {
   const [cart, setCart] = useState(() => {
     try { return JSON.parse(localStorage.getItem('yc-cart') || '[]'); } catch { return []; }
   });
@@ -150,14 +152,28 @@ function useCart() {
     return ex ? c.map(x => x.id === p.id ? { ...x, qty: x.qty + 1 } : x) : [...c, { ...p, qty: 1 }];
   });
   const setQty = (id, q) => setCart(c => q <= 0 ? c.filter(x => x.id !== id) : c.map(x => x.id === id ? { ...x, qty: q } : x));
-  const clear = () => setCart([]);
+  const clear = () => {
+    setCart([]);
+    setMeta({});
+    localStorage.removeItem('yc-cart');
+    localStorage.removeItem('yc-cart-meta');
+  };
   const subtotal = cart.reduce((s, x) => s + x.price * x.qty, 0);
   const count = cart.reduce((s, x) => s + x.qty, 0);
-  return { cart, meta, setMeta, add, setQty, clear, subtotal, count };
+
+  return (
+    <CartContext.Provider value={{ cart, meta, setMeta, add, setQty, clear, subtotal, count }}>
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+function useCart() {
+  return useContext(CartContext);
 }
 
 // ---------- Provisioning Shop Page ----------
-function ProvisioningPage() {
+function ProvisioningPageContent() {
   const { setRoute } = useApp();
   const cart = useCart();
   const [cartOpen, setCartOpen] = useState(false);
@@ -527,7 +543,7 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
 }
 
 // ---------- Order Summary Page ----------
-function OrderSummaryPage() {
+function OrderSummaryPageContent() {
   const { setRoute } = useApp();
   const cart = useCart();
   const [confirmed, setConfirmed] = useState(false);
@@ -676,5 +692,8 @@ function RowMoney({ k, v }) {
     </div>
   );
 }
+
+function ProvisioningPage()  { return <CartProvider><ProvisioningPageContent /></CartProvider>; }
+function OrderSummaryPage()  { return <CartProvider><OrderSummaryPageContent /></CartProvider>; }
 
 export { ProvisioningPage, OrderSummaryPage };
