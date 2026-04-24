@@ -54,6 +54,22 @@ function ProductSwatch({ cat, name }) {
   );
 }
 
+// Shows product image if available, falls back to abstract swatch on error or missing URL
+function ProductImage({ p }) {
+  const [err, setErr] = useState(false);
+  if (!p.image || err) return <ProductSwatch cat={p.cat} name={p.name}/>;
+  return (
+    <div style={{ aspectRatio: '4/3', overflow: 'hidden', background: 'var(--bg-raised)' }}>
+      <img
+        src={p.image}
+        alt={p.name}
+        onError={() => setErr(true)}
+        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+      />
+    </div>
+  );
+}
+
 // ---------- Cart context (single instance shared across pages) ----------
 const CartContext = createContext(null);
 
@@ -309,7 +325,7 @@ function ProductCard({ p, onAdd }) {
       display: 'flex', flexDirection: 'column',
       transition: 'transform 0.3s var(--ease)',
     }}>
-      <ProductSwatch cat={p.cat} name={p.name}/>
+      <ProductImage p={p}/>
       <div style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: 10 }}>
           <h4 className="serif" style={{ fontSize: 18, lineHeight: 1.15, letterSpacing: '-0.01em', margin: 0 }}>{p.name}</h4>
