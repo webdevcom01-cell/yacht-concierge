@@ -40,7 +40,7 @@ PRODUCTS_JS       = 'src/lib/products.js'
 MARKUP            = 0.30
 
 BASE_URL          = 'https://voli.me'
-SEARCH_URL        = 'https://voli.me/catalogsearch/result/?q={query}'
+SEARCH_URL        = 'https://voli.me/pretraga?q={query}'
 
 DELAY_MIN         = 1.2   # seconds between requests (be polite)
 DELAY_MAX         = 2.5
@@ -58,13 +58,13 @@ HEADERS = {
 
 CAT_MAP = {
     'ASIAN FOOD':'asian','LARNAUDIE DUCK & GOOSE':'meat','PREMIUM MEAT':'meat',
-    'WAGYU BEEF':'meat','RISTORIS PROFESSIONAL':'pantry','BAKERY & BREADS':'bakery',
-    'JAMS- HONEY & CEREALS':'pantry','CHICKEN & TURKEY MEAT':'meat',
+    'WAGYU BEEF':'meat','RISTORIS PROFESSIONAL':'ristoris','BAKERY & BREADS':'bakery',
+    'JAMS- HONEY & CEREALS':'jams','CHICKEN & TURKEY MEAT':'meat',
     'SEA PRODUCTS':'seafood','CHEESES':'dairy','CHARCUTERIE':'charcuterie',
-    'SAUSAGES AND LOCAL CURED MEAT':'charcuterie','PASTA & FLOURS':'pantry',
-    'TOMATO & RICE':'pantry','FROZEN VEGETABLES & POTATOES':'frozen',
-    'TRUFFLES':'pantry','THERMOSTABLE JAMS AND CONFECT':'pantry',
-    'OILS':'pantry','SPICES':'pantry',
+    'SAUSAGES AND LOCAL CURED MEAT':'charcuterie','PASTA & FLOURS':'pasta',
+    'TOMATO & RICE':'condiments','FROZEN VEGETABLES & POTATOES':'frozen',
+    'TRUFFLES':'truffles','THERMOSTABLE JAMS AND CONFECT':'jams',
+    'OILS':'condiments','SPICES':'spices',
 }
 
 # ── Load Montenegrin names from HORECA xlsx ───────────────────────────────────
@@ -149,22 +149,12 @@ def search_voli(query):
             return None
         soup = BeautifulSoup(resp.text, 'html.parser')
 
-        # Look for product image in search results
-        # Voli.me uses Magento-style markup
-        for img in soup.select('img.product-image-photo, img[class*="product"], .product-image img'):
-            src = img.get('src') or img.get('data-src') or ''
-            if '/storage/images/products/' in src:
-                # Normalize to full URL
-                if src.startswith('//'):
-                    src = 'https:' + src
-                elif src.startswith('/'):
-                    src = BASE_URL + src
-                return src
-
-        # Fallback: any img with /storage/images/products/ in src
+        # Voli.me uses lazy loading — real image URL is in data-src, not src
+        # Pattern: https://voli.me/storage/images/products/thumbnails/{ID}/{ID}_1.jpg
         for img in soup.find_all('img'):
-            src = img.get('src') or img.get('data-src') or ''
-            if '/storage/images/products/' in src and 'placeholder' not in src.lower():
+            # Check data-src first (lazy loaded), then src
+            src = img.get('data-src') or img.get('src') or ''
+            if '/storage/images/products/thumbnails/' in src and 'default' not in src.lower():
                 if src.startswith('//'): src = 'https:' + src
                 elif src.startswith('/'): src = BASE_URL + src
                 return src
