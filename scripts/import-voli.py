@@ -30,6 +30,7 @@ XLSX_PATH   = 'FOOD SERVICE 2025.xlsx'   # Put xlsx in project root or adjust pa
 IMAGE_CDN   = ''                          # e.g. 'https://cdn.voli.me/products/{code}.jpg'
 IMAGE_ZIP   = ''                          # e.g. 'voli-images.zip'
 OUTPUT_PATH = 'src/lib/products.js'
+MARKUP      = 0.30                        # 30% markup on all Voli prices
 
 # ── Category mapping ─────────────────────────────────────────────────────────
 
@@ -129,7 +130,7 @@ def main():
                 except:
                     pass
             try:
-                price = round(float(price_raw), 2)
+                price = round(float(price_raw) * (1 + MARKUP), 2)
             except:
                 skipped += 1
                 continue
@@ -181,7 +182,7 @@ def main():
     with open(OUTPUT_PATH, 'w') as f:
         f.write('\n'.join(lines))
 
-    print(f'✓ {len(products)} products written to {OUTPUT_PATH}')
+    print(f'✓ {len(products)} products written to {OUTPUT_PATH} (markup: +{int(MARKUP*100)}%)')
     if IMAGE_CDN:
         print(f'  Images: CDN pattern → {IMAGE_CDN}')
     elif IMAGE_ZIP:
