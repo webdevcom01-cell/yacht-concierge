@@ -1,16 +1,18 @@
 // API_URL is baked in at build time from VITE_API_URL environment variable
 const API_URL = import.meta.env.VITE_API_URL;
 
-// GAS web apps redirect POST requests internally, which breaks no-cors mode.
-// Sending data as a GET request with URL-encoded payload is the reliable approach.
-async function postJSON(payload) {
+// GAS web apps redirect exec→echo internally. fetch() no-cors gets CORB-blocked
+// at the echo step, preventing doGet from running. Using Image.src fires a plain
+// GET request with no CORS/CORB restrictions — the browser ignores the response
+// (not a valid image) but GAS receives and processes the request normally.
+function postJSON(payload) {
   if (!API_URL) {
     console.warn('[submit] VITE_API_URL not set — submission skipped in dev');
-    return { result: 'dev-skip' };
+    return Promise.resolve({ result: 'dev-skip' });
   }
   const url = API_URL + '?payload=' + encodeURIComponent(JSON.stringify(payload));
-  await fetch(url, { mode: 'no-cors' });
-  return { result: 'ok' };
+  new Image().src = url;
+  return Promise.resolve({ result: 'ok' });
 }
 
 export async function submitQuote(data, refNum) {
