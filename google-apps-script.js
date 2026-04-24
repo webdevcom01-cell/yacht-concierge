@@ -107,12 +107,15 @@ function writeRow(sheetName, data) {
   var sheet = ss.getSheetByName(sheetName);
 
   if (!sheet) {
-    // Create tab with headers if it doesn't exist yet
     sheet = ss.insertSheet(sheetName);
-    var headers = SHEET_HEADERS[sheetName] || ['Timestamp'].concat(Object.keys(data));
-    sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+  }
+
+  // Add headers if sheet is empty (handles both new sheets and manually-created empty tabs)
+  if (sheet.getLastColumn() === 0) {
+    var hdrs = SHEET_HEADERS[sheetName] || ['Timestamp'].concat(Object.keys(data));
+    sheet.getRange(1, 1, 1, hdrs.length).setValues([hdrs]);
     sheet.setFrozenRows(1);
-    sheet.getRange(1, 1, 1, headers.length)
+    sheet.getRange(1, 1, 1, hdrs.length)
       .setBackground('#001730')
       .setFontColor('#EFEAE2')
       .setFontWeight('bold');
