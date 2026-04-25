@@ -680,4 +680,52 @@ function AboutPage() {
   );
 }
 
-export { ProcessPage, ContactPage, FleetPage, AboutPage };
+// ── 404 Not Found ─────────────────────────────────────────────────────────────
+
+function NotFoundPage() {
+  const { setRoute } = useApp();
+  return (
+    <main className="page-top">
+      <div className="container" style={{ minHeight: '60vh', display: 'flex', alignItems: 'center' }}>
+        <div style={{ maxWidth: 560 }}>
+          <Reveal>
+            <div className="mono" style={{ color: 'var(--accent)', marginBottom: 24, fontSize: 12, letterSpacing: '0.12em' }}>
+              ↳ ERROR 404
+            </div>
+          </Reveal>
+          <Reveal delay={60}>
+            <h1 className="display" style={{ marginBottom: 32 }}>
+              Page not<br/><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>found</em>.
+            </h1>
+          </Reveal>
+          <Reveal delay={120}>
+            <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-70)', marginBottom: 48 }}>
+              The page you're looking for doesn't exist or has moved.
+              If you followed a link, it may be outdated.
+            </p>
+          </Reveal>
+          <Reveal delay={180}>
+            <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setRoute({ page: 'home' })}
+                className="btn btn-primary"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
+              >
+                Return home
+                <Icons.Arrow size={15}/>
+              </button>
+              <button
+                onClick={() => setRoute({ page: 'contact' })}
+                className="btn btn-outline"
+              >
+                Contact us
+              </button>
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+export { ProcessPage, ContactPage, FleetPage, AboutPage, NotFoundPage };

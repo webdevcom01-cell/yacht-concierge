@@ -5,7 +5,7 @@ import { AppCtx, Nav, Footer, Icons, WhatsAppFloat } from './components/shared';
 import { PageSEO } from './seo.jsx';
 import { HomePage } from './components/home-bottom';
 import { ServicesPage, ServiceDetailPage } from './components/services';
-import { ProcessPage, ContactPage, FleetPage, AboutPage } from './components/pages';
+import { ProcessPage, ContactPage, FleetPage, AboutPage, NotFoundPage } from './components/pages';
 import { LegalNoticePage, PrivacyPage, TermsPage } from './components/legal';
 import { ProvisioningPage, OrderSummaryPage } from './components/provisioning';
 import '../styles.css';
@@ -106,7 +106,7 @@ function App() {
   else if (route.page === 'legal')    Page = <LegalNoticePage/>;
   else if (route.page === 'privacy')  Page = <PrivacyPage/>;
   else if (route.page === 'terms')    Page = <TermsPage/>;
-  else Page = <HomePage/>;
+  else Page = <NotFoundPage/>;
 
   const labelMap = {
     home: '01 Home', services: '02 Services', service: '03 Service Detail',
