@@ -140,8 +140,25 @@ def load_products():
 session = requests.Session()
 session.headers.update(HEADERS)
 
-def search_voli(query):
-    """Search voli.me and return first product image URL found, or None."""
+def name_words(text):
+    """Extract significant words (>2 chars) from a product name, lowercased."""
+    return set(w.lower() for w in re.split(r'[\s\-/,\.]+', text) if len(w) > 2)
+
+def alt_matches(alt_text, product_name, montenegrin_name='', min_overlap=1):
+    """Return True if the image alt text shares enough words with our product name."""
+    if not alt_text:
+        return False
+    alt_words = name_words(alt_text)
+    en_words  = name_words(product_name)
+    me_words  = name_words(montenegrin_name) if montenegrin_name else set()
+    # Accept if at least min_overlap significant words match either name
+    overlap_en = len(alt_words & en_words)
+    overlap_me = len(alt_words & me_words)
+    return overlap_en >= min_overlap or overlap_me >= min_overlap
+
+def search_voli(query, product_name='', montenegrin_name=''):
+    """Search voli.me and return first MATCHING product image URL, or None.
+    Uses alt-text validation to avoid returning images for wrong products."""
     try:
         url = SEARCH_URL.format(query=requests.utils.quote(query))
         resp = session.get(url, timeout=REQUEST_TIMEOUT)
@@ -149,15 +166,22 @@ def search_voli(query):
             return None
         soup = BeautifulSoup(resp.text, 'html.parser')
 
-        # Voli.me uses lazy loading — real image URL is in data-src, not src
-        # Pattern: https://voli.me/storage/images/products/thumbnails/{ID}/{ID}_1.jpg
+        # Voli.me uses lazy loading — real URL is in data-src, not src
         for img in soup.find_all('img'):
-            # Check data-src first (lazy loaded), then src
             src = img.get('data-src') or img.get('src') or ''
-            if '/storage/images/products/thumbnails/' in src and 'default' not in src.lower():
-                if src.startswith('//'): src = 'https:' + src
-                elif src.startswith('/'): src = BASE_URL + src
-                return src
+            if '/storage/images/products/thumbnails/' not in src:
+                continue
+            if 'default' in src.lower():
+                continue
+
+            # Validate: alt text must share words with our product name
+            alt = img.get('alt', '')
+            if product_name and not alt_matches(alt, product_name, montenegrin_name):
+                continue  # Wrong product — skip this image
+
+            if src.startswith('//'): src = 'https:' + src
+            elif src.startswith('/'): src = BASE_URL + src
+            return src
 
         return None
     except Exception as e:
@@ -168,24 +192,23 @@ def get_image_for_product(code, english_name, montenegrin_name):
 
     strategies = []
 
-    # Strategy 1: search by product code
-    if code:
-        strategies.append(('code', code))
-
-    # Strategy 2: search by Montenegrin name (shorter = better match)
+    # Strategy 1: search by Montenegrin name (most precise for voli.me)
     if montenegrin_name:
-        # Use first 3-4 words for better search results
         short = ' '.join(montenegrin_name.split()[:4])
         strategies.append(('me_name', short))
 
-    # Strategy 3: search by English name (first 3 words)
+    # Strategy 2: search by English name (first 3 words)
     if english_name:
         short = ' '.join(english_name.split()[:3])
         strategies.append(('en_name', short))
 
+    # Strategy 3: search by product code (last resort — less reliable)
+    if code:
+        strategies.append(('code', code))
+
     for strategy, query in strategies:
         time.sleep(random.uniform(DELAY_MIN, DELAY_MAX))
-        img_url = search_voli(query)
+        img_url = search_voli(query, english_name, montenegrin_name)
         if img_url:
             return img_url, strategy
 
