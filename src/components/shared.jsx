@@ -195,6 +195,7 @@ function Nav() {
     { id: 'provisioning', label: 'Provisioning' },
     { id: 'process', label: 'How it works' },
     { id: 'fleet', label: 'Berths' },
+    { id: 'about', label: 'About' },
     { id: 'contact', label: 'Contact' },
   ];
 
@@ -310,7 +311,7 @@ function Footer() {
           </div>
           {[
             { title: 'Services', items: ['Berth Reservations', 'Customs & Immigration', 'Provisioning', 'Laundry', 'Floristry', 'Maintenance'] },
-            { title: 'Operations', items: ['How it works', 'Berth availability', 'Fleet tiers', 'SLA'] },
+            { title: 'Operations', items: ['How it works', 'Berth availability', 'Fleet tiers', 'SLA', 'About us'] },
           ].map(col => (
             <div key={col.title}>
               <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 18 }}>{col.title}</div>

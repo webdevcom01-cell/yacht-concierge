@@ -32,6 +32,11 @@ const SEO_DATA = {
     description: 'Submit your vessel details and arrival date. Our operations team responds within 24 hours with a full service proposal.',
     url: 'https://yacht-concierge.me/contact',
   },
+  about: {
+    title: 'About — Yacht Concierge Montenegro',
+    description: 'The operational arm of Montenegro Charter. Nine seasons serving superyachts on the Adriatic — one dedicated desk for berths, customs, provisioning, and crew logistics.',
+    url: 'https://yacht-concierge.me/about',
+  },
   legal: {
     title: 'Legal Notice — Yacht Concierge Montenegro',
     description: 'Legal notice, company registration details, and dispute resolution information for Yacht Concierge D.O.O., Tivat, Montenegro.',

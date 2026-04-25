@@ -428,4 +428,256 @@ function FleetPage() {
   );
 }
 
-export { ProcessPage, ContactPage, FleetPage };
+// ---------- About page ----------
+function AboutPage() {
+  const { setRoute } = useApp();
+
+  const stats = [
+    { value: '9+',  label: 'Seasons operating' },
+    { value: '450+', label: 'Vessels served' },
+    { value: '5',   label: 'Montenegrin marinas' },
+    { value: '1',   label: 'Dedicated desk' },
+  ];
+
+  const team = [
+    {
+      name:  'Sanja Božović',
+      title: 'Founder & CEO',
+      bio:   'Founded Montenegro Charter in 2015 after a decade on the water as a charter captain. Built Yacht Concierge to solve the shore-side gaps she kept encountering — paperwork, provisioning, and the absence of anyone who stayed on a problem until it was resolved.',
+      phone: '38267201655',
+      wa:    'Hello Sanja, I would like to enquire about your yacht concierge services in Montenegro.',
+    },
+    {
+      name:  'Iva Erceg',
+      title: 'Operations Director',
+      bio:   'Manages real-time logistics across all active vessel files. Former charter coordinator with direct experience in Montenegrin port authority and customs workflows. When the marina office opens at 07:00, Iva is already there.',
+      phone: '38267144555',
+      wa:    "Hello, I'd like to enquire about yacht concierge services in Montenegro.",
+    },
+  ];
+
+  return (
+    <main className="page-top">
+      <div className="container">
+
+        {/* Hero */}
+        <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 120 }}>
+          <div>
+            <Reveal>
+              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>↳ ABOUT</div>
+            </Reveal>
+            <Reveal delay={80}>
+              <h1 className="display">
+                The desk behind<br/>
+                <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>seamless arrivals</em>.
+              </h1>
+            </Reveal>
+          </div>
+          <Reveal delay={160}>
+            <p className="lede">
+              Yacht Concierge is the operational arm of Montenegro Charter — the Adriatic's longest-running charter operator. Nine seasons of shore-side experience, one dedicated desk for your vessel.
+            </p>
+          </Reveal>
+        </div>
+
+        {/* Story */}
+        <Reveal>
+          <div style={{
+            borderTop: '1px solid var(--border)',
+            paddingTop: 80,
+            marginBottom: 80,
+            display: 'grid',
+            gridTemplateColumns: '1fr 2fr',
+            gap: 64,
+          }}>
+            <div>
+              <div className="mono" style={{ color: 'var(--fg-50)', fontSize: 11, letterSpacing: '0.12em' }}>
+                OUR STORY
+              </div>
+            </div>
+            <div>
+              <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 28 }}>
+                Montenegro Charter was founded in 2015 to bring honest, experienced hands to one of Europe's most underserved sailing grounds. Over nine seasons we built the relationships that make the difference: with port captains, customs offices, provisioning suppliers, and the crews who return year after year.
+              </p>
+              <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 28 }}>
+                Yacht Concierge grew from a straightforward observation: superyacht captains needed someone on the dock who understood the water they came from — not just the regulations of the port they'd arrived at. We created a dedicated operations desk staffed by people who have worked both sides of the gangway.
+              </p>
+              <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 40 }}>
+                Today we handle berth reservations, customs and immigration clearance, provisioning, crew logistics, laundry, floristry, and maintenance coordination for vessels from 30 to 120 metres — across five marinas along the Montenegrin coast.
+              </p>
+              <a
+                href="https://montenegrocharter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
+              >
+                Visit Montenegro Charter
+                <Icons.ArrowRight size={15}/>
+              </a>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Stats */}
+        <Reveal>
+          <div style={{
+            background: 'var(--surface)',
+            borderRadius: 4,
+            padding: '64px 72px',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: 0,
+            marginBottom: 80,
+          }}>
+            {stats.map((s, i) => (
+              <div key={i} style={{
+                textAlign: 'center',
+                borderLeft: i > 0 ? '1px solid var(--border)' : 'none',
+                padding: '0 32px',
+              }}>
+                <div style={{
+                  fontSize: 52,
+                  fontFamily: 'var(--serif)',
+                  fontWeight: 300,
+                  color: 'var(--accent)',
+                  lineHeight: 1,
+                  marginBottom: 12,
+                }}>
+                  {s.value}
+                </div>
+                <div className="mono" style={{ fontSize: 11, color: 'var(--fg-50)', letterSpacing: '0.1em' }}>
+                  {s.label.toUpperCase()}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Pull quote */}
+        <Reveal>
+          <div style={{
+            borderLeft: '3px solid var(--accent)',
+            paddingLeft: 40,
+            marginBottom: 100,
+            maxWidth: 680,
+          }}>
+            <p style={{
+              fontSize: 24,
+              fontFamily: 'var(--serif)',
+              fontStyle: 'italic',
+              lineHeight: 1.6,
+              color: 'var(--fg)',
+              marginBottom: 20,
+            }}>
+              "We built the kind of service we wanted when we were on the water ourselves — direct, accountable, and with no surprises in the invoice."
+            </p>
+            <div className="mono" style={{ fontSize: 11, color: 'var(--fg-50)', letterSpacing: '0.1em' }}>
+              SANJA BOŽOVIĆ — FOUNDER & CEO
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Team */}
+        <SectionHeader
+          tag="THE TEAM"
+          title={<>The people<br/>on <em>your file</em>.</>}
+          sub="Two leads. One file. Every request answered by someone with the authority to resolve it."
+        />
+
+        <div className="grid-2" style={{ gap: 40, marginBottom: 100, marginTop: 56 }}>
+          {team.map((m, i) => (
+            <Reveal key={i} delay={i * 100}>
+              <div style={{
+                background: 'var(--surface)',
+                borderRadius: 4,
+                padding: '48px 44px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 0,
+                height: '100%',
+              }}>
+                <div className="mono" style={{ fontSize: 11, color: 'var(--accent)', letterSpacing: '0.12em', marginBottom: 8 }}>
+                  {m.title.toUpperCase()}
+                </div>
+                <h3 style={{
+                  fontFamily: 'var(--serif)',
+                  fontSize: 28,
+                  fontWeight: 400,
+                  color: 'var(--fg)',
+                  marginBottom: 20,
+                  lineHeight: 1.2,
+                }}>
+                  {m.name}
+                </h3>
+                <p style={{
+                  fontSize: 15,
+                  lineHeight: 1.75,
+                  color: 'var(--fg-60)',
+                  flexGrow: 1,
+                  marginBottom: 32,
+                }}>
+                  {m.bio}
+                </p>
+                <a
+                  href={`https://wa.me/${m.phone}?text=${encodeURIComponent(m.wa)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 10,
+                    color: '#25D366',
+                    fontSize: 13,
+                    fontWeight: 500,
+                    letterSpacing: '0.05em',
+                    textDecoration: 'none',
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                  WhatsApp {m.name.split(' ')[0]}
+                </a>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* Values strip */}
+        <Reveal>
+          <div style={{
+            borderTop: '1px solid var(--border)',
+            borderBottom: '1px solid var(--border)',
+            padding: '56px 0',
+            marginBottom: 100,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 0,
+          }}>
+            {[
+              { label: 'Accountability', text: 'One coordinator owns your file, start to finish. No handoffs, no gaps in the chain.' },
+              { label: 'Transparency',   text: 'Itemised invoicing, rate-card pricing. You know the cost before we move.' },
+              { label: 'Presence',       text: 'We are physically in Tivat. When you need someone at the marina, they are already there.' },
+            ].map((v, i) => (
+              <div key={i} style={{
+                padding: '0 48px',
+                borderLeft: i > 0 ? '1px solid var(--border)' : 'none',
+              }}>
+                <div className="mono" style={{ fontSize: 11, color: 'var(--accent)', letterSpacing: '0.12em', marginBottom: 16 }}>
+                  {v.label.toUpperCase()}
+                </div>
+                <p style={{ fontSize: 15, lineHeight: 1.7, color: 'var(--fg-60)' }}>{v.text}</p>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+
+      </div>
+
+      <ClosingCTA/>
+    </main>
+  );
+}
+
+export { ProcessPage, ContactPage, FleetPage, AboutPage };

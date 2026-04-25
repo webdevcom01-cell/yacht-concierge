@@ -6,6 +6,7 @@
   <url><loc>https://yacht-concierge.me/process</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://yacht-concierge.me/fleet</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://yacht-concierge.me/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://yacht-concierge.me/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://yacht-concierge.me/legal</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://yacht-concierge.me/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://yacht-concierge.me/terms</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>

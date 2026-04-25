@@ -5,7 +5,7 @@ import { AppCtx, Nav, Footer, Icons, WhatsAppFloat } from './components/shared';
 import { PageSEO } from './seo.jsx';
 import { HomePage } from './components/home-bottom';
 import { ServicesPage, ServiceDetailPage } from './components/services';
-import { ProcessPage, ContactPage, FleetPage } from './components/pages';
+import { ProcessPage, ContactPage, FleetPage, AboutPage } from './components/pages';
 import { LegalNoticePage, PrivacyPage, TermsPage } from './components/legal';
 import { ProvisioningPage, OrderSummaryPage } from './components/provisioning';
 import '../styles.css';
@@ -100,6 +100,7 @@ function App() {
   else if (route.page === 'process')  Page = <ProcessPage/>;
   else if (route.page === 'contact')  Page = <ContactPage/>;
   else if (route.page === 'fleet')    Page = <FleetPage/>;
+  else if (route.page === 'about')    Page = <AboutPage/>;
   else if (route.page === 'provisioning')   Page = <ProvisioningPage/>;
   else if (route.page === 'order-summary')  Page = <OrderSummaryPage/>;
   else if (route.page === 'legal')    Page = <LegalNoticePage/>;
@@ -110,7 +111,8 @@ function App() {
   const labelMap = {
     home: '01 Home', services: '02 Services', service: '03 Service Detail',
     process: '04 How It Works', contact: '05 Contact', fleet: '06 Berths',
-    provisioning: '07 Provisioning', 'order-summary': '08 Order Summary',
+    about: '07 About',
+    provisioning: '08 Provisioning', 'order-summary': '08 Order Summary',
     legal: '09 Legal Notice', privacy: '10 Privacy Policy', terms: '11 Terms of Service',
   };
 
