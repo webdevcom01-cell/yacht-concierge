@@ -68,6 +68,7 @@ function ProductImage({ p }) {
 
 // ---------- Cart context (single instance shared across pages) ----------
 const CartContext = createContext(null);
+const CART_STALE_DAYS = 7; // warn user if cart is older than this
 
 function CartProvider({ children }) {
   const [cart, setCart] = useState(() => {
@@ -76,8 +77,16 @@ function CartProvider({ children }) {
   const [meta, setMeta] = useState(() => {
     try { return JSON.parse(localStorage.getItem('yc-cart-meta') || '{}'); } catch { return {}; }
   });
+  const [savedAt] = useState(() => {
+    const ts = localStorage.getItem('yc-cart-ts');
+    return ts ? parseInt(ts, 10) : null;
+  });
 
-  useEffect(() => { localStorage.setItem('yc-cart', JSON.stringify(cart)); }, [cart]);
+  useEffect(() => {
+    localStorage.setItem('yc-cart', JSON.stringify(cart));
+    if (cart.length > 0) localStorage.setItem('yc-cart-ts', Date.now().toString());
+    else localStorage.removeItem('yc-cart-ts');
+  }, [cart]);
   useEffect(() => { localStorage.setItem('yc-cart-meta', JSON.stringify(meta)); }, [meta]);
 
   const add = (p) => setCart(c => {
@@ -89,6 +98,7 @@ function CartProvider({ children }) {
   const clearItems = () => {
     setCart([]);
     localStorage.removeItem('yc-cart');
+    localStorage.removeItem('yc-cart-ts');
   };
   // clear — full reset including delivery details
   const clear = () => {
@@ -96,12 +106,18 @@ function CartProvider({ children }) {
     setMeta({});
     localStorage.removeItem('yc-cart');
     localStorage.removeItem('yc-cart-meta');
+    localStorage.removeItem('yc-cart-ts');
   };
   const subtotal = cart.reduce((s, x) => s + x.price * x.qty, 0);
   const count = cart.reduce((s, x) => s + x.qty, 0);
 
+  // Is the cart stale (older than CART_STALE_DAYS)?
+  const isStale = savedAt
+    ? (Date.now() - savedAt) > CART_STALE_DAYS * 24 * 60 * 60 * 1000
+    : false;
+
   return (
-    <CartContext.Provider value={{ cart, meta, setMeta, add, setQty, clear, clearItems, subtotal, count }}>
+    <CartContext.Provider value={{ cart, meta, setMeta, add, setQty, clear, clearItems, subtotal, count, isStale }}>
       {children}
     </CartContext.Provider>
   );
@@ -109,6 +125,57 @@ function CartProvider({ children }) {
 
 function useCart() {
   return useContext(CartContext);
+}
+
+// ---------- Saved-cart resume banner ----------
+function ResumeBanner({ onOpen }) {
+  const cart = useCart();
+  const { t } = useTranslation();
+  const [dismissed, setDismissed] = useState(false);
+  if (cart.count === 0 || dismissed) return null;
+  return (
+    <div style={{
+      position: 'sticky', top: 72, zIndex: 180,
+      background: 'var(--navy, #001730)',
+      borderBottom: '1px solid rgba(255,255,255,0.08)',
+      padding: '14px 32px',
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+        <span className="mono" style={{ color: 'rgba(255,255,255,0.45)', fontSize: 10 }}>
+          {t('provisioningPage.resumeBannerLabel')}
+        </span>
+        <span style={{ fontSize: 14, fontFamily: 'var(--sans)', color: 'rgba(255,255,255,0.8)' }}>
+          {t('provisioningPage.resumeBannerTitle', { n: cart.count, total: cart.subtotal.toFixed(2) })}
+        </span>
+        {cart.isStale && (
+          <span className="mono" style={{ color: 'var(--accent, #B8963E)', fontSize: 9, letterSpacing: '0.08em' }}>
+            ⚠ {t('provisioningPage.staleWarning')}
+          </span>
+        )}
+      </div>
+      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+        <button
+          onClick={() => { cart.clear(); setDismissed(true); }}
+          className="mono"
+          style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10, letterSpacing: '0.08em', background: 'none', border: 'none', cursor: 'pointer' }}
+        >
+          {t('provisioningPage.resumeBannerClear')}
+        </button>
+        <button
+          onClick={onOpen}
+          className="mono"
+          style={{
+            padding: '8px 18px', fontSize: 10, letterSpacing: '0.12em',
+            background: 'var(--accent, #B8963E)', color: '#fff',
+            border: 'none', cursor: 'pointer',
+          }}
+        >
+          {t('provisioningPage.resumeBannerBtn')}
+        </button>
+      </div>
+    </div>
+  );
 }
 
 // ---------- Provisioning Shop Page ----------
@@ -140,6 +207,8 @@ function ProvisioningPageContent() {
   });
 
   return (
+    <>
+    <ResumeBanner onOpen={() => setCartOpen(true)}/>
     <main className="page-top">
       <div className="container">
         {/* Back to service brief */}
@@ -307,6 +376,7 @@ function ProvisioningPageContent() {
 
       <ClosingCTA/>
     </main>
+    </>
   );
 }
 
@@ -450,7 +520,15 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
   const { cart: items, meta, setMeta, setQty, subtotal } = cart;
   const { t } = useTranslation();
   const setM = (k, v) => setMeta(m => ({ ...m, [k]: v }));
-  const canCheckout = items.length > 0 && meta.yacht && meta.marina && meta.berth && meta.date && meta.email;
+  const requiredFields = [
+    { key: 'yacht',  label: t('provisioningPage.yachtNameLabel').replace(' *','') },
+    { key: 'email',  label: t('provisioningPage.emailLabel').replace(' *','') },
+    { key: 'marina', label: t('provisioningPage.marinaLabel').replace(' *','') },
+    { key: 'berth',  label: t('provisioningPage.berthLabel').replace(' *','') },
+    { key: 'date',   label: t('provisioningPage.dateLabel').replace(' *','') },
+  ];
+  const missingFields = requiredFields.filter(f => !meta[f.key]).map(f => f.label);
+  const canCheckout = items.length > 0 && missingFields.length === 0;
 
   return (
     <>
@@ -564,7 +642,11 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
             >
               {t('provisioningPage.proceedToSummary')} <Icons.Arrow size={14}/>
             </button>
-            {!canCheckout && <div className="mono" style={{ color: 'var(--fg-50)', marginTop: 12, textAlign: 'center' }}>{t('provisioningPage.requiredFields')}</div>}
+            {!canCheckout && missingFields.length > 0 && (
+              <div className="mono" style={{ color: 'var(--accent)', marginTop: 12, fontSize: 10, letterSpacing: '0.06em', lineHeight: 1.6 }}>
+                ↳ {t('provisioningPage.missingFields', { fields: missingFields.join(', ') })}
+              </div>
+            )}
           </div>
         )}
       </aside>
