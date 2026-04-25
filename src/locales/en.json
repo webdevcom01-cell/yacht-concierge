@@ -389,6 +389,9 @@
     "emptyOrderTitle": "No items to review.",
     "orderError": "Order failed — please email orders@yacht-concierge.me",
     "backCatalogue": "← BACK TO CATALOGUE",
+    "selectMarina": "Select...",
+    "resultsCount": "{{filtered}} of {{total}} ITEMS",
+    "itemsCount": "ITEMS ({{n}})",
     "categories": {
       "all": "All Categories",
       "meat": "Premium Meat",

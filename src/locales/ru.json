@@ -389,6 +389,9 @@
     "emptyOrderTitle": "Нет товаров для просмотра.",
     "orderError": "Ошибка заказа — напишите на orders@yacht-concierge.me",
     "backCatalogue": "← НАЗАД В КАТАЛОГ",
+    "selectMarina": "Выберите...",
+    "resultsCount": "{{filtered}} из {{total}} позиций",
+    "itemsCount": "ПОЗИЦИИ ({{n}})",
     "categories": {
       "all": "Все категории",
       "meat": "Премиум мясо",

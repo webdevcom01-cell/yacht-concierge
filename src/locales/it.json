@@ -389,6 +389,9 @@
     "emptyOrderTitle": "Nessun articolo da revisionare.",
     "orderError": "Ordine fallito — scrivere a orders@yacht-concierge.me",
     "backCatalogue": "← TORNA AL CATALOGO",
+    "selectMarina": "Seleziona...",
+    "resultsCount": "{{filtered}} di {{total}} articoli",
+    "itemsCount": "ARTICOLI ({{n}})",
     "categories": {
       "all": "Tutte le categorie",
       "meat": "Carne premium",

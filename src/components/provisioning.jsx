@@ -178,7 +178,7 @@ function ProvisioningPageContent() {
               )}
             </div>
             <div className="mono" style={{ color: 'var(--fg-50)', whiteSpace: 'nowrap' }}>
-              {`${filtered.length} of ${PRODUCTS.length} ITEMS`}
+              {t('provisioningPage.resultsCount', { filtered: filtered.length, total: PRODUCTS.length })}
             </div>
             <button
               className="btn btn-ghost"
@@ -246,7 +246,7 @@ function ProvisioningPageContent() {
             </FilterBlock>
 
             <button
-              onClick={() => { setCat('all'); setQuery(''); setPriceMax(250); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
+              onClick={() => { setCat('all'); setQuery(''); setPriceMax(350); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
               className="mono"
               style={{ color: 'var(--fg-50)', marginTop: 24, cursor: 'pointer' }}
             >{t('provisioningPage.resetFilters')}</button>
@@ -507,7 +507,7 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
                     <div className="field">
                       <label className="field-label">{t('provisioningPage.marinaLabel')}</label>
                       <select className="field-select" value={meta.marina || ''} onChange={e => setM('marina', e.target.value)}>
-                        <option value="">Select...</option>
+                        <option value="">{t('provisioningPage.selectMarina')}</option>
                         <option>Porto Montenegro</option>
                         <option>Portonovi</option>
                         <option>Kotor</option>
@@ -623,7 +623,7 @@ function OrderSummaryPageContent() {
         ) : (
           <div className="grid-order-summary" style={{ gap: 56, alignItems: 'start' }}>
             <div>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>ITEMS ({cart.count})</div>
+              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>{t('provisioningPage.itemsCount', { n: cart.count })}</div>
               <div style={{ borderTop: '1px solid var(--fg-15)' }}>
                 {cart.cart.map(it => (
                   <div key={it.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: 24, padding: '20px 0', borderBottom: '1px solid var(--fg-08)' }}>
