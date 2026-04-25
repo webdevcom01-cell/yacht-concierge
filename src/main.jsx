@@ -8,6 +8,7 @@ import { ServicesPage, ServiceDetailPage } from './components/services';
 import { ProcessPage, ContactPage, FleetPage, AboutPage, NotFoundPage } from './components/pages';
 import { LegalNoticePage, PrivacyPage, TermsPage } from './components/legal';
 import { ProvisioningPage, OrderSummaryPage } from './components/provisioning';
+import { CookieConsent } from './components/cookie-consent';
 import '../styles.css';
 import '@fontsource/cormorant-garamond/300.css';
 import '@fontsource/cormorant-garamond/400.css';
@@ -125,6 +126,7 @@ function App() {
         {Page}
         <Footer/>
         <WhatsAppFloat/>
+        <CookieConsent/>
       </div>
       {editMode && (
         <div className="tweaks" data-open={tweaksOpen}>
