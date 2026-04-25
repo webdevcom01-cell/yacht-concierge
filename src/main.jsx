@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppCtx, Nav, Footer, Icons } from './components/shared';
+import { AppCtx, Nav, Footer, Icons, WhatsAppFloat } from './components/shared';
 import { PageSEO } from './seo.jsx';
 import { HomePage } from './components/home-bottom';
 import { ServicesPage, ServiceDetailPage } from './components/services';
@@ -122,6 +122,7 @@ function App() {
         <Nav/>
         {Page}
         <Footer/>
+        <WhatsAppFloat/>
       </div>
       {editMode && (
         <div className="tweaks" data-open={tweaksOpen}>
