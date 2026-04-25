@@ -164,7 +164,7 @@ function ContactPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 {[
                   { icon: 'Phone', label: '+382 67 144 555', sub: 'Operational desk · 24h in season' },
-                  { icon: 'Mail', label: 'info@yacht-concierge.com', sub: 'Encrypted channel available on request' },
+                  { icon: 'Mail', label: 'info@yacht-concierge.me', sub: 'Encrypted channel available on request' },
                   { icon: 'Pin', label: 'Pomorska ulica, Zgrada Baia', sub: 'Porto Montenegro · Tivat 85320' },
                 ].map(c => {
                   const IconC = Icons[c.icon];
@@ -365,7 +365,7 @@ function ContactPage() {
                       await submitQuote(data, refNum);
                       setStep(5);
                     } catch {
-                      setSubmitError('Submission failed — please email info@yacht-concierge.com');
+                      setSubmitError('Submission failed — please email info@yacht-concierge.me');
                     } finally {
                       setSubmitting(false);
                     }

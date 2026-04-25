@@ -598,7 +598,7 @@ function OrderSummaryPageContent() {
                     setConfirmed(true);
                     window.scrollTo({ top: 0 });
                   } catch {
-                    setSubmitError('Order failed — please email info@yacht-concierge.com');
+                    setSubmitError('Order failed — please email orders@yacht-concierge.me');
                   } finally {
                     setSubmitting(false);
                   }

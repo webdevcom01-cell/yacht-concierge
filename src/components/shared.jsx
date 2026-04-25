@@ -199,7 +199,7 @@ function Footer() {
           {[
             { title: 'Services', items: ['Berth Reservations', 'Customs & Immigration', 'Provisioning', 'Laundry', 'Floristry', 'Maintenance'] },
             { title: 'Operations', items: ['How it works', 'Berth availability', 'Fleet tiers', 'SLA'] },
-            { title: 'Office', items: ['Pomorska ulica, Zgrada Baia', 'Porto Montenegro', 'Tivat 85320', '+382 67 144 555', 'info@yacht-concierge.com'] },
+            { title: 'Office', items: ['Pomorska ulica, Zgrada Baia', 'Porto Montenegro', 'Tivat 85320', '+382 67 144 555', 'info@yacht-concierge.me'] },
           ].map(col => (
             <div key={col.title}>
               <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 18 }}>{col.title}</div>

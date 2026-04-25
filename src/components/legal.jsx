@@ -44,7 +44,7 @@ function LegalNoticePage() {
       </p>
       <p>
         <strong>Email:</strong>{' '}
-        <a href="mailto:info@yacht-concierge.com">info@yacht-concierge.com</a><br />
+        <a href="mailto:info@yacht-concierge.me">info@yacht-concierge.me</a><br />
         <strong>Phone:</strong> +382 67 144 555
       </p>
 
@@ -84,7 +84,7 @@ function LegalNoticePage() {
         consumers in EU/EEA member states:{' '}
         <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer">
           https://ec.europa.eu/consumers/odr
-        </a>. Our email address for this purpose is info@yacht-concierge.com.
+        </a>. Our email address for this purpose is info@yacht-concierge.me.
       </p>
       <p>
         We are not obliged to participate in a consumer dispute resolution procedure before
@@ -109,7 +109,7 @@ function PrivacyPage() {
       <p>
         <strong>YACHT CONCIERGE D.O.O.</strong><br />
         Pomorska ulica, Zgrada Baia, Porto Montenegro, Tivat 85320, Montenegro<br />
-        Email: <a href="mailto:info@yacht-concierge.com">info@yacht-concierge.com</a>
+        Email: <a href="mailto:info@yacht-concierge.me">info@yacht-concierge.me</a>
       </p>
       <p>
         This Privacy Policy governs all personal data processed through our website,
@@ -206,7 +206,7 @@ function PrivacyPage() {
       </ul>
       <p>
         To exercise any of these rights, contact us at{' '}
-        <a href="mailto:info@yacht-concierge.com">info@yacht-concierge.com</a>.
+        <a href="mailto:info@yacht-concierge.me">info@yacht-concierge.me</a>.
         We will respond within 30 days of receiving your request.
       </p>
 
@@ -272,7 +272,7 @@ function TermsPage() {
       <h2>4. Cancellation and Modification</h2>
       <p>
         Cancellations or material modifications must be communicated in writing to{' '}
-        <a href="mailto:info@yacht-concierge.com">info@yacht-concierge.com</a>:
+        <a href="mailto:info@yacht-concierge.me">info@yacht-concierge.me</a>:
       </p>
       <ul>
         <li>More than 48 hours before service commencement: no charge.</li>
@@ -339,7 +339,7 @@ function TermsPage() {
       <h2>10. Contact</h2>
       <p>
         For any questions regarding these Terms, contact us at{' '}
-        <a href="mailto:info@yacht-concierge.com">info@yacht-concierge.com</a> or
+        <a href="mailto:info@yacht-concierge.me">info@yacht-concierge.me</a> or
         +382 67 144 555.
       </p>
     </LegalShell>
