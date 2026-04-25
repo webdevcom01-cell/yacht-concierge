@@ -174,30 +174,40 @@ function sendQuoteAutoReply(data, toEmail) {
   var ref  = data.ref  || 'N/A';
   var name = data.name || 'Captain';
 
-  var subject = 'Enquiry received · Ref. ' + ref + ' — Yacht Concierge Montenegro';
+  var subject = 'Your enquiry is with us — Ref. ' + ref;
 
   var body = [
     'Dear ' + name + ',',
     '',
-    'We have received your enquiry and a coordinator has been assigned to your file.',
+    'Thank you for reaching out. Your enquiry has been received and I have personally',
+    'taken on your file.',
     '',
-    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
-    'REFERENCE      ' + ref,
-    'VESSEL         ' + (data.yacht || '—'),
-    'PORT           ' + (data.port  || '—'),
-    'ETA            ' + (data.eta   || '—'),
-    'SERVICES       ' + (data.services || '—'),
-    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    'Here is a summary of what we have logged:',
     '',
-    'You will receive a full service proposal within 24 hours.',
+    '  Reference    ' + ref,
+    '  Vessel       ' + (data.yacht    || '—'),
+    '  Port         ' + (data.port     || '—'),
+    '  Arrival      ' + (data.eta      || '—'),
+    '  Departure    ' + (data.etd      || '—'),
+    '  Services     ' + (data.services || '—'),
     '',
-    'For urgent matters, reach us directly:',
-    '  WhatsApp / Phone: +382 67 144 555',
-    '  Email: info@yacht-concierge.me',
+    'You will receive a full service proposal — berths, customs approach, provisioning',
+    'calendar, and an itemised budget — within 24 hours.',
     '',
-    'Fair winds,',
+    'If anything changes on your end in the meantime, or if there is anything urgent,',
+    'the fastest way to reach me is WhatsApp: +382 67 144 555.',
+    'I am typically available 06:00 – 22:00 CET.',
+    '',
+    'Looking forward to having you in Montenegrin waters.',
+    '',
+    'Warm regards,',
+    '',
     'Iva Erceg',
-    'Operations Director · Yacht Concierge Montenegro',
+    'Operations Director',
+    'Yacht Concierge Montenegro',
+    '',
+    'WhatsApp / Phone: +382 67 144 555',
+    'Email: info@yacht-concierge.me',
     'Pomorska ulica, Zgrada Baia · Porto Montenegro · Tivat 85320',
     'yacht-concierge.me',
   ].join('\n');
@@ -212,41 +222,48 @@ function sendQuoteAutoReply(data, toEmail) {
 }
 
 function sendOrderAutoReply(data, toEmail) {
-  var ref = data.ref || 'N/A';
+  var ref   = data.ref   || 'N/A';
+  var items = (data.items || '—').split(' | ');
 
-  var subject = 'Order Confirmation №' + ref + ' — Yacht Concierge Montenegro';
+  var subject = 'Order №' + ref + ' confirmed — delivery to ' + (data.marina || 'your berth');
 
   var body = [
-    'Order confirmed.',
+    'Your provisioning order has been received.',
     '',
-    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
-    'ORDER №        ' + ref,
-    'VESSEL         ' + (data.yacht  || '—'),
-    'MARINA         ' + (data.marina || '—'),
-    'BERTH          ' + (data.berth  || '—'),
-    'DELIVERY DATE  ' + (data.date   || '—'),
-    'DELIVERY TIME  ' + (data.time   || '—'),
-    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    'Here is your confirmation:',
     '',
-    'ITEMS',
-    (data.items || '—').split(' | ').join('\n'),
+    '  Order №       ' + ref,
+    '  Vessel        ' + (data.yacht  || '—'),
+    '  Marina        ' + (data.marina || '—'),
+    '  Berth         ' + (data.berth  || '—'),
+    '  Delivery      ' + (data.date   || '—') + (data.time && data.time !== '—' ? ' at ' + data.time : ''),
     '',
-    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
-    'SUBTOTAL       ' + (data.subtotal || '—'),
-    'TOTAL          ' + (data.total    || '—'),
-    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    'Items ordered:',
+  ].concat(
+    items.map(function(line) { return '  · ' + line; })
+  ).concat([
     '',
-    'Your coordinator will confirm the delivery window within two operational hours.',
-    'VAT will be itemised on the final invoice.',
+    '  Subtotal      ' + (data.subtotal || '—'),
+    '  Total         ' + (data.total    || '—'),
+    '  (VAT will be itemised on the final invoice)',
     '',
-    'For changes or urgent queries:',
-    '  WhatsApp / Phone: +382 67 144 555',
-    '  Email: orders@yacht-concierge.me',
+    'A coordinator will confirm your exact delivery window within two operational hours.',
+    'If you need to add items, change the delivery time, or have any special instructions,',
+    'please reply to this email or contact us on WhatsApp.',
     '',
+    'We look forward to having everything ready at the berth.',
+    '',
+    'Warm regards,',
+    '',
+    'Iva Erceg',
+    'Operations Director',
     'Yacht Concierge Montenegro',
+    '',
+    'WhatsApp / Phone: +382 67 144 555',
+    'Email: orders@yacht-concierge.me',
     'Pomorska ulica, Zgrada Baia · Porto Montenegro · Tivat 85320',
     'yacht-concierge.me',
-  ].join('\n');
+  ]).join('\n');
 
   MailApp.sendEmail({
     to:       toEmail,
