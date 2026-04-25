@@ -284,7 +284,7 @@ function ServiceDetailPage({ id }) {
           </div>
         </div>
       </div>
-      <ClosingCTA/>
+      <ClosingCTA serviceId={s.id}/>
     </main>
   );
 }

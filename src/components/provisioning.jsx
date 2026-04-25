@@ -142,6 +142,17 @@ function ProvisioningPageContent() {
   return (
     <main className="page-top">
       <div className="container">
+        {/* Back to service brief */}
+        <Reveal>
+          <a
+            className="mono"
+            onClick={() => setRoute({ page: 'service', id: 'provisioning' })}
+            style={{ display: 'inline-flex', gap: 10, color: 'var(--fg-70)', cursor: 'pointer', marginBottom: 64 }}
+          >
+            {t('provisioningPage.serviceBriefLink')}
+          </a>
+        </Reveal>
+
         {/* Hero — reuses editorial split pattern */}
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 80 }}>
           <div>

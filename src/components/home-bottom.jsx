@@ -383,7 +383,7 @@ function TestimonialsSection() {
 }
 
 // ---------- Final CTA ----------
-function ClosingCTA() {
+function ClosingCTA({ serviceId = null }) {
   const { setRoute } = useApp();
   const { t } = useTranslation();
   return (
@@ -403,7 +403,12 @@ function ClosingCTA() {
         </Reveal>
         <Reveal delay={240}>
           <div className="btn-row" style={{ justifyContent: 'center', marginTop: 48 }}>
-            <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}>{t('cta.btnQuote')} <Icons.Arrow size={14}/></button>
+            <button
+              className="btn btn-primary"
+              onClick={() => setRoute({ page: 'contact', ...(serviceId && { service: serviceId }) })}
+            >
+              {t('cta.btnQuote')} <Icons.Arrow size={14}/>
+            </button>
             <button className="btn btn-ghost" onClick={() => setRoute({ page: 'services' })}>{t('cta.btnServices')}</button>
           </div>
         </Reveal>

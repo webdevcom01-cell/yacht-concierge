@@ -393,6 +393,7 @@
     "emptyOrderTitle": "Нет товаров для просмотра.",
     "orderError": "Ошибка заказа — напишите на orders@yacht-concierge.me",
     "backCatalogue": "← НАЗАД В КАТАЛОГ",
+    "serviceBriefLink": "← ОБЗОР УСЛУГИ",
     "selectMarina": "Выберите...",
     "resultsCount": "{{filtered}} из {{total}} позиций",
     "itemsCount": "ПОЗИЦИИ ({{n}})",

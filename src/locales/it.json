@@ -393,6 +393,7 @@
     "emptyOrderTitle": "Nessun articolo da revisionare.",
     "orderError": "Ordine fallito — scrivere a orders@yacht-concierge.me",
     "backCatalogue": "← TORNA AL CATALOGO",
+    "serviceBriefLink": "← SCHEDA SERVIZIO",
     "selectMarina": "Seleziona...",
     "resultsCount": "{{filtered}} di {{total}} articoli",
     "itemsCount": "ARTICOLI ({{n}})",

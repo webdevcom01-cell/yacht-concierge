@@ -80,6 +80,7 @@ function ProcessPage() {
 // ---------- Contact / Quote multi-step ----------
 function ContactPage() {
   const { t } = useTranslation();
+  const { route: appRoute } = useApp();
   const [step, setStep] = useState(0);
   const [refNum] = useState(() => {
     const now = new Date();
@@ -90,7 +91,8 @@ function ContactPage() {
   const [data, setData] = useState({
     name: '', role: 'captain', yacht: '', loa: '', flag: '',
     eta: '', etd: '', port: 'Porto Montenegro',
-    services: [], notes: '',
+    services: appRoute.service ? [appRoute.service] : [],
+    notes: '',
     email: '', phone: '',
   });
   const [submitting, setSubmitting] = useState(false);
