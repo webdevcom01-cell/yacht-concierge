@@ -316,8 +316,23 @@ function Nav() {
         </div>
       </header>
 
-      {/* Full-screen mobile overlay */}
-      <div className={`nav-overlay${menuOpen ? ' nav-overlay--open' : ''}`} aria-hidden={!menuOpen}>
+      {/* Full-screen mobile overlay — inline styles as primary guard, CSS classes for animation */}
+      <div
+        className={`nav-overlay${menuOpen ? ' nav-overlay--open' : ''}`}
+        aria-hidden={!menuOpen}
+        style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          zIndex: 300,
+          background: 'var(--bg)',
+          transform: menuOpen ? 'translateX(0)' : 'translateX(100%)',
+          transition: 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)',
+          visibility: menuOpen ? 'visible' : 'hidden',
+          pointerEvents: menuOpen ? 'auto' : 'none',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <div className="nav-overlay-inner">
 
           {/* Overlay header */}
