@@ -26,11 +26,13 @@ warnings.filterwarnings('ignore')
 
 # ── Configuration ────────────────────────────────────────────────────────────
 
-XLSX_PATH   = 'FOOD SERVICE 2025.xlsx'   # Put xlsx in project root or adjust path
-IMAGE_CDN   = ''                          # e.g. 'https://cdn.voli.me/products/{code}.jpg'
-IMAGE_ZIP   = ''                          # e.g. 'voli-images.zip'
-OUTPUT_PATH = 'src/lib/products.js'
-MARKUP      = 0.30                        # 30% markup on all Voli prices
+XLSX_PATH      = 'FOOD SERVICE 2025.xlsx'
+IMAGE_CDN      = ''
+IMAGE_ZIP      = ''
+OUTPUT_PATH    = 'src/lib/products.js'
+MARKUP         = 0.30
+MAPPING_FILE   = 'scripts/image-mapping.json'   # from scrape-voli-images.py
+OVERRIDES_FILE = 'scripts/image-overrides.json' # manual corrections
 
 # ── Category mapping ─────────────────────────────────────────────────────────
 
@@ -58,13 +60,31 @@ CAT_MAP = {
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
-def resolve_image(code):
-    """Return image URL/path for a product code, or None if not available."""
+def load_image_map():
+    """Load scraped image mapping + manual overrides. Overrides take priority."""
+    mapping = {}
+    if os.path.exists(MAPPING_FILE):
+        with open(MAPPING_FILE) as f:
+            mapping = json.load(f)
+        print(f'  Loaded {sum(1 for v in mapping.values() if v)} scraped images')
+    overrides = {}
+    if os.path.exists(OVERRIDES_FILE):
+        with open(OVERRIDES_FILE) as f:
+            raw = json.load(f)
+        # Skip comment keys
+        overrides = {k: v for k, v in raw.items() if not k.startswith('_')}
+        if overrides:
+            print(f'  Applied {len(overrides)} manual overrides')
+    mapping.update(overrides)  # overrides win
+    return mapping
+
+def resolve_image(code, image_map):
+    """Return verified image URL for a product code, or None."""
     if IMAGE_CDN and code:
         return IMAGE_CDN.replace('{code}', code)
     if IMAGE_ZIP and code:
-        return f'/products/{code}.jpg'   # served from public/products/
-    return None
+        return f'/products/{code}.jpg'
+    return image_map.get(code) or None
 
 def extract_zip_images(zip_path):
     """Unzip product images into public/products/."""
@@ -86,6 +106,9 @@ def main():
     if IMAGE_ZIP and os.path.exists(IMAGE_ZIP):
         print(f'Extracting images from {IMAGE_ZIP}...')
         extract_zip_images(IMAGE_ZIP)
+
+    print('Loading image mapping...')
+    image_map = load_image_map()
 
     xl = pd.ExcelFile(XLSX_PATH)
     products = []
@@ -140,7 +163,7 @@ def main():
 
             code = str(int(row[code_col])) if code_col and pd.notna(row.get(code_col)) else ''
             unit = str(row[unit_col]).strip() if unit_col and pd.notna(row.get(unit_col)) else 'pc'
-            image = resolve_image(code)
+            image = resolve_image(code, image_map)
 
             entry = {
                 'id':      f'v{code}' if code else f'v{len(products)+1}',
