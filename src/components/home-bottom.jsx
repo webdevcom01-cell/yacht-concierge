@@ -4,6 +4,129 @@ import { HeroEditorial, HeroCinematic, HeroOversized, ServicesPreview, StatsBloc
 
 // Home page bottom — Interactive coast map, Berth availability widget, Testimonial, CTA
 
+// ── Marina illustration — unique palette per port ────────────────────────────
+
+const MARINA_PALETTES = {
+  'herceg-novi': {
+    skyTop: '#2A1A0A', skyMid: '#7A3E1A', skyBot: '#C4622A',
+    seaTop: '#1A4A5A', seaBot: '#0A2A3A',
+    mountains: 'rgba(60,20,5,0.85)',
+    glow: '#E8842A', glowR: 45,
+    accent: 'rgba(232,132,42,0.15)',
+    label: 'GOLDEN HOUR',
+  },
+  'porto-montenegro': {
+    skyTop: '#020E1C', skyMid: '#0a2c4f', skyBot: '#1a3e5e',
+    seaTop: '#16354d', seaBot: '#03162a',
+    mountains: 'rgba(0,0,0,0.5)',
+    glow: '#EFEAE2', glowR: 28,
+    accent: 'rgba(184,150,62,0.1)',
+    label: 'MIDNIGHT',
+  },
+  'kotor': {
+    skyTop: '#0A0F18', skyMid: '#1A2535', skyBot: '#2E3E52',
+    seaTop: '#1A2E3A', seaBot: '#0A1A24',
+    mountains: 'rgba(5,10,20,0.9)',
+    glow: '#B0C4D8', glowR: 22,
+    accent: 'rgba(176,196,216,0.08)',
+    label: 'MORNING MIST',
+  },
+  'budva': {
+    skyTop: '#0A2040', skyMid: '#1A4A7A', skyBot: '#2E7AB0',
+    seaTop: '#1A6A8A', seaBot: '#0A3A50',
+    mountains: 'rgba(10,30,50,0.6)',
+    glow: '#7ACFEA', glowR: 36,
+    accent: 'rgba(122,207,234,0.12)',
+    label: 'AZURE NOON',
+  },
+  'bar': {
+    skyTop: '#080510', skyMid: '#1A0A2E', skyBot: '#2E1A4A',
+    seaTop: '#0A1E2E', seaBot: '#03080F',
+    mountains: 'rgba(15,5,25,0.88)',
+    glow: '#C8A0E0', glowR: 24,
+    accent: 'rgba(200,160,224,0.1)',
+    label: 'PRE-DAWN',
+  },
+};
+
+function MarinaSVG({ id }) {
+  const p = MARINA_PALETTES[id] || MARINA_PALETTES['porto-montenegro'];
+  const isKotor = id === 'kotor';
+  return (
+    <svg
+      viewBox="0 0 400 260"
+      preserveAspectRatio="xMidYMid slice"
+      style={{ width: '100%', height: '100%', display: 'block', transition: 'opacity 0.4s ease' }}
+    >
+      <defs>
+        <linearGradient id={`sky-${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor={p.skyTop}/>
+          <stop offset="55%"  stopColor={p.skyMid}/>
+          <stop offset="100%" stopColor={p.skyBot}/>
+        </linearGradient>
+        <linearGradient id={`sea-${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stopColor={p.seaTop}/>
+          <stop offset="100%" stopColor={p.seaBot}/>
+        </linearGradient>
+        <radialGradient id={`glow-${id}`} cx="75%" cy="38%" r="28%">
+          <stop offset="0%"   stopColor={p.glow} stopOpacity="0.22"/>
+          <stop offset="100%" stopColor={p.glow} stopOpacity="0"/>
+        </radialGradient>
+      </defs>
+
+      {/* Sky */}
+      <rect width="400" height="170" fill={`url(#sky-${id})`}/>
+      {/* Glow */}
+      <rect width="400" height="170" fill={`url(#glow-${id})`}/>
+      {/* Sea */}
+      <rect y="170" width="400" height="90" fill={`url(#sea-${id})`}/>
+      {/* Horizon */}
+      <line x1="0" y1="170" x2="400" y2="170" stroke={p.glow} strokeOpacity="0.18" strokeWidth="0.6"/>
+
+      {/* Mountains — Kotor gets dramatic high peaks */}
+      {isKotor ? (
+        <path d="M0 170 L30 120 L65 150 L100 100 L145 130 L190 108 L240 125 L285 105 L330 122 L370 110 L400 118 L400 170 Z"
+          fill={p.mountains}/>
+      ) : (
+        <path d="M0 170 L45 148 L95 162 L150 140 L220 158 L285 143 L345 160 L400 148 L400 170 Z"
+          fill={p.mountains}/>
+      )}
+
+      {/* Moon / sun orb */}
+      <circle cx="300" cy="65" r={p.glowR} fill={p.glow} fillOpacity="0.07"/>
+      <circle cx="300" cy="65" r={p.glowR * 0.6} fill={p.glow} fillOpacity="0.11"/>
+
+      {/* Stars — small dots */}
+      {[[40,30],[80,18],[130,42],[170,22],[220,38],[260,14],[340,28],[380,44],[60,55],[200,10]].map(([x,y],i) => (
+        <circle key={i} cx={x} cy={y} r="0.8" fill={p.glow} fillOpacity="0.45"/>
+      ))}
+
+      {/* Yacht silhouette */}
+      <g transform="translate(148, 162)">
+        <rect x="0" y="4" width="80" height="4" fill="rgba(239,234,226,0.6)"/>
+        <path d="M0 4 L10 0 L70 0 L80 4 Z" fill="rgba(239,234,226,0.8)"/>
+        <rect x="20" y="-9" width="40" height="9" fill="rgba(239,234,226,0.55)"/>
+        <rect x="28" y="-16" width="24" height="7" fill="rgba(239,234,226,0.45)"/>
+        <line x1="40" y1="-22" x2="40" y2="-16" stroke="rgba(239,234,226,0.4)" strokeWidth="0.6"/>
+        <rect x="2" y="9"  width="76" height="1"   fill="rgba(239,234,226,0.18)"/>
+        <rect x="6" y="11" width="68" height="0.5" fill="rgba(239,234,226,0.12)"/>
+      </g>
+
+      {/* Sea reflection lines */}
+      {[0,1,2,3,4,5,6].map(i => (
+        <line key={i} x1="0" y1={180 + i*11} x2="400" y2={180 + i*11}
+          stroke={p.glow} strokeOpacity="0.05" strokeWidth="0.5"/>
+      ))}
+
+      {/* Corner label */}
+      <text x="12" y="252" fontFamily="monospace" fontSize="8"
+        letterSpacing="2" fill="rgba(239,234,226,0.35)" textAnchor="start">
+        {p.label}
+      </text>
+    </svg>
+  );
+}
+
 function CoastMap() {
   const [selected, setSelected] = useState('porto-montenegro');
   const ports = [
@@ -41,26 +164,33 @@ function CoastMap() {
           </Reveal>
           <div>
             <Reveal delay={120}>
-              <div style={{ border: '1px solid var(--fg-08)', background: 'var(--bg-raised)', padding: 36 }}>
-                <div style={{ marginBottom: 28 }}>
-                  <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 10 }}>{cur.coords}</div>
-                  <h3 className="serif" style={{ fontSize: 36, letterSpacing: '-0.01em' }}>{cur.name}</h3>
+              <div style={{ border: '1px solid var(--fg-08)', background: 'var(--bg-raised)', overflow: 'hidden' }}>
+                {/* Marina illustration */}
+                <div style={{ height: 180, overflow: 'hidden' }}>
+                  <MarinaSVG id={selected} />
                 </div>
-                <div className="rule mb-24" style={{ marginTop: 8 }}/>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 28 }}>
-                  <div>
-                    <div className="mono" style={{ color: 'var(--fg-50)' }}>Total Berths</div>
-                    <div className="serif" style={{ fontSize: 40, marginTop: 6 }}>{cur.berths}</div>
+                {/* Info panel */}
+                <div style={{ padding: '28px 32px 32px' }}>
+                  <div style={{ marginBottom: 20 }}>
+                    <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 8, fontSize: 10 }}>{cur.coords}</div>
+                    <h3 className="serif" style={{ fontSize: 32, letterSpacing: '-0.01em' }}>{cur.name}</h3>
                   </div>
-                  <div>
-                    <div className="mono" style={{ color: 'var(--fg-50)' }}>Availability</div>
-                    <div className="serif" style={{ fontSize: 18, marginTop: 10, color: 'var(--fg-70)', lineHeight: 1.4 }}>Contact us for current berth availability</div>
+                  <div className="rule mb-24" style={{ marginTop: 4 }}/>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
+                    <div>
+                      <div className="mono" style={{ color: 'var(--fg-50)' }}>Total Berths</div>
+                      <div className="serif" style={{ fontSize: 40, marginTop: 6 }}>{cur.berths}</div>
+                    </div>
+                    <div>
+                      <div className="mono" style={{ color: 'var(--fg-50)' }}>Availability</div>
+                      <div className="serif" style={{ fontSize: 16, marginTop: 10, color: 'var(--fg-70)', lineHeight: 1.5 }}>Contact us for current berth availability</div>
+                    </div>
                   </div>
+                  <button className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }}
+                    onClick={() => {/* contact */}}>
+                    Enquire About Availability <Icons.Arrow size={14}/>
+                  </button>
                 </div>
-                <button className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }}
-                  onClick={() => {/* contact */}}>
-                  Enquire About Availability <Icons.Arrow size={14}/>
-                </button>
               </div>
             </Reveal>
           </div>
