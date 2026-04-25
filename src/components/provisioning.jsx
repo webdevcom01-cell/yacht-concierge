@@ -520,12 +520,13 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
   const { cart: items, meta, setMeta, setQty, subtotal } = cart;
   const { t } = useTranslation();
   const setM = (k, v) => setMeta(m => ({ ...m, [k]: v }));
+  const stripAsterisk = s => s.replace(/\s*\*$/, '');
   const requiredFields = [
-    { key: 'yacht',  label: t('provisioningPage.yachtNameLabel').replace(' *','') },
-    { key: 'email',  label: t('provisioningPage.emailLabel').replace(' *','') },
-    { key: 'marina', label: t('provisioningPage.marinaLabel').replace(' *','') },
-    { key: 'berth',  label: t('provisioningPage.berthLabel').replace(' *','') },
-    { key: 'date',   label: t('provisioningPage.dateLabel').replace(' *','') },
+    { key: 'yacht',  label: stripAsterisk(t('provisioningPage.yachtNameLabel')) },
+    { key: 'email',  label: stripAsterisk(t('provisioningPage.emailLabel')) },
+    { key: 'marina', label: stripAsterisk(t('provisioningPage.marinaLabel')) },
+    { key: 'berth',  label: stripAsterisk(t('provisioningPage.berthLabel')) },
+    { key: 'date',   label: stripAsterisk(t('provisioningPage.dateLabel')) },
   ];
   const missingFields = requiredFields.filter(f => !meta[f.key]).map(f => f.label);
   const canCheckout = items.length > 0 && missingFields.length === 0;
