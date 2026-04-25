@@ -5,9 +5,10 @@
  *   Execute as:       Me
  *   Who has access:   Anyone
  *
- * This script receives POST requests from the website contact form
+ * This script receives GET requests from the website contact form
  * and provisioning shop, writes rows to the appropriate Google Sheet
- * tab, and sends an email notification to the operations inbox.
+ * tab, sends an email notification to the operations inbox, and
+ * sends an auto-reply confirmation to the client.
  *
  * SETUP:
  * 1. Open your Google Sheet: "Yacht Concierge — Submissions"
@@ -24,7 +25,8 @@
 
 // ── Configuration ────────────────────────────────────────────────────────────
 
-var NOTIFY_EMAIL = 'info@yacht-concierge.com';
+var NOTIFY_EMAIL = 'info@yacht-concierge.me';
+var REPLY_FROM   = 'Yacht Concierge Montenegro';
 
 var SHEET_HEADERS = {
   'Quote Requests': [
@@ -33,7 +35,7 @@ var SHEET_HEADERS = {
   ],
   'Provisioning Orders': [
     'Timestamp', 'Ref', 'Yacht', 'Marina', 'Berth',
-    'Date', 'Time', 'Notes', 'Items', 'Item Count', 'Subtotal', 'Total'
+    'Date', 'Time', 'Email', 'Notes', 'Items', 'Item Count', 'Subtotal', 'Total'
   ]
 };
 
@@ -44,26 +46,18 @@ function doPost(e) {
   output.setMimeType(ContentService.MimeType.JSON);
 
   try {
-    // Parse JSON body (sent as text/plain to avoid CORS preflight)
     var data = JSON.parse(e.postData.contents);
-
     var sheetName = data._sheet || 'Quote Requests';
     var subject   = data._subject || 'New Submission — Yacht Concierge';
-
-    // Remove metadata fields before writing to sheet
     delete data._sheet;
     delete data._subject;
 
-    // Write row to Google Sheet
     writeRow(sheetName, data);
-
-    // Send email notification
     sendNotification(subject, data);
+    sendAutoReply(sheetName, data);
 
     output.setContent(JSON.stringify({ result: 'ok' }));
-
   } catch (err) {
-    // Log error for debugging (visible in Apps Script → Executions)
     console.error('Submission error: ' + err.toString());
     output.setContent(JSON.stringify({ result: 'error', message: err.toString() }));
   }
@@ -71,9 +65,6 @@ function doPost(e) {
   return output;
 }
 
-// Handles both form submissions (via ?payload=...) and health-check GETs.
-// Using GET because GAS internally redirects POST requests, which breaks
-// the no-cors fetch pattern from browsers.
 function doGet(e) {
   var output = ContentService.createTextOutput();
   output.setMimeType(ContentService.MimeType.JSON);
@@ -85,11 +76,13 @@ function doGet(e) {
       var subject   = data._subject || 'New Submission — Yacht Concierge';
       delete data._sheet;
       delete data._subject;
+
       writeRow(sheetName, data);
       sendNotification(subject, data);
+      sendAutoReply(sheetName, data);
+
       output.setContent(JSON.stringify({ result: 'ok' }));
     } else {
-      // Health check
       output.setContent(JSON.stringify({ status: 'ok', service: 'Yacht Concierge API' }));
     }
   } catch (err) {
@@ -110,7 +103,6 @@ function writeRow(sheetName, data) {
     sheet = ss.insertSheet(sheetName);
   }
 
-  // Add headers if sheet is empty (handles both new sheets and manually-created empty tabs)
   if (sheet.getLastColumn() === 0) {
     var hdrs = SHEET_HEADERS[sheetName] || ['Timestamp'].concat(Object.keys(data));
     sheet.getRange(1, 1, 1, hdrs.length).setValues([hdrs]);
@@ -121,17 +113,14 @@ function writeRow(sheetName, data) {
       .setFontWeight('bold');
   }
 
-  var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var headers   = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
   var timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
 
-  // Build row in header order, fallback to '—' for missing fields
   var row = headers.map(function(h) {
     if (h === 'Timestamp') return timestamp;
     var key = h.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
-    // Try exact match first, then normalised key
-    if (data[h] !== undefined) return data[h];
+    if (data[h]   !== undefined) return data[h];
     if (data[key] !== undefined) return data[key];
-    // Try common key variations
     var variations = [h, h.toLowerCase(), key];
     for (var i = 0; i < variations.length; i++) {
       if (data[variations[i]] !== undefined) return data[variations[i]];
@@ -142,7 +131,7 @@ function writeRow(sheetName, data) {
   sheet.appendRow(row);
 }
 
-// ── Email notification ────────────────────────────────────────────────────────
+// ── Internal notification ─────────────────────────────────────────────────────
 
 function sendNotification(subject, data) {
   var lines = Object.entries(data).map(function(pair) {
@@ -165,5 +154,105 @@ function sendNotification(subject, data) {
     to:      NOTIFY_EMAIL,
     subject: subject,
     body:    body,
+  });
+}
+
+// ── Auto-reply to client ──────────────────────────────────────────────────────
+
+function sendAutoReply(sheetName, data) {
+  var clientEmail = data.email || data.Email;
+  if (!clientEmail || clientEmail === '—') return; // no email, skip
+
+  if (sheetName === 'Quote Requests') {
+    sendQuoteAutoReply(data, clientEmail);
+  } else if (sheetName === 'Provisioning Orders') {
+    sendOrderAutoReply(data, clientEmail);
+  }
+}
+
+function sendQuoteAutoReply(data, toEmail) {
+  var ref  = data.ref  || 'N/A';
+  var name = data.name || 'Captain';
+
+  var subject = 'Enquiry received · Ref. ' + ref + ' — Yacht Concierge Montenegro';
+
+  var body = [
+    'Dear ' + name + ',',
+    '',
+    'We have received your enquiry and a coordinator has been assigned to your file.',
+    '',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    'REFERENCE      ' + ref,
+    'VESSEL         ' + (data.yacht || '—'),
+    'PORT           ' + (data.port  || '—'),
+    'ETA            ' + (data.eta   || '—'),
+    'SERVICES       ' + (data.services || '—'),
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    '',
+    'You will receive a full service proposal within 24 hours.',
+    '',
+    'For urgent matters, reach us directly:',
+    '  WhatsApp / Phone: +382 67 144 555',
+    '  Email: info@yacht-concierge.me',
+    '',
+    'Fair winds,',
+    'Iva Erceg',
+    'Operations Director · Yacht Concierge Montenegro',
+    'Pomorska ulica, Zgrada Baia · Porto Montenegro · Tivat 85320',
+    'yacht-concierge.me',
+  ].join('\n');
+
+  MailApp.sendEmail({
+    to:       toEmail,
+    subject:  subject,
+    body:     body,
+    name:     REPLY_FROM,
+    replyTo:  NOTIFY_EMAIL,
+  });
+}
+
+function sendOrderAutoReply(data, toEmail) {
+  var ref = data.ref || 'N/A';
+
+  var subject = 'Order Confirmation №' + ref + ' — Yacht Concierge Montenegro';
+
+  var body = [
+    'Order confirmed.',
+    '',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    'ORDER №        ' + ref,
+    'VESSEL         ' + (data.yacht  || '—'),
+    'MARINA         ' + (data.marina || '—'),
+    'BERTH          ' + (data.berth  || '—'),
+    'DELIVERY DATE  ' + (data.date   || '—'),
+    'DELIVERY TIME  ' + (data.time   || '—'),
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    '',
+    'ITEMS',
+    (data.items || '—').split(' | ').join('\n'),
+    '',
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    'SUBTOTAL       ' + (data.subtotal || '—'),
+    'TOTAL          ' + (data.total    || '—'),
+    '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+    '',
+    'Your coordinator will confirm the delivery window within two operational hours.',
+    'VAT will be itemised on the final invoice.',
+    '',
+    'For changes or urgent queries:',
+    '  WhatsApp / Phone: +382 67 144 555',
+    '  Email: orders@yacht-concierge.me',
+    '',
+    'Yacht Concierge Montenegro',
+    'Pomorska ulica, Zgrada Baia · Porto Montenegro · Tivat 85320',
+    'yacht-concierge.me',
+  ].join('\n');
+
+  MailApp.sendEmail({
+    to:       toEmail,
+    subject:  subject,
+    body:     body,
+    name:     REPLY_FROM,
+    replyTo:  'orders@yacht-concierge.me',
   });
 }

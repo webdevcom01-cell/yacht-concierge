@@ -45,6 +45,7 @@ export async function submitOrder(cartItems, meta, refNum, total) {
     berth:      meta.berth || '—',
     date:       meta.date || '—',
     time:       meta.time || '—',
+    email:      meta.email || '—',
     notes:      meta.notes || '—',
     items:      cartItems.map(it =>
                   `${it.name} x${it.qty} = €${(it.price * it.qty).toFixed(2)}${it.taxFree ? ' [TF]' : ''}`

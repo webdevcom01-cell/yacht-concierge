@@ -371,7 +371,7 @@ function ProductCard({ p, onAdd }) {
 function CartDrawer({ cart, open, onClose, onCheckout }) {
   const { cart: items, meta, setMeta, setQty, subtotal } = cart;
   const setM = (k, v) => setMeta(m => ({ ...m, [k]: v }));
-  const canCheckout = items.length > 0 && meta.yacht && meta.marina && meta.berth && meta.date;
+  const canCheckout = items.length > 0 && meta.yacht && meta.marina && meta.berth && meta.date && meta.email;
 
   return (
     <>
@@ -431,6 +431,10 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
                     <label className="field-label">Yacht Name *</label>
                     <input className="field-input" value={meta.yacht || ''} onChange={e => setM('yacht', e.target.value)} placeholder="M/Y Atlas"/>
                   </div>
+                  <div className="field">
+                    <label className="field-label">Confirmation Email *</label>
+                    <input className="field-input" type="email" value={meta.email || ''} onChange={e => setM('email', e.target.value)} placeholder="captain@vessel.com"/>
+                  </div>
                   <div className="grid-2" style={{ gap: 16 }}>
                     <div className="field">
                       <label className="field-label">Marina *</label>
@@ -481,7 +485,7 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
             >
               Proceed to Order Summary <Icons.Arrow size={14}/>
             </button>
-            {!canCheckout && <div className="mono" style={{ color: 'var(--fg-50)', marginTop: 12, textAlign: 'center' }}>* YACHT, MARINA, BERTH & DATE REQUIRED</div>}
+            {!canCheckout && <div className="mono" style={{ color: 'var(--fg-50)', marginTop: 12, textAlign: 'center' }}>* YACHT, MARINA, BERTH, DATE & EMAIL REQUIRED</div>}
           </div>
         )}
       </aside>
@@ -574,6 +578,7 @@ function OrderSummaryPageContent() {
                 <Row k="Berth" v={cart.meta.berth}/>
                 <Row k="Date" v={cart.meta.date}/>
                 {cart.meta.time && <Row k="Time" v={cart.meta.time}/>}
+                <Row k="Email" v={cart.meta.email}/>
                 {cart.meta.notes && <Row k="Notes" v={cart.meta.notes}/>}
               </dl>
               <div className="rule" style={{ margin: '28px 0' }}/>
