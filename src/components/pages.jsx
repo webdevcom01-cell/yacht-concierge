@@ -513,7 +513,7 @@ function AboutPage() {
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
               >
                 Visit Montenegro Charter
-                <Icons.ArrowRight size={15}/>
+                <Icons.Arrow size={15}/>
               </a>
             </div>
           </div>
