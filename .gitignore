@@ -5,3 +5,7 @@ dist
 .env
 .env.local
 .claude/
+*.xlsx
+.venv/
+scripts/test-voli.py
+scripts/voli-test-response.html
