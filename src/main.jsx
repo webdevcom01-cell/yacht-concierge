@@ -44,18 +44,70 @@ const FONT_MAP = {
   garamond: "'EB Garamond', Georgia, serif",
 };
 
+// ── URL ↔ Route helpers ──────────────────────────────────────────────────────
+
+const SERVICE_IDS = ['berth', 'customs', 'provisioning', 'laundry', 'floristry', 'maintenance'];
+
+function routeToPath(r) {
+  if (!r) return '/';
+  switch (r.page) {
+    case 'home':          return '/';
+    case 'services':      return '/services';
+    case 'service':       return `/services/${r.id}`;
+    case 'process':       return '/process';
+    case 'contact':       return '/contact';
+    case 'fleet':         return '/fleet';
+    case 'about':         return '/about';
+    case 'provisioning':  return '/provisioning';
+    case 'order-summary': return '/order-summary';
+    case 'legal':         return '/legal';
+    case 'privacy':       return '/privacy';
+    case 'terms':         return '/terms';
+    default:              return '/';
+  }
+}
+
+function pathToRoute(path) {
+  const p = path.replace(/\/$/, '') || '/';
+  if (p === '/' || p === '')              return { page: 'home' };
+  if (p === '/services')                  return { page: 'services' };
+  if (p.startsWith('/services/')) {
+    const id = p.slice('/services/'.length);
+    if (SERVICE_IDS.includes(id))         return { page: 'service', id };
+  }
+  if (p === '/process')                   return { page: 'process' };
+  if (p === '/contact')                   return { page: 'contact' };
+  if (p === '/fleet')                     return { page: 'fleet' };
+  if (p === '/about')                     return { page: 'about' };
+  if (p === '/provisioning')              return { page: 'provisioning' };
+  if (p === '/order-summary')             return { page: 'order-summary' };
+  if (p === '/legal')                     return { page: 'legal' };
+  if (p === '/privacy')                   return { page: 'privacy' };
+  if (p === '/terms')                     return { page: 'terms' };
+  return { page: '404' };
+}
+
+// ── App ──────────────────────────────────────────────────────────────────────
+
 function App() {
-  const [route, setRouteState] = useState(() => {
-    try {
-      const saved = JSON.parse(localStorage.getItem('yc-route') || 'null');
-      return saved || { page: 'home' };
-    } catch { return { page: 'home' }; }
-  });
+  const [route, setRouteState] = useState(() => pathToRoute(window.location.pathname));
+
   const setRoute = (r) => {
+    const path = routeToPath(r);
+    window.history.pushState(r, '', path);
     setRouteState(r);
-    localStorage.setItem('yc-route', JSON.stringify(r));
     window.scrollTo({ top: 0, behavior: 'instant' });
   };
+
+  // Handle browser back / forward
+  useEffect(() => {
+    const onPop = (e) => {
+      setRouteState(e.state || pathToRoute(window.location.pathname));
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
 
   const [tweaks, setTweaks] = useState(TWEAKS);
   const [tweaksOpen, setTweaksOpen] = useState(false);
@@ -108,7 +160,7 @@ function App() {
   else if (route.page === 'legal')    Page = <LegalNoticePage/>;
   else if (route.page === 'privacy')  Page = <PrivacyPage/>;
   else if (route.page === 'terms')    Page = <TermsPage/>;
-  else Page = <NotFoundPage/>;
+  else                                Page = <NotFoundPage/>;
 
   const labelMap = {
     home: '01 Home', services: '02 Services', service: '03 Service Detail',

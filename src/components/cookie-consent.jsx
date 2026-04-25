@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useApp } from './shared';
 
 const GA_ID = 'G-SK94J53BXJ';
 const CONSENT_KEY = 'yc-cookie-consent'; // 'accepted' | 'declined'
@@ -26,6 +27,7 @@ function loadGA4() {
 
 export function CookieConsent() {
   const { t } = useTranslation();
+  const { setRoute } = useApp();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -81,7 +83,7 @@ export function CookieConsent() {
         {t('cookie.body')}{' '}
         <a
           href="/privacy"
-          onClick={(e) => { e.preventDefault(); window.location.hash = ''; }}
+          onClick={(e) => { e.preventDefault(); setRoute({ page: 'privacy' }); }}
           style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'underline', textUnderlineOffset: 3 }}
         >
           Privacy Policy
