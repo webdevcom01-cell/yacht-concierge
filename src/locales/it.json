@@ -321,7 +321,11 @@
     "protocolTitle": "Come viene erogato questo servizio.",
     "ratesLabel": "¶ TARIFFE",
     "adjacentTitle": "Servizi correlati.",
-    "adjacentLabel": "CORRELATI"
+    "adjacentLabel": "CORRELATI",
+    "provShopLabel": "SHOP APPROVVIGIONAMENTO",
+    "provShopTitle": "Sfoglia il catalogo completo.",
+    "provShopBody": "851 prodotti da Tivat, Kotor e dalla flotta adriatica. Aggiungi al carrello — consegniamo all'ormeggio.",
+    "provShopBtn": "APRI CATALOGO"
   },
   "provisioningPage": {
     "eyebrow": "↳ SHOP APPROVVIGIONAMENTO",

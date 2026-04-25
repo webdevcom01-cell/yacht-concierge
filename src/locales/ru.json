@@ -321,7 +321,11 @@
     "protocolTitle": "Как оказывается данная услуга.",
     "ratesLabel": "¶ ТАРИФЫ",
     "adjacentTitle": "Смежные услуги.",
-    "adjacentLabel": "СВЯЗАННЫЕ"
+    "adjacentLabel": "СВЯЗАННЫЕ",
+    "provShopLabel": "МАГАЗИН ПРОВИЗИИ",
+    "provShopTitle": "Просмотреть полный каталог.",
+    "provShopBody": "851 позиция из Тивата, Котора и Адриатического флота. Добавьте в корзину — доставим на борт.",
+    "provShopBtn": "ОТКРЫТЬ КАТАЛОГ"
   },
   "provisioningPage": {
     "eyebrow": "↳ ПРОВИЗИОННЫЙ КАТАЛОГ",

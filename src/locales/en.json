@@ -321,7 +321,11 @@
     "protocolTitle": "How this service is delivered.",
     "ratesLabel": "¶ RATES",
     "adjacentTitle": "Adjacent services.",
-    "adjacentLabel": "RELATED"
+    "adjacentLabel": "RELATED",
+    "provShopLabel": "PROVISIONING SHOP",
+    "provShopTitle": "Browse the full catalogue.",
+    "provShopBody": "851 items sourced from Tivat, Kotor, and the Adriatic fleet. Add to cart and we deliver to your berth.",
+    "provShopBtn": "OPEN CATALOGUE"
   },
   "provisioningPage": {
     "eyebrow": "↳ PROVISIONING SHOP",
