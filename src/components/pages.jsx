@@ -265,7 +265,7 @@ function ContactPage() {
                                 <span className="mono" style={{ color: 'var(--fg-50)' }}>{s.num}</span>
                                 <IconC size={18} stroke={0.9}/>
                               </div>
-                              <div className="serif" style={{ fontSize: 20, marginTop: 8 }}>{s.title}</div>
+                              <div className="serif" style={{ fontSize: 20, marginTop: 8 }}>{t(`services.${s.id}_title`)}</div>
                             </div>
                           </div>
                         );
@@ -273,7 +273,7 @@ function ContactPage() {
                     </div>
                     <div className="field mt-32">
                       <label className="field-label">{t('contactPage.fieldNotes')}</label>
-                      <textarea className="field-textarea" value={data.notes} onChange={e => update('notes', e.target.value)} placeholder="Guest dietary notes, A/V issues, arrival protocol, anything else."/>
+                      <textarea className="field-textarea" value={data.notes} onChange={e => update('notes', e.target.value)} placeholder={t('contactPage.notesPlaceholder')}/>
                     </div>
                   </StepWrap>
                 )}
@@ -292,7 +292,7 @@ function ContactPage() {
                     <div style={{ marginTop: 48, padding: 24, background: 'var(--bg-warm)', border: '1px solid var(--fg-08)' }}>
                       <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 12 }}>{t('contactPage.briefSummary')}</div>
                       <div style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--fg-70)' }}>
-                        <strong style={{ color: 'var(--fg)' }}>{data.yacht || '—'}</strong>{data.loa && ` · ${data.loa}m`}{data.flag && ` · ${data.flag}`} {t('contactPage.arriving')} <strong style={{ color: 'var(--fg)' }}>{data.port}</strong> on <strong style={{ color: 'var(--fg)' }}>{data.eta || '—'}</strong>{data.etd && ` ${t('contactPage.until')} ${data.etd}`}. {t('contactPage.requesting')} <strong style={{ color: 'var(--fg)' }}>{data.services.length}</strong> {data.services.length === 1 ? t('contactPage.service') : t('contactPage.services')}.
+                        <strong style={{ color: 'var(--fg)' }}>{data.yacht || '—'}</strong>{data.loa && ` · ${data.loa}m`}{data.flag && ` · ${data.flag}`} {t('contactPage.arriving')} <strong style={{ color: 'var(--fg)' }}>{data.port}</strong> {t('contactPage.on')} <strong style={{ color: 'var(--fg)' }}>{data.eta || '—'}</strong>{data.etd && ` ${t('contactPage.until')} ${data.etd}`}. {t('contactPage.requesting')} <strong style={{ color: 'var(--fg)' }}>{data.services.length}</strong> {data.services.length === 1 ? t('contactPage.service') : t('contactPage.services')}.
                       </div>
                     </div>
                   </StepWrap>
