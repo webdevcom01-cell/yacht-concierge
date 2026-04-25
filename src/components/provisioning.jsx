@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useCallback, createContext, useContext } from 'react';
 import { useApp, Icons, Reveal } from './shared';
 import { ClosingCTA } from './home-bottom';
 import { submitOrder } from '../lib/submit';
@@ -99,6 +99,12 @@ function CartProvider({ children }) {
     return ex ? c.map(x => x.id === p.id ? { ...x, qty: x.qty + 1 } : x) : [...c, { ...p, qty: 1 }];
   });
   const setQty = (id, q) => setCart(c => q <= 0 ? c.filter(x => x.id !== id) : c.map(x => x.id === id ? { ...x, qty: q } : x));
+  // clearItems — keeps vessel meta (yacht, marina, email etc.) for repeat orders
+  const clearItems = () => {
+    setCart([]);
+    localStorage.removeItem('yc-cart');
+  };
+  // clear — full reset including delivery details
   const clear = () => {
     setCart([]);
     setMeta({});
@@ -109,7 +115,7 @@ function CartProvider({ children }) {
   const count = cart.reduce((s, x) => s + x.qty, 0);
 
   return (
-    <CartContext.Provider value={{ cart, meta, setMeta, add, setQty, clear, subtotal, count }}>
+    <CartContext.Provider value={{ cart, meta, setMeta, add, setQty, clear, clearItems, subtotal, count }}>
       {children}
     </CartContext.Provider>
   );
@@ -126,15 +132,11 @@ function ProvisioningPageContent() {
   const [cartOpen, setCartOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [cat, setCat] = useState('all');
-  const [priceMax, setPriceMax] = useState(250);
+  const [priceMax, setPriceMax] = useState(350);
   const [taxFreeOnly, setTaxFreeOnly] = useState(false);
   const [sameDayOnly, setSameDayOnly] = useState(false);
   const [diet, setDiet] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [filtersMobile, setFiltersMobile] = useState(false);
-
-  // TODO: replace with Voli API fetch — GET /products?marina=porto-montenegro
-  useEffect(() => { const t = setTimeout(() => setLoading(false), 600); return () => clearTimeout(t); }, []);
 
   const toggleDiet = (d) => setDiet(xs => xs.includes(d) ? xs.filter(x => x !== d) : [...xs, d]);
 
@@ -173,17 +175,33 @@ function ProvisioningPageContent() {
               <span className="mono" style={{ color: 'var(--fg-50)' }}>↳</span>
               <input
                 className="field-input"
-                style={{ border: 'none', fontSize: 18, fontFamily: 'var(--serif)', padding: '4px 0' }}
+                style={{ border: 'none', fontSize: 18, fontFamily: 'var(--serif)', padding: '4px 0', flex: 1 }}
                 placeholder="Search products for your yacht..."
                 value={query}
                 onChange={e => setQuery(e.target.value)}
               />
+              {query && (
+                <button
+                  onClick={() => setQuery('')}
+                  className="mono"
+                  style={{ color: 'var(--fg-50)', fontSize: 11, padding: '2px 8px', border: '1px solid var(--fg-15)', letterSpacing: '0.1em' }}
+                >
+                  × CLEAR
+                </button>
+              )}
             </div>
             <div className="mono" style={{ color: 'var(--fg-50)', whiteSpace: 'nowrap' }}>
-              {loading ? 'LOADING...' : `${filtered.length} of ${PRODUCTS.length} ITEMS`}
+              {`${filtered.length} of ${PRODUCTS.length} ITEMS`}
             </div>
-            <button className="btn btn-ghost" onClick={() => setCartOpen(true)} style={{ position: 'relative' }}>
-              Cart ({cart.count}) <Icons.Arrow size={12}/>
+            <button
+              className="btn btn-ghost"
+              onClick={() => setCartOpen(true)}
+              style={{ position: 'relative' }}
+            >
+              {cart.count > 0
+                ? <><span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 18, height: 18, background: 'var(--accent)', color: 'var(--bg)', borderRadius: '50%', fontSize: 10, fontWeight: 600, marginRight: 6 }}>{cart.count}</span>€ {cart.subtotal.toFixed(2)}</>
+                : 'Cart'
+              } <Icons.Arrow size={12}/>
             </button>
           </div>
         </Reveal>
@@ -224,7 +242,7 @@ function ProvisioningPageContent() {
 
             <FilterBlock label="Price Maximum">
               <div className="serif" style={{ fontSize: 24, marginBottom: 8 }}>€ {priceMax}</div>
-              <input type="range" min="5" max="250" step="5" value={priceMax}
+              <input type="range" min="5" max="350" step="5" value={priceMax}
                 onChange={e => setPriceMax(Number(e.target.value))}
                 style={{ width: '100%', accentColor: 'var(--accent)' }}/>
             </FilterBlock>
@@ -249,11 +267,7 @@ function ProvisioningPageContent() {
 
           {/* Product grid */}
           <div>
-            {loading ? (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 1, background: 'var(--fg-08)', border: '1px solid var(--fg-08)' }}>
-                {[...Array(9)].map((_, i) => <ProductSkeleton key={i}/>)}
-              </div>
-            ) : filtered.length === 0 ? (
+            {filtered.length === 0 ? (
               <div style={{ padding: '96px 32px', textAlign: 'center', border: '1px dashed var(--fg-15)' }}>
                 <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>↳ NO RESULTS</div>
                 <div className="serif" style={{ fontSize: 28, marginBottom: 12 }}>No items match this brief.</div>
@@ -261,21 +275,33 @@ function ProvisioningPageContent() {
               </div>
             ) : (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 1, background: 'var(--fg-08)', border: '1px solid var(--fg-08)' }}>
-                {filtered.map(p => <ProductCard key={p.id} p={p} onAdd={() => { cart.add(p); setCartOpen(true); }}/>)}
+                {filtered.map(p => {
+                  const inCartQty = cart.cart.find(x => x.id === p.id)?.qty || 0;
+                  return (
+                    <ProductCard
+                      key={p.id}
+                      p={p}
+                      inCartQty={inCartQty}
+                      onAdd={() => cart.add(p)}
+                      onSetQty={(q) => cart.setQty(p.id, q)}
+                    />
+                  );
+                })}
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* Floating cart button */}
+      {/* Floating cart button — positioned above WhatsApp button */}
       {cart.count > 0 && !cartOpen && (
         <button
           onClick={() => setCartOpen(true)}
           className="btn btn-primary"
-          style={{ position: 'fixed', bottom: 32, right: 32, zIndex: 90, boxShadow: '0 12px 40px rgba(0,23,48,0.25)' }}
+          style={{ position: 'fixed', bottom: 104, right: 28, zIndex: 90, boxShadow: '0 12px 40px rgba(0,23,48,0.25)' }}
         >
-          Review Cart · {cart.count} · € {cart.subtotal.toFixed(2)}
+          <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, background: 'rgba(255,255,255,0.25)', borderRadius: '50%', fontSize: 11, fontWeight: 700, marginRight: 8 }}>{cart.count}</span>
+          € {cart.subtotal.toFixed(2)} <Icons.Arrow size={13}/>
         </button>
       )}
 
@@ -328,14 +354,41 @@ function ProductSkeleton() {
   );
 }
 
-function ProductCard({ p, onAdd }) {
+function ProductCard({ p, inCartQty, onAdd, onSetQty }) {
+  const [flash, setFlash] = useState(false);
+
+  const handleAdd = () => {
+    onAdd();
+    setFlash(true);
+    setTimeout(() => setFlash(false), 1500);
+  };
+
+  const inCart = inCartQty > 0;
+
   return (
     <div style={{
       background: 'var(--bg-raised)',
       display: 'flex', flexDirection: 'column',
-      transition: 'transform 0.3s var(--ease)',
+      outline: inCart ? '2px solid var(--accent)' : 'none',
+      outlineOffset: -2,
+      transition: 'outline 0.2s var(--ease)',
+      position: 'relative',
     }}>
+      {/* In-cart qty badge */}
+      {inCart && (
+        <div style={{
+          position: 'absolute', top: 10, right: 10, zIndex: 2,
+          background: 'var(--accent)', color: 'var(--bg)',
+          width: 24, height: 24, borderRadius: '50%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: 'var(--mono)', fontSize: 11, fontWeight: 700,
+        }}>
+          {inCartQty}
+        </div>
+      )}
+
       <ProductImage p={p}/>
+
       <div style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: 10 }}>
           <h4 className="serif" style={{ fontSize: 18, lineHeight: 1.15, letterSpacing: '-0.01em', margin: 0 }}>{p.name}</h4>
@@ -352,16 +405,42 @@ function ProductCard({ p, onAdd }) {
           </div>
           {p.sameDay && <span className="mono" style={{ color: 'var(--fg-50)', fontSize: 9 }}>SAME-DAY</span>}
         </div>
-        <button onClick={onAdd} className="mono" style={{
-          marginTop: 10, padding: '10px 12px', border: '1px solid var(--fg-15)',
-          textAlign: 'center', cursor: 'pointer', transition: 'all 0.3s var(--ease)',
-          fontSize: 10, letterSpacing: '0.18em',
-        }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'var(--fg)'; e.currentTarget.style.color = 'var(--bg)'; e.currentTarget.style.borderColor = 'var(--fg)'; }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--fg)'; e.currentTarget.style.borderColor = 'var(--fg-15)'; }}
-        >
-          Add to Order →
-        </button>
+
+        {inCart ? (
+          /* Qty controls when item is already in cart */
+          <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', border: '1px solid var(--accent)' }}>
+            <button
+              onClick={() => onSetQty(inCartQty - 1)}
+              style={{ flex: 1, padding: '9px 0', fontFamily: 'var(--mono)', fontSize: 16, color: 'var(--accent)', borderRight: '1px solid var(--accent)' }}
+            >−</button>
+            <span style={{ flex: 1, textAlign: 'center', fontFamily: 'var(--mono)', fontSize: 13, color: 'var(--accent)', fontWeight: 600 }}>
+              {inCartQty}
+            </span>
+            <button
+              onClick={handleAdd}
+              style={{ flex: 1, padding: '9px 0', fontFamily: 'var(--mono)', fontSize: 16, color: 'var(--accent)', borderLeft: '1px solid var(--accent)' }}
+            >+</button>
+          </div>
+        ) : (
+          /* Add button when not in cart */
+          <button
+            onClick={handleAdd}
+            className="mono"
+            style={{
+              marginTop: 10, padding: '10px 12px',
+              border: `1px solid ${flash ? 'var(--accent)' : 'var(--fg-15)'}`,
+              background: flash ? 'var(--accent-soft)' : 'transparent',
+              color: flash ? 'var(--accent)' : 'var(--fg)',
+              textAlign: 'center', cursor: 'pointer',
+              transition: 'all 0.3s var(--ease)',
+              fontSize: 10, letterSpacing: '0.18em',
+            }}
+            onMouseEnter={e => { if (!flash) { e.currentTarget.style.background = 'var(--fg)'; e.currentTarget.style.color = 'var(--bg)'; e.currentTarget.style.borderColor = 'var(--fg)'; }}}
+            onMouseLeave={e => { if (!flash) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--fg)'; e.currentTarget.style.borderColor = 'var(--fg-15)'; }}}
+          >
+            {flash ? '✓ ADDED' : 'Add to Order →'}
+          </button>
+        )}
       </div>
     </div>
   );
@@ -551,7 +630,7 @@ function OrderSummaryPageContent() {
             <p className="lede" style={{ margin: '20px auto 0', maxWidth: 440 }}>
               Reference №{refNum}. Your coordinator will confirm delivery within two operational hours.
             </p>
-            <button onClick={() => { cart.clear(); setRoute({ page: 'provisioning' }); }} className="btn btn-ghost mt-48">Return to catalogue</button>
+            <button onClick={() => { cart.clearItems(); setRoute({ page: 'provisioning' }); }} className="btn btn-ghost mt-48">Return to catalogue</button>
           </div>
         ) : (
           <div className="grid-order-summary" style={{ gap: 56, alignItems: 'start' }}>
