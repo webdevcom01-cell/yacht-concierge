@@ -219,11 +219,18 @@ function LangSwitcher() {
 }
 
 // ---------- Nav ----------
+const WA_SVG = (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+  </svg>
+);
+
 function Nav() {
   const { route, setRoute, theme, setTheme, navStyle } = useApp();
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
@@ -231,89 +238,122 @@ function Nav() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Lock body scroll when overlay is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
+  // Close menu on route change
+  useEffect(() => { setMenuOpen(false); }, [route]);
+
   const links = [
-    { id: 'home',         label: t('nav.home') },
     { id: 'services',     label: t('nav.services') },
     { id: 'provisioning', label: t('nav.provisioning') },
     { id: 'process',      label: t('nav.process') },
     { id: 'fleet',        label: t('nav.fleet') },
     { id: 'about',        label: t('nav.about') },
-    { id: 'contact',      label: t('nav.contact') },
   ];
 
   return (
-    <header className="nav" data-style={navStyle} data-scrolled={scrolled}>
-      <div className="nav-inner">
-        <div style={{ justifySelf: 'start' }}>
-          <Logo onClick={() => { setRoute({ page: 'home' }); setMenuOpen(false); }} />
-        </div>
-        <nav>
-          <ul className="nav-links">
-            {links.map(l => (
-              <li key={l.id}>
-                <a
-                  className="nav-link"
-                  data-active={route.page === l.id}
-                  onClick={() => setRoute({ page: l.id })}
-                >{l.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <div className="nav-right">
-          <LangSwitcher />
-          <button
-            className="nav-link"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            aria-label="Toggle theme"
-            style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 10px' }}
-          >
-            {theme === 'dark' ? <Icons.Sun size={14} /> : <Icons.Moon size={14} />}
-          </button>
-          <a
-            href={WA_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="nav-link wa-nav-link"
-            aria-label="Chat on WhatsApp"
-            style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '6px 10px', textDecoration: 'none', color: 'inherit', transition: 'color 0.2s' }}
-            onMouseEnter={e => e.currentTarget.style.color = '#25D366'}
-            onMouseLeave={e => e.currentTarget.style.color = ''}
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-            </svg>
-            <span className="mono" style={{ fontSize: 10, letterSpacing: '0.1em' }}>WHATSAPP</span>
-          </a>
-          <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}>
-            {t('nav.requestQuote')} <Icons.Arrow size={14} />
-          </button>
-          <button
-            className="nav-menu-btn"
-            onClick={() => setMenuOpen(v => !v)}
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          >
-            {menuOpen ? <Icons.Close size={20} /> : <Icons.Menu size={20} />}
-          </button>
-        </div>
-      </div>
-      {menuOpen && (
-        <div className="nav-mobile-menu">
-          {links.map(l => (
-            <a
-              key={l.id}
-              className="nav-mobile-link"
-              data-active={route.page === l.id}
-              onClick={() => { setRoute({ page: l.id }); setMenuOpen(false); }}
+    <>
+      <header className="nav" data-style={navStyle} data-scrolled={scrolled}>
+        <div className="nav-inner">
+          {/* Left — Logo */}
+          <div style={{ justifySelf: 'start' }}>
+            <Logo onClick={() => setRoute({ page: 'home' })} />
+          </div>
+
+          {/* Centre — Primary links (desktop only) */}
+          <nav>
+            <ul className="nav-links">
+              {links.map(l => (
+                <li key={l.id}>
+                  <a
+                    className="nav-link"
+                    data-active={route.page === l.id}
+                    onClick={() => setRoute({ page: l.id })}
+                  >{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Right — Utilities + CTA + Hamburger */}
+          <div className="nav-right">
+            {/* Lang switcher — desktop only via CSS */}
+            <div className="nav-lang-desktop">
+              <LangSwitcher />
+            </div>
+
+            {/* Theme toggle */}
+            <button
+              className="nav-link nav-icon-btn"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              aria-label="Toggle theme"
             >
-              {l.label}
-            </a>
-          ))}
-          <div className="nav-mobile-cta">
+              {theme === 'dark' ? <Icons.Sun size={14} /> : <Icons.Moon size={14} />}
+            </button>
+
+            {/* CTA — desktop only */}
+            <button
+              className="btn btn-primary nav-cta-desktop"
+              onClick={() => setRoute({ page: 'contact' })}
+            >
+              {t('nav.requestQuote')} <Icons.Arrow size={14} />
+            </button>
+
+            {/* Hamburger — mobile only */}
+            <button
+              className="nav-menu-btn"
+              onClick={() => setMenuOpen(v => !v)}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <Icons.Close size={20} /> : <Icons.Menu size={20} />}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Full-screen mobile overlay */}
+      <div className={`nav-overlay${menuOpen ? ' nav-overlay--open' : ''}`} aria-hidden={!menuOpen}>
+        <div className="nav-overlay-inner">
+
+          {/* Overlay header */}
+          <div className="nav-overlay-header">
+            <LangSwitcher />
+            <button
+              onClick={() => setMenuOpen(false)}
+              style={{ color: 'var(--fg-70)', display: 'flex', alignItems: 'center', padding: 6 }}
+              aria-label="Close menu"
+            >
+              <Icons.Close size={22} />
+            </button>
+          </div>
+
+          {/* Primary links */}
+          <nav className="nav-overlay-links">
+            {links.map((l, i) => (
+              <a
+                key={l.id}
+                className="nav-overlay-link"
+                data-active={route.page === l.id}
+                onClick={() => setRoute({ page: l.id })}
+                style={{ transitionDelay: menuOpen ? `${i * 45}ms` : '0ms' }}
+              >
+                <span className="nav-overlay-num">0{i + 1}</span>
+                {l.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Bottom CTA area */}
+          <div className="nav-overlay-cta">
             <button
               className="btn btn-primary"
               style={{ width: '100%', justifyContent: 'center' }}
-              onClick={() => { setRoute({ page: 'contact' }); setMenuOpen(false); }}
+              onClick={() => setRoute({ page: 'contact' })}
             >
               {t('nav.requestQuote')} <Icons.Arrow size={14} />
             </button>
@@ -321,17 +361,17 @@ function Nav() {
               href={WA_URL}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, width: '100%', padding: '12px 20px', marginTop: 10, background: '#25D366', color: '#fff', borderRadius: 3, textDecoration: 'none', fontFamily: 'var(--mono)', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase' }}
+              className="nav-overlay-wa"
+              onClick={() => setMenuOpen(false)}
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-              </svg>
+              {WA_SVG}
               {t('nav.chatWhatsapp')}
             </a>
           </div>
+
         </div>
-      )}
-    </header>
+      </div>
+    </>
   );
 }
 
