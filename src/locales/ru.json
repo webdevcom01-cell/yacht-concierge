@@ -396,6 +396,7 @@
     "orderError": "Ошибка заказа — напишите на orders@yacht-concierge.me",
     "backCatalogue": "← НАЗАД В КАТАЛОГ",
     "serviceBriefLink": "← ОБЗОР УСЛУГИ",
+    "orderNotesPlaceholder": "Код ворот, контакт шеф-повара, требования к холодовой цепи...",
     "selectMarina": "Выберите...",
     "resultsCount": "{{filtered}} из {{total}} позиций",
     "itemsCount": "ПОЗИЦИИ ({{n}})",

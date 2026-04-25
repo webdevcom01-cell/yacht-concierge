@@ -396,6 +396,7 @@
     "orderError": "Ordine fallito — scrivere a orders@yacht-concierge.me",
     "backCatalogue": "← TORNA AL CATALOGO",
     "serviceBriefLink": "← SCHEDA SERVIZIO",
+    "orderNotesPlaceholder": "Codice cancello, contatto chef, note catena del freddo...",
     "selectMarina": "Seleziona...",
     "resultsCount": "{{filtered}} di {{total}} articoli",
     "itemsCount": "ARTICOLI ({{n}})",

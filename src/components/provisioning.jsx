@@ -543,7 +543,7 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
                   </div>
                   <div className="field">
                     <label className="field-label">{t('provisioningPage.notesLabel')}</label>
-                    <textarea className="field-textarea" value={meta.notes || ''} onChange={e => setM('notes', e.target.value)} placeholder="Gate code, chef contact, cold-chain notes..."/>
+                    <textarea className="field-textarea" value={meta.notes || ''} onChange={e => setM('notes', e.target.value)} placeholder={t('provisioningPage.orderNotesPlaceholder')}/>
                   </div>
                 </div>
               </div>

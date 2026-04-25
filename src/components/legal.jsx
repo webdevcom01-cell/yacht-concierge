@@ -1,5 +1,29 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Reveal } from './shared';
+
+// ─── Language notice (shown when not EN) ────────────────────────────────────
+function LegalLangNotice() {
+  const { i18n } = useTranslation();
+  if (i18n.language === 'en') return null;
+  const msg = i18n.language === 'ru'
+    ? 'Правовые документы доступны только на английском языке. Свяжитесь с нами для перевода.'
+    : 'I documenti legali sono disponibili solo in inglese. Contattateci per una traduzione.';
+  return (
+    <div style={{
+      padding: '14px 20px',
+      marginBottom: 40,
+      background: 'var(--accent-soft)',
+      border: '1px solid var(--accent-line)',
+      display: 'flex',
+      gap: 12,
+      alignItems: 'start',
+    }}>
+      <span className="mono" style={{ color: 'var(--accent)', fontSize: 10, paddingTop: 2 }}>¶</span>
+      <p style={{ margin: 0, fontSize: 13, fontFamily: 'var(--sans)', color: 'var(--fg-70)', lineHeight: 1.5 }}>{msg}</p>
+    </div>
+  );
+}
 
 // ─── Shared prose shell ───────────────────────────────────────────────────────
 function LegalShell({ eyebrow, title, updated, children }) {
@@ -16,10 +40,11 @@ function LegalShell({ eyebrow, title, updated, children }) {
             <h1 className="h1" style={{ marginBottom: 16 }}>{title}</h1>
           </Reveal>
           <Reveal delay={120}>
-            <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 64 }}>
+            <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 40 }}>
               Last updated: {updated}
             </div>
           </Reveal>
+          <LegalLangNotice/>
           <Reveal delay={160}>
             <div className="legal-prose">
               {children}
