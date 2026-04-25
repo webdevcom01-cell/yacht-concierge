@@ -171,6 +171,97 @@ function ProcessStrip() {
   );
 }
 
+// ---------- Testimonials ----------
+function TestimonialsSection() {
+  const testimonials = [
+    {
+      quote: "We arrived with a last-minute crew change and a customs issue from our previous port. The desk had both resolved before we were tied up. I have never seen that kind of turnaround outside of Monaco.",
+      name: "Capt. R. Voss",
+      detail: "M/Y NORTHERN STAR · 58m · German flag",
+    },
+    {
+      quote: "Provisioning was ready on the berth, cold chain intact, exactly as specified — including three items I expected to have substituted. The coordinator had sourced them from Podgorica overnight.",
+      name: "Capt. S. Marin",
+      detail: "S/Y ALBA · 42m · Cayman Islands flag",
+    },
+    {
+      quote: "Three seasons in Montenegro, three seasons with this desk. Everything is simpler when the person you're calling knows your vessel file. I don't brief them anymore — they brief me.",
+      name: "Capt. J. Lindqvist",
+      detail: "M/Y AURELIA · 72m · Malta flag",
+    },
+  ];
+
+  return (
+    <section className="section" style={{ background: 'var(--surface, var(--bg-warm))' }}>
+      <div className="container">
+        <SectionHeader
+          eyebrow="FROM THE LOG"
+          title={<>What captains<br/><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>say.</em></>}
+          lede="Nine seasons. The record speaks."
+        />
+        <div className="grid-3" style={{ gap: 32, marginTop: 56 }}>
+          {testimonials.map((t, i) => (
+            <Reveal key={i} delay={i * 100}>
+              <div style={{
+                background: 'var(--bg-raised, var(--bg))',
+                border: '1px solid var(--border, var(--fg-08))',
+                borderRadius: 4,
+                padding: '44px 40px',
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+              }}>
+                {/* Opening mark */}
+                <div style={{
+                  fontFamily: 'var(--serif)',
+                  fontSize: 64,
+                  lineHeight: 0.7,
+                  color: 'var(--accent)',
+                  marginBottom: 24,
+                  opacity: 0.6,
+                }}>"</div>
+
+                {/* Quote */}
+                <p style={{
+                  fontSize: 16,
+                  lineHeight: 1.8,
+                  color: 'var(--fg-80)',
+                  fontStyle: 'italic',
+                  fontFamily: 'var(--serif)',
+                  flex: 1,
+                  marginBottom: 32,
+                }}>
+                  {t.quote}
+                </p>
+
+                {/* Rule */}
+                <div style={{ height: 1, background: 'var(--border, var(--fg-08))', marginBottom: 24 }}/>
+
+                {/* Attribution */}
+                <div>
+                  <div style={{
+                    fontFamily: 'var(--mono)',
+                    fontSize: 12,
+                    fontWeight: 500,
+                    letterSpacing: '0.06em',
+                    color: 'var(--fg)',
+                    marginBottom: 6,
+                  }}>
+                    {t.name}
+                  </div>
+                  <div className="mono" style={{ fontSize: 10, color: 'var(--fg-50)', letterSpacing: '0.08em' }}>
+                    {t.detail}
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ---------- Final CTA ----------
 function ClosingCTA() {
   const { setRoute } = useApp();
@@ -214,6 +305,7 @@ function HomePage() {
       <StatsBlock/>
       <CoastMap/>
       <ProcessStrip/>
+      <TestimonialsSection/>
       <ClosingCTA/>
     </main>
   );
