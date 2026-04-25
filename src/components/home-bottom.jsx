@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal, SectionHeader } from './shared';
 import { HeroEditorial, HeroCinematic, HeroOversized, ServicesPreview, StatsBlock } from './home-top';
 
@@ -128,6 +129,7 @@ function MarinaSVG({ id }) {
 }
 
 function CoastMap() {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState('porto-montenegro');
   const ports = [
     { id: 'herceg-novi', name: 'Herceg Novi', x: 14, y: 32, coords: '42.45°N 18.54°E', berths: 120 },
@@ -143,22 +145,22 @@ function CoastMap() {
       <div className="container">
         <SectionHeader
           num="03 / FLEET"
-          eyebrow="BERTH AVAILABILITY"
-          title={<>Five marinas. <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>One coast.</em></>}
-          lede="Our operational footprint spans five marinas along the Montenegrin coast. Contact us directly for current berth availability and seasonal rates."
+          eyebrow={t('map.eyebrow')}
+          title={<>{t('map.title1')} <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('map.title2')}</em></>}
+          lede={t('map.lede')}
         />
         <div className="grid-map" style={{ gap: 72, alignItems: 'start' }}>
           <Reveal>
             <div style={{ position: 'relative', aspectRatio: '4/3', background: 'var(--bg-raised)', border: '1px solid var(--fg-08)' }}>
               <MapSVG ports={ports} selected={selected} onSelect={setSelected} />
               <div style={{ position: 'absolute', top: 20, left: 20, fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--fg-50)' }}>
-                ADRIATIC COAST · MONTENEGRO
+                {t('map.mapLabel')}
               </div>
               <div style={{ position: 'absolute', top: 20, right: 20, fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--fg-50)' }}>
-                MONTENEGRIN COAST
+                {t('map.mapLabel2')}
               </div>
               <div style={{ position: 'absolute', bottom: 20, left: 20, fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--fg-50)' }}>
-                SELECT A MARINA
+                {t('map.selectMarina')}
               </div>
             </div>
           </Reveal>
@@ -178,17 +180,17 @@ function CoastMap() {
                   <div className="rule mb-24" style={{ marginTop: 4 }}/>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
                     <div>
-                      <div className="mono" style={{ color: 'var(--fg-50)' }}>Total Berths</div>
+                      <div className="mono" style={{ color: 'var(--fg-50)' }}>{t('map.totalBerths')}</div>
                       <div className="serif" style={{ fontSize: 40, marginTop: 6 }}>{cur.berths}</div>
                     </div>
                     <div>
-                      <div className="mono" style={{ color: 'var(--fg-50)' }}>Availability</div>
-                      <div className="serif" style={{ fontSize: 16, marginTop: 10, color: 'var(--fg-70)', lineHeight: 1.5 }}>Contact us for current berth availability</div>
+                      <div className="mono" style={{ color: 'var(--fg-50)' }}>{t('map.availability')}</div>
+                      <div className="serif" style={{ fontSize: 16, marginTop: 10, color: 'var(--fg-70)', lineHeight: 1.5 }}>{t('map.availabilityText')}</div>
                     </div>
                   </div>
                   <button className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }}
                     onClick={() => {/* contact */}}>
-                    Enquire About Availability <Icons.Arrow size={14}/>
+                    {t('map.enquire')} <Icons.Arrow size={14}/>
                   </button>
                 </div>
               </div>
@@ -257,24 +259,23 @@ function MapSVG({ ports, selected, onSelect }) {
 // ---------- Process preview strip ----------
 function ProcessStrip() {
   const { setRoute } = useApp();
+  const { t } = useTranslation();
   const steps = [
-    { n: '01', label: 'CONTACT', desc: 'Intake call with your captain or manager.' },
-    { n: '02', label: 'PLAN', desc: 'Itinerary brief, service scope, SLAs, quote.' },
-    { n: '03', label: 'EXECUTE', desc: 'Dedicated coordinator on-call for the stay.' },
-    { n: '04', label: 'REVIEW', desc: 'Post-call report, next-season recommendations.' },
+    { n: t('process.step1_n'), label: t('process.step1_label'), desc: t('process.step1_desc') },
+    { n: t('process.step2_n'), label: t('process.step2_label'), desc: t('process.step2_desc') },
+    { n: t('process.step3_n'), label: t('process.step3_label'), desc: t('process.step3_desc') },
+    { n: t('process.step4_n'), label: t('process.step4_label'), desc: t('process.step4_desc') },
   ];
   return (
     <section className="section" style={{ background: 'var(--bg-warm)' }}>
       <div className="container">
         <div className="grid-2" style={{ gap: 72, marginBottom: 72, alignItems: 'end' }}>
           <div>
-            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>05 / PROTOCOL</div></Reveal>
-            <Reveal delay={80}><h2 className="h2">A considered protocol.</h2></Reveal>
+            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('process.eyebrow')}</div></Reveal>
+            <Reveal delay={80}><h2 className="h2">{t('process.title')}</h2></Reveal>
           </div>
           <Reveal delay={160}>
-            <p className="lede lede-right">
-              Every yacht we serve moves through four measured steps. No rushed handoffs, no lost context.
-            </p>
+            <p className="lede lede-right">{t('process.lede')}</p>
           </Reveal>
         </div>
         <div className="grid-4" style={{ gap: 0 }}>
@@ -292,7 +293,7 @@ function ProcessStrip() {
         <Reveal delay={400}>
           <div style={{ marginTop: 48 }}>
             <a className="btn-link mono" onClick={() => setRoute({ page: 'process' })}>
-              FULL PROTOCOL <Icons.Arrow size={12}/>
+              {t('process.fullProtocol')} <Icons.Arrow size={12}/>
             </a>
           </div>
         </Reveal>
@@ -303,31 +304,20 @@ function ProcessStrip() {
 
 // ---------- Testimonials ----------
 function TestimonialsSection() {
+  const { t } = useTranslation();
   const testimonials = [
-    {
-      quote: "We arrived with a last-minute crew change and a customs issue from our previous port. The desk had both resolved before we were tied up. I have never seen that kind of turnaround outside of Monaco.",
-      name: "Capt. R. Voss",
-      detail: "M/Y NORTHERN STAR · 58m · German flag",
-    },
-    {
-      quote: "Provisioning was ready on the berth, cold chain intact, exactly as specified — including three items I expected to have substituted. The coordinator had sourced them from Podgorica overnight.",
-      name: "Capt. S. Marin",
-      detail: "S/Y ALBA · 42m · Cayman Islands flag",
-    },
-    {
-      quote: "Three seasons in Montenegro, three seasons with this desk. Everything is simpler when the person you're calling knows your vessel file. I don't brief them anymore — they brief me.",
-      name: "Capt. J. Lindqvist",
-      detail: "M/Y AURELIA · 72m · Malta flag",
-    },
+    { quote: t('testimonials.t1_quote'), name: t('testimonials.t1_name'), detail: t('testimonials.t1_detail') },
+    { quote: t('testimonials.t2_quote'), name: t('testimonials.t2_name'), detail: t('testimonials.t2_detail') },
+    { quote: t('testimonials.t3_quote'), name: t('testimonials.t3_name'), detail: t('testimonials.t3_detail') },
   ];
 
   return (
     <section className="section" style={{ background: 'var(--surface, var(--bg-warm))' }}>
       <div className="container">
         <SectionHeader
-          eyebrow="FROM THE LOG"
-          title={<>What captains<br/><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>say.</em></>}
-          lede="Nine seasons. The record speaks."
+          eyebrow={t('testimonials.eyebrow')}
+          title={<>{t('testimonials.title1')}<br/><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('testimonials.title2')}</em></>}
+          lede={t('testimonials.lede')}
         />
         <div className="grid-3" style={{ gap: 32, marginTop: 56 }}>
           {testimonials.map((t, i) => (
@@ -395,27 +385,26 @@ function TestimonialsSection() {
 // ---------- Final CTA ----------
 function ClosingCTA() {
   const { setRoute } = useApp();
+  const { t } = useTranslation();
   return (
     <section className="section" style={{ paddingTop: 120, paddingBottom: 160 }}>
       <div className="container" style={{ textAlign: 'center' }}>
         <Reveal>
-          <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 32 }}>↳ ENGAGE</div>
+          <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 32 }}>{t('cta.engage')}</div>
         </Reveal>
         <Reveal delay={80}>
           <h2 className="serif" style={{ fontSize: 'clamp(48px, 6.5vw, 96px)', lineHeight: 0.95, letterSpacing: '-0.02em' }}>
-            Arriving in Montenegro?<br/>
-            <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>Let the desk work.</em>
+            {t('cta.title1')}<br/>
+            <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('cta.title2')}</em>
           </h2>
         </Reveal>
         <Reveal delay={160}>
-          <p className="lede" style={{ margin: '32px auto 0' }}>
-            Submit your ETA, LOA, and call sign. We'll return a coordinated service brief within four operational hours.
-          </p>
+          <p className="lede" style={{ margin: '32px auto 0' }}>{t('cta.lede')}</p>
         </Reveal>
         <Reveal delay={240}>
           <div className="btn-row" style={{ justifyContent: 'center', marginTop: 48 }}>
-            <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}>Request Quote <Icons.Arrow size={14}/></button>
-            <button className="btn btn-ghost" onClick={() => setRoute({ page: 'services' })}>View All Services</button>
+            <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}>{t('cta.btnQuote')} <Icons.Arrow size={14}/></button>
+            <button className="btn btn-ghost" onClick={() => setRoute({ page: 'services' })}>{t('cta.btnServices')}</button>
           </div>
         </Reveal>
       </div>

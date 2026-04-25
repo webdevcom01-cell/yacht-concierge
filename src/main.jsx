@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
+import './i18n';
 import { AppCtx, Nav, Footer, Icons, WhatsAppFloat } from './components/shared';
 import { PageSEO } from './seo.jsx';
 import { HomePage } from './components/home-bottom';

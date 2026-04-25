@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal, SectionHeader } from './shared';
 import { SERVICES } from '../data/services';
 
@@ -7,6 +8,7 @@ import { SERVICES } from '../data/services';
 // Hero variant A — Editorial split (default)
 function HeroEditorial() {
   const { setRoute } = useApp();
+  const { t } = useTranslation();
   return (
     <section style={{ paddingTop: 140, paddingBottom: 80 }}>
       <div className="container">
@@ -14,31 +16,30 @@ function HeroEditorial() {
           <div>
             <Reveal>
               <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 36, display: 'flex', gap: 24 }}>
-                <span>↳ EST. MMXVII</span>
+                <span>{t('hero.eyebrow')}</span>
                 <span>—</span>
-                <span>OPERATIONAL SEASON 2026</span>
+                <span>{t('hero.eyebrow2')}</span>
               </div>
             </Reveal>
             <Reveal delay={60}>
               <h1 className="serif" style={{ fontSize: 'clamp(56px, 7.4vw, 112px)', lineHeight: 0.92, letterSpacing: '-0.025em' }}>
-                Pure logistics.<br/>
-                <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>Pure reliability.</em><br/>
-                For superyachts<br/>in Montenegro.
+                {t('hero.headline1')}<br/>
+                <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('hero.headline2')}</em><br/>
+                {t('hero.headline3')}<br/>{t('hero.headline4')}
               </h1>
             </Reveal>
             <Reveal delay={160}>
               <p className="lede mt-32" style={{ maxWidth: 460 }}>
-                Berth, customs, provisioning, laundry, floristry, maintenance —
-                coordinated discreetly from a single operational desk in Tivat.
+                {t('hero.lede')}
               </p>
             </Reveal>
             <Reveal delay={240}>
               <div className="btn-row" style={{ marginTop: 48 }}>
                 <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}>
-                  Request Quote <Icons.Arrow size={14} />
+                  {t('hero.btnQuote')} <Icons.Arrow size={14} />
                 </button>
                 <button className="btn btn-ghost" onClick={() => setRoute({ page: 'services' })}>
-                  View Services
+                  {t('hero.btnServices')}
                 </button>
               </div>
             </Reveal>
@@ -56,6 +57,7 @@ function HeroEditorial() {
 // Hero variant B — Cinematic full-bleed
 function HeroCinematic() {
   const { setRoute } = useApp();
+  const { t } = useTranslation();
   return (
     <section style={{ paddingTop: 0, position: 'relative' }}>
       <div style={{ height: '100vh', minHeight: 700, position: 'relative' }}>
@@ -71,18 +73,18 @@ function HeroCinematic() {
             </Reveal>
             <Reveal delay={80}>
               <h1 className="serif" style={{ fontSize: 'clamp(48px, 7vw, 104px)', lineHeight: 0.95, letterSpacing: '-0.025em' }}>
-                Pure Logistics.<br/>Pure Reliability.
+                {t('hero.headline1')}<br/>{t('hero.headline2')}
               </h1>
             </Reveal>
             <Reveal delay={160}>
               <p style={{ fontSize: 17, color: 'rgba(239,234,226,0.8)', marginTop: 28, fontWeight: 300, maxWidth: 560, marginLeft: 'auto', marginRight: 'auto' }}>
-                For superyachts transiting the Adriatic. A single operational desk for berth, customs, provisioning, and ground services.
+                {t('hero.lede')}
               </p>
             </Reveal>
             <Reveal delay={240}>
               <div style={{ display: 'flex', gap: 14, marginTop: 48, justifyContent: 'center' }}>
-                <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}>Request Quote <Icons.Arrow size={14}/></button>
-                <button className="btn btn-ghost" style={{ borderColor: 'rgba(239,234,226,0.4)', color: '#EFEAE2' }} onClick={() => setRoute({ page: 'services' })}>View Services</button>
+                <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}>{t('hero.btnQuote')} <Icons.Arrow size={14}/></button>
+                <button className="btn btn-ghost" style={{ borderColor: 'rgba(239,234,226,0.4)', color: '#EFEAE2' }} onClick={() => setRoute({ page: 'services' })}>{t('hero.btnServices')}</button>
               </div>
             </Reveal>
           </div>
@@ -100,6 +102,7 @@ function HeroCinematic() {
 // Hero variant C — Oversized editorial type
 function HeroOversized() {
   const { setRoute } = useApp();
+  const { t } = useTranslation();
   return (
     <section style={{ paddingTop: 180, paddingBottom: 80 }}>
       <div className="container">
@@ -110,9 +113,9 @@ function HeroOversized() {
         </Reveal>
         <Reveal delay={80}>
           <h1 className="serif" style={{ fontSize: 'clamp(64px, 11vw, 180px)', lineHeight: 0.88, letterSpacing: '-0.03em' }}>
-            Pure<br/>
-            <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>logistics</span>.<br/>
-            Pure reliability.
+            {t('hero.headline1')}<br/>
+            <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>{t('hero.headline2')}</span><br/>
+            {t('hero.headline3')} {t('hero.headline4')}
           </h1>
         </Reveal>
         <div className="grid-2" style={{ gap: 64, marginTop: 72, alignItems: 'end' }}>
@@ -123,12 +126,10 @@ function HeroOversized() {
           </Reveal>
           <Reveal delay={240}>
             <div>
-              <p className="lede">
-                For superyachts transiting Montenegro. Berth, customs, provisioning, and ground services coordinated from a single operational desk in Tivat.
-              </p>
+              <p className="lede">{t('hero.lede')}</p>
               <div style={{ display: 'flex', gap: 14, marginTop: 32 }}>
-                <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}>Request Quote <Icons.Arrow size={14}/></button>
-                <button className="btn btn-ghost" onClick={() => setRoute({ page: 'services' })}>View Services</button>
+                <button className="btn btn-primary" onClick={() => setRoute({ page: 'contact' })}>{t('hero.btnQuote')} <Icons.Arrow size={14}/></button>
+                <button className="btn btn-ghost" onClick={() => setRoute({ page: 'services' })}>{t('hero.btnServices')}</button>
               </div>
             </div>
           </Reveal>
@@ -208,12 +209,13 @@ function HeroStrip() {
 }
 
 function HeroStripInline({ light = false }) {
+  const { t } = useTranslation();
   const items = [
-    { label: 'Operational Base', value: 'Porto Montenegro' },
-    { label: 'Coordinates', value: '42.43°N · 18.69°E' },
-    { label: 'Five Marinas', value: 'HN · PM · KT · BV · BAR' },
-    { label: 'Season', value: 'Apr – Oct' },
-    { label: 'Contact', value: '+382 67 144 555' },
+    { label: t('hero.labelBase'),    value: t('hero.stripBase') },
+    { label: t('hero.labelCoords'),  value: t('hero.stripCoords') },
+    { label: t('hero.labelMarinas'), value: t('hero.stripMarinas') },
+    { label: t('hero.labelSeason'),  value: t('hero.stripSeason') },
+    { label: t('hero.labelContact'), value: t('hero.stripContact') },
   ];
   return (
     <div className="grid-stats-strip" style={{ gap: 24 }}>
@@ -230,6 +232,7 @@ function HeroStripInline({ light = false }) {
 // ---------- Services preview grid ----------
 function ServicesPreview() {
   const { setRoute, serviceDensity } = useApp();
+  const { t } = useTranslation();
   return (
     <section className="section">
       <div className="container">
@@ -237,20 +240,18 @@ function ServicesPreview() {
           <div>
             <Reveal>
               <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>
-                01 / SERVICES
+                {t('services.eyebrow')}
               </div>
             </Reveal>
             <Reveal delay={80}>
               <h2 className="h2">
-                Six disciplines.<br/>
-                <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>One desk.</em>
+                {t('services.title1')}<br/>
+                <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('services.title2')}</em>
               </h2>
             </Reveal>
           </div>
           <Reveal delay={160}>
-            <p className="lede lede-right">
-              Every request, from a late-arriving provisioning pallet to a hull wash before charter, routes through a single captain-facing coordinator.
-            </p>
+            <p className="lede lede-right">{t('services.lede')}</p>
           </Reveal>
         </div>
 
@@ -280,7 +281,7 @@ function ServicesPreview() {
                   <h3 className="service-card-title">{s.title}</h3>
                   <p className="service-card-body">{s.desc}</p>
                   <div className="service-card-arrow">
-                    View protocol <Icons.Arrow size={12}/>
+                    {t('services.viewProtocol')} <Icons.Arrow size={12}/>
                   </div>
                 </div>
               </Reveal>
@@ -294,16 +295,17 @@ function ServicesPreview() {
 
 // ---------- Stats / SLA ----------
 function StatsBlock() {
+  const { t } = useTranslation();
   const items = [
-    { value: '6', label: 'Coordinated disciplines', sub: 'Berth · Customs · Provisioning · Laundry · Floristry · Maintenance' },
-    { value: '24h', label: 'Initial response SLA', sub: 'Quote returned within 24 operational hours' },
-    { value: 'Apr–Oct', label: 'Operational season', sub: 'Adriatic transit corridor · Montenegro' },
-    { value: '1', label: 'Coordinator per vessel', sub: 'One named contact · no switchboard · no transfers' },
+    { value: t('stats.disciplines_value'), label: t('stats.disciplines_label'), sub: t('stats.disciplines_sub') },
+    { value: t('stats.sla_value'),         label: t('stats.sla_label'),         sub: t('stats.sla_sub') },
+    { value: t('stats.season_value'),      label: t('stats.season_label'),      sub: t('stats.season_sub') },
+    { value: t('stats.coordinator_value'), label: t('stats.coordinator_label'), sub: t('stats.coordinator_sub') },
   ];
   return (
     <section className="section" style={{ paddingTop: 80 }}>
       <div className="container">
-        <SectionHeader num="02" eyebrow="OPERATIONAL STANDARDS" title={<>Discretion, by design.</>} />
+        <SectionHeader num="02" eyebrow={t('stats.eyebrow')} title={<>{t('stats.title')}</>} />
         <div className="grid-4" style={{ gap: 0, borderTop: '1px solid var(--fg-08)', borderBottom: '1px solid var(--fg-08)' }}>
           {items.map((s, i) => (
             <Reveal key={i} delay={i * 80}>

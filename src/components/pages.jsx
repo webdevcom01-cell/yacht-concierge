@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal, SectionHeader } from './shared';
 import { SERVICES } from '../data/services';
 import { ClosingCTA, CoastMap } from './home-bottom';
@@ -9,51 +10,21 @@ import { submitQuote } from '../lib/submit';
 
 function ProcessPage() {
   const { setRoute } = useApp();
-  const phases = [
-    {
-      n: '01', code: 'CONTACT',
-      title: 'Intake.',
-      lede: 'You arrive. We listen. No form-gated discovery — a voice call with a coordinator who will remain on your file.',
-      meta: ['Voice call · 20 min', 'Captain, manager, or owner', 'No NDA required for intake'],
-      detail: 'Most relationships begin as a captain forwarding our number. The intake is unhurried: your itinerary, your guest profile, what you are expecting from Montenegro, and where the last port fell short. We don\'t circulate notes — one coordinator holds your file.',
-    },
-    {
-      n: '02', code: 'PLAN',
-      title: 'Brief.',
-      lede: 'A written service brief, scoped to your stay. Itemised, SLA-anchored, no retainer padding.',
-      meta: ['Delivered within 72h', 'Itemised by discipline', 'Rate-card transparency'],
-      detail: 'We return a brief that reads like a flight plan: berths proposed, customs approach, provisioning calendar, laundry cadence, standing maintenance, and an operational budget. Each line is signed by the discipline lead who will execute it.',
-    },
-    {
-      n: '03', code: 'EXECUTE',
-      title: 'Operate.',
-      lede: 'Your coordinator becomes your desk. One number, one email, one person who owns every outcome.',
-      meta: ['Dedicated coordinator', '06:00 – 22:00 standard', '24h under Tier III'],
-      detail: 'From the moment the yacht enters territorial waters, the file is active. Your coordinator is physically in Tivat, moves between marinas as needed, and is on-call for the duration. Escalation ladders are defined; no request sits in an inbox.',
-    },
-    {
-      n: '04', code: 'REVIEW',
-      title: 'Report.',
-      lede: 'A post-call operational report, returned to the owner or manager. Lessons captured for next season.',
-      meta: ['Delivered 14 days after departure', 'Owner-confidential', 'Archived to your vessel file'],
-      detail: 'Every visit is closed with a written report: what was requested, what was delivered, what exceeded or fell short. Your file compounds — by the third season, we have met more of your crew than most of their own colleagues have.',
-    },
-  ];
+  const { t } = useTranslation();
+  const phases = t('processPage.phases', { returnObjects: true });
 
   return (
     <main className="page-top">
       <div className="container">
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 120 }}>
           <div>
-            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>↳ OPERATIONAL PROTOCOL</div></Reveal>
+            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('processPage.eyebrow')}</div></Reveal>
             <Reveal delay={80}>
-              <h1 className="display">How<br/>it <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>works</em>.</h1>
+              <h1 className="display">{t('processPage.title1')}<br/>{t('processPage.title2')} <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('processPage.titleAccent')}</em>.</h1>
             </Reveal>
           </div>
           <Reveal delay={160}>
-            <p className="lede">
-              Four measured phases. One file, one coordinator, one escalation path. The protocol is the same for a four-day stay as for a three-month refit — only the volume differs.
-            </p>
+            <p className="lede">{t('processPage.lede')}</p>
           </Reveal>
         </div>
 
@@ -87,15 +58,9 @@ function ProcessPage() {
 
         {/* Principles */}
         <section className="section">
-          <SectionHeader num="↳ PRINCIPLES" eyebrow="THE UNWRITTEN SIDE" title={<>Five rules,<br/>none negotiable.</>}/>
+          <SectionHeader num={t('processPage.principlesEyebrow')} eyebrow={t('processPage.principlesSubtitle')} title={<>{t('processPage.principlesTitle1')}<br/>{t('processPage.principlesTitle2')}</>}/>
           <div className="grid-5" style={{ gap: 0, border: '1px solid var(--fg-08)' }}>
-            {[
-              { n: 'I', t: 'One desk.', b: 'Every request routes through your coordinator. Never a switchboard.' },
-              { n: 'II', t: 'No mark-up.', b: 'Government fees, berthing, technician labour — passed through at invoice.' },
-              { n: 'III', t: 'Silent on-site.', b: 'We operate inside the rhythm of the yacht, not across it.' },
-              { n: 'IV', t: 'Documented.', b: 'Every action logged, every parts ledger captured, every report filed.' },
-              { n: 'V', t: 'Closed file.', b: 'Your stay lives in an encrypted record. Nothing leaves.' },
-            ].map((r, i) => (
+            {t('processPage.principles', { returnObjects: true }).map((r, i) => (
               <Reveal key={r.n} delay={i * 80}>
                 <div style={{ padding: 32, borderRight: i < 4 ? '1px solid var(--fg-08)' : 'none', minHeight: 260, display: 'flex', flexDirection: 'column', gap: 16 }}>
                   <div className="serif" style={{ fontSize: 48, color: 'var(--accent)', fontStyle: 'italic' }}>{r.n}</div>
@@ -114,6 +79,7 @@ function ProcessPage() {
 
 // ---------- Contact / Quote multi-step ----------
 function ContactPage() {
+  const { t } = useTranslation();
   const [step, setStep] = useState(0);
   const [refNum] = useState(() => {
     const now = new Date();
@@ -133,7 +99,7 @@ function ContactPage() {
   const update = (k, v) => setData(d => ({ ...d, [k]: v }));
   const toggleService = (id) => setData(d => ({ ...d, services: d.services.includes(id) ? d.services.filter(s => s !== id) : [...d.services, id] }));
 
-  const steps = ['Identity', 'Vessel', 'Visit', 'Services', 'Contact', 'Submitted'];
+  const steps = t('contactPage.stepLabels', { returnObjects: true });
 
   const canProceed = () => {
     if (step === 0) return data.name.trim();
@@ -150,22 +116,20 @@ function ContactPage() {
         <div className="grid-contact" style={{ gap: 96, alignItems: 'start' }}>
           {/* Left: context */}
           <div className="contact-sticky" style={{ position: 'sticky', top: 140 }}>
-            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>↳ REQUEST QUOTE</div></Reveal>
+            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('contactPage.eyebrow')}</div></Reveal>
             <Reveal delay={80}>
-              <h1 className="display">Submit<br/>your <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>brief</em>.</h1>
+              <h1 className="display">{t('contactPage.title1')}<br/>{t('contactPage.title2')} <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('contactPage.titleAccent')}</em>.</h1>
             </Reveal>
             <Reveal delay={160}>
-              <p className="lede mt-32">
-                Five short steps. No sales call. We return a scoped service brief within four operational hours, signed by the coordinator who will hold your file.
-              </p>
+              <p className="lede mt-32">{t('contactPage.lede')}</p>
             </Reveal>
             <div className="mt-48">
               <div className="rule mb-24"/>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 {[
-                  { icon: 'Phone', label: '+382 67 144 555', sub: 'Operational desk · 24h in season' },
-                  { icon: 'Mail', label: 'info@yacht-concierge.me', sub: 'Encrypted channel available on request' },
-                  { icon: 'Pin', label: 'Pomorska ulica, Zgrada Baia', sub: 'Porto Montenegro · Tivat 85320' },
+                  { icon: 'Phone', label: '+382 67 144 555', sub: t('contactPage.phoneSub') },
+                  { icon: 'Mail', label: 'info@yacht-concierge.me', sub: t('contactPage.emailSub') },
+                  { icon: 'Pin', label: 'Pomorska ulica, Zgrada Baia', sub: t('contactPage.addressSub') },
                 ].map(c => {
                   const IconC = Icons[c.icon];
                   return (
@@ -199,56 +163,56 @@ function ContactPage() {
             {step < 5 && (
               <div key={step} className="reveal in">
                 {step === 0 && (
-                  <StepWrap title="Who are we speaking with?" sub="Your name and role. We keep this file confidential.">
+                  <StepWrap title={t('contactPage.step0_title')} sub={t('contactPage.step0_sub')}>
                     <div className="grid-2" style={{ gap: 32 }}>
                       <div className="field">
-                        <label className="field-label">Full name</label>
+                        <label className="field-label">{t('contactPage.fieldName')}</label>
                         <input className="field-input" value={data.name} onChange={e => update('name', e.target.value)} placeholder="Eleanor Vance"/>
                       </div>
                       <div className="field">
-                        <label className="field-label">Role</label>
+                        <label className="field-label">{t('contactPage.fieldRole')}</label>
                         <select className="field-select" value={data.role} onChange={e => update('role', e.target.value)}>
-                          <option value="captain">Captain</option>
-                          <option value="manager">Management Company</option>
-                          <option value="owner">Owner / Representative</option>
-                          <option value="broker">Charter Broker</option>
+                          <option value="captain">{t('contactPage.roleCaption')}</option>
+                          <option value="manager">{t('contactPage.roleManager')}</option>
+                          <option value="owner">{t('contactPage.roleOwner')}</option>
+                          <option value="broker">{t('contactPage.roleBroker')}</option>
                         </select>
                       </div>
                     </div>
                   </StepWrap>
                 )}
                 {step === 1 && (
-                  <StepWrap title="Tell us about the vessel." sub="Details stay within our encrypted file.">
+                  <StepWrap title={t('contactPage.step1_title')} sub={t('contactPage.step1_sub')}>
                     <div className="grid-contact-vessel" style={{ gap: 32 }}>
                       <div className="field">
-                        <label className="field-label">Vessel name</label>
+                        <label className="field-label">{t('contactPage.fieldVessel')}</label>
                         <input className="field-input" value={data.yacht} onChange={e => update('yacht', e.target.value)} placeholder="M/Y Atlas"/>
                       </div>
                       <div className="field">
-                        <label className="field-label">LOA (m)</label>
+                        <label className="field-label">{t('contactPage.fieldLoa')}</label>
                         <input className="field-input" type="number" value={data.loa} onChange={e => update('loa', e.target.value)} placeholder="73"/>
                       </div>
                       <div className="field">
-                        <label className="field-label">Flag</label>
+                        <label className="field-label">{t('contactPage.fieldFlag')}</label>
                         <input className="field-input" value={data.flag} onChange={e => update('flag', e.target.value)} placeholder="Cayman Is."/>
                       </div>
                     </div>
                   </StepWrap>
                 )}
                 {step === 2 && (
-                  <StepWrap title="When and where?" sub="Port call details. Adjustments accepted up to 48h before arrival.">
+                  <StepWrap title={t('contactPage.step2_title')} sub={t('contactPage.step2_sub')}>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 32 }}>
                       <div className="field">
-                        <label className="field-label">ETA</label>
+                        <label className="field-label">{t('contactPage.fieldEta')}</label>
                         <input className="field-input" type="date" value={data.eta} onChange={e => update('eta', e.target.value)}/>
                       </div>
                       <div className="field">
-                        <label className="field-label">ETD</label>
+                        <label className="field-label">{t('contactPage.fieldEtd')}</label>
                         <input className="field-input" type="date" value={data.etd} onChange={e => update('etd', e.target.value)}/>
                       </div>
                     </div>
                     <div className="field">
-                      <label className="field-label">Port of call</label>
+                      <label className="field-label">{t('contactPage.fieldPort')}</label>
                       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 8 }}>
                         {['Porto Montenegro', 'Herceg Novi', 'Kotor', 'Budva', 'Bar', 'TBD'].map(p => (
                           <button key={p} onClick={() => update('port', p)}
@@ -271,7 +235,7 @@ function ContactPage() {
                   </StepWrap>
                 )}
                 {step === 3 && (
-                  <StepWrap title="Which disciplines?" sub="Select any number. Coordinator will scope each.">
+                  <StepWrap title={t('contactPage.step3_title')} sub={t('contactPage.step3_sub')}>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, border: '1px solid var(--fg-15)' }}>
                       {SERVICES.map((s, i) => {
                         const IconC = Icons[s.icon];
@@ -306,27 +270,27 @@ function ContactPage() {
                       })}
                     </div>
                     <div className="field mt-32">
-                      <label className="field-label">Additional notes (optional)</label>
+                      <label className="field-label">{t('contactPage.fieldNotes')}</label>
                       <textarea className="field-textarea" value={data.notes} onChange={e => update('notes', e.target.value)} placeholder="Guest dietary notes, A/V issues, arrival protocol, anything else."/>
                     </div>
                   </StepWrap>
                 )}
                 {step === 4 && (
-                  <StepWrap title="How should we reach you?" sub="Encrypted channels available on request.">
+                  <StepWrap title={t('contactPage.step4_title')} sub={t('contactPage.step4_sub')}>
                     <div className="grid-2" style={{ gap: 32 }}>
                       <div className="field">
-                        <label className="field-label">Email</label>
+                        <label className="field-label">{t('contactPage.fieldEmail')}</label>
                         <input className="field-input" type="email" value={data.email} onChange={e => update('email', e.target.value)} placeholder="captain@atlas.example"/>
                       </div>
                       <div className="field">
-                        <label className="field-label">Phone (optional)</label>
+                        <label className="field-label">{t('contactPage.fieldPhone')}</label>
                         <input className="field-input" value={data.phone} onChange={e => update('phone', e.target.value)} placeholder="+44 7700 900 000"/>
                       </div>
                     </div>
                     <div style={{ marginTop: 48, padding: 24, background: 'var(--bg-warm)', border: '1px solid var(--fg-08)' }}>
-                      <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 12 }}>BRIEF SUMMARY</div>
+                      <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 12 }}>{t('contactPage.briefSummary')}</div>
                       <div style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--fg-70)' }}>
-                        <strong style={{ color: 'var(--fg)' }}>{data.yacht || '—'}</strong>{data.loa && ` · ${data.loa}m`}{data.flag && ` · ${data.flag}`} arriving <strong style={{ color: 'var(--fg)' }}>{data.port}</strong> on <strong style={{ color: 'var(--fg)' }}>{data.eta || '—'}</strong>{data.etd && ` until ${data.etd}`}. Requesting <strong style={{ color: 'var(--fg)' }}>{data.services.length}</strong> {data.services.length === 1 ? 'service' : 'services'}.
+                        <strong style={{ color: 'var(--fg)' }}>{data.yacht || '—'}</strong>{data.loa && ` · ${data.loa}m`}{data.flag && ` · ${data.flag}`} {t('contactPage.arriving')} <strong style={{ color: 'var(--fg)' }}>{data.port}</strong> on <strong style={{ color: 'var(--fg)' }}>{data.eta || '—'}</strong>{data.etd && ` ${t('contactPage.until')} ${data.etd}`}. {t('contactPage.requesting')} <strong style={{ color: 'var(--fg)' }}>{data.services.length}</strong> {data.services.length === 1 ? t('contactPage.service') : t('contactPage.services')}.
                       </div>
                     </div>
                   </StepWrap>
@@ -339,12 +303,12 @@ function ContactPage() {
                 <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 72, height: 72, border: '1px solid var(--accent)', color: 'var(--accent)', marginBottom: 40, borderRadius: '50%' }}>
                   <Icons.Check size={28} stroke={1.2}/>
                 </div>
-                <h2 className="serif" style={{ fontSize: 48, letterSpacing: '-0.02em', marginBottom: 20 }}>Brief received.</h2>
+                <h2 className="serif" style={{ fontSize: 48, letterSpacing: '-0.02em', marginBottom: 20 }}>{t('contactPage.successTitle')}</h2>
                 <p className="lede" style={{ margin: '0 auto', maxWidth: 440 }}>
-                  Reference №{refNum}. A coordinator will return a scoped service brief within four operational hours.
+                  {t('contactPage.successLede', { ref: refNum })}
                 </p>
                 <div className="mono mt-48" style={{ color: 'var(--fg-50)' }}>
-                  ↳ RESPONSE WITHIN 4 OPERATIONAL HOURS · 06:00 – 22:00 CET
+                  {t('contactPage.successMono')}
                 </div>
               </div>
             )}
@@ -352,7 +316,7 @@ function ContactPage() {
             {step < 5 && (
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 48, paddingTop: 32, borderTop: '1px solid var(--fg-15)' }}>
                 <button className="btn btn-ghost" onClick={() => setStep(Math.max(0, step - 1))} disabled={step === 0} style={{ opacity: step === 0 ? 0.3 : 1 }}>
-                  ← Back
+                  {t('contactPage.back')}
                 </button>
                 <button
                   className="btn btn-primary"
@@ -365,7 +329,7 @@ function ContactPage() {
                       await submitQuote(data, refNum);
                       setStep(5);
                     } catch {
-                      setSubmitError('Submission failed — please email info@yacht-concierge.me');
+                      setSubmitError(t('contactPage.errorMsg'));
                     } finally {
                       setSubmitting(false);
                     }
@@ -373,7 +337,7 @@ function ContactPage() {
                   disabled={submitting}
                   style={{ opacity: canProceed() && !submitting ? 1 : 0.4, pointerEvents: canProceed() && !submitting ? 'auto' : 'none' }}
                 >
-                  {submitting ? 'Sending...' : step === 4 ? 'Submit Brief' : 'Continue'} <Icons.Arrow size={14}/>
+                  {submitting ? t('contactPage.sending') : step === 4 ? t('contactPage.submit') : t('contactPage.continue')} <Icons.Arrow size={14}/>
                 </button>
                 {submitError && (
                   <div className="mono" style={{ color: '#c0392b', marginTop: 12, fontSize: 10.5, letterSpacing: '0.12em' }}>
@@ -390,9 +354,10 @@ function ContactPage() {
 }
 
 function StepWrap({ title, sub, children }) {
+  const { t } = useTranslation();
   return (
     <div>
-      <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>↳ REQUIRED INFORMATION</div>
+      <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>{t('contactPage.requiredInfo')}</div>
       <h2 className="serif" style={{ fontSize: 36, letterSpacing: '-0.01em', marginBottom: 12 }}>{title}</h2>
       <p style={{ color: 'var(--fg-70)', fontSize: 14, marginBottom: 48, maxWidth: '54ch' }}>{sub}</p>
       {children}
@@ -402,20 +367,19 @@ function StepWrap({ title, sub, children }) {
 
 // ---------- Berths / Fleet page (simple) ----------
 function FleetPage() {
+  const { t } = useTranslation();
   return (
     <main className="page-top">
       <div className="container">
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 96 }}>
           <div>
-            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>↳ OPERATIONAL FOOTPRINT</div></Reveal>
+            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('fleetPage.eyebrow')}</div></Reveal>
             <Reveal delay={80}>
-              <h1 className="display">Berths<br/>& <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>conditions</em>.</h1>
+              <h1 className="display">{t('fleetPage.title1')}<br/>{t('fleetPage.title2')} <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('fleetPage.titleAccent')}</em>.</h1>
             </Reveal>
           </div>
           <Reveal delay={160}>
-            <p className="lede">
-              Our operational footprint spans five marinas along the Montenegrin coast. Contact us directly for current berth availability and seasonal rates.
-            </p>
+            <p className="lede">{t('fleetPage.lede')}</p>
           </Reveal>
         </div>
       </div>
@@ -431,26 +395,27 @@ function FleetPage() {
 // ---------- About page ----------
 function AboutPage() {
   const { setRoute } = useApp();
+  const { t } = useTranslation();
 
   const stats = [
-    { value: '9+',  label: 'Seasons operating' },
-    { value: '450+', label: 'Vessels served' },
-    { value: '5',   label: 'Montenegrin marinas' },
-    { value: '1',   label: 'Dedicated desk' },
+    { value: t('aboutPage.seasons_value'),  label: t('aboutPage.seasons_label') },
+    { value: t('aboutPage.vessels_value'),  label: t('aboutPage.vessels_label') },
+    { value: t('aboutPage.marinas_value'),  label: t('aboutPage.marinas_label') },
+    { value: t('aboutPage.desk_value'),     label: t('aboutPage.desk_label') },
   ];
 
   const team = [
     {
       name:  'Sanja Božović',
       title: 'Founder & CEO',
-      bio:   'Founded Montenegro Charter in 2015 after a decade on the water as a charter captain. Built Yacht Concierge to solve the shore-side gaps she kept encountering — paperwork, provisioning, and the absence of anyone who stayed on a problem until it was resolved.',
+      bio:   t('aboutPage.teamBio_sanja'),
       phone: '38267201655',
       wa:    'Hello Sanja, I would like to enquire about your yacht concierge services in Montenegro.',
     },
     {
       name:  'Iva Erceg',
       title: 'Operations Director',
-      bio:   'Manages real-time logistics across all active vessel files. Former charter coordinator with direct experience in Montenegrin port authority and customs workflows. When the marina office opens at 07:00, Iva is already there.',
+      bio:   t('aboutPage.teamBio_iva'),
       phone: '38267144555',
       wa:    "Hello, I'd like to enquire about yacht concierge services in Montenegro.",
     },
@@ -464,19 +429,17 @@ function AboutPage() {
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 120 }}>
           <div>
             <Reveal>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>↳ ABOUT</div>
+              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('aboutPage.eyebrow')}</div>
             </Reveal>
             <Reveal delay={80}>
               <h1 className="display">
-                The desk behind<br/>
-                <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>seamless arrivals</em>.
+                {t('aboutPage.title1')}<br/>
+                <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('aboutPage.titleAccent')}</em>.
               </h1>
             </Reveal>
           </div>
           <Reveal delay={160}>
-            <p className="lede">
-              Yacht Concierge is the operational arm of Montenegro Charter — the Adriatic's longest-running charter operator. Nine seasons of shore-side experience, one dedicated desk for your vessel.
-            </p>
+            <p className="lede">{t('aboutPage.lede')}</p>
           </Reveal>
         </div>
 
@@ -492,19 +455,13 @@ function AboutPage() {
           }}>
             <div>
               <div className="mono" style={{ color: 'var(--fg-50)', fontSize: 11, letterSpacing: '0.12em' }}>
-                OUR STORY
+                {t('aboutPage.storyLabel')}
               </div>
             </div>
             <div>
-              <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 28 }}>
-                Montenegro Charter was founded in 2015 to bring honest, experienced hands to one of Europe's most underserved sailing grounds. Over nine seasons we built the relationships that make the difference: with port captains, customs offices, provisioning suppliers, and the crews who return year after year.
-              </p>
-              <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 28 }}>
-                Yacht Concierge grew from a straightforward observation: superyacht captains needed someone on the dock who understood the water they came from — not just the regulations of the port they'd arrived at. We created a dedicated operations desk staffed by people who have worked both sides of the gangway.
-              </p>
-              <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 40 }}>
-                Today we handle berth reservations, customs and immigration clearance, provisioning, crew logistics, laundry, floristry, and maintenance coordination for vessels from 30 to 120 metres — across five marinas along the Montenegrin coast.
-              </p>
+              <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 28 }}>{t('aboutPage.story1')}</p>
+              <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 28 }}>{t('aboutPage.story2')}</p>
+              <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 40 }}>{t('aboutPage.story3')}</p>
               <a
                 href="https://montenegrocharter.com"
                 target="_blank"
@@ -512,7 +469,7 @@ function AboutPage() {
                 className="btn btn-outline"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
               >
-                Visit Montenegro Charter
+                {t('aboutPage.visitCharter')}
                 <Icons.Arrow size={15}/>
               </a>
             </div>
@@ -570,10 +527,10 @@ function AboutPage() {
               color: 'var(--fg)',
               marginBottom: 20,
             }}>
-              "We built the kind of service we wanted when we were on the water ourselves — direct, accountable, and with no surprises in the invoice."
+              {t('aboutPage.quote')}
             </p>
             <div className="mono" style={{ fontSize: 11, color: 'var(--fg-50)', letterSpacing: '0.1em' }}>
-              SANJA BOŽOVIĆ — FOUNDER & CEO
+              {t('aboutPage.quoteAuthor')}
             </div>
           </div>
         </Reveal>
@@ -581,8 +538,8 @@ function AboutPage() {
         {/* Team */}
         <SectionHeader
           tag="THE TEAM"
-          title={<>The people<br/>on <em>your file</em>.</>}
-          sub="Two leads. One file. Every request answered by someone with the authority to resolve it."
+          title={<>{t('aboutPage.teamTitle1')}<br/>{t('aboutPage.teamTitle2')} <em>{t('aboutPage.teamTitleAccent')}</em>.</>}
+          sub={t('aboutPage.teamSub')}
         />
 
         <div className="grid-2" style={{ gap: 40, marginBottom: 100, marginTop: 56 }}>
@@ -637,7 +594,7 @@ function AboutPage() {
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                   </svg>
-                  WhatsApp {m.name.split(' ')[0]}
+                  {t('aboutPage.whatsappPrefix')} {m.name.split(' ')[0]}
                 </a>
               </div>
             </Reveal>
@@ -656,9 +613,9 @@ function AboutPage() {
             gap: 0,
           }}>
             {[
-              { label: 'Accountability', text: 'One coordinator owns your file, start to finish. No handoffs, no gaps in the chain.' },
-              { label: 'Transparency',   text: 'Itemised invoicing, rate-card pricing. You know the cost before we move.' },
-              { label: 'Presence',       text: 'We are physically in Tivat. When you need someone at the marina, they are already there.' },
+              { label: t('aboutPage.accountability_label'), text: t('aboutPage.accountability_text') },
+              { label: t('aboutPage.transparency_label'),  text: t('aboutPage.transparency_text') },
+              { label: t('aboutPage.presence_label'),      text: t('aboutPage.presence_text') },
             ].map((v, i) => (
               <div key={i} style={{
                 padding: '0 48px',
@@ -684,24 +641,24 @@ function AboutPage() {
 
 function NotFoundPage() {
   const { setRoute } = useApp();
+  const { t } = useTranslation();
   return (
     <main className="page-top">
       <div className="container" style={{ minHeight: '60vh', display: 'flex', alignItems: 'center' }}>
         <div style={{ maxWidth: 560 }}>
           <Reveal>
             <div className="mono" style={{ color: 'var(--accent)', marginBottom: 24, fontSize: 12, letterSpacing: '0.12em' }}>
-              ↳ ERROR 404
+              {t('notFound.code')}
             </div>
           </Reveal>
           <Reveal delay={60}>
             <h1 className="display" style={{ marginBottom: 32 }}>
-              Page not<br/><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>found</em>.
+              {t('notFound.title1')}<br/><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('notFound.titleAccent')}</em>.
             </h1>
           </Reveal>
           <Reveal delay={120}>
             <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-70)', marginBottom: 48 }}>
-              The page you're looking for doesn't exist or has moved.
-              If you followed a link, it may be outdated.
+              {t('notFound.body')}
             </p>
           </Reveal>
           <Reveal delay={180}>
@@ -711,14 +668,14 @@ function NotFoundPage() {
                 className="btn btn-primary"
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
               >
-                Return home
+                {t('notFound.btnHome')}
                 <Icons.Arrow size={15}/>
               </button>
               <button
                 onClick={() => setRoute({ page: 'contact' })}
                 className="btn btn-outline"
               >
-                Contact us
+                {t('notFound.btnContact')}
               </button>
             </div>
           </Reveal>

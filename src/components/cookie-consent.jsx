@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const GA_ID = 'G-SK94J53BXJ';
 const CONSENT_KEY = 'yc-cookie-consent'; // 'accepted' | 'declined'
@@ -24,6 +25,7 @@ function loadGA4() {
 // ── CookieConsent component ───────────────────────────────────────────────────
 
 export function CookieConsent() {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -76,8 +78,7 @@ export function CookieConsent() {
         maxWidth: 680,
         fontFamily: "'Inter', sans-serif",
       }}>
-        We use analytics cookies (Google Analytics 4) to understand how visitors
-        use this site. No personal data is sold or shared with third parties.{' '}
+        {t('cookie.body')}{' '}
         <a
           href="/privacy"
           onClick={(e) => { e.preventDefault(); window.location.hash = ''; }}
@@ -104,7 +105,7 @@ export function CookieConsent() {
             cursor: 'pointer',
           }}
         >
-          DECLINE
+          {t('cookie.decline').toUpperCase()}
         </button>
         <button
           onClick={accept}
@@ -121,7 +122,7 @@ export function CookieConsent() {
             cursor: 'pointer',
           }}
         >
-          ACCEPT
+          {t('cookie.accept').toUpperCase()}
         </button>
       </div>
     </div>
