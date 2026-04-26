@@ -61,7 +61,7 @@ export function CookieConsent() {
       bottom: 0,
       left: 0,
       right: 0,
-      zIndex: 9000,
+      zIndex: 8999, /* below WhatsApp (9001) so button stays reachable when banner is open */
       background: 'var(--navy, #001730)',
       borderTop: '1px solid rgba(255,255,255,0.12)',
       padding: '20px 32px',

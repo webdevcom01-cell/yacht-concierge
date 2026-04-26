@@ -342,7 +342,13 @@ function ProvisioningPageContent() {
               <div style={{ padding: '96px 32px', textAlign: 'center', border: '1px dashed var(--fg-15)' }}>
                 <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>{t('provisioningPage.noResults')}</div>
                 <div className="serif" style={{ fontSize: 28, marginBottom: 12 }}>{t('provisioningPage.noResultsTitle')}</div>
-                <div style={{ color: 'var(--fg-70)', fontSize: 14 }}>{t('provisioningPage.noResultsBody')}</div>
+                <div style={{ color: 'var(--fg-70)', fontSize: 14, marginBottom: 32 }}>{t('provisioningPage.noResultsBody')}</div>
+                <button
+                  onClick={() => { setCat('all'); setQuery(''); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
+                  className="btn btn-ghost"
+                >
+                  {t('provisioningPage.resetFilters')}
+                </button>
               </div>
             ) : cat === 'all' && groupedProducts ? (
               /* All categories — grouped sections with headers */
