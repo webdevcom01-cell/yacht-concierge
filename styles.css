@@ -812,7 +812,8 @@ html { scroll-behavior: smooth; }
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 20px 28px 40px;
+  /* Mi-1: bottom padding adapts to iPhone home indicator height */
+  padding: 20px 28px max(40px, calc(24px + env(safe-area-inset-bottom, 0px)));
 }
 
 .nav-overlay-header {
@@ -1002,8 +1003,11 @@ html { scroll-behavior: smooth; }
   .service-row > *:nth-child(1) { display: none; }
   .service-row > *:nth-child(5) { display: none; }
 
-  /* M-8: grid-5 no 480px override — principles + cross-sell crush to 144px cells */
+  /* M-8: grid-5 single-column on small phones */
   .grid-5 { grid-template-columns: 1fr; }
+
+  /* Mi-7: stats strip 2-col → 1-col on small phones — 5 items side-by-side crush to ~60px each */
+  .grid-stats-strip { grid-template-columns: 1fr; }
 
   /* CTA button rows: stack vertically, full-width */
   .btn-row { flex-direction: column; }

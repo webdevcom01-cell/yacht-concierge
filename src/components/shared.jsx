@@ -194,6 +194,8 @@ function LangSwitcher() {
           <button
             className="nav-link"
             onClick={() => i18n.changeLanguage(l.code)}
+            aria-pressed={i18n.language === l.code} /* Mi-4: screen readers announce selected language */
+            aria-label={`Switch language to ${l.label}`}
             style={{
               padding: '16px 12px', /* M-4: was 10px 12px (33px) → 16px gives 45px tap height */
               fontFamily: 'var(--mono)',
