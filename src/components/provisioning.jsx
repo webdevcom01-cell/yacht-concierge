@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, createContext, useContext } from 'react';
+import React, { useState, useEffect, useCallback, createContext, useContext, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal } from './shared';
 import { ClosingCTA } from './home-bottom';
@@ -206,6 +206,33 @@ function ProvisioningPageContent() {
     return true;
   });
 
+  // Per-category counts respecting all active filters except the category filter itself
+  const productCounts = useMemo(() => {
+    const counts = {};
+    let all = 0;
+    PRODUCTS.forEach(p => {
+      if (query && !p.name.toLowerCase().includes(query.toLowerCase())) return;
+      if (p.price > priceMax) return;
+      if (taxFreeOnly && !p.taxFree) return;
+      if (sameDayOnly && !p.sameDay) return;
+      if (diet.length && !diet.every(d => (p.diet || []).includes(d))) return;
+      counts[p.cat] = (counts[p.cat] || 0) + 1;
+      all++;
+    });
+    counts.all = all;
+    return counts;
+  }, [query, priceMax, taxFreeOnly, sameDayOnly, diet]);
+
+  // Grouped view: products split by category, used when browsing "all"
+  const groupedProducts = useMemo(() => {
+    if (cat !== 'all') return null;
+    const groups = {};
+    CATEGORY_IDS.filter(id => id !== 'all').forEach(id => {
+      groups[id] = filtered.filter(p => p.cat === id);
+    });
+    return groups;
+  }, [cat, filtered]);
+
   return (
     <>
     <ResumeBanner onOpen={() => setCartOpen(true)}/>
@@ -222,7 +249,7 @@ function ProvisioningPageContent() {
           </a>
         </Reveal>
 
-        {/* Hero — reuses editorial split pattern */}
+        {/* Hero */}
         <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 80 }}>
           <div>
             <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('provisioningPage.eyebrow')}</div></Reveal>
@@ -235,9 +262,9 @@ function ProvisioningPageContent() {
           </Reveal>
         </div>
 
-        {/* Search bar */}
+        {/* Search + cart bar */}
         <Reveal>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: 16, marginBottom: 48, alignItems: 'center', paddingTop: 24, paddingBottom: 24, borderTop: '1px solid var(--fg-15)', borderBottom: '1px solid var(--fg-15)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: 16, marginBottom: 0, alignItems: 'center', paddingTop: 24, paddingBottom: 24, borderTop: '1px solid var(--fg-15)', borderBottom: '1px solid var(--fg-15)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               <span className="mono" style={{ color: 'var(--fg-50)' }}>↳</span>
               <input
@@ -273,40 +300,27 @@ function ProvisioningPageContent() {
           </div>
         </Reveal>
 
-        {/* Mobile filters toggle */}
+        {/* Category tabs — sticky, visible on all screen sizes */}
+        <div className="cat-tabs-row">
+          <CategoryTabs
+            categories={CATEGORIES}
+            active={cat}
+            onChange={setCat}
+            productCounts={productCounts}
+          />
+        </div>
+
+        {/* Mobile refinement filters toggle (price / service / dietary) */}
         <div className="shop-mobile-filters" style={{ marginBottom: 24 }}>
           <button className="btn btn-ghost" onClick={() => setFiltersMobile(v => !v)}>
             {filtersMobile ? t('provisioningPage.hideFilters') : t('provisioningPage.showFilters')}
           </button>
         </div>
 
-        {/* Main grid */}
+        {/* Main layout */}
         <div className="shop-layout" style={{ gap: 56, alignItems: 'start' }}>
-          {/* Filters sidebar */}
-          <aside className={`shop-filters${filtersMobile ? ' shop-filters--open' : ''}`} style={{ position: 'sticky', top: 120 }}>
-            <FilterBlock label={t('provisioningPage.filterCategory')}>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {CATEGORIES.map(c => (
-                  <li key={c.id}>
-                    <button
-                      onClick={() => setCat(c.id)}
-                      style={{
-                        fontFamily: 'var(--sans)',
-                        fontSize: 14,
-                        color: cat === c.id ? 'var(--fg)' : 'var(--fg-70)',
-                        fontWeight: cat === c.id ? 500 : 400,
-                        padding: '4px 0',
-                        borderLeft: cat === c.id ? '2px solid var(--accent)' : '2px solid transparent',
-                        paddingLeft: 10,
-                        transition: 'all 0.2s var(--ease)',
-                        textAlign: 'left',
-                      }}
-                    >{c.label}</button>
-                  </li>
-                ))}
-              </ul>
-            </FilterBlock>
-
+          {/* Refinement sidebar — price, service flags, dietary (no longer contains categories) */}
+          <aside className={`shop-filters${filtersMobile ? ' shop-filters--open' : ''}`} style={{ position: 'sticky', top: 140 }}>
             <FilterBlock label={t('provisioningPage.filterPrice')}>
               <div className="serif" style={{ fontSize: 24, marginBottom: 8 }}>€ {priceMax}</div>
               <input type="range" min="5" max="350" step="5" value={priceMax}
@@ -332,7 +346,7 @@ function ProvisioningPageContent() {
             >{t('provisioningPage.resetFilters')}</button>
           </aside>
 
-          {/* Product grid */}
+          {/* Product area */}
           <div>
             {filtered.length === 0 ? (
               <div style={{ padding: '96px 32px', textAlign: 'center', border: '1px dashed var(--fg-15)' }}>
@@ -340,7 +354,21 @@ function ProvisioningPageContent() {
                 <div className="serif" style={{ fontSize: 28, marginBottom: 12 }}>{t('provisioningPage.noResultsTitle')}</div>
                 <div style={{ color: 'var(--fg-70)', fontSize: 14 }}>{t('provisioningPage.noResultsBody')}</div>
               </div>
+            ) : cat === 'all' && groupedProducts ? (
+              /* All categories — grouped sections with headers */
+              <div>
+                {CATEGORY_IDS.filter(id => id !== 'all').map(id => (
+                  <CategorySection
+                    key={id}
+                    catId={id}
+                    label={t(`provisioningPage.categories.${id}`)}
+                    products={groupedProducts[id] || []}
+                    cart={cart}
+                  />
+                ))}
+              </div>
             ) : (
+              /* Single category or active search — flat grid */
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 1, background: 'var(--fg-08)', border: '1px solid var(--fg-08)' }}>
                 {filtered.map(p => {
                   const inCartQty = cart.cart.find(x => x.id === p.id)?.qty || 0;
@@ -407,6 +435,105 @@ function Toggle({ label, on, onChange }) {
       </span>
       {label}
     </button>
+  );
+}
+
+// ---------- Category tab bar ----------
+function CategoryTabs({ categories, active, onChange, productCounts }) {
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const activeBtn = container.querySelector('[data-active="true"]');
+    if (activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }, [active]);
+
+  return (
+    <div ref={scrollRef} className="cat-tabs-scroll">
+      {categories.map(c => {
+        const isActive = active === c.id;
+        const count = productCounts[c.id] ?? 0;
+        // Hide non-all categories when they have no matching products
+        if (c.id !== 'all' && count === 0) return null;
+        return (
+          <button
+            key={c.id}
+            data-active={String(isActive)}
+            onClick={() => onChange(c.id)}
+            className="cat-tab"
+            style={{
+              background: isActive ? 'var(--accent)' : 'transparent',
+              color: isActive ? '#fff' : 'var(--fg-70)',
+              border: `1px solid ${isActive ? 'var(--accent)' : 'var(--fg-15)'}`,
+            }}
+          >
+            <span>{c.label}</span>
+            {count > 0 && (
+              <span className="cat-tab-count" style={{
+                background: isActive ? 'rgba(255,255,255,0.22)' : 'var(--fg-08)',
+                color: isActive ? '#fff' : 'var(--fg-50)',
+              }}>
+                {count}
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// ---------- Category section (grouped view) ----------
+function CategorySection({ catId, label, products, cart }) {
+  if (products.length === 0) return null;
+  const [accent] = CAT_COLOR[catId] || ['#445566'];
+  return (
+    <section id={`cat-section-${catId}`} style={{ marginBottom: 72 }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 12,
+        marginBottom: 24,
+        paddingBottom: 14,
+        borderBottom: '1px solid var(--fg-08)',
+      }}>
+        <div style={{
+          width: 3,
+          height: 18,
+          background: accent,
+          opacity: 0.85,
+          borderRadius: 1,
+          flexShrink: 0,
+        }}/>
+        <span className="mono" style={{ fontSize: 11, letterSpacing: '0.18em', color: 'var(--fg)' }}>
+          {label.toUpperCase()}
+        </span>
+        <span className="mono" style={{ color: 'var(--fg-30)', fontSize: 9.5 }}>
+          {products.length}
+        </span>
+      </div>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+        gap: 1,
+        background: 'var(--fg-08)',
+        border: '1px solid var(--fg-08)',
+      }}>
+        {products.map(p => {
+          const inCartQty = cart.cart.find(x => x.id === p.id)?.qty || 0;
+          return (
+            <ProductCard
+              key={p.id}
+              p={p}
+              inCartQty={inCartQty}
+              onAdd={() => cart.add(p)}
+              onSetQty={(q) => cart.setQty(p.id, q)}
+            />
+          );
+        })}
+      </div>
+    </section>
   );
 }
 

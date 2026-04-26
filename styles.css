@@ -620,7 +620,48 @@ html { scroll-behavior: smooth; }
 
 /* Base rules for classes already used in JSX (grid props extracted from inline) */
 .service-row { display: grid; grid-template-columns: 60px 60px 1.3fr 2fr 120px; }
-.shop-layout  { display: grid; grid-template-columns: 260px 1fr; }
+.shop-layout  { display: grid; grid-template-columns: 220px 1fr; }
+
+/* ── Category tabs ───────────────────────────────────────────────────────── */
+.cat-tabs-row {
+  position: sticky;
+  top: 72px;
+  z-index: 80;
+  background: var(--bg);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--fg-08);
+  margin-bottom: 40px;
+}
+.cat-tabs-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.cat-tabs-scroll::-webkit-scrollbar { display: none; }
+.cat-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  white-space: nowrap;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.18s var(--ease);
+  flex-shrink: 0;
+}
+.cat-tab:hover { opacity: 0.82; }
+.cat-tab-count {
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 10px;
+  font-weight: 600;
+}
 
 /* Footer bottom bar */
 .footer-bar {
