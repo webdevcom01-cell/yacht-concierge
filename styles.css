@@ -159,6 +159,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   align-items: center;
   gap: 10px;
   padding: 14px 22px;
+  min-height: 44px; /* M-1: was 41.2px — every CTA on the site now meets Apple HIG */
   font-family: var(--mono);
   font-size: 11px;
   letter-spacing: 0.18em;
@@ -278,7 +279,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
+  padding: 15px; /* M-2: was 12px (38px total) → 15px gives 44px with size(14) icon */
 }
 
 .nav-right {
