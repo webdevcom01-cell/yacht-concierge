@@ -787,10 +787,15 @@ function OrderSummaryPageContent() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [refNum] = useState(() => {
+    // Reuse idempotency key for this session so page refreshes don't create duplicate orders
+    const saved = sessionStorage.getItem('yc-order-ref');
+    if (saved) return saved;
     const now = new Date();
     const date = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
     const rand = Math.random().toString(36).slice(2, 7).toUpperCase();
-    return `YC-${date}-${rand}`;
+    const ref = `YC-${date}-${rand}`;
+    sessionStorage.setItem('yc-order-ref', ref);
+    return ref;
   });
 
   // VAT depends on item category and tax-free status — confirmed on coordinator invoice.
@@ -884,6 +889,7 @@ function OrderSummaryPageContent() {
                   setSubmitError('');
                   try {
                     await submitOrder(cart.cart, cart.meta, refNum, cart.subtotal);
+                    sessionStorage.removeItem('yc-order-ref');
                     setConfirmed(true);
                     window.scrollTo({ top: 0 });
                   } catch {

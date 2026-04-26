@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApp } from './shared';
 
-const GA_ID = 'G-SK94J53BXJ';
+const GA_ID = import.meta.env.VITE_GA4_ID || 'G-SK94J53BXJ';
 const CONSENT_KEY = 'yc-cookie-consent'; // 'accepted' | 'declined'
 
 // ── Load GA4 dynamically ──────────────────────────────────────────────────────
