@@ -186,7 +186,6 @@ function ProvisioningPageContent() {
   const [cartOpen, setCartOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [cat, setCat] = useState('all');
-  const [priceMax, setPriceMax] = useState(1000);
   const [taxFreeOnly, setTaxFreeOnly] = useState(false);
   const [sameDayOnly, setSameDayOnly] = useState(false);
   const [diet, setDiet] = useState([]);
@@ -199,7 +198,6 @@ function ProvisioningPageContent() {
   const filtered = PRODUCTS.filter(p => {
     if (cat !== 'all' && p.cat !== cat) return false;
     if (query && !p.name.toLowerCase().includes(query.toLowerCase())) return false;
-    if (p.price > priceMax) return false;
     if (taxFreeOnly && !p.taxFree) return false;
     if (sameDayOnly && !p.sameDay) return false;
     if (diet.length && !diet.every(d => (p.diet || []).includes(d))) return false;
@@ -212,7 +210,6 @@ function ProvisioningPageContent() {
     let all = 0;
     PRODUCTS.forEach(p => {
       if (query && !p.name.toLowerCase().includes(query.toLowerCase())) return;
-      if (p.price > priceMax) return;
       if (taxFreeOnly && !p.taxFree) return;
       if (sameDayOnly && !p.sameDay) return;
       if (diet.length && !diet.every(d => (p.diet || []).includes(d))) return;
@@ -221,7 +218,7 @@ function ProvisioningPageContent() {
     });
     counts.all = all;
     return counts;
-  }, [query, priceMax, taxFreeOnly, sameDayOnly, diet]);
+  }, [query, taxFreeOnly, sameDayOnly, diet]);
 
   // Grouped view: products split by category, used when browsing "all"
   const groupedProducts = useMemo(() => {
@@ -319,15 +316,8 @@ function ProvisioningPageContent() {
 
         {/* Main layout */}
         <div className="shop-layout" style={{ gap: 56, alignItems: 'start' }}>
-          {/* Refinement sidebar — price, service flags, dietary (no longer contains categories) */}
+          {/* Refinement sidebar — service flags and dietary */}
           <aside className={`shop-filters${filtersMobile ? ' shop-filters--open' : ''}`} style={{ position: 'sticky', top: 140 }}>
-            <FilterBlock label={t('provisioningPage.filterPrice')}>
-              <div className="serif" style={{ fontSize: 24, marginBottom: 8 }}>€ {priceMax}</div>
-              <input type="range" min="5" max="1000" step="5" value={priceMax}
-                onChange={e => setPriceMax(Number(e.target.value))}
-                style={{ width: '100%', accentColor: 'var(--accent)' }}/>
-            </FilterBlock>
-
             <FilterBlock label={t('provisioningPage.filterService')}>
               <Toggle label={t('provisioningPage.taxFreeOnly')} on={taxFreeOnly} onChange={setTaxFreeOnly}/>
               <Toggle label={t('provisioningPage.sameDayOnly')} on={sameDayOnly} onChange={setSameDayOnly}/>
@@ -340,7 +330,7 @@ function ProvisioningPageContent() {
             </FilterBlock>
 
             <button
-              onClick={() => { setCat('all'); setQuery(''); setPriceMax(1000); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
+              onClick={() => { setCat('all'); setQuery(''); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
               className="mono"
               style={{ color: 'var(--fg-50)', marginTop: 24, cursor: 'pointer' }}
             >{t('provisioningPage.resetFilters')}</button>
