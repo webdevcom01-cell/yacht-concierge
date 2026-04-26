@@ -195,7 +195,7 @@ function LangSwitcher() {
             className="nav-link"
             onClick={() => i18n.changeLanguage(l.code)}
             style={{
-              padding: '10px 12px', /* C-03: was 4px 6px — ~18px target → ~44px */
+              padding: '16px 12px', /* M-4: was 10px 12px (33px) → 16px gives 45px tap height */
               fontFamily: 'var(--mono)',
               fontSize: 11, /* C-03: was 10 */
               letterSpacing: '0.1em',
@@ -453,15 +453,15 @@ function Footer() {
           <span style={{ display: 'flex', gap: 20 }}>
             <button
               onClick={() => setRoute({ page: 'legal' })}
-              style={{ background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-10: was 0 → 8px vertical tap area */
+              style={{ background: 'none', border: 'none', padding: '16px 4px', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-3: was 8px 0 (28px) → 16px gives 44px tap height */
             >{t('footer.legal')}</button>
             <button
               onClick={() => setRoute({ page: 'privacy' })}
-              style={{ background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-10: was 0 → 8px vertical tap area */
+              style={{ background: 'none', border: 'none', padding: '16px 4px', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-3: was 8px 0 (28px) → 16px gives 44px tap height */
             >{t('footer.privacy')}</button>
             <button
               onClick={() => setRoute({ page: 'terms' })}
-              style={{ background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-10: was 0 → 8px vertical tap area */
+              style={{ background: 'none', border: 'none', padding: '16px 4px', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-3: was 8px 0 (28px) → 16px gives 44px tap height */
             >{t('footer.terms')}</button>
           </span>
         </div>

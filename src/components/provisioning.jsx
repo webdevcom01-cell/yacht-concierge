@@ -418,7 +418,7 @@ function Toggle({ label, on, onChange }) {
     <button
       onClick={() => onChange(!on)}
       style={{
-        display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '6px 0',
+        display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '14px 0', /* M-6: was 6px 0 (28px) → 14px gives 44px tap height */
         fontSize: 13.5, color: on ? 'var(--fg)' : 'var(--fg-70)', textTransform: 'capitalize', textAlign: 'left',
       }}
     >
@@ -619,7 +619,7 @@ function ProductCard({ p, inCartQty, onAdd, onSetQty }) {
             onClick={handleAdd}
             className="mono"
             style={{
-              marginTop: 10, padding: '10px 12px',
+              marginTop: 10, padding: '17px 12px', /* M-5: was 10px 12px (32px) → 17px gives 44px tap height */
               border: `1px solid ${flash ? 'var(--accent)' : 'var(--fg-15)'}`,
               background: flash ? 'var(--accent-soft)' : 'transparent',
               color: flash ? 'var(--accent)' : 'var(--fg)',
