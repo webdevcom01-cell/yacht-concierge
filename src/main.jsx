@@ -174,7 +174,7 @@ function App() {
     <HelmetProvider>
     <AppCtx.Provider value={ctx}>
       <div data-screen-label={labelMap[route.page] || 'Page'}>
-        <PageSEO page={route.page} />
+        <PageSEO page={route.page} id={route.id} />
         <Nav/>
         {Page}
         <Footer/>

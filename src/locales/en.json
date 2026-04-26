@@ -78,7 +78,12 @@
     "totalBerths": "Total Berths",
     "availability": "Availability",
     "availabilityText": "Contact us for current berth availability",
-    "enquire": "Enquire About Availability"
+    "enquire": "Enquire About Availability",
+    "mood_herceg_novi": "GOLDEN HOUR",
+    "mood_porto_montenegro": "MIDNIGHT",
+    "mood_kotor": "MORNING MIST",
+    "mood_budva": "AZURE NOON",
+    "mood_bar": "PRE-DAWN"
   },
   "process": {
     "eyebrow": "05 / PROTOCOL",

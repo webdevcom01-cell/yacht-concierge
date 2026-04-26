@@ -50,9 +50,10 @@ const MARINA_PALETTES = {
   },
 };
 
-function MarinaSVG({ id }) {
+function MarinaSVG({ id, label }) {
   const p = MARINA_PALETTES[id] || MARINA_PALETTES['porto-montenegro'];
   const isKotor = id === 'kotor';
+  const moodLabel = label || p.label;
   return (
     <svg
       viewBox="0 0 400 260"
@@ -122,7 +123,7 @@ function MarinaSVG({ id }) {
       {/* Corner label */}
       <text x="12" y="252" fontFamily="monospace" fontSize="8"
         letterSpacing="2" fill="rgba(239,234,226,0.35)" textAnchor="start">
-        {p.label}
+        {moodLabel}
       </text>
     </svg>
   );
@@ -170,7 +171,7 @@ function CoastMap() {
               <div style={{ border: '1px solid var(--fg-08)', background: 'var(--bg-raised)', overflow: 'hidden' }}>
                 {/* Marina illustration */}
                 <div style={{ height: 180, overflow: 'hidden' }}>
-                  <MarinaSVG id={selected} />
+                  <MarinaSVG id={selected} label={t(`map.mood_${selected.replace(/-/g, '_')}`)} />
                 </div>
                 {/* Info panel */}
                 <div style={{ padding: '28px 32px 32px' }}>

@@ -78,7 +78,12 @@
     "totalBerths": "Posti totali",
     "availability": "Disponibilità",
     "availabilityText": "Contattateci per la disponibilità attuale",
-    "enquire": "Richiedi disponibilità"
+    "enquire": "Richiedi disponibilità",
+    "mood_herceg_novi": "ORA D'ORO",
+    "mood_porto_montenegro": "MEZZANOTTE",
+    "mood_kotor": "NEBBIA MATTUTINA",
+    "mood_budva": "MEZZOGIORNO AZZURRO",
+    "mood_bar": "PREDAWN"
   },
   "process": {
     "eyebrow": "05 / PROTOCOLLO",

@@ -62,6 +62,43 @@ const SEO_DATA = {
     url: 'https://yacht-concierge.me/terms',
     breadcrumb: [{ name: 'Terms of Service', url: 'https://yacht-concierge.me/terms' }],
   },
+  // ── Service detail pages ──────────────────────────────────────────────────
+  'service-berth': {
+    title: 'Berth Reservations — Yacht Concierge Montenegro',
+    description: 'Priority berth reservations at Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar. 24-hour confirmation with customs coordination included.',
+    url: 'https://yacht-concierge.me/services/berth',
+    breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Berth Reservations', url: 'https://yacht-concierge.me/services/berth' }],
+  },
+  'service-customs': {
+    title: 'Customs & Immigration — Yacht Concierge Montenegro',
+    description: 'Full Montenegrin customs and immigration clearance for superyachts. All documentation handled from your berth — no agent handoffs, no delays.',
+    url: 'https://yacht-concierge.me/services/customs',
+    breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Customs & Immigration', url: 'https://yacht-concierge.me/services/customs' }],
+  },
+  'service-provisioning': {
+    title: 'Provisioning — Yacht Concierge Montenegro',
+    description: 'Galley-standard provisioning for superyachts in Montenegro. Fresh produce, premium beverages, and duty-free procurement with same-day berth delivery.',
+    url: 'https://yacht-concierge.me/services/provisioning',
+    breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Provisioning', url: 'https://yacht-concierge.me/services/provisioning' }],
+  },
+  'service-laundry': {
+    title: 'Laundry & Valeting — Yacht Concierge Montenegro',
+    description: 'Professional laundry, dry cleaning, and uniform care for superyacht crews. Berth collection and same-day return at Porto Montenegro and partner marinas.',
+    url: 'https://yacht-concierge.me/services/laundry',
+    breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Laundry & Valeting', url: 'https://yacht-concierge.me/services/laundry' }],
+  },
+  'service-floristry': {
+    title: 'Floristry — Yacht Concierge Montenegro',
+    description: 'Fresh floral arrangements for superyachts at Montenegrin marinas. Daily-sourced local flowers with charter-standard presentation and berth delivery.',
+    url: 'https://yacht-concierge.me/services/floristry',
+    breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Floristry', url: 'https://yacht-concierge.me/services/floristry' }],
+  },
+  'service-maintenance': {
+    title: 'Maintenance Coordination — Yacht Concierge Montenegro',
+    description: 'Scheduled and emergency maintenance for superyachts in Montenegro. One point of contact, vetted local contractors, full progress reporting.',
+    url: 'https://yacht-concierge.me/services/maintenance',
+    breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Maintenance', url: 'https://yacht-concierge.me/services/maintenance' }],
+  },
 };
 
 const OG_IMAGE  = 'https://yacht-concierge.me/og-image.jpg';
@@ -182,8 +219,9 @@ function buildBreadcrumb(crumbs) {
 
 // ── PageSEO component ─────────────────────────────────────────────────────────
 
-export function PageSEO({ page }) {
-  const data       = SEO_DATA[page] || SEO_DATA.home;
+export function PageSEO({ page, id }) {
+  const key        = page === 'service' ? `service-${id}` : page;
+  const data       = SEO_DATA[key] || SEO_DATA.home;
   const breadcrumb = buildBreadcrumb(data.breadcrumb);
 
   return (
@@ -191,6 +229,12 @@ export function PageSEO({ page }) {
       <title>{data.title}</title>
       <meta name="description" content={data.description} />
       <link rel="canonical" href={data.url} />
+
+      {/* hreflang — multilingual content, same URL for all languages */}
+      <link rel="alternate" hreflang="en"       href={data.url} />
+      <link rel="alternate" hreflang="ru"       href={data.url} />
+      <link rel="alternate" hreflang="it"       href={data.url} />
+      <link rel="alternate" hreflang="x-default" href={data.url} />
 
       {/* Open Graph */}
       <meta property="og:title"       content={data.title} />

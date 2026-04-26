@@ -78,7 +78,12 @@
     "totalBerths": "Всего мест",
     "availability": "Доступность",
     "availabilityText": "Свяжитесь с нами для актуальной информации",
-    "enquire": "Запросить место"
+    "enquire": "Запросить место",
+    "mood_herceg_novi": "ЗОЛОТОЙ ЧАС",
+    "mood_porto_montenegro": "ПОЛНОЧЬ",
+    "mood_kotor": "УТРЕННИЙ ТУМАН",
+    "mood_budva": "ЛАЗУРНЫЙ ПОЛДЕНЬ",
+    "mood_bar": "ПРЕДРАССВЕТ"
   },
   "process": {
     "eyebrow": "05 / ПРОТОКОЛ",
