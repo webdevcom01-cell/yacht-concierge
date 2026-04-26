@@ -129,6 +129,7 @@ function MarinaSVG({ id }) {
 }
 
 function CoastMap() {
+  const { setRoute } = useApp();
   const { t } = useTranslation();
   const [selected, setSelected] = useState('porto-montenegro');
   const ports = [
@@ -189,7 +190,7 @@ function CoastMap() {
                     </div>
                   </div>
                   <button className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }}
-                    onClick={() => {/* contact */}}>
+                    onClick={() => setRoute({ page: 'contact', service: 'berth' })}>
                     {t('map.enquire')} <Icons.Arrow size={14}/>
                   </button>
                 </div>
@@ -320,7 +321,7 @@ function TestimonialsSection() {
           lede={t('testimonials.lede')}
         />
         <div className="grid-3" style={{ gap: 32, marginTop: 56 }}>
-          {testimonials.map((t, i) => (
+          {testimonials.map((item, i) => (
             <Reveal key={i} delay={i * 100}>
               <div style={{
                 background: 'var(--bg-raised, var(--bg))',
@@ -351,7 +352,7 @@ function TestimonialsSection() {
                   flex: 1,
                   marginBottom: 32,
                 }}>
-                  {t.quote}
+                  {item.quote}
                 </p>
 
                 {/* Rule */}
@@ -367,10 +368,10 @@ function TestimonialsSection() {
                     color: 'var(--fg)',
                     marginBottom: 6,
                   }}>
-                    {t.name}
+                    {item.name}
                   </div>
                   <div className="mono" style={{ fontSize: 10, color: 'var(--fg-50)', letterSpacing: '0.08em' }}>
-                    {t.detail}
+                    {item.detail}
                   </div>
                 </div>
               </div>
