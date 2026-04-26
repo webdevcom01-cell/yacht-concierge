@@ -579,11 +579,19 @@ html { scroll-behavior: smooth; }
 /* Stats strip — 5 horizontal live-data items */
 .grid-stats-strip { display: grid; grid-template-columns: repeat(5, 1fr); }
 
+/* Services section header — elegant gap between heading block and card grid */
+.services-preview-header { margin-bottom: 64px; }
+
 /* Services preview grid — density controlled via modifier classes */
 .services-grid                 { display: grid; }
 .services-grid--standard       { grid-template-columns: repeat(3, 1fr); }
 .services-grid--loose          { grid-template-columns: repeat(2, 1fr); }
 .services-grid--dense          { grid-template-columns: repeat(4, 1fr); }
+
+/* Grid cell alignment: Reveal wrapper + card must both fill the grid cell
+   so that borderRight/borderBottom extend the full row height */
+.services-grid .reveal         { height: 100%; }
+.services-grid .service-card   { height: 100%; box-sizing: border-box; }
 
 /* 4-column — stats block, process steps */
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); }
