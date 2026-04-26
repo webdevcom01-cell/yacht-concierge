@@ -194,7 +194,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 }
 
 .btn-link {
-  padding: 8px 0;
+  padding: 12px 0; /* M-7: was 8px (29px total) → 12px gives 44px tap height */
   border-bottom: 1px solid var(--fg-30);
   display: inline-flex;
   align-items: center;
@@ -619,6 +619,9 @@ html { scroll-behavior: smooth; }
 /* 5-column — principles, cross-sell related services */
 .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); }
 
+/* M-12: filter toggle hidden on desktop; shown only inside ≤768px breakpoint */
+.shop-mobile-filters { display: none; }
+
 /* Coast map — map panel + detail panel */
 .grid-map { display: grid; grid-template-columns: 1.4fr 1fr; }
 
@@ -998,6 +1001,9 @@ html { scroll-behavior: smooth; }
   }
   .service-row > *:nth-child(1) { display: none; }
   .service-row > *:nth-child(5) { display: none; }
+
+  /* M-8: grid-5 no 480px override — principles + cross-sell crush to 144px cells */
+  .grid-5 { grid-template-columns: 1fr; }
 
   /* CTA button rows: stack vertically, full-width */
   .btn-row { flex-direction: column; }

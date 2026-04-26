@@ -261,8 +261,8 @@ function ProvisioningPageContent() {
 
         {/* Search + cart bar */}
         <Reveal>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: 16, marginBottom: 0, alignItems: 'center', paddingTop: 24, paddingBottom: 24, borderTop: '1px solid var(--fg-15)', borderBottom: '1px solid var(--fg-15)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 0, alignItems: 'center', paddingTop: 24, paddingBottom: 24, borderTop: '1px solid var(--fg-15)', borderBottom: '1px solid var(--fg-15)' }}> {/* M-9: was 1fr auto auto grid — auto cols overflow on 320px; flex+wrap collapses safely */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 1, minWidth: 200 }}>
               <span className="mono" style={{ color: 'var(--fg-50)' }}>↳</span>
               <input
                 className="field-input"
@@ -666,7 +666,7 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
       />
       <aside style={{
         position: 'fixed', top: 0, right: 0, bottom: 0, width: 'min(520px, 100vw)',
-        background: 'var(--bg-raised)', zIndex: 200,
+        background: 'var(--bg-raised)', zIndex: 201, /* M-10: was 200 = nav z-index → 201 ensures drawer renders above nav glass */
         transform: open ? 'translateX(0)' : 'translateX(100%)',
         transition: 'transform 0.5s var(--ease)', display: 'flex', flexDirection: 'column',
         borderLeft: '1px solid var(--fg-15)',
