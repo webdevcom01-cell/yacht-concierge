@@ -389,7 +389,7 @@ function ProvisioningPageContent() {
         <button
           onClick={() => setCartOpen(true)}
           className="btn btn-primary"
-          style={{ position: 'fixed', bottom: 104, right: 28, zIndex: 90, boxShadow: '0 12px 40px rgba(0,23,48,0.25)' }}
+          style={{ position: 'fixed', bottom: 104, right: 28, zIndex: 9002, boxShadow: '0 12px 40px rgba(0,23,48,0.25)' }}
         >
           <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, background: 'rgba(255,255,255,0.25)', borderRadius: '50%', fontSize: 11, fontWeight: 700, marginRight: 8 }}>{cart.count}</span>
           € {cart.subtotal.toFixed(2)} <Icons.Arrow size={13}/>
@@ -603,14 +603,14 @@ function ProductCard({ p, inCartQty, onAdd, onSetQty }) {
           <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', border: '1px solid var(--accent)' }}>
             <button
               onClick={() => onSetQty(inCartQty - 1)}
-              style={{ flex: 1, padding: '9px 0', fontFamily: 'var(--mono)', fontSize: 16, color: 'var(--accent)', borderRight: '1px solid var(--accent)' }}
+              style={{ flex: 1, padding: '14px 0', fontFamily: 'var(--mono)', fontSize: 16, color: 'var(--accent)', borderRight: '1px solid var(--accent)' }}
             >−</button>
             <span style={{ flex: 1, textAlign: 'center', fontFamily: 'var(--mono)', fontSize: 13, color: 'var(--accent)', fontWeight: 600 }}>
               {inCartQty}
             </span>
             <button
               onClick={handleAdd}
-              style={{ flex: 1, padding: '9px 0', fontFamily: 'var(--mono)', fontSize: 16, color: 'var(--accent)', borderLeft: '1px solid var(--accent)' }}
+              style={{ flex: 1, padding: '14px 0', fontFamily: 'var(--mono)', fontSize: 16, color: 'var(--accent)', borderLeft: '1px solid var(--accent)' }}
             >+</button>
           </div>
         ) : (
@@ -696,9 +696,9 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
                       <div className="mono" style={{ color: 'var(--fg-50)', marginTop: 4, fontSize: 9.5 }}>€ {it.price.toFixed(2)} / {it.unit}{it.taxFree && ` · ${t('provisioningPage.taxFreeLabel')}`}</div>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--fg-15)' }}>
-                      <button onClick={() => setQty(it.id, it.qty - 1)} style={{ padding: '6px 12px', fontFamily: 'var(--mono)' }}>−</button>
+                      <button onClick={() => setQty(it.id, it.qty - 1)} style={{ padding: '13px 16px', fontFamily: 'var(--mono)' }}>−</button>
                       <span style={{ minWidth: 28, textAlign: 'center', fontFamily: 'var(--mono)', fontSize: 12 }}>{it.qty}</span>
-                      <button onClick={() => setQty(it.id, it.qty + 1)} style={{ padding: '6px 12px', fontFamily: 'var(--mono)' }}>+</button>
+                      <button onClick={() => setQty(it.id, it.qty + 1)} style={{ padding: '13px 16px', fontFamily: 'var(--mono)' }}>+</button>
                     </div>
                     <div className="serif" style={{ fontSize: 17, minWidth: 70, textAlign: 'right' }}>€ {(it.price * it.qty).toFixed(2)}</div>
                   </div>

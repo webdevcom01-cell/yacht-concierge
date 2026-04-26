@@ -64,7 +64,8 @@ export function CookieConsent() {
       zIndex: 8999, /* below WhatsApp (9001) so button stays reachable when banner is open */
       background: 'var(--navy, #001730)',
       borderTop: '1px solid rgba(255,255,255,0.12)',
-      padding: '20px 32px',
+      padding: 'clamp(16px, 4vw, 20px) clamp(16px, 4vw, 32px)',
+      paddingBottom: 'max(clamp(16px, 4vw, 20px), env(safe-area-inset-bottom, 16px))',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',

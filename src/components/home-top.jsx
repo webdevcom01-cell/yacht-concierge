@@ -10,12 +10,12 @@ function HeroEditorial() {
   const { setRoute } = useApp();
   const { t } = useTranslation();
   return (
-    <section style={{ paddingTop: 140, paddingBottom: 80 }}>
+    <section style={{ paddingTop: 'clamp(80px, 15vw, 140px)', paddingBottom: 80 }}>
       <div className="container">
         <div className="grid-hero" style={{ gap: 72, alignItems: 'end' }}>
           <div>
             <Reveal>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 36, display: 'flex', gap: 24 }}>
+              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 36, display: 'flex', flexWrap: 'wrap', gap: '8px 24px' }}>
                 <span>{t('hero.eyebrow')}</span>
                 <span>—</span>
                 <span>{t('hero.eyebrow2')}</span>
@@ -104,7 +104,7 @@ function HeroOversized() {
   const { setRoute } = useApp();
   const { t } = useTranslation();
   return (
-    <section style={{ paddingTop: 180, paddingBottom: 80 }}>
+    <section style={{ paddingTop: 'clamp(100px, 18vw, 180px)', paddingBottom: 80 }}>
       <div className="container">
         <Reveal>
           <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 48, display: 'flex', justifyContent: 'space-between' }}>
