@@ -7,8 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 // (not a valid image) but GAS receives and processes the request normally.
 function postJSON(payload) {
   if (!API_URL) {
-    console.warn('[submit] VITE_API_URL not set — submission skipped in dev');
-    return Promise.resolve({ result: 'dev-skip' });
+    throw new Error('API endpoint not configured — set VITE_API_URL in your environment');
   }
   const url = API_URL + '?payload=' + encodeURIComponent(JSON.stringify(payload));
   new Image().src = url;

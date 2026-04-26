@@ -168,12 +168,12 @@ function ContactPage() {
                   <StepWrap title={t('contactPage.step0_title')} sub={t('contactPage.step0_sub')}>
                     <div className="grid-2" style={{ gap: 32 }}>
                       <div className="field">
-                        <label className="field-label">{t('contactPage.fieldName')}</label>
-                        <input className="field-input" value={data.name} onChange={e => update('name', e.target.value)} placeholder="Eleanor Vance"/>
+                        <label className="field-label" htmlFor="cf-name">{t('contactPage.fieldName')}</label>
+                        <input id="cf-name" className="field-input" value={data.name} onChange={e => update('name', e.target.value)} placeholder="Eleanor Vance"/>
                       </div>
                       <div className="field">
-                        <label className="field-label">{t('contactPage.fieldRole')}</label>
-                        <select className="field-select" value={data.role} onChange={e => update('role', e.target.value)}>
+                        <label className="field-label" htmlFor="cf-role">{t('contactPage.fieldRole')}</label>
+                        <select id="cf-role" className="field-select" value={data.role} onChange={e => update('role', e.target.value)}>
                           <option value="captain">{t('contactPage.roleCaption')}</option>
                           <option value="manager">{t('contactPage.roleManager')}</option>
                           <option value="owner">{t('contactPage.roleOwner')}</option>
@@ -187,16 +187,16 @@ function ContactPage() {
                   <StepWrap title={t('contactPage.step1_title')} sub={t('contactPage.step1_sub')}>
                     <div className="grid-contact-vessel" style={{ gap: 32 }}>
                       <div className="field">
-                        <label className="field-label">{t('contactPage.fieldVessel')}</label>
-                        <input className="field-input" value={data.yacht} onChange={e => update('yacht', e.target.value)} placeholder="M/Y Atlas"/>
+                        <label className="field-label" htmlFor="cf-yacht">{t('contactPage.fieldVessel')}</label>
+                        <input id="cf-yacht" className="field-input" value={data.yacht} onChange={e => update('yacht', e.target.value)} placeholder="M/Y Atlas"/>
                       </div>
                       <div className="field">
-                        <label className="field-label">{t('contactPage.fieldLoa')}</label>
-                        <input className="field-input" type="number" value={data.loa} onChange={e => update('loa', e.target.value)} placeholder="73"/>
+                        <label className="field-label" htmlFor="cf-loa">{t('contactPage.fieldLoa')}</label>
+                        <input id="cf-loa" className="field-input" type="number" min="24" max="300" step="0.1" value={data.loa} onChange={e => update('loa', e.target.value)} placeholder="73"/>
                       </div>
                       <div className="field">
-                        <label className="field-label">{t('contactPage.fieldFlag')}</label>
-                        <input className="field-input" value={data.flag} onChange={e => update('flag', e.target.value)} placeholder="Cayman Is."/>
+                        <label className="field-label" htmlFor="cf-flag">{t('contactPage.fieldFlag')}</label>
+                        <input id="cf-flag" className="field-input" value={data.flag} onChange={e => update('flag', e.target.value)} placeholder="Cayman Is."/>
                       </div>
                     </div>
                   </StepWrap>
@@ -205,12 +205,12 @@ function ContactPage() {
                   <StepWrap title={t('contactPage.step2_title')} sub={t('contactPage.step2_sub')}>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 32 }}>
                       <div className="field">
-                        <label className="field-label">{t('contactPage.fieldEta')}</label>
-                        <input className="field-input" type="date" value={data.eta} onChange={e => update('eta', e.target.value)}/>
+                        <label className="field-label" htmlFor="cf-eta">{t('contactPage.fieldEta')}</label>
+                        <input id="cf-eta" className="field-input" type="date" value={data.eta} onChange={e => update('eta', e.target.value)}/>
                       </div>
                       <div className="field">
-                        <label className="field-label">{t('contactPage.fieldEtd')}</label>
-                        <input className="field-input" type="date" value={data.etd} onChange={e => update('etd', e.target.value)}/>
+                        <label className="field-label" htmlFor="cf-etd">{t('contactPage.fieldEtd')}</label>
+                        <input id="cf-etd" className="field-input" type="date" value={data.etd} onChange={e => update('etd', e.target.value)}/>
                       </div>
                     </div>
                     <div className="field">
@@ -272,8 +272,8 @@ function ContactPage() {
                       })}
                     </div>
                     <div className="field mt-32">
-                      <label className="field-label">{t('contactPage.fieldNotes')}</label>
-                      <textarea className="field-textarea" value={data.notes} onChange={e => update('notes', e.target.value)} placeholder={t('contactPage.notesPlaceholder')}/>
+                      <label className="field-label" htmlFor="cf-notes">{t('contactPage.fieldNotes')}</label>
+                      <textarea id="cf-notes" className="field-textarea" value={data.notes} onChange={e => update('notes', e.target.value)} placeholder={t('contactPage.notesPlaceholder')}/>
                     </div>
                   </StepWrap>
                 )}
@@ -281,12 +281,12 @@ function ContactPage() {
                   <StepWrap title={t('contactPage.step4_title')} sub={t('contactPage.step4_sub')}>
                     <div className="grid-2" style={{ gap: 32 }}>
                       <div className="field">
-                        <label className="field-label">{t('contactPage.fieldEmail')}</label>
-                        <input className="field-input" type="email" value={data.email} onChange={e => update('email', e.target.value)} placeholder="captain@atlas.example"/>
+                        <label className="field-label" htmlFor="cf-email">{t('contactPage.fieldEmail')}</label>
+                        <input id="cf-email" className="field-input" type="email" value={data.email} onChange={e => update('email', e.target.value)} placeholder="captain@atlas.example"/>
                       </div>
                       <div className="field">
-                        <label className="field-label">{t('contactPage.fieldPhone')}</label>
-                        <input className="field-input" value={data.phone} onChange={e => update('phone', e.target.value)} placeholder="+44 7700 900 000"/>
+                        <label className="field-label" htmlFor="cf-phone">{t('contactPage.fieldPhone')}</label>
+                        <input id="cf-phone" className="field-input" value={data.phone} onChange={e => update('phone', e.target.value)} placeholder="+44 7700 900 000"/>
                       </div>
                     </div>
                     <div style={{ marginTop: 48, padding: 24, background: 'var(--bg-warm)', border: '1px solid var(--fg-08)' }}>
