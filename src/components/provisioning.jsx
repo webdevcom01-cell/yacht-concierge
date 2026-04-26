@@ -186,7 +186,7 @@ function ProvisioningPageContent() {
   const [cartOpen, setCartOpen] = useState(false);
   const [query, setQuery] = useState('');
   const [cat, setCat] = useState('all');
-  const [priceMax, setPriceMax] = useState(350);
+  const [priceMax, setPriceMax] = useState(1000);
   const [taxFreeOnly, setTaxFreeOnly] = useState(false);
   const [sameDayOnly, setSameDayOnly] = useState(false);
   const [diet, setDiet] = useState([]);
@@ -323,7 +323,7 @@ function ProvisioningPageContent() {
           <aside className={`shop-filters${filtersMobile ? ' shop-filters--open' : ''}`} style={{ position: 'sticky', top: 140 }}>
             <FilterBlock label={t('provisioningPage.filterPrice')}>
               <div className="serif" style={{ fontSize: 24, marginBottom: 8 }}>€ {priceMax}</div>
-              <input type="range" min="5" max="350" step="5" value={priceMax}
+              <input type="range" min="5" max="1000" step="5" value={priceMax}
                 onChange={e => setPriceMax(Number(e.target.value))}
                 style={{ width: '100%', accentColor: 'var(--accent)' }}/>
             </FilterBlock>
@@ -340,7 +340,7 @@ function ProvisioningPageContent() {
             </FilterBlock>
 
             <button
-              onClick={() => { setCat('all'); setQuery(''); setPriceMax(350); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
+              onClick={() => { setCat('all'); setQuery(''); setPriceMax(1000); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
               className="mono"
               style={{ color: 'var(--fg-50)', marginTop: 24, cursor: 'pointer' }}
             >{t('provisioningPage.resetFilters')}</button>
