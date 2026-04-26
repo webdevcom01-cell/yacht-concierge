@@ -7,27 +7,31 @@ import { PageSEO } from './seo.jsx';
 import { HomePage } from './components/home-bottom';
 import { ServicesPage, ServiceDetailPage } from './components/services';
 import { ProcessPage, ContactPage, FleetPage, AboutPage, NotFoundPage } from './components/pages';
-import { LegalNoticePage, PrivacyPage, TermsPage } from './components/legal';
-import { ProvisioningPage, OrderSummaryPage } from './components/provisioning';
 import { CookieConsent } from './components/cookie-consent';
 import '../styles.css';
-import '@fontsource/cormorant-garamond/300.css';
+// N6: Reduced from 17 → 10 font imports — dropped unused weights/styles
+// Cormorant: 400 + 400-italic only (dropped 300, 500, 300-italic, 500-italic)
 import '@fontsource/cormorant-garamond/400.css';
-import '@fontsource/cormorant-garamond/500.css';
-import '@fontsource/cormorant-garamond/300-italic.css';
 import '@fontsource/cormorant-garamond/400-italic.css';
-import '@fontsource/cormorant-garamond/500-italic.css';
+// EB Garamond: default heading font — keep both weights
 import '@fontsource/eb-garamond/400.css';
 import '@fontsource/eb-garamond/400-italic.css';
+// Fraunces: 400 + 400-italic only (dropped 500)
 import '@fontsource/fraunces/400.css';
-import '@fontsource/fraunces/500.css';
 import '@fontsource/fraunces/400-italic.css';
-import '@fontsource/inter/300.css';
+// Inter: keep 400, 500, 600 (dropped 300 — unused in CSS)
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/inter/600.css';
+// JetBrains Mono: 400 only (dropped 500 — unused in CSS)
 import '@fontsource/jetbrains-mono/400.css';
-import '@fontsource/jetbrains-mono/500.css';
+
+// N6: Lazy-load heavy route components — provisioning ~40% of bundle, legal ~8%
+const ProvisioningPage  = React.lazy(() => import('./components/provisioning').then(m => ({ default: m.ProvisioningPage })));
+const OrderSummaryPage  = React.lazy(() => import('./components/provisioning').then(m => ({ default: m.OrderSummaryPage })));
+const LegalNoticePage   = React.lazy(() => import('./components/legal').then(m => ({ default: m.LegalNoticePage })));
+const PrivacyPage       = React.lazy(() => import('./components/legal').then(m => ({ default: m.PrivacyPage })));
+const TermsPage         = React.lazy(() => import('./components/legal').then(m => ({ default: m.TermsPage })));
 
 const TWEAKS = {
   "theme": "light",
@@ -176,7 +180,9 @@ function App() {
       <div data-screen-label={labelMap[route.page] || 'Page'}>
         <PageSEO page={route.page} id={route.id} />
         <Nav/>
-        {Page}
+        <React.Suspense fallback={<div style={{ minHeight: '60vh' }}/>}>
+          {Page}
+        </React.Suspense>
         <Footer/>
         <WhatsAppFloat/>
         <CookieConsent/>
