@@ -973,6 +973,9 @@ html { scroll-behavior: smooth; }
 
   /* M-07: About story grid: 1fr 2fr → single column on mobile */
   .about-story { grid-template-columns: 1fr; gap: 32px; }
+
+  /* C-4: HeroOversized 6-label eyebrow overflows by ~225px on 375px — hide on mobile */
+  .hero-oversized-eyebrow { display: none; }
 }
 
 /* ============ Breakpoint 480px — Small Phone ============ */

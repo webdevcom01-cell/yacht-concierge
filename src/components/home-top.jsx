@@ -107,7 +107,7 @@ function HeroOversized() {
     <section style={{ paddingTop: 'clamp(100px, 18vw, 180px)', paddingBottom: 80 }}>
       <div className="container">
         <Reveal>
-          <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 48, display: 'flex', justifyContent: 'space-between' }}>
+          <div className="mono hero-oversized-eyebrow" style={{ color: 'var(--fg-50)', marginBottom: 48, display: 'flex', justifyContent: 'space-between', overflow: 'hidden' }}>
             <span>A / BERTH</span><span>B / CUSTOMS</span><span>C / PROVISIONING</span><span>D / LAUNDRY</span><span>E / FLORISTRY</span><span>F / MAINTENANCE</span>
           </div>
         </Reveal>

@@ -158,7 +158,7 @@ function ResumeBanner({ onOpen }) {
         <button
           onClick={() => { cart.clear(); setDismissed(true); }}
           className="mono"
-          style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10, letterSpacing: '0.08em', background: 'none', border: 'none', cursor: 'pointer' }}
+          style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10, letterSpacing: '0.08em', background: 'none', border: 'none', cursor: 'pointer', padding: '14px 12px', minHeight: 44 }}
         >
           {t('provisioningPage.resumeBannerClear')}
         </button>
@@ -676,7 +676,7 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
             <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 6 }}>{t('provisioningPage.cartOrder')}</div>
             <div className="serif" style={{ fontSize: 28, letterSpacing: '-0.01em' }}>{t('provisioningPage.cartTitle')}</div>
           </div>
-          <button onClick={onClose} style={{ color: 'var(--fg-70)' }}><Icons.Close size={18}/></button>
+          <button onClick={onClose} style={{ color: 'var(--fg-70)', padding: 13, margin: -13, lineHeight: 0 }}><Icons.Close size={18}/></button>
         </div>
 
         <div style={{ flex: 1, overflowY: 'auto', padding: 32 }}>

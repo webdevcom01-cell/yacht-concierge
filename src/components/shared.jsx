@@ -90,7 +90,7 @@ function WhatsAppFloat() {
       <style>{`
         .wa-float {
           position: fixed;
-          bottom: 28px;
+          bottom: max(28px, calc(28px + env(safe-area-inset-bottom, 0px)));
           right: 28px;
           z-index: 9001; /* above cookie banner (8999) */
           width: 58px;
