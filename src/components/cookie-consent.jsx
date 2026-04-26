@@ -86,7 +86,7 @@ export function CookieConsent() {
           onClick={(e) => { e.preventDefault(); setRoute({ page: 'privacy' }); }}
           style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'underline', textUnderlineOffset: 3 }}
         >
-          Privacy Policy
+          {t('cookie.privacyLink')}
         </a>
       </p>
 

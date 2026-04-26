@@ -262,6 +262,7 @@
     "desk_label": "Desk dedicato",
     "quote": "«Abbiamo costruito il servizio che avremmo voluto ricevere quando eravamo noi sull'acqua — diretto, responsabile, senza sorprese in fattura.»",
     "quoteAuthor": "SANJA BOŽOVIĆ — FONDATRICE E CEO",
+    "teamEyebrow": "IL TEAM",
     "teamTitle1": "Le persone",
     "teamTitle2": "nel",
     "teamTitleAccent": "vostro file",
@@ -288,7 +289,8 @@
     "title": "Utilizziamo i cookie",
     "body": "Utilizziamo Google Analytics per capire come i visitatori usano questo sito. Nessun dato personale viene venduto o condiviso con terze parti.",
     "accept": "Accetta",
-    "decline": "Rifiuta"
+    "decline": "Rifiuta",
+    "privacyLink": "Informativa sulla privacy"
   },
   "servicesPage": {
     "eyebrow": "↳ INDICE SERVIZI",

@@ -262,6 +262,7 @@
     "desk_label": "Dedicated desk",
     "quote": "\"We built the kind of service we wanted when we were on the water ourselves — direct, accountable, and with no surprises in the invoice.\"",
     "quoteAuthor": "SANJA BOŽOVIĆ — FOUNDER & CEO",
+    "teamEyebrow": "THE TEAM",
     "teamTitle1": "The people",
     "teamTitle2": "on",
     "teamTitleAccent": "your file",
@@ -288,7 +289,8 @@
     "title": "We use cookies",
     "body": "We use Google Analytics to understand how visitors use this site. No personal data is sold or shared with third parties.",
     "accept": "Accept",
-    "decline": "Decline"
+    "decline": "Decline",
+    "privacyLink": "Privacy Policy"
   },
   "servicesPage": {
     "eyebrow": "↳ SERVICES INDEX",

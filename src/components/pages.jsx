@@ -539,9 +539,9 @@ function AboutPage() {
 
         {/* Team */}
         <SectionHeader
-          tag="THE TEAM"
+          eyebrow={t('aboutPage.teamEyebrow')}
           title={<>{t('aboutPage.teamTitle1')}<br/>{t('aboutPage.teamTitle2')} <em>{t('aboutPage.teamTitleAccent')}</em>.</>}
-          sub={t('aboutPage.teamSub')}
+          lede={t('aboutPage.teamSub')}
         />
 
         <div className="grid-2" style={{ gap: 40, marginBottom: 100, marginTop: 56 }}>
