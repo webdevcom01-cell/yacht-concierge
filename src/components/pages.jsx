@@ -148,8 +148,8 @@ function ContactPage() {
             </div>
           </div>
 
-          {/* Right: form */}
-          <div style={{ border: '1px solid var(--fg-15)', padding: 56, background: 'var(--bg-raised)' }}>
+          {/* Right: form — C-02: was padding:56 → clamp so it doesn't crush at 375px */}
+          <div style={{ border: '1px solid var(--fg-15)', padding: 'clamp(24px, 6vw, 56px)', background: 'var(--bg-raised)' }}>
             {/* Step indicator */}
             <div style={{ display: 'flex', gap: 8, marginBottom: 48 }}>
               {steps.slice(0, 5).map((s, i) => (
@@ -203,7 +203,7 @@ function ContactPage() {
                 )}
                 {step === 2 && (
                   <StepWrap title={t('contactPage.step2_title')} sub={t('contactPage.step2_sub')}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 32 }}>
+                    <div className="grid-2" style={{ gap: 32, marginBottom: 32 }}>
                       <div className="field">
                         <label className="field-label" htmlFor="cf-eta">{t('contactPage.fieldEta')}</label>
                         <input id="cf-eta" className="field-input" type="date" value={data.eta} onChange={e => update('eta', e.target.value)}/>
@@ -219,7 +219,7 @@ function ContactPage() {
                         {['Porto Montenegro', 'Herceg Novi', 'Kotor', 'Budva', 'Bar', 'TBD'].map(p => (
                           <button key={p} onClick={() => update('port', p)}
                             style={{
-                              padding: '10px 18px',
+                              padding: '14px 18px', /* Mi-04: was 10px → 30px target, now ~44px */
                               border: `1px solid ${data.port === p ? 'var(--fg)' : 'var(--fg-15)'}`,
                               background: data.port === p ? 'var(--fg)' : 'transparent',
                               color: data.port === p ? 'var(--bg)' : 'var(--fg)',
@@ -445,15 +445,12 @@ function AboutPage() {
           </Reveal>
         </div>
 
-        {/* Story */}
+        {/* Story — M-07: was inline 1fr 2fr grid, now .about-story class (collapses on mobile) */}
         <Reveal>
-          <div style={{
+          <div className="about-story" style={{
             borderTop: '1px solid var(--border)',
             paddingTop: 80,
             marginBottom: 80,
-            display: 'grid',
-            gridTemplateColumns: '1fr 2fr',
-            gap: 64,
           }}>
             <div>
               <div className="mono" style={{ color: 'var(--fg-50)', fontSize: 11, letterSpacing: '0.12em' }}>
@@ -478,14 +475,12 @@ function AboutPage() {
           </div>
         </Reveal>
 
-        {/* Stats */}
+        {/* Stats — M-08: was inline repeat(4,1fr), now grid-4 class (collapses to 2-col at 768px) */}
         <Reveal>
-          <div style={{
+          <div className="grid-4" style={{
             background: 'var(--surface)',
             borderRadius: 4,
             padding: '64px 72px',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
             gap: 0,
             marginBottom: 80,
           }}>
@@ -603,15 +598,13 @@ function AboutPage() {
           ))}
         </div>
 
-        {/* Values strip */}
+        {/* Values strip — M-09: was inline repeat(3,1fr), now grid-3 class (collapses to 1-col at 768px) */}
         <Reveal>
-          <div style={{
+          <div className="grid-3" style={{
             borderTop: '1px solid var(--border)',
             borderBottom: '1px solid var(--border)',
             padding: '56px 0',
             marginBottom: 100,
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
             gap: 0,
           }}>
             {[

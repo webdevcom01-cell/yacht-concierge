@@ -602,6 +602,13 @@ html { scroll-behavior: smooth; }
 .services-grid .reveal         { height: 100%; }
 .services-grid .service-card   { height: 100%; box-sizing: border-box; }
 
+/* M-07: About page story grid — was inline 1fr 2fr, bypassed media queries */
+.about-story {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 64px;
+}
+
 /* 4-column — stats block, process steps */
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); }
 
@@ -963,6 +970,9 @@ html { scroll-behavior: smooth; }
 
   /* Right-aligned lede: lijevo poravnanje na single column */
   .lede-right { text-align: left; margin-left: 0; }
+
+  /* M-07: About story grid: 1fr 2fr → single column on mobile */
+  .about-story { grid-template-columns: 1fr; gap: 32px; }
 }
 
 /* ============ Breakpoint 480px — Small Phone ============ */
