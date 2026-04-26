@@ -169,7 +169,7 @@ function ContactPage() {
                     <div className="grid-2" style={{ gap: 32 }}>
                       <div className="field">
                         <label className="field-label" htmlFor="cf-name">{t('contactPage.fieldName')}</label>
-                        <input id="cf-name" className="field-input" value={data.name} onChange={e => update('name', e.target.value)} placeholder="Eleanor Vance"/>
+                        <input id="cf-name" className="field-input" autoComplete="name" value={data.name} onChange={e => update('name', e.target.value)} placeholder="Eleanor Vance"/>
                       </div>
                       <div className="field">
                         <label className="field-label" htmlFor="cf-role">{t('contactPage.fieldRole')}</label>
@@ -282,11 +282,11 @@ function ContactPage() {
                     <div className="grid-2" style={{ gap: 32 }}>
                       <div className="field">
                         <label className="field-label" htmlFor="cf-email">{t('contactPage.fieldEmail')}</label>
-                        <input id="cf-email" className="field-input" type="email" value={data.email} onChange={e => update('email', e.target.value)} placeholder="captain@atlas.example"/>
+                        <input id="cf-email" className="field-input" type="email" autoComplete="email" value={data.email} onChange={e => update('email', e.target.value)} placeholder="captain@atlas.example"/>
                       </div>
                       <div className="field">
                         <label className="field-label" htmlFor="cf-phone">{t('contactPage.fieldPhone')}</label>
-                        <input id="cf-phone" className="field-input" value={data.phone} onChange={e => update('phone', e.target.value)} placeholder="+44 7700 900 000"/>
+                        <input id="cf-phone" className="field-input" type="tel" autoComplete="tel" value={data.phone} onChange={e => update('phone', e.target.value)} placeholder="+44 7700 900 000"/>
                       </div>
                     </div>
                     <div style={{ marginTop: 48, padding: 24, background: 'var(--bg-warm)', border: '1px solid var(--fg-08)' }}>

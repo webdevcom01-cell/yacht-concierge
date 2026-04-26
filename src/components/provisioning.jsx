@@ -389,7 +389,7 @@ function ProvisioningPageContent() {
         <button
           onClick={() => setCartOpen(true)}
           className="btn btn-primary"
-          style={{ position: 'fixed', bottom: 104, right: 28, zIndex: 9002, boxShadow: '0 12px 40px rgba(0,23,48,0.25)' }}
+          style={{ position: 'fixed', bottom: 'max(104px, calc(70px + env(safe-area-inset-bottom, 0px)))', right: 28, zIndex: 9002, boxShadow: '0 12px 40px rgba(0,23,48,0.25)' }} /* M-13: was hardcoded 104px — now adapts to iPhone safe area */
         >
           <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, background: 'rgba(255,255,255,0.25)', borderRadius: '50%', fontSize: 11, fontWeight: 700, marginRight: 8 }}>{cart.count}</span>
           € {cart.subtotal.toFixed(2)} <Icons.Arrow size={13}/>
@@ -709,17 +709,17 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
                 <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 20 }}>{t('provisioningPage.vesselDelivery')}</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                   <div className="field">
-                    <label className="field-label">{t('provisioningPage.yachtNameLabel')}</label>
-                    <input className="field-input" value={meta.yacht || ''} onChange={e => setM('yacht', e.target.value)} placeholder="M/Y Atlas"/>
+                    <label className="field-label" htmlFor="cd-yacht">{t('provisioningPage.yachtNameLabel')}</label>
+                    <input id="cd-yacht" className="field-input" autoComplete="organization" value={meta.yacht || ''} onChange={e => setM('yacht', e.target.value)} placeholder="M/Y Atlas"/>
                   </div>
                   <div className="field">
-                    <label className="field-label">{t('provisioningPage.emailLabel')}</label>
-                    <input className="field-input" type="email" value={meta.email || ''} onChange={e => setM('email', e.target.value)} placeholder="captain@vessel.com"/>
+                    <label className="field-label" htmlFor="cd-email">{t('provisioningPage.emailLabel')}</label>
+                    <input id="cd-email" className="field-input" type="email" autoComplete="email" value={meta.email || ''} onChange={e => setM('email', e.target.value)} placeholder="captain@vessel.com"/>
                   </div>
                   <div className="grid-2" style={{ gap: 16 }}>
                     <div className="field">
-                      <label className="field-label">{t('provisioningPage.marinaLabel')}</label>
-                      <select className="field-select" value={meta.marina || ''} onChange={e => setM('marina', e.target.value)}>
+                      <label className="field-label" htmlFor="cd-marina">{t('provisioningPage.marinaLabel')}</label>
+                      <select id="cd-marina" className="field-select" autoComplete="off" value={meta.marina || ''} onChange={e => setM('marina', e.target.value)}>
                         <option value="">{t('provisioningPage.selectMarina')}</option>
                         <option>Porto Montenegro</option>
                         <option>Portonovi</option>
@@ -729,23 +729,23 @@ function CartDrawer({ cart, open, onClose, onCheckout }) {
                       </select>
                     </div>
                     <div className="field">
-                      <label className="field-label">{t('provisioningPage.berthLabel')}</label>
-                      <input className="field-input" value={meta.berth || ''} onChange={e => setM('berth', e.target.value)} placeholder="B-14"/>
+                      <label className="field-label" htmlFor="cd-berth">{t('provisioningPage.berthLabel')}</label>
+                      <input id="cd-berth" className="field-input" autoComplete="off" value={meta.berth || ''} onChange={e => setM('berth', e.target.value)} placeholder="B-14"/>
                     </div>
                   </div>
                   <div className="grid-2" style={{ gap: 16 }}>
                     <div className="field">
-                      <label className="field-label">{t('provisioningPage.dateLabel')}</label>
-                      <input className="field-input" type="date" value={meta.date || ''} onChange={e => setM('date', e.target.value)}/>
+                      <label className="field-label" htmlFor="cd-date">{t('provisioningPage.dateLabel')}</label>
+                      <input id="cd-date" className="field-input" type="date" autoComplete="off" value={meta.date || ''} onChange={e => setM('date', e.target.value)}/>
                     </div>
                     <div className="field">
-                      <label className="field-label">{t('provisioningPage.timeLabel')}</label>
-                      <input className="field-input" type="time" value={meta.time || ''} onChange={e => setM('time', e.target.value)}/>
+                      <label className="field-label" htmlFor="cd-time">{t('provisioningPage.timeLabel')}</label>
+                      <input id="cd-time" className="field-input" type="time" autoComplete="off" value={meta.time || ''} onChange={e => setM('time', e.target.value)}/>
                     </div>
                   </div>
                   <div className="field">
-                    <label className="field-label">{t('provisioningPage.notesLabel')}</label>
-                    <textarea className="field-textarea" value={meta.notes || ''} onChange={e => setM('notes', e.target.value)} placeholder={t('provisioningPage.orderNotesPlaceholder')}/>
+                    <label className="field-label" htmlFor="cd-notes">{t('provisioningPage.notesLabel')}</label>
+                    <textarea id="cd-notes" className="field-textarea" autoComplete="off" value={meta.notes || ''} onChange={e => setM('notes', e.target.value)} placeholder={t('provisioningPage.orderNotesPlaceholder')}/>
                   </div>
                 </div>
               </div>
