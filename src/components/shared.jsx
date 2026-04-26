@@ -195,9 +195,9 @@ function LangSwitcher() {
             className="nav-link"
             onClick={() => i18n.changeLanguage(l.code)}
             style={{
-              padding: '4px 6px',
+              padding: '10px 12px', /* C-03: was 4px 6px — ~18px target → ~44px */
               fontFamily: 'var(--mono)',
-              fontSize: 10,
+              fontSize: 11, /* C-03: was 10 */
               letterSpacing: '0.1em',
               opacity: i18n.language === l.code ? 1 : 0.4,
               fontWeight: i18n.language === l.code ? 600 : 400,
@@ -341,7 +341,7 @@ function Nav() {
             <LangSwitcher />
             <button
               onClick={() => setMenuOpen(false)}
-              style={{ color: 'var(--fg-70)', display: 'flex', alignItems: 'center', padding: 6 }}
+              style={{ color: 'var(--fg-70)', display: 'flex', alignItems: 'center', padding: 12 }} /* M-03: was 6 → 44px target */
               aria-label="Close menu"
             >
               <Icons.Close size={22} />
@@ -453,15 +453,15 @@ function Footer() {
           <span style={{ display: 'flex', gap: 20 }}>
             <button
               onClick={() => setRoute({ page: 'legal' })}
-              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }}
+              style={{ background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-10: was 0 → 8px vertical tap area */
             >{t('footer.legal')}</button>
             <button
               onClick={() => setRoute({ page: 'privacy' })}
-              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }}
+              style={{ background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-10: was 0 → 8px vertical tap area */
             >{t('footer.privacy')}</button>
             <button
               onClick={() => setRoute({ page: 'terms' })}
-              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }}
+              style={{ background: 'none', border: 'none', padding: '8px 0', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-10: was 0 → 8px vertical tap area */
             >{t('footer.terms')}</button>
           </span>
         </div>

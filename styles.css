@@ -70,7 +70,7 @@ html, body {
   font-family: var(--sans);
   background: var(--bg);
   color: var(--fg);
-  font-size: 15px;
+  font-size: 16px; /* Mi-08: was 15px — 16px is mobile accessibility baseline */
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -99,6 +99,15 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   font-family: var(--serif);
   font-size: clamp(52px, 7vw, 104px);
   line-height: 0.95;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+/* M-11: .h1 was missing — legal pages fell back to browser UA bold sans-serif */
+.h1 {
+  font-family: var(--serif);
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1.0;
   letter-spacing: -0.02em;
   font-weight: 400;
 }
@@ -264,12 +273,12 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   background: var(--accent);
 }
 
-/* Icon-only utility button */
+/* Icon-only utility button — M-02: was 6px 8px → 12px gives ~38px target */
 .nav-icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 8px;
+  padding: 12px;
 }
 
 .nav-right {
@@ -459,7 +468,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   border-bottom: 1px solid var(--fg-15);
   padding: 10px 0;
   font-family: var(--sans);
-  font-size: 15px;
+  font-size: 16px; /* C-01: was 15px — iOS auto-zooms viewport on focus when font-size < 16px */
   color: var(--fg);
   outline: none;
   transition: border-color 0.3s var(--ease);
@@ -652,7 +661,8 @@ html { scroll-behavior: smooth; }
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 7px 14px;
+  padding: 12px 14px; /* M-04: was 7px → min-height ~34px; 12px → ~44px touch target */
+  min-height: 44px;
   white-space: nowrap;
   font-family: var(--mono);
   font-size: 10px;
@@ -696,7 +706,7 @@ html { scroll-behavior: smooth; }
 /* ============ Legal Prose ============ */
 
 .legal-prose {
-  font-size: 15.5px;
+  font-size: 16px; /* Mi-06: was 15.5px — align with 16px accessibility baseline */
   line-height: 1.85;
   color: var(--fg-70);
 }
@@ -761,7 +771,7 @@ html { scroll-behavior: smooth; }
   display: none;
   align-items: center;
   justify-content: center;
-  padding: 6px;
+  padding: 12px; /* M-01: was 6px → 44px touch target (20px icon + 2×12px) */
   color: var(--fg);
   background: none;
   border: none;
