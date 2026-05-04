@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { HelmetProvider } from 'react-helmet-async';
+
 import './i18n';
-import { AppCtx, Nav, Footer, Icons, WhatsAppFloat } from './components/shared';
+import { AppCtx, Nav, Footer, Icons, WhatsAppFloat, ErrorBoundary } from './components/shared';
 import { PageSEO } from './seo.jsx';
 import { HomePage } from './components/home-bottom';
 import { ServicesPage, ServiceDetailPage } from './components/services';
@@ -175,7 +175,7 @@ function App() {
   };
 
   return (
-    <HelmetProvider>
+
     <AppCtx.Provider value={ctx}>
       <div data-screen-label={labelMap[route.page] || 'Page'}>
         <PageSEO page={route.page} id={route.id} />
@@ -204,7 +204,7 @@ function App() {
         </div>
       )}
     </AppCtx.Provider>
-    </HelmetProvider>
+
   );
 }
 
@@ -221,4 +221,8 @@ function TweakGroup({ label, value, options, onChange }) {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <ErrorBoundary>
+    <App/>
+  </ErrorBoundary>
+);

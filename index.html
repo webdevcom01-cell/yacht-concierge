@@ -8,14 +8,26 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#001730">
-<link rel="stylesheet" href="styles.css"/>
-<!-- N6: DNS prefetch for analytics — eliminates connection setup latency -->
-<link rel="dns-prefetch" href="https://plausible.io"/>
+<!-- DNS prefetch for analytics -->
+<link rel="dns-prefetch" href="https://www.googletagmanager.com"/>
 <!-- Plausible Analytics — privacy-first, no cookies, GDPR-compliant without consent -->
 <script defer data-domain="yacht-concierge.me" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
 <div id="root"></div>
+<noscript>
+  <div style="font-family:Georgia,serif;padding:48px 24px;max-width:600px;margin:0 auto;color:#001730">
+    <h1 style="font-size:32px;margin-bottom:16px">Yacht Concierge Montenegro</h1>
+    <p style="font-size:16px;line-height:1.6;color:#555">
+      Full-service concierge for superyachts in Montenegro. Please enable JavaScript to use this site,
+      or contact us directly:
+    </p>
+    <p style="margin-top:24px">
+      <a href="mailto:info@yacht-concierge.me" style="color:#668E9B">info@yacht-concierge.me</a><br/>
+      <a href="tel:+38267144555" style="color:#668E9B">+382 67 144 555</a>
+    </p>
+  </div>
+</noscript>
 <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>

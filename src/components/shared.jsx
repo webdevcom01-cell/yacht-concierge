@@ -163,7 +163,7 @@ function WhatsAppFloat() {
 // ---------- Logo: Wordmark + compass rose ----------
 function Logo({ onClick }) {
   return (
-    <div className="logo" onClick={onClick} aria-label="Yacht Concierge">
+    <a className="logo" href="/" onClick={(e) => { if(onClick){ e.preventDefault(); onClick(); } }} aria-label="Yacht Concierge — Home">
       <svg className="logo-mark" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="16" cy="16" r="14" strokeWidth="0.8"/>
         <circle cx="16" cy="16" r="10" strokeWidth="0.5" opacity="0.5"/>
@@ -175,7 +175,7 @@ function Logo({ onClick }) {
         <div className="logo-text-main">YACHT CONCIERGE</div>
         <div className="logo-text-sub">MONTENEGRO · EST. MMXVII</div>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -250,6 +250,12 @@ function Nav() {
   // Close menu on route change
   useEffect(() => { setMenuOpen(false); }, [route]);
 
+  const PAGE_PATHS = {
+    home: '/', services: '/services', provisioning: '/provisioning',
+    process: '/process', fleet: '/fleet', about: '/about',
+    contact: '/contact', legal: '/legal', privacy: '/privacy', terms: '/terms',
+  };
+
   const links = [
     { id: 'services',     label: t('nav.services') },
     { id: 'provisioning', label: t('nav.provisioning') },
@@ -274,8 +280,9 @@ function Nav() {
                 <li key={l.id}>
                   <a
                     className="nav-link"
+                    href={PAGE_PATHS[l.id] || '/'}
                     data-active={route.page === l.id}
-                    onClick={() => setRoute({ page: l.id })}
+                    onClick={(e) => { e.preventDefault(); setRoute({ page: l.id }); }}
                   >{l.label}</a>
                 </li>
               ))}
@@ -355,9 +362,10 @@ function Nav() {
             {links.map((l, i) => (
               <a
                 key={l.id}
+                href={PAGE_PATHS[l.id] || '/'}
                 className="nav-overlay-link"
                 data-active={route.page === l.id}
-                onClick={() => setRoute({ page: l.id })}
+                onClick={(e) => { e.preventDefault(); setRoute({ page: l.id }); }}
                 style={{ transitionDelay: menuOpen ? `${i * 45}ms` : '0ms' }}
               >
                 <span className="nav-overlay-num">0{i + 1}</span>
@@ -453,18 +461,15 @@ function Footer() {
           <span>{t('footer.copyright')}</span>
           <span>{t('footer.certifications')}</span>
           <span style={{ display: 'flex', gap: 20 }}>
-            <button
-              onClick={() => setRoute({ page: 'legal' })}
-              style={{ background: 'none', border: 'none', padding: '16px 4px', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-3: was 8px 0 (28px) → 16px gives 44px tap height */
-            >{t('footer.legal')}</button>
-            <button
-              onClick={() => setRoute({ page: 'privacy' })}
-              style={{ background: 'none', border: 'none', padding: '16px 4px', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-3: was 8px 0 (28px) → 16px gives 44px tap height */
-            >{t('footer.privacy')}</button>
-            <button
-              onClick={() => setRoute({ page: 'terms' })}
-              style={{ background: 'none', border: 'none', padding: '16px 4px', cursor: 'pointer', color: 'inherit', font: 'inherit', fontSize: 'inherit' }} /* M-3: was 8px 0 (28px) → 16px gives 44px tap height */
-            >{t('footer.terms')}</button>
+            <a href="/legal" onClick={(e) => { e.preventDefault(); setRoute({ page: 'legal' }); }}
+              style={{ padding: '16px 4px', color: 'inherit', textDecoration: 'none', font: 'inherit', fontSize: 'inherit' }}
+            >{t('footer.legal')}</a>
+            <a href="/privacy" onClick={(e) => { e.preventDefault(); setRoute({ page: 'privacy' }); }}
+              style={{ padding: '16px 4px', color: 'inherit', textDecoration: 'none', font: 'inherit', fontSize: 'inherit' }}
+            >{t('footer.privacy')}</a>
+            <a href="/terms" onClick={(e) => { e.preventDefault(); setRoute({ page: 'terms' }); }}
+              style={{ padding: '16px 4px', color: 'inherit', textDecoration: 'none', font: 'inherit', fontSize: 'inherit' }}
+            >{t('footer.terms')}</a>
           </span>
         </div>
       </div>
@@ -491,3 +496,54 @@ function SectionHeader({ num, eyebrow, title, lede, align = 'left' }) {
 }
 
 export { AppCtx, useApp, Icons, Icon, Logo, Nav, Footer, Reveal, useReveal, SectionHeader, WhatsAppFloat, LangSwitcher };
+
+// ---------- Error Boundary ----------
+export class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, info) {
+    // In production you could send to Sentry / LogRocket here
+    console.error('[ErrorBoundary]', error, info.componentStack);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{
+          minHeight: '60vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 24,
+          padding: '48px 24px',
+          textAlign: 'center',
+        }}>
+          <div className="mono" style={{ color: 'var(--fg-50)', fontSize: 12 }}>ERROR</div>
+          <h2 className="serif" style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
+            Something went wrong.
+          </h2>
+          <p style={{ color: 'var(--fg-70)', maxWidth: 480 }}>
+            An unexpected error occurred on this page. Please refresh to continue,
+            or contact us directly at{' '}
+            <a href="mailto:info@yacht-concierge.me" style={{ color: 'var(--accent)' }}>
+              info@yacht-concierge.me
+            </a>.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="btn"
+            style={{ marginTop: 8 }}
+          >
+            Reload page
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}

@@ -1,13 +1,25 @@
 // API_URL is baked in at build time from VITE_API_URL environment variable
 const API_URL = import.meta.env.VITE_API_URL;
 
+// Detect unconfigured or placeholder URL
+function isApiConfigured() {
+  return API_URL &&
+    !API_URL.includes('ZAMENI') &&
+    !API_URL.includes('YOUR_') &&
+    !API_URL.includes('placeholder') &&
+    API_URL.startsWith('https://');
+}
+
 // GAS web apps redirect exec→echo internally. fetch() no-cors gets CORB-blocked
 // at the echo step, preventing doGet from running. Using Image.src fires a plain
 // GET request with no CORS/CORB restrictions — the browser ignores the response
 // (not a valid image) but GAS receives and processes the request normally.
 function postJSON(payload) {
-  if (!API_URL) {
-    throw new Error('API endpoint not configured — set VITE_API_URL in your environment');
+  if (!isApiConfigured()) {
+    // In development / before GAS is deployed: log to console and resolve gracefully
+    console.warn('[submit] API endpoint not configured — set VITE_API_URL in your environment.');
+    console.info('[submit] Payload that would have been sent:', payload);
+    return Promise.resolve({ result: 'ok', _dev: true });
   }
   const url = API_URL + '?payload=' + encodeURIComponent(JSON.stringify(payload));
   new Image().src = url;

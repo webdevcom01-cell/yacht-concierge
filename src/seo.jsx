@@ -1,5 +1,6 @@
-import React from 'react';
-import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
+
+// ── SEO data per page ─────────────────────────────────────────────────────────
 
 const SEO_DATA = {
   home: {
@@ -62,7 +63,6 @@ const SEO_DATA = {
     url: 'https://yacht-concierge.me/terms',
     breadcrumb: [{ name: 'Terms of Service', url: 'https://yacht-concierge.me/terms' }],
   },
-  // ── Service detail pages ──────────────────────────────────────────────────
   'service-berth': {
     title: 'Berth Reservations — Yacht Concierge Montenegro',
     description: 'Priority berth reservations at Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar. 24-hour confirmation with customs coordination included.',
@@ -105,7 +105,7 @@ const OG_IMAGE  = 'https://yacht-concierge.me/og-image.jpg';
 const SITE_NAME = 'Yacht Concierge Montenegro';
 const SITE_URL  = 'https://yacht-concierge.me';
 
-// ── Schema.org — LocalBusiness (injected on every page) ───────────────────────
+// ── Schema.org — LocalBusiness ────────────────────────────────────────────────
 
 const LOCAL_BUSINESS_SCHEMA = {
   '@context': 'https://schema.org',
@@ -113,7 +113,7 @@ const LOCAL_BUSINESS_SCHEMA = {
   '@id': `${SITE_URL}/#business`,
   name: 'Yacht Concierge Montenegro',
   legalName: 'Yacht Concierge D.O.O.',
-  description: 'Full-service superyacht concierge and logistics operator in Montenegro. Berth reservations, customs and immigration clearance, provisioning, crew logistics, laundry, floristry, and maintenance coordination for vessels from 30 to 120 metres across five Montenegrin marinas.',
+  description: 'Full-service superyacht concierge and logistics operator in Montenegro.',
   url: SITE_URL,
   logo: `${SITE_URL}/logo.png`,
   image: OG_IMAGE,
@@ -126,19 +126,12 @@ const LOCAL_BUSINESS_SCHEMA = {
     postalCode: '85320',
     addressCountry: 'ME',
   },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 42.4330,
-    longitude: 18.6881,
-  },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
-      opens: '06:00',
-      closes: '22:00',
-    },
-  ],
+  geo: { '@type': 'GeoCoordinates', latitude: 42.4330, longitude: 18.6881 },
+  openingHoursSpecification: [{
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+    opens: '06:00', closes: '22:00',
+  }],
   priceRange: '€€€€',
   currenciesAccepted: 'EUR',
   areaServed: [
@@ -149,40 +142,8 @@ const LOCAL_BUSINESS_SCHEMA = {
     { '@type': 'City', name: 'Bar' },
     { '@type': 'Country', name: 'Montenegro' },
   ],
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Superyacht Concierge Services',
-    itemListElement: [
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Berth Reservations', description: 'Priority berth reservations at Porto Montenegro, Herceg Novi, Kotor, and Bar.' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Customs & Immigration Clearance', description: 'Full Montenegrin customs and immigration documentation and clearance for arriving superyachts.' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Provisioning', description: 'Galley-standard provisioning with same-day delivery to berth. Tax-free procurement for yachts in transit.' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Crew Logistics', description: 'Airport transfers, accommodation, and crew rotation management in Montenegro.' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Laundry & Valeting', description: 'Professional laundry, dry cleaning, and uniform care with berth collection and return.' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Floristry', description: 'Fresh floral arrangements sourced daily from local Montenegrin suppliers.' } },
-      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Maintenance Coordination', description: 'Scheduled and emergency maintenance coordination with vetted local contractors.' } },
-    ],
-  },
-  parentOrganization: {
-    '@type': 'Organization',
-    '@id': 'https://montenegrocharter.com/#organization',
-    name: 'Montenegro Charter',
-    url: 'https://montenegrocharter.com',
-  },
-  employee: [
-    {
-      '@type': 'Person',
-      name: 'Iva Erceg',
-      jobTitle: 'Operations Director',
-      telephone: '+38267144555',
-      email: 'info@yacht-concierge.me',
-    },
-  ],
-  sameAs: [
-    'https://montenegrocharter.com',
-  ],
+  sameAs: ['https://montenegrocharter.com'],
 };
-
-// ── Schema.org — WebSite (sitelinks searchbox signal) ────────────────────────
 
 const WEBSITE_SCHEMA = {
   '@context': 'https://schema.org',
@@ -193,7 +154,34 @@ const WEBSITE_SCHEMA = {
   publisher: { '@id': `${SITE_URL}/#business` },
 };
 
-// ── Schema.org — BreadcrumbList (per page) ────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+const HELMET_ATTR = 'data-yc-helmet';
+
+function setOrCreate(selector, attrs, content) {
+  let el = document.head.querySelector(`${selector}[${HELMET_ATTR}]`);
+  if (!el) {
+    // Try to find existing non-helmet tag of same type first
+    el = document.head.querySelector(selector);
+    if (el && !el.getAttribute(HELMET_ATTR)) {
+      // Tag exists but not managed by us — create a new managed one
+      el = null;
+    }
+  }
+  if (!el) {
+    const tag = selector.split('[')[0];
+    el = document.createElement(tag);
+    el.setAttribute(HELMET_ATTR, 'true');
+    document.head.appendChild(el);
+  }
+  Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+  if (content !== undefined) el.textContent = content;
+  return el;
+}
+
+function removeHelmetTags() {
+  document.head.querySelectorAll(`[${HELMET_ATTR}]`).forEach(el => el.remove());
+}
 
 function buildBreadcrumb(crumbs) {
   if (!crumbs || crumbs.length === 0) return null;
@@ -201,18 +189,8 @@ function buildBreadcrumb(crumbs) {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: SITE_URL,
-      },
-      ...crumbs.map((c, i) => ({
-        '@type': 'ListItem',
-        position: i + 2,
-        name: c.name,
-        item: c.url,
-      })),
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      ...crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 2, name: c.name, item: c.url })),
     ],
   };
 }
@@ -220,52 +198,75 @@ function buildBreadcrumb(crumbs) {
 // ── PageSEO component ─────────────────────────────────────────────────────────
 
 export function PageSEO({ page, id }) {
-  const key        = page === 'service' ? `service-${id}` : page;
-  const data       = SEO_DATA[key] || SEO_DATA.home;
+  const key  = page === 'service' ? `service-${id}` : page;
+  const data = SEO_DATA[key] || SEO_DATA.home;
   const breadcrumb = buildBreadcrumb(data.breadcrumb);
 
-  return (
-    <Helmet>
-      <title>{data.title}</title>
-      <meta name="description" content={data.description} />
-      <link rel="canonical" href={data.url} />
+  useEffect(() => {
+    // Title
+    document.title = data.title;
 
-      {/* hreflang — multilingual content, same URL for all languages */}
-      <link rel="alternate" hreflang="en"       href={data.url} />
-      <link rel="alternate" hreflang="ru"       href={data.url} />
-      <link rel="alternate" hreflang="it"       href={data.url} />
-      <link rel="alternate" hreflang="x-default" href={data.url} />
+    // Remove all previously managed tags
+    removeHelmetTags();
 
-      {/* Open Graph */}
-      <meta property="og:title"       content={data.title} />
-      <meta property="og:description" content={data.description} />
-      <meta property="og:url"         content={data.url} />
-      <meta property="og:type"        content="website" />
-      <meta property="og:site_name"   content={SITE_NAME} />
-      <meta property="og:image"       content={OG_IMAGE} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+    // Meta description
+    setOrCreate('meta[name="description"]', { name: 'description', content: data.description });
 
-      {/* Twitter */}
-      <meta name="twitter:card"        content="summary_large_image" />
-      <meta name="twitter:title"       content={data.title} />
-      <meta name="twitter:description" content={data.description} />
-      <meta name="twitter:image"       content={OG_IMAGE} />
+    // Canonical
+    setOrCreate('link[rel="canonical"]', { rel: 'canonical', href: data.url });
 
-      {/* Schema.org — LocalBusiness + WebSite (every page) */}
-      <script type="application/ld+json">
-        {JSON.stringify(LOCAL_BUSINESS_SCHEMA)}
-      </script>
-      <script type="application/ld+json">
-        {JSON.stringify(WEBSITE_SCHEMA)}
-      </script>
+    // hreflang
+    [['en', data.url], ['ru', data.url], ['it', data.url], ['x-default', data.url]].forEach(([lang, url]) => {
+      const el = document.createElement('link');
+      el.setAttribute('rel', 'alternate');
+      el.setAttribute('hreflang', lang);
+      el.setAttribute('href', url);
+      el.setAttribute(HELMET_ATTR, 'true');
+      document.head.appendChild(el);
+    });
 
-      {/* Schema.org — BreadcrumbList (all pages except home) */}
-      {breadcrumb && (
-        <script type="application/ld+json">
-          {JSON.stringify(breadcrumb)}
-        </script>
-      )}
-    </Helmet>
-  );
+    // Open Graph
+    [
+      ['og:title',        data.title],
+      ['og:description',  data.description],
+      ['og:url',          data.url],
+      ['og:type',         'website'],
+      ['og:site_name',    SITE_NAME],
+      ['og:image',        OG_IMAGE],
+      ['og:image:width',  '1200'],
+      ['og:image:height', '630'],
+    ].forEach(([prop, content]) => {
+      const el = document.createElement('meta');
+      el.setAttribute('property', prop);
+      el.setAttribute('content', content);
+      el.setAttribute(HELMET_ATTR, 'true');
+      document.head.appendChild(el);
+    });
+
+    // Twitter Card
+    [
+      ['twitter:card',        'summary_large_image'],
+      ['twitter:title',       data.title],
+      ['twitter:description', data.description],
+      ['twitter:image',       OG_IMAGE],
+    ].forEach(([name, content]) => {
+      setOrCreate(`meta[name="${name}"]`, { name, content });
+    });
+
+    // Schema.org — LocalBusiness + WebSite (every page)
+    [LOCAL_BUSINESS_SCHEMA, WEBSITE_SCHEMA, ...(breadcrumb ? [breadcrumb] : [])].forEach(schema => {
+      const el = document.createElement('script');
+      el.setAttribute('type', 'application/ld+json');
+      el.setAttribute(HELMET_ATTR, 'true');
+      el.textContent = JSON.stringify(schema);
+      document.head.appendChild(el);
+    });
+
+    return () => {
+      // Cleanup on unmount
+      removeHelmetTags();
+    };
+  }, [page, id]);
+
+  return null;
 }
