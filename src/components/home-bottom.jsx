@@ -173,17 +173,71 @@ function CoastMap() {
           {/* Map panel */}
           <Reveal>
             <div style={{ position: 'relative', aspectRatio: '4/3', background: DARK.card, border: `1px solid ${DARK.border}`, overflow: 'hidden' }}>
-              <MapSVG ports={ports} selected={selected} onSelect={setSelected} dark />
-              <div style={{ position: 'absolute', top: 16, left: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: DARK.muted }}>
+              {/* Hero photo as map background */}
+              <img
+                src="/hero-yacht.jpg"
+                alt="Bay of Kotor"
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%', display: 'block' }}
+              />
+              {/* Dark gradient for pin readability */}
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(2,10,22,0.3) 0%, rgba(2,10,22,0.15) 50%, rgba(2,10,22,0.45) 100%)', pointerEvents: 'none' }}/>
+              {/* Location pins overlay */}
+              <div style={{ position: 'absolute', inset: 0 }}>
+                {ports.filter(p => p.id !== 'bar').map(p => {
+                  const isSelected = selected === p.id;
+                  return (
+                    <div
+                      key={p.id}
+                      onClick={() => setSelected(p.id)}
+                      style={{
+                        position: 'absolute',
+                        left: `${p.x}%`,
+                        top: `${p.y}%`,
+                        transform: 'translate(-50%, -50%)',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 8,
+                        zIndex: 2,
+                      }}
+                    >
+                      <div style={{
+                        width: isSelected ? 22 : 16,
+                        height: isSelected ? 22 : 16,
+                        borderRadius: '50%',
+                        background: isSelected ? 'rgba(212,183,143,0.95)' : 'rgba(239,234,226,0.55)',
+                        border: `1.5px solid ${isSelected ? '#D4B78F' : 'rgba(239,234,226,0.8)'}`,
+                        boxShadow: isSelected ? '0 0 0 4px rgba(212,183,143,0.2)' : 'none',
+                        transition: 'all 0.25s ease',
+                        flexShrink: 0,
+                      }}/>
+                      <span style={{
+                        fontFamily: 'var(--mono)',
+                        fontSize: 9,
+                        letterSpacing: '0.15em',
+                        textTransform: 'uppercase',
+                        color: isSelected ? '#D4B78F' : 'rgba(239,234,226,0.85)',
+                        whiteSpace: 'nowrap',
+                        textShadow: '0 1px 4px rgba(0,0,0,0.8)',
+                        fontWeight: isSelected ? '600' : '400',
+                      }}>
+                        {p.name}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Corner labels */}
+              <div style={{ position: 'absolute', top: 16, left: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(239,234,226,0.6)', textShadow: '0 1px 4px rgba(0,0,0,0.8)', pointerEvents: 'none' }}>
                 {t('map.mapLabel')}
               </div>
-              <div style={{ position: 'absolute', top: 16, right: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: DARK.muted }}>
+              <div style={{ position: 'absolute', top: 16, right: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(239,234,226,0.6)', textShadow: '0 1px 4px rgba(0,0,0,0.8)', pointerEvents: 'none' }}>
                 {t('map.mapLabel2')}
               </div>
-              <div style={{ position: 'absolute', bottom: 16, left: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: DARK.muted }}>
+              <div style={{ position: 'absolute', bottom: 16, left: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(239,234,226,0.6)', textShadow: '0 1px 4px rgba(0,0,0,0.8)', pointerEvents: 'none' }}>
                 {t('map.selectMarina')}
               </div>
-              <div style={{ position: 'absolute', bottom: 16, right: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: DARK.muted }}>
+              <div style={{ position: 'absolute', bottom: 16, right: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(239,234,226,0.6)', textShadow: '0 1px 4px rgba(0,0,0,0.8)', pointerEvents: 'none' }}>
                 ALBANIA →
               </div>
             </div>
