@@ -142,55 +142,92 @@ function CoastMap() {
   ];
   const cur = ports.find(p => p.id === selected);
 
+  const DARK = { bg: '#020a16', card: '#071428', border: 'rgba(239,234,226,0.1)', text: '#EFEAE2', muted: 'rgba(239,234,226,0.5)', accent: '#D4B78F' };
+
   return (
-    <section className="section" style={{ background: 'var(--bg-warm)' }}>
-      <div className="container">
-        <SectionHeader
-          num="03 / FLEET"
-          eyebrow={t('map.eyebrow')}
-          title={<>{t('map.title1')} <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('map.title2')}</em></>}
-          lede={t('map.lede')}
-        />
-        <div className="grid-map" style={{ gap: 72, alignItems: 'start' }}>
+    <section style={{ background: DARK.bg, padding: '100px 0', position: 'relative', overflow: 'hidden' }}>
+      {/* Subtle water texture overlay */}
+      <img src="/fleet-bg.jpg" alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55, pointerEvents: 'none' }}/>
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+        {/* Header */}
+        <div className="grid-2 services-preview-header" style={{ alignItems: 'end', marginBottom: 64 }}>
+          <div>
+            <Reveal>
+              <div className="mono" style={{ color: DARK.accent, marginBottom: 24, letterSpacing: '0.18em', opacity: 0.8 }}>
+                {t('map.eyebrow')}
+              </div>
+            </Reveal>
+            <Reveal delay={80}>
+              <h2 className="h2" style={{ color: DARK.text }}>
+                {t('map.title1')}<br/>
+                <em style={{ fontStyle: 'italic', color: DARK.accent }}>{t('map.title2')}</em>
+              </h2>
+            </Reveal>
+          </div>
+          <Reveal delay={160}>
+            <p className="lede lede-right" style={{ color: DARK.muted }}>{t('map.lede')}</p>
+          </Reveal>
+        </div>
+
+        <div className="grid-map" style={{ gap: 48, alignItems: 'start' }}>
+          {/* Map panel */}
           <Reveal>
-            <div style={{ position: 'relative', aspectRatio: '4/3', background: 'var(--bg-raised)', border: '1px solid var(--fg-08)' }}>
-              <MapSVG ports={ports} selected={selected} onSelect={setSelected} />
-              <div style={{ position: 'absolute', top: 20, left: 20, fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--fg-50)' }}>
+            <div style={{ position: 'relative', aspectRatio: '4/3', background: DARK.card, border: `1px solid ${DARK.border}`, overflow: 'hidden' }}>
+              <MapSVG ports={ports} selected={selected} onSelect={setSelected} dark />
+              <div style={{ position: 'absolute', top: 16, left: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: DARK.muted }}>
                 {t('map.mapLabel')}
               </div>
-              <div style={{ position: 'absolute', top: 20, right: 20, fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--fg-50)' }}>
+              <div style={{ position: 'absolute', top: 16, right: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: DARK.muted }}>
                 {t('map.mapLabel2')}
               </div>
-              <div style={{ position: 'absolute', bottom: 20, left: 20, fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--fg-50)' }}>
+              <div style={{ position: 'absolute', bottom: 16, left: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: DARK.muted }}>
                 {t('map.selectMarina')}
+              </div>
+              <div style={{ position: 'absolute', bottom: 16, right: 16, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: DARK.muted }}>
+                ALBANIA →
               </div>
             </div>
           </Reveal>
+
+          {/* Marina info card */}
           <div>
             <Reveal delay={120}>
-              <div style={{ border: '1px solid var(--fg-08)', background: 'var(--bg-raised)', overflow: 'hidden' }}>
-                {/* Marina illustration */}
-                <div style={{ height: 180, overflow: 'hidden' }}>
-                  <MarinaSVG id={selected} label={t(`map.mood_${selected.replace(/-/g, '_')}`)} />
+              <div style={{ border: `1px solid ${DARK.border}`, background: DARK.card, overflow: 'hidden' }}>
+                {/* Marina photo */}
+                <div style={{ height: 220, overflow: 'hidden', position: 'relative', background: '#071428' }}>
+                  <img
+                    key={selected}
+                    src={`/marina-${selected}.jpg`}
+                    alt={cur.name}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block', transition: 'opacity 0.4s ease' }}
+                    onError={e => { e.target.style.display = 'none'; }}
+                  />
+                  {/* Fallback SVG when no photo */}
+                  <div style={{ position: 'absolute', inset: 0, zIndex: -1 }}>
+                    <MarinaSVG id={selected} label={t(`map.mood_${selected.replace(/-/g, '_')}`)} dark />
+                  </div>
                 </div>
                 {/* Info panel */}
                 <div style={{ padding: '28px 32px 32px' }}>
                   <div style={{ marginBottom: 20 }}>
-                    <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 8, fontSize: 10 }}>{cur.coords}</div>
-                    <h3 className="serif" style={{ fontSize: 32, letterSpacing: '-0.01em' }}>{cur.name}</h3>
+                    <div className="mono" style={{ color: DARK.muted, marginBottom: 8, fontSize: 10, letterSpacing: '0.15em' }}>{cur.coords}</div>
+                    <h3 className="serif" style={{ fontSize: 32, letterSpacing: '-0.01em', color: DARK.text }}>{cur.name}</h3>
                   </div>
-                  <div className="rule mb-24" style={{ marginTop: 4 }}/>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 24 }}>
+                  <div style={{ height: 1, background: DARK.border, margin: '4px 0 24px' }}/>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 28 }}>
                     <div>
-                      <div className="mono" style={{ color: 'var(--fg-50)' }}>{t('map.totalBerths')}</div>
-                      <div className="serif" style={{ fontSize: 40, marginTop: 6 }}>{cur.berths}</div>
+                      <div className="mono" style={{ color: DARK.muted, fontSize: 10, letterSpacing: '0.15em' }}>{t('map.totalBerths')}</div>
+                      <div className="serif" style={{ fontSize: 40, marginTop: 6, color: DARK.text }}>{cur.berths}</div>
                     </div>
                     <div>
-                      <div className="mono" style={{ color: 'var(--fg-50)' }}>{t('map.availability')}</div>
-                      <div className="serif" style={{ fontSize: 16, marginTop: 10, color: 'var(--fg-70)', lineHeight: 1.5 }}>{t('map.availabilityText')}</div>
+                      <div className="mono" style={{ color: DARK.muted, fontSize: 10, letterSpacing: '0.15em' }}>{t('map.availability')}</div>
+                      <div style={{ fontSize: 14, marginTop: 10, color: DARK.muted, lineHeight: 1.6, fontFamily: 'var(--serif)' }}>{t('map.availabilityText')}</div>
                     </div>
                   </div>
-                  <button className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }}
+                  <button
+                    style={{ width: '100%', padding: '14px 24px', border: `1px solid ${DARK.border}`, background: 'transparent', color: DARK.text, fontFamily: 'var(--mono)', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, transition: 'border-color 0.2s, color 0.2s' }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = DARK.accent; e.currentTarget.style.color = DARK.accent; }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = DARK.border; e.currentTarget.style.color = DARK.text; }}
                     onClick={() => setRoute({ page: 'contact', service: 'berth' })}>
                     {t('map.enquire')} <Icons.Arrow size={14}/>
                   </button>
@@ -204,14 +241,18 @@ function CoastMap() {
   );
 }
 
-function MapSVG({ ports, selected, onSelect }) {
+function MapSVG({ ports, selected, onSelect, dark = false }) {
+  const sea   = dark ? '#071a2e' : 'var(--bg-warm)';
+  const land  = dark ? '#0d2540' : 'var(--bg)';
+  const grid  = dark ? 'rgba(239,234,226,0.06)' : 'var(--fg-08)';
+  const shore = dark ? 'rgba(212,183,143,0.25)' : 'var(--fg-15)';
   return (
     <svg viewBox="0 0 100 75" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%', display: 'block' }}>
       {/* Sea */}
-      <rect width="100" height="75" fill="var(--bg-warm)"/>
+      <rect width="100" height="75" fill={sea}/>
 
       {/* Grid */}
-      <g stroke="var(--fg-08)" strokeWidth="0.08">
+      <g stroke={grid} strokeWidth="0.08">
         {[...Array(10)].map((_, i) => <line key={`h${i}`} x1="0" y1={i * 7.5} x2="100" y2={i * 7.5}/>)}
         {[...Array(14)].map((_, i) => <line key={`v${i}`} x1={i * 7.5} y1="0" x2={i * 7.5} y2="75"/>)}
       </g>
@@ -219,8 +260,8 @@ function MapSVG({ ports, selected, onSelect }) {
       {/* Landmass — Montenegrin coast (stylized) */}
       <path
         d="M 0 0 L 100 0 L 100 18 Q 90 19 85 24 Q 80 28 70 26 Q 60 22 52 24 Q 45 28 42 38 Q 42 48 48 52 Q 58 58 70 56 Q 85 56 95 66 Q 100 72 100 75 L 0 75 L 0 0 Z"
-        fill="var(--bg)"
-        stroke="var(--fg-15)"
+        fill={land}
+        stroke={shore}
         strokeWidth="0.15"
         opacity="0.4"
       />
