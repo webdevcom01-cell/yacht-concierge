@@ -141,16 +141,58 @@ function HeroOversized() {
 
 function HeroVisual() {
   return (
-    <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5', maxHeight: 640 }}>
-      <div className="hero-canvas" style={{ position: 'absolute', inset: 0 }}>
+    <div style={{
+      position: 'relative',
+      width: '100%',
+      aspectRatio: '4/5',
+      maxHeight: 640,
+      overflow: 'hidden',
+      border: '1px solid var(--fg-15)',
+    }}>
+      {/* Hero photograph */}
+      <img
+        src="/hero-yacht.jpg"
+        alt="Superyacht in the Bay of Kotor, Montenegro"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          display: 'block',
+        }}
+        onError={e => { e.target.style.display = 'none'; }}
+      />
+      {/* Dark gradient overlay for text legibility */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.35) 100%)',
+        pointerEvents: 'none',
+      }}/>
+      {/* SVG fallback shown when no image */}
+      <div className="hero-canvas" style={{ position: 'absolute', inset: 0, zIndex: -1 }}>
         <HorizonSVG />
       </div>
-      {/* Metadata overlay */}
-      <div style={{ position: 'absolute', top: 20, left: 20, right: 20, display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(239,234,226,0.7)' }}>
-        <span>BAY OF KOTOR / 42.43°N</span>
+      {/* Metadata overlays */}
+      <div style={{
+        position: 'absolute', top: 16, left: 16, right: 16,
+        display: 'flex', justifyContent: 'space-between',
+        fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.18em',
+        textTransform: 'uppercase', color: 'rgba(239,234,226,0.85)',
+        pointerEvents: 'none',
+      }}>
+        <span>BAY CP KOTOR / 42.42°N</span>
         <span>EST. MMXVII</span>
       </div>
-      <div style={{ position: 'absolute', bottom: 20, left: 20, right: 20, display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(239,234,226,0.7)' }}>
+      <div style={{
+        position: 'absolute', bottom: 16, left: 16, right: 16,
+        display: 'flex', justifyContent: 'space-between',
+        fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.18em',
+        textTransform: 'uppercase', color: 'rgba(239,234,226,0.85)',
+        pointerEvents: 'none',
+      }}>
         <span>TIVAT, MONTENEGRO</span>
         <span>ADRIATIC SEA</span>
       </div>
