@@ -220,28 +220,28 @@ function CoastMap() {
                   return (
                     <g key={p.id} onClick={()=>setSelected(p.id)} style={{cursor:'pointer'}}>
                       {/* Pulse ring (selected only) */}
-                      {isSel && <circle cx={p.x} cy={p.y} r="5" fill="none" stroke="rgba(212,183,143,0.2)" strokeWidth="0.5"/>}
+                      {isSel && <circle cx={p.x} cy={p.y} r="2.5" fill="none" stroke="rgba(212,183,143,0.22)" strokeWidth="0.25"/>}
                       {/* Outer ring */}
-                      <circle cx={p.x} cy={p.y} r={isSel?3.2:2.2}
-                        fill="rgba(2,10,22,0.5)"
-                        stroke={isSel?'rgba(212,183,143,0.9)':'rgba(239,234,226,0.5)'}
-                        strokeWidth={isSel?0.6:0.4}
+                      <circle cx={p.x} cy={p.y} r={isSel?1.8:1.1}
+                        fill="rgba(2,10,22,0.65)"
+                        stroke={isSel?'rgba(212,183,143,0.9)':'rgba(239,234,226,0.55)'}
+                        strokeWidth={isSel?0.4:0.3}
                       />
                       {/* Inner dot */}
-                      <circle cx={p.x} cy={p.y} r={isSel?1.4:0.9}
+                      <circle cx={p.x} cy={p.y} r={isSel?0.75:0.45}
                         fill={isSel?'#D4B78F':'rgba(239,234,226,0.8)'}
                         filter={isSel?'url(#glow)':'none'}
                       />
                       {/* Name label */}
-                      <text x={p.x+4.5} y={p.y+0.8}
-                        fontFamily="var(--mono)" fontSize="3.2"
+                      <text x={p.x+2.8} y={p.y+0.7}
+                        fontFamily="var(--mono)" fontSize="2.1"
                         fill={isSel?'rgba(212,183,143,0.95)':'rgba(239,234,226,0.75)'}
                         letterSpacing="0.05em"
                         style={{textShadow:'0 1px 3px rgba(0,0,0,0.9)', pointerEvents:'none'}}
                       >{p.name}</text>
                       {/* Coordinates (selected only) */}
                       {isSel && (
-                        <text x={p.x+4.5} y={p.y+4.5}
+                        <text x={p.x+2.8} y={p.y+3.8}
                           fontFamily="var(--mono)" fontSize="2.6"
                           fill="rgba(239,234,226,0.55)"
                           letterSpacing="0.03em"
@@ -271,17 +271,17 @@ function CoastMap() {
               <div style={{ border: `1px solid ${DARK.border}`, background: DARK.card, overflow: 'hidden' }}>
                 {/* Marina photo */}
                 <div style={{ height: 220, overflow: 'hidden', position: 'relative', background: '#071428' }}>
+                  {/* Fallback SVG — always visible behind photo */}
+                  <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+                    <MarinaSVG id={selected} label={t(`map.mood_${selected.replace(/-/g, '_')}`)} dark />
+                  </div>
                   <img
                     key={selected}
                     src={`/marina-${selected}.jpg`}
                     alt={cur.name}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block', transition: 'opacity 0.4s ease' }}
+                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block', transition: 'opacity 0.4s ease', zIndex: 1 }}
                     onError={e => { e.target.style.display = 'none'; }}
                   />
-                  {/* Fallback SVG when no photo */}
-                  <div style={{ position: 'absolute', inset: 0, zIndex: -1 }}>
-                    <MarinaSVG id={selected} label={t(`map.mood_${selected.replace(/-/g, '_')}`)} dark />
-                  </div>
                 </div>
                 {/* Info panel */}
                 <div style={{ padding: '28px 32px 32px' }}>
