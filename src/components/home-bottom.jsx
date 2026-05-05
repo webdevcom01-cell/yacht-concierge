@@ -134,11 +134,11 @@ function CoastMap() {
   const { t } = useTranslation();
   const [selected, setSelected] = useState('porto-montenegro');
   const ports = [
-    { id: 'herceg-novi', name: 'Herceg Novi', x: 14, y: 32, coords: '42.45°N 18.54°E', berths: 120 },
-    { id: 'porto-montenegro', name: 'Porto Montenegro', x: 38, y: 52, coords: '42.43°N 18.69°E', berths: 450 },
-    { id: 'kotor', name: 'Kotor', x: 54, y: 30, coords: '42.42°N 18.77°E', berths: 90 },
-    { id: 'budva', name: 'Budva', x: 70, y: 60, coords: '42.28°N 18.84°E', berths: 380 },
-    { id: 'bar', name: 'Bar', x: 88, y: 82, coords: '42.10°N 19.09°E', berths: 160 },
+    { id: 'herceg-novi', name: 'Herceg Novi', x: 16, y: 46, coords: '42.45°N 18.54°E', berths: 120 },
+    { id: 'porto-montenegro', name: 'Porto Montenegro', x: 50, y: 72, coords: '42.43°N 18.69°E', berths: 450 },
+    { id: 'kotor', name: 'Kotor', x: 56, y: 34, coords: '42.42°N 18.77°E', berths: 90 },
+    { id: 'budva', name: 'Budva', x: 78, y: 83, coords: '42.28°N 18.84°E', berths: 380 },
+    { id: 'bar', name: 'Bar', x: 92, y: 95, coords: '42.10°N 19.09°E', berths: 160 },
   ];
   const cur = ports.find(p => p.id === selected);
 
@@ -174,7 +174,7 @@ function CoastMap() {
           <Reveal>
             <div style={{ position: 'relative', aspectRatio: '4/3', background: DARK.card, border: `1px solid ${DARK.border}`, overflow: 'hidden' }}>
               {/* Hero photo background */}
-              <img src="/hero-yacht.jpg" alt="Bay of Kotor" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 35%', display: 'block' }}/>
+              <img src="/map-yacht.jpg" alt="Bay of Kotor" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%', display: 'block' }} onError={e=>{e.target.src='/hero-yacht.jpg'}}/>
               {/* Subtle dark vignette */}
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(2,10,22,0.25) 0%, rgba(2,10,22,0.05) 45%, rgba(2,10,22,0.5) 100%)', pointerEvents: 'none' }}/>
               {/* SVG overlay — arcs + pins + labels */}
@@ -186,30 +186,26 @@ function CoastMap() {
                     <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
                   </filter>
                 </defs>
-                {/* Coastline arc — subtle */}
-                <path d="M 18 28 Q 35 20 52 26 Q 62 30 65 42 Q 70 54 80 60 Q 88 65 98 68"
-                  fill="none" stroke="rgba(212,183,143,0.2)" strokeWidth="0.4"/>
-                <path d="M 18 28 Q 28 38 38 50 Q 44 58 52 64 Q 65 72 80 74"
-                  fill="none" stroke="rgba(212,183,143,0.2)" strokeWidth="0.4"/>
+                {/* Coastline curves — subtle gold */}
+                <path d="M 0 38 Q 10 35 16 46 Q 26 58 42 65 Q 50 70 50 72 Q 62 76 78 83"
+                  fill="none" stroke="rgba(212,183,143,0.18)" strokeWidth="0.35"/>
 
-                {/* Arc connecting lines between pins */}
+                {/* Arc connecting lines — matching reference design */}
                 {[
-                  ['herceg-novi','porto-montenegro'],
-                  ['porto-montenegro','kotor'],
-                  ['porto-montenegro','tivat'],
-                  ['tivat','budva'],
-                ].map(([a,b]) => {
+                  { a:'herceg-novi', b:'kotor',            cx:36, cy:8  },
+                  { a:'herceg-novi', b:'porto-montenegro',  cx:30, cy:45 },
+                  { a:'kotor',       b:'porto-montenegro',  cx:53, cy:56 },
+                  { a:'porto-montenegro', b:'budva',        cx:64, cy:82 },
+                ].map(({ a, b, cx, cy }) => {
                   const pa = ports.find(p=>p.id===a), pb = ports.find(p=>p.id===b);
                   if (!pa||!pb) return null;
-                  const mx = (pa.x+pb.x)/2, my = Math.min(pa.y,pb.y)-8;
                   const isActive = selected===a||selected===b;
                   return (
                     <path key={a+b}
-                      d={`M${pa.x} ${pa.y} Q${mx} ${my} ${pb.x} ${pb.y}`}
+                      d={`M${pa.x} ${pa.y} Q${cx} ${cy} ${pb.x} ${pb.y}`}
                       fill="none"
-                      stroke={isActive ? 'rgba(212,183,143,0.45)' : 'rgba(212,183,143,0.15)'}
-                      strokeWidth={isActive ? 0.35 : 0.25}
-                      strokeDasharray={isActive ? 'none' : '1 1'}
+                      stroke={isActive ? 'rgba(212,183,143,0.55)' : 'rgba(212,183,143,0.18)'}
+                      strokeWidth={isActive ? 0.4 : 0.28}
                     />
                   );
                 })}
