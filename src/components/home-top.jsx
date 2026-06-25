@@ -141,16 +141,58 @@ function HeroOversized() {
 
 function HeroVisual() {
   return (
-    <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5', maxHeight: 640 }}>
-      <div className="hero-canvas" style={{ position: 'absolute', inset: 0 }}>
+    <div style={{
+      position: 'relative',
+      width: '100%',
+      aspectRatio: '4/5',
+      maxHeight: 640,
+      overflow: 'hidden',
+      border: '1px solid var(--fg-15)',
+    }}>
+      {/* Hero photograph */}
+      <img
+        src="/hero-yacht.jpg"
+        alt="Superyacht in the Bay of Kotor, Montenegro"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center',
+          display: 'block',
+        }}
+        onError={e => { e.target.style.display = 'none'; }}
+      />
+      {/* Dark gradient overlay for text legibility */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.35) 100%)',
+        pointerEvents: 'none',
+      }}/>
+      {/* SVG fallback shown when no image */}
+      <div className="hero-canvas" style={{ position: 'absolute', inset: 0, zIndex: -1 }}>
         <HorizonSVG />
       </div>
-      {/* Metadata overlay */}
-      <div style={{ position: 'absolute', top: 20, left: 20, right: 20, display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(239,234,226,0.7)' }}>
-        <span>BAY OF KOTOR / 42.43°N</span>
+      {/* Metadata overlays */}
+      <div style={{
+        position: 'absolute', top: 16, left: 16, right: 16,
+        display: 'flex', justifyContent: 'space-between',
+        fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.18em',
+        textTransform: 'uppercase', color: 'rgba(239,234,226,0.85)',
+        pointerEvents: 'none',
+      }}>
+        <span>BAY CP KOTOR / 42.42°N</span>
         <span>EST. MMXVII</span>
       </div>
-      <div style={{ position: 'absolute', bottom: 20, left: 20, right: 20, display: 'flex', justifyContent: 'space-between', fontFamily: 'var(--mono)', fontSize: 9.5, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(239,234,226,0.7)' }}>
+      <div style={{
+        position: 'absolute', bottom: 16, left: 16, right: 16,
+        display: 'flex', justifyContent: 'space-between',
+        fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.18em',
+        textTransform: 'uppercase', color: 'rgba(239,234,226,0.85)',
+        pointerEvents: 'none',
+      }}>
         <span>TIVAT, MONTENEGRO</span>
         <span>ADRIATIC SEA</span>
       </div>
@@ -233,32 +275,51 @@ function HeroStripInline({ light = false }) {
 function ServicesPreview() {
   const { setRoute, serviceDensity } = useApp();
   const { t } = useTranslation();
+  const colCount = serviceDensity === 'dense' ? 4 : serviceDensity === 'loose' ? 2 : 3;
   return (
-    <section className="section">
-      <div className="container">
-        <div className="grid-2 services-preview-header" style={{ alignItems: 'end' }}>
+    <section style={{ position: 'relative', overflow: 'hidden', padding: '100px 0' }}>
+      {/* Background photo */}
+      <img
+        src="/services-bg.jpg"
+        alt=""
+        aria-hidden="true"
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover', objectPosition: 'center',
+          display: 'block',
+        }}
+      />
+      {/* Dark overlay */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to bottom, rgba(2,10,22,0.82) 0%, rgba(2,10,22,0.72) 50%, rgba(2,10,22,0.88) 100%)',
+        pointerEvents: 'none',
+      }}/>
+      {/* Content */}
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+        <div className="grid-2 services-preview-header" style={{ alignItems: 'end', marginBottom: 64 }}>
           <div>
             <Reveal>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>
+              <div className="mono" style={{ color: 'rgba(212,183,143,0.7)', marginBottom: 24, letterSpacing: '0.18em' }}>
                 {t('services.eyebrow')}
               </div>
             </Reveal>
             <Reveal delay={80}>
-              <h2 className="h2">
+              <h2 className="h2" style={{ color: '#EFEAE2' }}>
                 {t('services.title1')}<br/>
                 <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('services.title2')}</em>
               </h2>
             </Reveal>
           </div>
           <Reveal delay={160}>
-            <p className="lede lede-right">{t('services.lede')}</p>
+            <p className="lede lede-right" style={{ color: 'rgba(239,234,226,0.7)' }}>{t('services.lede')}</p>
           </Reveal>
         </div>
 
-        <div className={`services-grid services-grid--${serviceDensity === 'dense' ? 'dense' : serviceDensity === 'loose' ? 'loose' : 'standard'}`} style={{ gap: 0, border: '1px solid var(--fg-08)' }}>
+        <div className={`services-grid services-grid--${serviceDensity === 'dense' ? 'dense' : serviceDensity === 'loose' ? 'loose' : 'standard'}`} style={{ gap: 0, border: '1px solid rgba(239,234,226,0.12)' }}>
           {SERVICES.map((s, i) => {
             const IconC = Icons[s.icon];
-            const colCount = serviceDensity === 'dense' ? 4 : serviceDensity === 'loose' ? 2 : 3;
             const isRight = (i + 1) % colCount === 0;
             const isBottom = i >= SERVICES.length - colCount;
             return (
@@ -267,20 +328,24 @@ function ServicesPreview() {
                   className="service-card"
                   style={{
                     border: 'none',
-                    borderRight: isRight ? 'none' : '1px solid var(--fg-08)',
-                    borderBottom: isBottom ? 'none' : '1px solid var(--fg-08)',
+                    borderRight: isRight ? 'none' : '1px solid rgba(239,234,226,0.12)',
+                    borderBottom: isBottom ? 'none' : '1px solid rgba(239,234,226,0.12)',
                     borderRadius: 0,
-                    background: 'transparent',
+                    background: 'rgba(2,10,22,0.3)',
+                    backdropFilter: 'blur(2px)',
+                    transition: 'background 0.3s ease',
                   }}
+                  onMouseEnter={e => e.currentTarget.style.background = 'rgba(212,183,143,0.08)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(2,10,22,0.3)'}
                   onClick={() => setRoute({ page: 'service', id: s.id })}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-                    <span className="service-card-num">{s.num}</span>
-                    <IconC size={28} stroke={1} />
+                    <span className="service-card-num" style={{ color: 'rgba(212,183,143,0.6)' }}>{s.num}</span>
+                    <IconC size={28} stroke={1} color="var(--accent)" />
                   </div>
-                  <h3 className="service-card-title">{s.title}</h3>
-                  <p className="service-card-body">{s.desc}</p>
-                  <div className="service-card-arrow">
+                  <h3 className="service-card-title" style={{ color: '#EFEAE2' }}>{s.title}</h3>
+                  <p className="service-card-body" style={{ color: 'rgba(239,234,226,0.6)' }}>{s.desc}</p>
+                  <div className="service-card-arrow" style={{ color: 'var(--accent)' }}>
                     {t('services.viewProtocol')} <Icons.Arrow size={12}/>
                   </div>
                 </div>
