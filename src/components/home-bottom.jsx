@@ -498,10 +498,12 @@ function TestimonialsSection() {
 }
 
 // ---------- Final CTA ----------
+function PlainReveal({ children }) { return <>{children}</>; }
 function ClosingCTA({ serviceId = null, hero = false }) {
   const { setRoute } = useApp();
   const { t } = useTranslation();
   const Heading = hero ? 'h1' : 'h2';
+  const R = hero ? PlainReveal : Reveal;
   return (
     <section className="section" style={{
       paddingTop: hero ? 168 : 120,
@@ -509,19 +511,19 @@ function ClosingCTA({ serviceId = null, hero = false }) {
       ...(hero ? { minHeight: '86vh', display: 'flex', alignItems: 'center' } : {}),
     }}>
       <div className="container" style={{ textAlign: 'center', width: '100%' }}>
-        <Reveal>
+        <R>
           <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 32 }}>{t('cta.engage')}</div>
-        </Reveal>
-        <Reveal delay={80}>
+        </R>
+        <R delay={80}>
           <Heading className="serif" style={{ fontSize: 'clamp(48px, 6.5vw, 96px)', lineHeight: 0.95, letterSpacing: '-0.02em', margin: 0 }}>
             {t('cta.title1')}<br/>
             <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('cta.title2')}</em>
           </Heading>
-        </Reveal>
-        <Reveal delay={160}>
+        </R>
+        <R delay={160}>
           <p className="lede" style={{ margin: '32px auto 0' }}>{t('cta.lede')}</p>
-        </Reveal>
-        <Reveal delay={240}>
+        </R>
+        <R delay={240}>
           <div className="btn-row" style={{ justifyContent: 'center', marginTop: 48 }}>
             <button
               className="btn btn-primary"
@@ -531,7 +533,7 @@ function ClosingCTA({ serviceId = null, hero = false }) {
             </button>
             <button className="btn btn-ghost" onClick={() => setRoute({ page: 'services' })}>{t('cta.btnServices')}</button>
           </div>
-        </Reveal>
+        </R>
       </div>
     </section>
   );
