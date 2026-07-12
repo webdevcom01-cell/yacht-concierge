@@ -546,7 +546,6 @@ function HomePage() {
       <ClosingCTA hero/>
       <ServicesPreview/>
       <StatsBlock/>
-      <CoastMap/>
       <ProcessStrip/>
       <TestimonialsSection/>
     </main>
