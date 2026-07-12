@@ -67,7 +67,6 @@ function ServicesPage() {
           <FleetTierSelector/>
         </div>
       </div>
-      <ClosingCTA/>
     </main>
   );
 }
@@ -284,7 +283,6 @@ function ServiceDetailPage({ id }) {
           </div>
         </div>
       </div>
-      <ClosingCTA serviceId={s.id}/>
     </main>
   );
 }

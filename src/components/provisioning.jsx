@@ -398,7 +398,6 @@ function ProvisioningPageContent() {
 
       <CartDrawer cart={cart} open={cartOpen} onClose={() => setCartOpen(false)} onCheckout={() => { setCartOpen(false); setRoute({ page: 'order-summary' }); }}/>
 
-      <ClosingCTA/>
     </main>
     </>
   );

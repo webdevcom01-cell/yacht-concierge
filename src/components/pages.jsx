@@ -72,7 +72,6 @@ function ProcessPage() {
           </div>
         </section>
       </div>
-      <ClosingCTA/>
     </main>
   );
 }
@@ -389,7 +388,6 @@ function FleetPage() {
       <div className="container">
         <FleetTierSelector/>
       </div>
-      <ClosingCTA/>
     </main>
   );
 }
@@ -627,7 +625,6 @@ function AboutPage() {
 
       </div>
 
-      <ClosingCTA/>
     </main>
   );
 }
