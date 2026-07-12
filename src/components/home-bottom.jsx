@@ -498,20 +498,25 @@ function TestimonialsSection() {
 }
 
 // ---------- Final CTA ----------
-function ClosingCTA({ serviceId = null }) {
+function ClosingCTA({ serviceId = null, hero = false }) {
   const { setRoute } = useApp();
   const { t } = useTranslation();
+  const Heading = hero ? 'h1' : 'h2';
   return (
-    <section className="section" style={{ paddingTop: 120, paddingBottom: 160 }}>
-      <div className="container" style={{ textAlign: 'center' }}>
+    <section className="section" style={{
+      paddingTop: hero ? 168 : 120,
+      paddingBottom: hero ? 120 : 160,
+      ...(hero ? { minHeight: '86vh', display: 'flex', alignItems: 'center' } : {}),
+    }}>
+      <div className="container" style={{ textAlign: 'center', width: '100%' }}>
         <Reveal>
           <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 32 }}>{t('cta.engage')}</div>
         </Reveal>
         <Reveal delay={80}>
-          <h2 className="serif" style={{ fontSize: 'clamp(48px, 6.5vw, 96px)', lineHeight: 0.95, letterSpacing: '-0.02em' }}>
+          <Heading className="serif" style={{ fontSize: 'clamp(48px, 6.5vw, 96px)', lineHeight: 0.95, letterSpacing: '-0.02em', margin: 0 }}>
             {t('cta.title1')}<br/>
             <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('cta.title2')}</em>
-          </h2>
+          </Heading>
         </Reveal>
         <Reveal delay={160}>
           <p className="lede" style={{ margin: '32px auto 0' }}>{t('cta.lede')}</p>
@@ -534,18 +539,14 @@ function ClosingCTA({ serviceId = null }) {
 
 // ---------- Home page shell ----------
 function HomePage() {
-  const { heroVariant } = useApp();
   return (
     <main>
-      {heroVariant === 'cinematic' && <HeroCinematic/>}
-      {heroVariant === 'oversized' && <HeroOversized/>}
-      {heroVariant === 'editorial' && <HeroEditorial/>}
+      <ClosingCTA hero/>
       <ServicesPreview/>
       <StatsBlock/>
       <CoastMap/>
       <ProcessStrip/>
       <TestimonialsSection/>
-      <ClosingCTA/>
     </main>
   );
 }
