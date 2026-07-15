@@ -277,29 +277,29 @@ function ServicesPreview() {
   const { t } = useTranslation();
   const colCount = serviceDensity === 'dense' ? 4 : serviceDensity === 'loose' ? 2 : 3;
   return (
-    <section style={{ position: 'relative', overflow: 'hidden', padding: '100px 0', background: '#001730' }}>
+    <section style={{ position: 'relative', overflow: 'hidden', padding: '100px 0' }}>
       {/* Content */}
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div className="grid-2 services-preview-header" style={{ alignItems: 'end', marginBottom: 64 }}>
           <div>
             <Reveal>
-              <div className="mono" style={{ color: 'rgba(212,183,143,0.7)', marginBottom: 24, letterSpacing: '0.18em' }}>
+              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24, letterSpacing: '0.18em' }}>
                 {t('services.eyebrow')}
               </div>
             </Reveal>
             <Reveal delay={80}>
-              <h2 className="h2" style={{ color: '#EFEAE2' }}>
+              <h2 className="h2" style={{ color: 'var(--fg)' }}>
                 {t('services.title1')}<br/>
                 <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('services.title2')}</em>
               </h2>
             </Reveal>
           </div>
           <Reveal delay={160}>
-            <p className="lede lede-right" style={{ color: 'rgba(239,234,226,0.7)' }}>{t('services.lede')}</p>
+            <p className="lede lede-right" style={{ color: 'var(--fg-50)' }}>{t('services.lede')}</p>
           </Reveal>
         </div>
 
-        <div className={`services-grid services-grid--${serviceDensity === 'dense' ? 'dense' : serviceDensity === 'loose' ? 'loose' : 'standard'}`} style={{ gap: 0, border: '1px solid rgba(239,234,226,0.12)' }}>
+        <div className={`services-grid services-grid--${serviceDensity === 'dense' ? 'dense' : serviceDensity === 'loose' ? 'loose' : 'standard'}`} style={{ gap: 0, border: '1px solid var(--border, var(--fg-08))' }}>
           {SERVICES.map((s, i) => {
             const IconC = Icons[s.icon];
             const isRight = (i + 1) % colCount === 0;
@@ -310,23 +310,22 @@ function ServicesPreview() {
                   className="service-card"
                   style={{
                     border: 'none',
-                    borderRight: isRight ? 'none' : '1px solid rgba(239,234,226,0.12)',
-                    borderBottom: isBottom ? 'none' : '1px solid rgba(239,234,226,0.12)',
+                    borderRight: isRight ? 'none' : '1px solid var(--border, var(--fg-08))',
+                    borderBottom: isBottom ? 'none' : '1px solid var(--border, var(--fg-08))',
                     borderRadius: 0,
-                    background: 'rgba(2,10,22,0.3)',
-                    backdropFilter: 'blur(2px)',
+                    background: 'transparent',
                     transition: 'background 0.3s ease',
                   }}
                   onMouseEnter={e => e.currentTarget.style.background = 'rgba(212,183,143,0.08)'}
-                  onMouseLeave={e => e.currentTarget.style.background = 'rgba(2,10,22,0.3)'}
+                  onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                   onClick={() => setRoute({ page: 'service', id: s.id })}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-                    <span className="service-card-num" style={{ color: 'rgba(212,183,143,0.6)' }}>{s.num}</span>
+                    <span className="service-card-num" style={{ color: 'rgba(212,183,143,0.75)' }}>{s.num}</span>
                     <IconC size={28} stroke={1} color="var(--accent)" />
                   </div>
-                  <h3 className="service-card-title" style={{ color: '#EFEAE2' }}>{s.title}</h3>
-                  <p className="service-card-body" style={{ color: 'rgba(239,234,226,0.6)' }}>{s.desc}</p>
+                  <h3 className="service-card-title" style={{ color: 'var(--fg)' }}>{s.title}</h3>
+                  <p className="service-card-body" style={{ color: 'var(--fg-50)' }}>{s.desc}</p>
                   <div className="service-card-arrow" style={{ color: 'var(--accent)' }}>
                     {t('services.viewProtocol')} <Icons.Arrow size={12}/>
                   </div>
