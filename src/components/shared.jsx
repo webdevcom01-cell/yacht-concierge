@@ -258,9 +258,7 @@ function Nav() {
 
   const links = [
     { id: 'services',     label: t('nav.services') },
-    { id: 'provisioning', label: t('nav.provisioning') },
     { id: 'process',      label: t('nav.process') },
-    { id: 'fleet',        label: t('nav.fleet') },
     { id: 'about',        label: t('nav.about') },
   ];
 
