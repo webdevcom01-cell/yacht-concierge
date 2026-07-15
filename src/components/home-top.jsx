@@ -277,25 +277,7 @@ function ServicesPreview() {
   const { t } = useTranslation();
   const colCount = serviceDensity === 'dense' ? 4 : serviceDensity === 'loose' ? 2 : 3;
   return (
-    <section style={{ position: 'relative', overflow: 'hidden', padding: '100px 0' }}>
-      {/* Background photo */}
-      <img
-        src="/services-bg.jpg"
-        alt=""
-        aria-hidden="true"
-        style={{
-          position: 'absolute', inset: 0,
-          width: '100%', height: '100%',
-          objectFit: 'cover', objectPosition: 'center',
-          display: 'block',
-        }}
-      />
-      {/* Dark overlay */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        background: 'linear-gradient(to bottom, rgba(2,10,22,0.82) 0%, rgba(2,10,22,0.72) 50%, rgba(2,10,22,0.88) 100%)',
-        pointerEvents: 'none',
-      }}/>
+    <section style={{ position: 'relative', overflow: 'hidden', padding: '100px 0', background: '#001730' }}>
       {/* Content */}
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div className="grid-2 services-preview-header" style={{ alignItems: 'end', marginBottom: 64 }}>
