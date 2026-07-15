@@ -198,7 +198,6 @@ function App() {
           <TweakGroup label="Theme"        value={tweaks.theme}          options={[['light','Light'],['dark','Dark']]}                         onChange={v => setTweak('theme', v)}/>
           <TweakGroup label="Accent"       value={tweaks.accent}         options={[['teal','Sea Teal'],['gold','Champagne']]}                  onChange={v => setTweak('accent', v)}/>
           <TweakGroup label="Navbar"       value={tweaks.navStyle}       options={[['glass','Glass'],['solid','Solid'],['line','Line']]}        onChange={v => setTweak('navStyle', v)}/>
-          <TweakGroup label="Hero Layout"  value={tweaks.heroVariant}    options={[['editorial','Editorial'],['cinematic','Cinematic'],['oversized','Oversized']]} onChange={v => setTweak('heroVariant', v)}/>
           <TweakGroup label="Services Grid" value={tweaks.serviceDensity} options={[['loose','2-col'],['standard','3-col'],['dense','4-col']]}  onChange={v => setTweak('serviceDensity', v)}/>
           <TweakGroup label="Heading Font" value={tweaks.headingFont}    options={[['cormorant','Cormorant'],['fraunces','Fraunces'],['garamond','Garamond']]} onChange={v => setTweak('headingFont', v)}/>
         </div>

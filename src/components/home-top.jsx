@@ -370,4 +370,4 @@ function StatsBlock() {
   );
 }
 
-export { HeroEditorial, HeroCinematic, HeroOversized, ServicesPreview, StatsBlock };
+export { ServicesPreview, StatsBlock };

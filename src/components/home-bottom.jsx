@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal, SectionHeader } from './shared';
-import { HeroEditorial, HeroCinematic, HeroOversized, ServicesPreview, StatsBlock } from './home-top';
+import { ServicesPreview, StatsBlock } from './home-top';
 
 // Home page bottom — Interactive coast map, Berth availability widget, Testimonial, CTA
 
@@ -547,7 +547,6 @@ function HomePage() {
       <ServicesPreview/>
       <StatsBlock/>
       <ProcessStrip/>
-      <TestimonialsSection/>
     </main>
   );
 }
