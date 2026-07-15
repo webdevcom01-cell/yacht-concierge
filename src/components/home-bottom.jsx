@@ -506,9 +506,9 @@ function ClosingCTA({ serviceId = null, hero = false }) {
   const R = hero ? PlainReveal : Reveal;
   return (
     <section className="section" style={{
-      paddingTop: hero ? 168 : 120,
+      paddingTop: 120,
       paddingBottom: hero ? 120 : 160,
-      ...(hero ? { minHeight: '86vh', display: 'flex', alignItems: 'center' } : {}),
+      ...(hero ? { minHeight: '100vh', display: 'flex', alignItems: 'center' } : {}),
     }}>
       <div className="container" style={{ textAlign: 'center', width: '100%' }}>
         <R>
