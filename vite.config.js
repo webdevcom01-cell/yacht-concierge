@@ -8,7 +8,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          'vendor': ['react', 'react-dom', 'react-helmet-async'],
+          'vendor': ['react', 'react-dom'],
           'i18n': ['i18next', 'react-i18next'],
         },
       },

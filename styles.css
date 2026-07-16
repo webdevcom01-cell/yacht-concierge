@@ -20,7 +20,7 @@
   --gold: #D4B78F;
   --gold-soft: rgba(212, 183, 143, 0.18);
 
-  --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --serif: 'EB Garamond', Georgia, serif;
   --sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
@@ -482,70 +482,7 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
 }
 .field-textarea { resize: vertical; min-height: 90px; }
 
-/* ============ Tweaks panel ============ */
 
-.tweaks {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  width: 300px;
-  background: var(--bg-raised);
-  border: 1px solid var(--fg-15);
-  padding: 20px;
-  z-index: 200;
-  font-family: var(--sans);
-  box-shadow: 0 30px 80px rgba(0,23,48,0.18);
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
-  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
-}
-.tweaks[data-open="true"] {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-.tweaks-title {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--fg-50);
-  margin-bottom: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.tweaks-group { margin-bottom: 16px; }
-.tweaks-group-label {
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--fg-50);
-  margin-bottom: 8px;
-}
-.tweaks-options {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.tweaks-opt {
-  padding: 7px 10px;
-  border: 1px solid var(--fg-15);
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--fg-70);
-  cursor: pointer;
-  transition: all 0.3s var(--ease);
-}
-.tweaks-opt[data-on="true"] {
-  background: var(--fg);
-  color: var(--bg);
-  border-color: var(--fg);
-}
 
 /* ============ Utility ============ */
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useLayoutEffect, createContext, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SERVICES } from '../data/services';
 
 // Shared primitives: Logo, Nav, Footer, icons, reveal hook
 
@@ -45,6 +46,13 @@ function Reveal({ children, delay = 0, as: Tag = 'div', className = '', style = 
 const WA_NUMBER  = '38267144555';
 const WA_MESSAGE = encodeURIComponent("Hello, I'd like to enquire about yacht concierge services in Montenegro.");
 export const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MESSAGE}`;
+
+// Single source for the WhatsApp glyph — previously duplicated inline in five places.
+export const WhatsAppIcon = ({ size = 15, fill = 'currentColor' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={fill} aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+);
 
 // ---------- Icons ---------- 1px stroke, vector, neutral
 const Icon = ({ children, size = 22, stroke = 1.2, className = '' }) => (
@@ -152,9 +160,7 @@ function WhatsAppFloat() {
         aria-label="Chat with us on WhatsApp — +382 67 144 555"
       >
         <span className="wa-tooltip">{t('nav.chatWhatsapp')}</span>
-        <svg width="29" height="29" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-        </svg>
+        <WhatsAppIcon size={29} fill="white"/>
       </a>
     </>
   );
@@ -222,12 +228,6 @@ function LangSwitcher() {
 }
 
 // ---------- Nav ----------
-const WA_SVG = (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-  </svg>
-);
-
 function Nav() {
   const { route, setRoute, theme, setTheme, navStyle } = useApp();
   const { t } = useTranslation();
@@ -250,11 +250,7 @@ function Nav() {
   // Close menu on route change
   useEffect(() => { setMenuOpen(false); }, [route]);
 
-  const PAGE_PATHS = {
-    home: '/', services: '/services', provisioning: '/provisioning',
-    process: '/process', fleet: '/fleet', about: '/about',
-    contact: '/contact', legal: '/legal', privacy: '/privacy', terms: '/terms',
-  };
+  const PAGE_PATHS = { services: '/services', process: '/process', about: '/about' };
 
   const links = [
     { id: 'services',     label: t('nav.services') },
@@ -388,7 +384,7 @@ function Nav() {
               className="nav-overlay-wa"
               onClick={() => setMenuOpen(false)}
             >
-              {WA_SVG}
+              <WhatsAppIcon size={15}/>
               {t('nav.chatWhatsapp')}
             </a>
           </div>
@@ -416,17 +412,42 @@ function Footer() {
               42.4330° N · 18.6881° E
             </div>
           </div>
-          {[
-            { titleKey: 'footer.services', itemsKey: 'footer.servicesItems' },
-            { titleKey: 'footer.operations', itemsKey: 'footer.operationsItems' },
-          ].map(col => (
-            <div key={col.titleKey}>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 18 }}>{t(col.titleKey)}</div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {t(col.itemsKey, { returnObjects: true }).map(i => <li key={i} style={{ fontSize: 13.5, color: 'var(--fg-70)' }}>{i}</li>)}
-              </ul>
-            </div>
-          ))}
+          {/* Services column — real links to service detail pages */}
+          <div>
+            <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 18 }}>{t('footer.services')}</div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {SERVICES.map(s => (
+                <li key={s.id}>
+                  <a
+                    href={`/services/${s.id}`}
+                    onClick={(e) => { e.preventDefault(); setRoute({ page: 'service', id: s.id }); }}
+                    style={{ fontSize: 13.5, color: 'var(--fg-70)', textDecoration: 'none' }}
+                  >{t(`services.${s.id}_title`)}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Operations column — real links to the remaining pages */}
+          <div>
+            <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 18 }}>{t('footer.operations')}</div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {[
+                { page: 'process',      path: '/process',      label: t('nav.process') },
+                { page: 'fleet',        path: '/fleet',        label: t('nav.fleet') },
+                { page: 'provisioning', path: '/provisioning', label: t('nav.provisioning') },
+                { page: 'about',        path: '/about',        label: t('nav.about') },
+                { page: 'contact',      path: '/contact',      label: t('nav.contact') },
+              ].map(l => (
+                <li key={l.page}>
+                  <a
+                    href={l.path}
+                    onClick={(e) => { e.preventDefault(); setRoute({ page: l.page }); }}
+                    style={{ fontSize: 13.5, color: 'var(--fg-70)', textDecoration: 'none' }}
+                  >{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div>
             <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 18 }}>{t('footer.office')}</div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -440,9 +461,7 @@ function Footer() {
                   rel="noopener noreferrer"
                   style={{ color: '#25D366', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}
                 >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-                  </svg>
+                  <WhatsAppIcon size={12} fill="#25D366"/>
                   +382 67 144 555
                 </a>
               </li>

@@ -1,6 +1,5 @@
 {
   "nav": {
-    "home": "Home",
     "services": "Servizi",
     "provisioning": "Approvvigionamento",
     "process": "Come funziona",
@@ -93,21 +92,6 @@
     "services": "Servizi",
     "operations": "Operazioni",
     "office": "Ufficio",
-    "servicesItems": [
-      "Prenotazione ormeggi",
-      "Dogana e immigrazione",
-      "Approvvigionamento",
-      "Lavanderia",
-      "Floristica",
-      "Manutenzione"
-    ],
-    "operationsItems": [
-      "Come funziona",
-      "Disponibilità ormeggi",
-      "Livelli di servizio",
-      "SLA",
-      "Chi siamo"
-    ],
     "copyright": "© MMXXVI YACHT CONCIERGE D.O.O.",
     "legal": "Note legali",
     "privacy": "Privacy",
@@ -303,7 +287,6 @@
     "btnContact": "Contattaci"
   },
   "cookie": {
-    "title": "Utilizziamo i cookie",
     "body": "Utilizziamo Google Analytics per capire come i visitatori usano questo sito. Nessun dato personale viene venduto o condiviso con terze parti.",
     "accept": "Accetta",
     "decline": "Rifiuta",

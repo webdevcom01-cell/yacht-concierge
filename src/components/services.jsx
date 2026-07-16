@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal, SectionHeader } from './shared';
 import { SERVICES } from '../data/services';
-import { ClosingCTA } from './home-bottom';
 
 // Services index page & Service detail page
 

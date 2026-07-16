@@ -158,15 +158,11 @@ const WEBSITE_SCHEMA = {
 const HELMET_ATTR = 'data-yc-helmet';
 
 function setOrCreate(selector, attrs, content) {
-  let el = document.head.querySelector(`${selector}[${HELMET_ATTR}]`);
-  if (!el) {
-    // Try to find existing non-helmet tag of same type first
-    el = document.head.querySelector(selector);
-    if (el && !el.getAttribute(HELMET_ATTR)) {
-      // Tag exists but not managed by us — create a new managed one
-      el = null;
-    }
-  }
+  // Prefer a tag we manage; otherwise ADOPT the existing static tag in place
+  // (index.html ships a static <meta description> for crawlers that don't run
+  // JS — updating it avoids shipping two description tags per page).
+  let el = document.head.querySelector(`${selector}[${HELMET_ATTR}]`) ||
+           document.head.querySelector(selector);
   if (!el) {
     const tag = selector.split('[')[0];
     el = document.createElement(tag);
@@ -196,9 +192,17 @@ function buildBreadcrumb(crumbs) {
 
 // ── PageSEO component ─────────────────────────────────────────────────────────
 
+const NOT_FOUND_DATA = {
+  title: 'Page Not Found — Yacht Concierge Montenegro',
+  description: 'The page you are looking for does not exist. Return to the homepage for superyacht concierge services in Montenegro.',
+  url: SITE_URL,
+  breadcrumb: null,
+};
+
 export function PageSEO({ page, id }) {
-  const key  = page === 'service' ? `service-${id}` : page;
-  const data = SEO_DATA[key] || SEO_DATA.home;
+  const key      = page === 'service' ? `service-${id}` : page;
+  const notFound = !SEO_DATA[key];
+  const data     = SEO_DATA[key] || NOT_FOUND_DATA;
   const breadcrumb = buildBreadcrumb(data.breadcrumb);
 
   useEffect(() => {
@@ -211,18 +215,15 @@ export function PageSEO({ page, id }) {
     // Meta description
     setOrCreate('meta[name="description"]', { name: 'description', content: data.description });
 
+    if (notFound) {
+      // Unknown route: the SPA host returns 200, so tell crawlers explicitly
+      // not to index this soft-404 — and skip canonical/OG/schema entirely.
+      setOrCreate('meta[name="robots"]', { name: 'robots', content: 'noindex' });
+      return () => removeHelmetTags();
+    }
+
     // Canonical
     setOrCreate('link[rel="canonical"]', { rel: 'canonical', href: data.url });
-
-    // hreflang
-    [['en', data.url], ['ru', data.url], ['it', data.url], ['x-default', data.url]].forEach(([lang, url]) => {
-      const el = document.createElement('link');
-      el.setAttribute('rel', 'alternate');
-      el.setAttribute('hreflang', lang);
-      el.setAttribute('href', url);
-      el.setAttribute(HELMET_ATTR, 'true');
-      document.head.appendChild(el);
-    });
 
     // Open Graph
     [

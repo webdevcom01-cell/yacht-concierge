@@ -2,23 +2,18 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import './i18n';
-import { AppCtx, Nav, Footer, Icons, WhatsAppFloat, ErrorBoundary } from './components/shared';
+import { AppCtx, Nav, Footer, WhatsAppFloat, ErrorBoundary } from './components/shared';
 import { PageSEO } from './seo.jsx';
 import { HomePage } from './components/home-bottom';
 import { ServicesPage, ServiceDetailPage } from './components/services';
 import { ProcessPage, ContactPage, FleetPage, AboutPage, NotFoundPage } from './components/pages';
 import { CookieConsent } from './components/cookie-consent';
 import '../styles.css';
-// N6: Reduced from 17 → 10 font imports — dropped unused weights/styles
-// Cormorant: 400 + 400-italic only (dropped 300, 500, 300-italic, 500-italic)
-import '@fontsource/cormorant-garamond/400.css';
-import '@fontsource/cormorant-garamond/400-italic.css';
-// EB Garamond: default heading font — keep both weights
+// Fonts: EB Garamond (headings), Inter (body), JetBrains Mono (labels).
+// Cormorant Garamond and Fraunces were removed with the design-tweaks panel —
+// the heading font is fixed to EB Garamond in styles.css (--serif).
 import '@fontsource/eb-garamond/400.css';
 import '@fontsource/eb-garamond/400-italic.css';
-// Fraunces: 400 + 400-italic only (dropped 500)
-import '@fontsource/fraunces/400.css';
-import '@fontsource/fraunces/400-italic.css';
 // Inter: keep 400, 500, 600 (dropped 300 — unused in CSS)
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
@@ -31,20 +26,6 @@ const ProvisioningPage  = React.lazy(() => import('./components/provisioning').t
 const LegalNoticePage   = React.lazy(() => import('./components/legal').then(m => ({ default: m.LegalNoticePage })));
 const PrivacyPage       = React.lazy(() => import('./components/legal').then(m => ({ default: m.PrivacyPage })));
 const TermsPage         = React.lazy(() => import('./components/legal').then(m => ({ default: m.TermsPage })));
-
-const TWEAKS = {
-  "theme": "light",
-  "accent": "gold",
-  "navStyle": "glass",
-  "serviceDensity": "standard",
-  "headingFont": "garamond"
-};
-
-const FONT_MAP = {
-  cormorant: "'Cormorant Garamond', Georgia, serif",
-  fraunces: "'Fraunces', Georgia, serif",
-  garamond: "'EB Garamond', Georgia, serif",
-};
 
 // ── URL ↔ Route helpers ──────────────────────────────────────────────────────
 
@@ -109,41 +90,20 @@ function App() {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  const [tweaks, setTweaks] = useState(TWEAKS);
-  const [tweaksOpen, setTweaksOpen] = useState(false);
-  const [editMode, setEditMode] = useState(false);
+  // Theme is the only runtime-adjustable design token (nav toggle);
+  // accent, nav style and grid density are fixed design decisions.
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', tweaks.theme);
-    document.documentElement.setAttribute('data-accent', tweaks.accent);
-    document.documentElement.style.setProperty('--serif', FONT_MAP[tweaks.headingFont] || FONT_MAP.cormorant);
-  }, [tweaks.theme, tweaks.accent, tweaks.headingFont]);
-
-  useEffect(() => {
-    const onMsg = (e) => {
-      if (e.data?.type === '__activate_edit_mode') { setEditMode(true); setTweaksOpen(true); }
-      if (e.data?.type === '__deactivate_edit_mode') { setEditMode(false); setTweaksOpen(false); }
-    };
-    window.addEventListener('message', onMsg);
-    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
-    return () => window.removeEventListener('message', onMsg);
-  }, []);
-
-  const setTweak = (k, v) => {
-    setTweaks(prev => {
-      const next = { ...prev, [k]: v };
-      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v } }, '*');
-      return next;
-    });
-  };
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
 
   const ctx = {
     route, setRoute,
-    theme: tweaks.theme,
-    setTheme: (t) => setTweak('theme', t),
-    accent: tweaks.accent,
-    navStyle: tweaks.navStyle,
-    serviceDensity: tweaks.serviceDensity,
+    theme, setTheme,
+    accent: 'gold',
+    navStyle: 'glass',
+    serviceDensity: 'standard',
   };
 
   let Page = null;
@@ -181,36 +141,8 @@ function App() {
         <WhatsAppFloat/>
         <CookieConsent/>
       </div>
-      {editMode && (
-        <div className="tweaks" data-open={tweaksOpen}>
-          <div className="tweaks-title">
-            <span>Tweaks</span>
-            <button onClick={() => setTweaksOpen(false)} style={{ color: 'var(--fg-50)' }}>
-              <Icons.Close size={14}/>
-            </button>
-          </div>
-          <TweakGroup label="Theme"        value={tweaks.theme}          options={[['light','Light'],['dark','Dark']]}                         onChange={v => setTweak('theme', v)}/>
-          <TweakGroup label="Accent"       value={tweaks.accent}         options={[['teal','Sea Teal'],['gold','Champagne']]}                  onChange={v => setTweak('accent', v)}/>
-          <TweakGroup label="Navbar"       value={tweaks.navStyle}       options={[['glass','Glass'],['solid','Solid'],['line','Line']]}        onChange={v => setTweak('navStyle', v)}/>
-          <TweakGroup label="Services Grid" value={tweaks.serviceDensity} options={[['loose','2-col'],['standard','3-col'],['dense','4-col']]}  onChange={v => setTweak('serviceDensity', v)}/>
-          <TweakGroup label="Heading Font" value={tweaks.headingFont}    options={[['cormorant','Cormorant'],['fraunces','Fraunces'],['garamond','Garamond']]} onChange={v => setTweak('headingFont', v)}/>
-        </div>
-      )}
     </AppCtx.Provider>
 
-  );
-}
-
-function TweakGroup({ label, value, options, onChange }) {
-  return (
-    <div className="tweaks-group">
-      <div className="tweaks-group-label">{label}</div>
-      <div className="tweaks-options">
-        {options.map(([v, l]) => (
-          <button key={v} className="tweaks-opt" data-on={value === v} onClick={() => onChange(v)}>{l}</button>
-        ))}
-      </div>
-    </div>
   );
 }
 

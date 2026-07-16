@@ -1,6 +1,5 @@
 {
   "nav": {
-    "home": "Home",
     "services": "Services",
     "provisioning": "Provisioning",
     "process": "How it works",
@@ -93,21 +92,6 @@
     "services": "Services",
     "operations": "Operations",
     "office": "Office",
-    "servicesItems": [
-      "Berth Reservations",
-      "Customs & Immigration",
-      "Provisioning",
-      "Laundry",
-      "Floristry",
-      "Maintenance"
-    ],
-    "operationsItems": [
-      "How it works",
-      "Berth availability",
-      "Fleet tiers",
-      "SLA",
-      "About us"
-    ],
     "copyright": "© MMXXVI YACHT CONCIERGE D.O.O.",
     "legal": "Legal",
     "privacy": "Privacy",
@@ -303,7 +287,6 @@
     "btnContact": "Contact us"
   },
   "cookie": {
-    "title": "We use cookies",
     "body": "We use Google Analytics to understand how visitors use this site. No personal data is sold or shared with third parties.",
     "accept": "Accept",
     "decline": "Decline",

@@ -253,10 +253,10 @@ function CoastMap() {
                 <text x="22" y="18" fontFamily="var(--mono)" fontSize="3" fill="rgba(239,234,226,0.35)" letterSpacing="0.2em">MONTENEGRO</text>
 
                 {/* Corner labels */}
-                <text x="2" y="4.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em">ADRIATIC COAST · MONTENEGRO</text>
-                <text x="98" y="4.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em" textAnchor="end">MONTENEGRIN COAST</text>
+                <text x="2" y="4.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em">{t('map.mapLabel')}</text>
+                <text x="98" y="4.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em" textAnchor="end">{t('map.mapLabel2')}</text>
                 <text x="2" y="72" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em">— ADRIATIC</text>
-                <text x="2" y="75.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em">SELECT A MARINA</text>
+                <text x="2" y="75.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em">{t('map.selectMarina')}</text>
                 <text x="98" y="75.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em" textAnchor="end">ALBANIA →</text>
               </svg>
             </div>
@@ -266,19 +266,13 @@ function CoastMap() {
           <div>
             <Reveal delay={120}>
               <div style={{ border: `1px solid ${DARK.border}`, background: DARK.card, overflow: 'hidden' }}>
-                {/* Marina photo */}
+                {/* Marina illustration (per-port palette). A per-marina photo
+                    layer used to sit above this, but the photos were never
+                    shipped — the <img> only produced a guaranteed 404 per click. */}
                 <div style={{ height: 220, overflow: 'hidden', position: 'relative', background: '#071428' }}>
-                  {/* Fallback SVG — always visible behind photo */}
-                  <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+                  <div style={{ position: 'absolute', inset: 0 }}>
                     <MarinaSVG id={selected} label={t(`map.mood_${selected.replace(/-/g, '_')}`)} dark />
                   </div>
-                  <img
-                    key={selected}
-                    src={`/marina-${selected}.jpg`}
-                    alt={cur.name}
-                    style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block', transition: 'opacity 0.4s ease', zIndex: 1 }}
-                    onError={e => { e.target.style.display = 'none'; }}
-                  />
                 </div>
                 {/* Info panel */}
                 <div style={{ padding: '28px 32px 32px' }}>
@@ -305,64 +299,6 @@ function CoastMap() {
         </div>
       </div>
     </section>
-  );
-}
-
-function MapSVG({ ports, selected, onSelect, dark = false }) {
-  const sea   = dark ? '#071a2e' : 'var(--bg-warm)';
-  const land  = dark ? '#0d2540' : 'var(--bg)';
-  const grid  = dark ? 'rgba(239,234,226,0.06)' : 'var(--fg-08)';
-  const shore = dark ? 'rgba(212,183,143,0.25)' : 'var(--fg-15)';
-  return (
-    <svg viewBox="0 0 100 75" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%', display: 'block' }}>
-      {/* Sea */}
-      <rect width="100" height="75" fill={sea}/>
-
-      {/* Grid */}
-      <g stroke={grid} strokeWidth="0.08">
-        {[...Array(10)].map((_, i) => <line key={`h${i}`} x1="0" y1={i * 7.5} x2="100" y2={i * 7.5}/>)}
-        {[...Array(14)].map((_, i) => <line key={`v${i}`} x1={i * 7.5} y1="0" x2={i * 7.5} y2="75"/>)}
-      </g>
-
-      {/* Landmass — Montenegrin coast (stylized) */}
-      <path
-        d="M 0 0 L 100 0 L 100 18 Q 90 19 85 24 Q 80 28 70 26 Q 60 22 52 24 Q 45 28 42 38 Q 42 48 48 52 Q 58 58 70 56 Q 85 56 95 66 Q 100 72 100 75 L 0 75 L 0 0 Z"
-        fill={land}
-        stroke={shore}
-        strokeWidth="0.15"
-        opacity="0.4"
-      />
-      {/* Land label */}
-      <text x="20" y="14" fontFamily="var(--mono)" fontSize="1.4" fill="var(--fg-50)" letterSpacing="0.4">MONTENEGRO</text>
-      <text x="78" y="72" fontFamily="var(--mono)" fontSize="1.4" fill="var(--fg-50)" letterSpacing="0.4">ALBANIA →</text>
-      <text x="4" y="70" fontFamily="var(--mono)" fontSize="1.4" fill="var(--fg-50)" letterSpacing="0.4">← ADRIATIC</text>
-
-      {/* Bay of Kotor shading */}
-      <path d="M 14 32 Q 28 38 38 52 Q 46 46 54 30 Z" fill="var(--accent)" opacity="0.08"/>
-
-      {/* Ports */}
-      {ports.map(p => {
-        const isSel = p.id === selected;
-        return (
-          <g key={p.id} style={{ cursor: 'pointer' }} onClick={() => onSelect(p.id)}>
-            {isSel && <circle cx={p.x} cy={p.y} r="3.5" fill="var(--accent)" opacity="0.2">
-              <animate attributeName="r" values="2.5;4.5;2.5" dur="2.4s" repeatCount="indefinite"/>
-              <animate attributeName="opacity" values="0.35;0;0.35" dur="2.4s" repeatCount="indefinite"/>
-            </circle>}
-            <circle cx={p.x} cy={p.y} r={isSel ? 1.2 : 0.9} fill="var(--accent)"/>
-            <circle cx={p.x} cy={p.y} r="2.6" fill="none" stroke="var(--accent)" strokeWidth="0.15" opacity={isSel ? 1 : 0.4}/>
-            <text
-              x={p.x + 3.5}
-              y={p.y + 0.8}
-              fontFamily="var(--serif)"
-              fontSize={isSel ? '2.4' : '2'}
-              fill="var(--fg)"
-              style={{ transition: 'font-size 0.3s' }}
-            >{p.name}</text>
-          </g>
-        );
-      })}
-    </svg>
   );
 }
 
