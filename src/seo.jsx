@@ -16,8 +16,8 @@ const SEO_DATA = {
     breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }],
   },
   provisioning: {
-    title: 'Provisioning Shop — Yacht Concierge Montenegro',
-    description: 'Order fresh produce, premium beverages, and duty-free provisions for delivery to your superyacht at Porto Montenegro or any Montenegrin berth.',
+    title: 'Provisioning Catalogues — Yacht Concierge Montenegro',
+    description: 'Request current price catalogues for superyacht provisioning in Montenegro — meat, seafood, dairy, bakery, pantry, specialty, and frozen lines, delivered to your berth.',
     url: 'https://yacht-concierge.me/provisioning',
     breadcrumb: [{ name: 'Provisioning', url: 'https://yacht-concierge.me/provisioning' }],
   },
