@@ -1,257 +1,82 @@
-import React, { useState, useEffect, useCallback, createContext, useContext, useMemo, useRef } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApp, Icons, Reveal } from './shared';
-import { ClosingCTA } from './home-bottom';
-import { submitOrder } from '../lib/submit';
-import { PRODUCTS } from '../lib/products';
+import { Icons, Reveal } from './shared';
+import { submitCatalogueRequest } from '../lib/submit';
 
-// Provisioning Shop: catalog + filters + cart drawer + summary page
-// Integrates with existing AppCtx routing + .service-card, .btn, .field styles.
-// Products sourced from Voli FOOD SERVICE 2025. To refresh: run scripts/import-voli.py
+// Provisioning — catalogue request page.
+// The former in-page product catalogue and online ordering were retired in
+// favour of a simple request flow: the client selects the categories of
+// interest and we send the current price catalogues directly.
 
-const CATEGORY_IDS = ['all','meat','seafood','dairy','charcuterie','bakery','pasta','spices','jams','condiments','truffles','ristoris','asian','frozen'];
+const CATEGORY_IDS = ['meat', 'seafood', 'dairy', 'bakery', 'pantry', 'specialty', 'frozen'];
 
-// ---------- Product placeholder visual (no photos — abstract swatch by category) ----------
-const CAT_COLOR = {
-  meat:        ['#5E2A2A', '#7A3F3F'],
-  seafood:     ['#1A3A4A', '#2E5F72'],
-  dairy:       ['#EFE4D1', '#D4C1A3'],
-  charcuterie: ['#4A2E1A', '#6B4227'],
-  bakery:      ['#4A3A28', '#6B5740'],
-  pasta:       ['#4A3A1A', '#7A5F2E'],
-  spices:      ['#5E2E0A', '#8B4513'],
-  jams:        ['#5E1A2E', '#8B3A52'],
-  condiments:  ['#2E3E1A', '#4A5E2E'],
-  truffles:    ['#1A1A0A', '#3A3A1A'],
-  ristoris:    ['#1A2A3E', '#2E4A6B'],
-  asian:       ['#2A3A1A', '#4A5E2E'],
-  frozen:      ['#1A2A3A', '#2E4A5E'],
-};
-function ProductSwatch({ cat, name }) {
-  const [a, b] = CAT_COLOR[cat] || ['#445', '#667'];
-  const initials = name.split(' ').slice(0,2).map(w => w[0]).join('');
-  return (
-    <div style={{
-      aspectRatio: '4/3',
-      background: `linear-gradient(135deg, ${a} 0%, ${b} 100%)`,
-      position: 'relative',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      overflow: 'hidden',
-    }}>
-      <div style={{ fontFamily: 'var(--serif)', fontSize: 42, color: 'rgba(255,255,255,0.9)', fontStyle: 'italic', letterSpacing: '-0.02em' }}>
-        {initials}
-      </div>
-      <div style={{ position: 'absolute', top: 12, left: 12, fontFamily: 'var(--mono)', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)' }}>
-        {cat}
-      </div>
-    </div>
-  );
-}
+const WA_CATALOGUE_URL = `https://wa.me/38267144555?text=${encodeURIComponent(
+  "Hello, I'd like to request provisioning price catalogues."
+)}`;
 
-// Shows product image if available, falls back to abstract swatch on error or missing URL
-function ProductImage({ p }) {
-  const [err, setErr] = useState(false);
-  if (!p.image || err) return <ProductSwatch cat={p.cat} name={p.name}/>;
-  return (
-    <div style={{ aspectRatio: '4/3', overflow: 'hidden', background: 'var(--bg-raised)' }}>
-      <img
-        src={p.image}
-        alt={p.name}
-        onError={() => setErr(true)}
-        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-      />
-    </div>
-  );
-}
-
-// ---------- Cart context (single instance shared across pages) ----------
-const CartContext = createContext(null);
-const CART_STALE_DAYS = 7; // warn user if cart is older than this
-
-function CartProvider({ children }) {
-  const [cart, setCart] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('yc-cart') || '[]'); } catch { return []; }
-  });
-  const [meta, setMeta] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('yc-cart-meta') || '{}'); } catch { return {}; }
-  });
-  const [savedAt] = useState(() => {
-    const ts = localStorage.getItem('yc-cart-ts');
-    return ts ? parseInt(ts, 10) : null;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('yc-cart', JSON.stringify(cart));
-    if (cart.length > 0) localStorage.setItem('yc-cart-ts', Date.now().toString());
-    else localStorage.removeItem('yc-cart-ts');
-  }, [cart]);
-  useEffect(() => { localStorage.setItem('yc-cart-meta', JSON.stringify(meta)); }, [meta]);
-
-  const add = (p) => setCart(c => {
-    const ex = c.find(x => x.id === p.id);
-    return ex ? c.map(x => x.id === p.id ? { ...x, qty: x.qty + 1 } : x) : [...c, { ...p, qty: 1 }];
-  });
-  const setQty = (id, q) => setCart(c => q <= 0 ? c.filter(x => x.id !== id) : c.map(x => x.id === id ? { ...x, qty: q } : x));
-  // clearItems — keeps vessel meta (yacht, marina, email etc.) for repeat orders
-  const clearItems = () => {
-    setCart([]);
-    localStorage.removeItem('yc-cart');
-    localStorage.removeItem('yc-cart-ts');
-  };
-  // clear — full reset including delivery details
-  const clear = () => {
-    setCart([]);
-    setMeta({});
-    localStorage.removeItem('yc-cart');
-    localStorage.removeItem('yc-cart-meta');
-    localStorage.removeItem('yc-cart-ts');
-  };
-  const subtotal = cart.reduce((s, x) => s + x.price * x.qty, 0);
-  const count = cart.reduce((s, x) => s + x.qty, 0);
-
-  // Is the cart stale (older than CART_STALE_DAYS)?
-  const isStale = savedAt
-    ? (Date.now() - savedAt) > CART_STALE_DAYS * 24 * 60 * 60 * 1000
-    : false;
-
-  return (
-    <CartContext.Provider value={{ cart, meta, setMeta, add, setQty, clear, clearItems, subtotal, count, isStale }}>
-      {children}
-    </CartContext.Provider>
-  );
-}
-
-function useCart() {
-  return useContext(CartContext);
-}
-
-// ---------- Saved-cart resume banner ----------
-function ResumeBanner({ onOpen }) {
-  const cart = useCart();
+function ProvisioningPage() {
   const { t } = useTranslation();
-  const [dismissed, setDismissed] = useState(false);
-  if (cart.count === 0 || dismissed) return null;
-  return (
-    <div style={{
-      position: 'sticky', top: 72, zIndex: 180,
-      background: 'var(--navy, #001730)',
-      borderBottom: '1px solid rgba(255,255,255,0.08)',
-      padding: '14px 32px',
-      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap',
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-        <span className="mono" style={{ color: 'rgba(255,255,255,0.45)', fontSize: 10 }}>
-          {t('provisioningPage.resumeBannerLabel')}
-        </span>
-        <span style={{ fontSize: 14, fontFamily: 'var(--sans)', color: 'rgba(255,255,255,0.8)' }}>
-          {t('provisioningPage.resumeBannerTitle', { n: cart.count, total: cart.subtotal.toFixed(2) })}
-        </span>
-        {cart.isStale && (
-          <span className="mono" style={{ color: 'var(--accent, #B8963E)', fontSize: 9, letterSpacing: '0.08em' }}>
-            ⚠ {t('provisioningPage.staleWarning')}
-          </span>
-        )}
-      </div>
-      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-        <button
-          onClick={() => { cart.clear(); setDismissed(true); }}
-          className="mono"
-          style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10, letterSpacing: '0.08em', background: 'none', border: 'none', cursor: 'pointer', padding: '14px 12px', minHeight: 44 }}
-        >
-          {t('provisioningPage.resumeBannerClear')}
-        </button>
-        <button
-          onClick={onOpen}
-          className="mono"
-          style={{
-            padding: '8px 18px', fontSize: 10, letterSpacing: '0.12em',
-            background: 'var(--accent, #B8963E)', color: '#fff',
-            border: 'none', cursor: 'pointer',
-          }}
-        >
-          {t('provisioningPage.resumeBannerBtn')}
-        </button>
-      </div>
-    </div>
-  );
-}
 
-// ---------- Provisioning Shop Page ----------
-function ProvisioningPageContent() {
-  const { setRoute } = useApp();
-  const { t } = useTranslation();
-  const cart = useCart();
-  const [cartOpen, setCartOpen] = useState(false);
-  const [query, setQuery] = useState('');
-  const [cat, setCat] = useState('all');
-  const [taxFreeOnly, setTaxFreeOnly] = useState(false);
-  const [sameDayOnly, setSameDayOnly] = useState(false);
-  const [diet, setDiet] = useState([]);
-  const [filtersMobile, setFiltersMobile] = useState(false);
-
-  const CATEGORIES = CATEGORY_IDS.map(id => ({ id, label: t(`provisioningPage.categories.${id}`) }));
-
-  const toggleDiet = (d) => setDiet(xs => xs.includes(d) ? xs.filter(x => x !== d) : [...xs, d]);
-
-  const filtered = PRODUCTS.filter(p => {
-    if (cat !== 'all' && p.cat !== cat) return false;
-    if (query && !p.name.toLowerCase().includes(query.toLowerCase())) return false;
-    if (taxFreeOnly && !p.taxFree) return false;
-    if (sameDayOnly && !p.sameDay) return false;
-    if (diet.length && !diet.every(d => (p.diet || []).includes(d))) return false;
-    return true;
+  const [refNum] = useState(() => {
+    const now = new Date();
+    const date = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+    const rand = Math.random().toString(36).slice(2, 7).toUpperCase();
+    return `PC-${date}-${rand}`;
   });
 
-  // Per-category counts respecting all active filters except the category filter itself
-  const productCounts = useMemo(() => {
-    const counts = {};
-    let all = 0;
-    PRODUCTS.forEach(p => {
-      if (query && !p.name.toLowerCase().includes(query.toLowerCase())) return;
-      if (taxFreeOnly && !p.taxFree) return;
-      if (sameDayOnly && !p.sameDay) return;
-      if (diet.length && !diet.every(d => (p.diet || []).includes(d))) return;
-      counts[p.cat] = (counts[p.cat] || 0) + 1;
-      all++;
-    });
-    counts.all = all;
-    return counts;
-  }, [query, taxFreeOnly, sameDayOnly, diet]);
+  const [data, setData] = useState({
+    name: '', yacht: '', email: '', phone: '', marina: '', notes: '', categories: [],
+  });
+  const [status, setStatus] = useState('idle'); // idle | sending | done | error
 
-  // Grouped view: products split by category, used when browsing "all"
-  const groupedProducts = useMemo(() => {
-    if (cat !== 'all') return null;
-    const groups = {};
-    CATEGORY_IDS.filter(id => id !== 'all').forEach(id => {
-      groups[id] = filtered.filter(p => p.cat === id);
-    });
-    return groups;
-  }, [cat, filtered]);
+  const update = (k, v) => setData(d => ({ ...d, [k]: v }));
+  const toggleCategory = (id) =>
+    setData(d => ({
+      ...d,
+      categories: d.categories.includes(id)
+        ? d.categories.filter(c => c !== id)
+        : [...d.categories, id],
+    }));
+
+  const canSubmit =
+    data.name.trim() &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email) &&
+    data.categories.length > 0;
+
+  const submit = async () => {
+    if (!canSubmit || status === 'sending') return;
+    setStatus('sending');
+    try {
+      await submitCatalogueRequest(
+        { ...data, categories: data.categories.map(id => t(`provisioningPage.cat_${id}`)) },
+        refNum
+      );
+      setStatus('done');
+    } catch {
+      setStatus('error');
+    }
+  };
 
   return (
-    <>
-    <ResumeBanner onOpen={() => setCartOpen(true)}/>
     <main className="page-top">
       <div className="container">
-        {/* Back to service brief */}
-        <Reveal>
-          <a
-            className="mono"
-            onClick={() => setRoute({ page: 'service', id: 'provisioning' })}
-            style={{ display: 'inline-flex', gap: 10, color: 'var(--fg-70)', cursor: 'pointer', marginBottom: 64 }}
-          >
-            {t('provisioningPage.serviceBriefLink')}
-          </a>
-        </Reveal>
 
         {/* Hero */}
-        <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 80 }}>
+        <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 96 }}>
           <div>
-            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('provisioningPage.eyebrow')}</div></Reveal>
+            <Reveal>
+              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>
+                {t('provisioningPage.eyebrow')}
+              </div>
+            </Reveal>
             <Reveal delay={80}>
-              <h1 className="display">{t('provisioningPage.title1')}<br/>{t('provisioningPage.title2')}<br/><em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('provisioningPage.titleAccent')}</em>.</h1>
+              <h1 className="display">
+                {t('provisioningPage.title1')}<br />
+                {t('provisioningPage.title2')}{' '}
+                <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>
+                  {t('provisioningPage.titleAccent')}
+                </em>.
+              </h1>
             </Reveal>
           </div>
           <Reveal delay={160}>
@@ -259,682 +84,163 @@ function ProvisioningPageContent() {
           </Reveal>
         </div>
 
-        {/* Search + cart bar */}
-        <Reveal>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 0, alignItems: 'center', paddingTop: 24, paddingBottom: 24, borderTop: '1px solid var(--fg-15)', borderBottom: '1px solid var(--fg-15)' }}> {/* M-9: was 1fr auto auto grid — auto cols overflow on 320px; flex+wrap collapses safely */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, flex: 1, minWidth: 200 }}>
-              <span className="mono" style={{ color: 'var(--fg-50)' }}>↳</span>
-              <input
-                className="field-input"
-                style={{ border: 'none', fontSize: 18, fontFamily: 'var(--serif)', padding: '4px 0', flex: 1 }}
-                placeholder={t('provisioningPage.searchPlaceholder')}
-                value={query}
-                onChange={e => setQuery(e.target.value)}
-              />
-              {query && (
-                <button
-                  onClick={() => setQuery('')}
-                  className="mono"
-                  style={{ color: 'var(--fg-50)', fontSize: 11, padding: '2px 8px', border: '1px solid var(--fg-15)', letterSpacing: '0.1em' }}
-                >
-                  {t('provisioningPage.clearBtn')}
-                </button>
-              )}
+        {status === 'done' ? (
+          /* Success state */
+          <div style={{ padding: '64px 0 96px', textAlign: 'center' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 72, height: 72, border: '1px solid var(--accent)', color: 'var(--accent)', marginBottom: 40, borderRadius: '50%' }}>
+              <Icons.Check size={28} stroke={1.2} />
             </div>
-            <div className="mono" style={{ color: 'var(--fg-50)', whiteSpace: 'nowrap' }}>
-              {t('provisioningPage.resultsCount', { filtered: filtered.length, total: PRODUCTS.length })}
-            </div>
-            <button
-              className="btn btn-ghost"
-              onClick={() => setCartOpen(true)}
-              style={{ position: 'relative' }}
-            >
-              {cart.count > 0
-                ? <><span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 18, height: 18, background: 'var(--accent)', color: 'var(--bg)', borderRadius: '50%', fontSize: 10, fontWeight: 600, marginRight: 6 }}>{cart.count}</span>€ {cart.subtotal.toFixed(2)}</>
-                : t('provisioningPage.cartBtn')
-              } <Icons.Arrow size={12}/>
-            </button>
-          </div>
-        </Reveal>
-
-        {/* Category tabs — sticky, visible on all screen sizes */}
-        <div className="cat-tabs-row">
-          <CategoryTabs
-            categories={CATEGORIES}
-            active={cat}
-            onChange={setCat}
-            productCounts={productCounts}
-          />
-        </div>
-
-        {/* Mobile refinement filters toggle (price / service / dietary) */}
-        <div className="shop-mobile-filters" style={{ marginBottom: 24 }}>
-          <button className="btn btn-ghost" onClick={() => setFiltersMobile(v => !v)}>
-            {filtersMobile ? t('provisioningPage.hideFilters') : t('provisioningPage.showFilters')}
-          </button>
-        </div>
-
-        {/* Main layout */}
-        <div className="shop-layout" style={{ gap: 56, alignItems: 'start' }}>
-          {/* Refinement sidebar — service flags and dietary */}
-          <aside className={`shop-filters${filtersMobile ? ' shop-filters--open' : ''}`} style={{ position: 'sticky', top: 140 }}>
-            <FilterBlock label={t('provisioningPage.filterService')}>
-              <Toggle label={t('provisioningPage.taxFreeOnly')} on={taxFreeOnly} onChange={setTaxFreeOnly}/>
-              <Toggle label={t('provisioningPage.sameDayOnly')} on={sameDayOnly} onChange={setSameDayOnly}/>
-            </FilterBlock>
-
-            <FilterBlock label={t('provisioningPage.filterDietary')}>
-              {['vegan', 'vegetarian', 'gluten-free'].map(d => (
-                <Toggle key={d} label={d} on={diet.includes(d)} onChange={() => toggleDiet(d)}/>
-              ))}
-            </FilterBlock>
-
-            <button
-              onClick={() => { setCat('all'); setQuery(''); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
-              className="mono"
-              style={{ color: 'var(--fg-50)', marginTop: 24, cursor: 'pointer' }}
-            >{t('provisioningPage.resetFilters')}</button>
-          </aside>
-
-          {/* Product area */}
-          <div>
-            {filtered.length === 0 ? (
-              <div style={{ padding: '96px 32px', textAlign: 'center', border: '1px dashed var(--fg-15)' }}>
-                <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>{t('provisioningPage.noResults')}</div>
-                <div className="serif" style={{ fontSize: 28, marginBottom: 12 }}>{t('provisioningPage.noResultsTitle')}</div>
-                <div style={{ color: 'var(--fg-70)', fontSize: 14, marginBottom: 32 }}>{t('provisioningPage.noResultsBody')}</div>
-                <button
-                  onClick={() => { setCat('all'); setQuery(''); setTaxFreeOnly(false); setSameDayOnly(false); setDiet([]); }}
-                  className="btn btn-ghost"
-                >
-                  {t('provisioningPage.resetFilters')}
-                </button>
-              </div>
-            ) : cat === 'all' && groupedProducts ? (
-              /* All categories — grouped sections with headers */
-              <div>
-                {CATEGORY_IDS.filter(id => id !== 'all').map(id => (
-                  <CategorySection
-                    key={id}
-                    catId={id}
-                    label={t(`provisioningPage.categories.${id}`)}
-                    products={groupedProducts[id] || []}
-                    cart={cart}
-                  />
-                ))}
-              </div>
-            ) : (
-              /* Single category or active search — flat grid */
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 1, background: 'var(--fg-08)', border: '1px solid var(--fg-08)' }}>
-                {filtered.map(p => {
-                  const inCartQty = cart.cart.find(x => x.id === p.id)?.qty || 0;
-                  return (
-                    <ProductCard
-                      key={p.id}
-                      p={p}
-                      inCartQty={inCartQty}
-                      onAdd={() => cart.add(p)}
-                      onSetQty={(q) => cart.setQty(p.id, q)}
-                    />
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Floating cart button — positioned above WhatsApp button */}
-      {cart.count > 0 && !cartOpen && (
-        <button
-          onClick={() => setCartOpen(true)}
-          className="btn btn-primary"
-          style={{ position: 'fixed', bottom: 'max(104px, calc(70px + env(safe-area-inset-bottom, 0px)))', right: 28, zIndex: 9002, boxShadow: '0 12px 40px rgba(0,23,48,0.25)' }} /* M-13: was hardcoded 104px — now adapts to iPhone safe area */
-        >
-          <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, background: 'rgba(255,255,255,0.25)', borderRadius: '50%', fontSize: 11, fontWeight: 700, marginRight: 8 }}>{cart.count}</span>
-          € {cart.subtotal.toFixed(2)} <Icons.Arrow size={13}/>
-        </button>
-      )}
-
-      <CartDrawer cart={cart} open={cartOpen} onClose={() => setCartOpen(false)} onCheckout={() => { setCartOpen(false); setRoute({ page: 'order-summary' }); }}/>
-
-    </main>
-    </>
-  );
-}
-
-function FilterBlock({ label, children }) {
-  return (
-    <div style={{ marginBottom: 32, paddingBottom: 32, borderBottom: '1px solid var(--fg-08)' }}>
-      <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>{label}</div>
-      {children}
-    </div>
-  );
-}
-
-function Toggle({ label, on, onChange }) {
-  return (
-    <button
-      onClick={() => onChange(!on)}
-      style={{
-        display: 'flex', alignItems: 'center', gap: 10, width: '100%', padding: '14px 0', /* M-6: was 6px 0 (28px) → 14px gives 44px tap height */
-        fontSize: 13.5, color: on ? 'var(--fg)' : 'var(--fg-70)', textTransform: 'capitalize', textAlign: 'left',
-      }}
-    >
-      <span style={{
-        width: 14, height: 14, border: `1px solid ${on ? 'var(--accent)' : 'var(--fg-30)'}`,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: on ? 'var(--accent)' : 'transparent',
-      }}>
-        {on && <Icons.Check size={10} stroke={2.5}/>}
-      </span>
-      {label}
-    </button>
-  );
-}
-
-// ---------- Category tab bar ----------
-function CategoryTabs({ categories, active, onChange, productCounts }) {
-  const scrollRef = useRef(null);
-
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-    const activeBtn = container.querySelector('[data-active="true"]');
-    if (activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-  }, [active]);
-
-  return (
-    <div ref={scrollRef} className="cat-tabs-scroll">
-      {categories.map(c => {
-        const isActive = active === c.id;
-        const count = productCounts[c.id] ?? 0;
-        // Hide non-all categories when they have no matching products
-        if (c.id !== 'all' && count === 0) return null;
-        return (
-          <button
-            key={c.id}
-            data-active={String(isActive)}
-            onClick={() => onChange(c.id)}
-            className="cat-tab"
-            style={{
-              background: isActive ? 'var(--accent)' : 'transparent',
-              color: isActive ? '#fff' : 'var(--fg-70)',
-              border: `1px solid ${isActive ? 'var(--accent)' : 'var(--fg-15)'}`,
-            }}
-          >
-            <span>{c.label}</span>
-            {count > 0 && (
-              <span className="cat-tab-count" style={{
-                background: isActive ? 'rgba(255,255,255,0.22)' : 'var(--fg-08)',
-                color: isActive ? '#fff' : 'var(--fg-50)',
-              }}>
-                {count}
-              </span>
-            )}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-// ---------- Category section (grouped view) ----------
-function CategorySection({ catId, label, products, cart }) {
-  if (products.length === 0) return null;
-  const [accent] = CAT_COLOR[catId] || ['#445566'];
-  return (
-    <section id={`cat-section-${catId}`} style={{ marginBottom: 72 }}>
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 12,
-        marginBottom: 24,
-        paddingBottom: 14,
-        borderBottom: '1px solid var(--fg-08)',
-      }}>
-        <div style={{
-          width: 3,
-          height: 18,
-          background: accent,
-          opacity: 0.85,
-          borderRadius: 1,
-          flexShrink: 0,
-        }}/>
-        <span className="mono" style={{ fontSize: 11, letterSpacing: '0.18em', color: 'var(--fg)' }}>
-          {label.toUpperCase()}
-        </span>
-        <span className="mono" style={{ color: 'var(--fg-30)', fontSize: 9.5 }}>
-          {products.length}
-        </span>
-      </div>
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-        gap: 1,
-        background: 'var(--fg-08)',
-        border: '1px solid var(--fg-08)',
-      }}>
-        {products.map(p => {
-          const inCartQty = cart.cart.find(x => x.id === p.id)?.qty || 0;
-          return (
-            <ProductCard
-              key={p.id}
-              p={p}
-              inCartQty={inCartQty}
-              onAdd={() => cart.add(p)}
-              onSetQty={(q) => cart.setQty(p.id, q)}
-            />
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
-function ProductSkeleton() {
-  return (
-    <div style={{ background: 'var(--bg-raised)', padding: 0 }}>
-      <div style={{ aspectRatio: '4/3', background: 'var(--bg-warm)' }}/>
-      <div style={{ padding: 20 }}>
-        <div style={{ height: 16, background: 'var(--fg-08)', marginBottom: 10, width: '70%' }}/>
-        <div style={{ height: 12, background: 'var(--fg-08)', width: '40%' }}/>
-      </div>
-    </div>
-  );
-}
-
-function ProductCard({ p, inCartQty, onAdd, onSetQty }) {
-  const [flash, setFlash] = useState(false);
-  const { t } = useTranslation();
-
-  const handleAdd = () => {
-    onAdd();
-    setFlash(true);
-    setTimeout(() => setFlash(false), 1500);
-  };
-
-  const inCart = inCartQty > 0;
-
-  return (
-    <div style={{
-      background: 'var(--bg-raised)',
-      display: 'flex', flexDirection: 'column',
-      outline: inCart ? '2px solid var(--accent)' : 'none',
-      outlineOffset: -2,
-      transition: 'outline 0.2s var(--ease)',
-      position: 'relative',
-    }}>
-      {/* In-cart qty badge */}
-      {inCart && (
-        <div style={{
-          position: 'absolute', top: 10, right: 10, zIndex: 2,
-          background: 'var(--accent)', color: 'var(--bg)',
-          width: 24, height: 24, borderRadius: '50%',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: 'var(--mono)', fontSize: 11, fontWeight: 700,
-        }}>
-          {inCartQty}
-        </div>
-      )}
-
-      <ProductImage p={p}/>
-
-      <div style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: 10 }}>
-          <h4 className="serif" style={{ fontSize: 18, lineHeight: 1.15, letterSpacing: '-0.01em', margin: 0 }}>{p.name}</h4>
-          {p.taxFree && (
-            <span className="mono" style={{ fontSize: 8.5, padding: '3px 6px', border: '1px solid var(--accent)', color: 'var(--accent)', whiteSpace: 'nowrap' }}>{t('provisioningPage.taxFreeLabel')}</span>
-          )}
-        </div>
-        {p.origin && <div className="mono" style={{ color: 'var(--fg-50)', fontSize: 9.5 }}>{p.origin}</div>}
-        <div style={{ flex: 1 }}/>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 8 }}>
-          <div>
-            <span className="serif" style={{ fontSize: 22, letterSpacing: '-0.01em' }}>€ {p.price.toFixed(2)}</span>
-            <span className="mono" style={{ color: 'var(--fg-50)', marginLeft: 6 }}>/ {p.unit}</span>
-          </div>
-          {p.sameDay && <span className="mono" style={{ color: 'var(--fg-50)', fontSize: 9 }}>{t('provisioningPage.sameDayLabel')}</span>}
-        </div>
-
-        {inCart ? (
-          /* Qty controls when item is already in cart */
-          <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', border: '1px solid var(--accent)' }}>
-            <button
-              onClick={() => onSetQty(inCartQty - 1)}
-              style={{ flex: 1, padding: '14px 0', fontFamily: 'var(--mono)', fontSize: 16, color: 'var(--accent)', borderRight: '1px solid var(--accent)' }}
-            >−</button>
-            <span style={{ flex: 1, textAlign: 'center', fontFamily: 'var(--mono)', fontSize: 13, color: 'var(--accent)', fontWeight: 600 }}>
-              {inCartQty}
-            </span>
-            <button
-              onClick={handleAdd}
-              style={{ flex: 1, padding: '14px 0', fontFamily: 'var(--mono)', fontSize: 16, color: 'var(--accent)', borderLeft: '1px solid var(--accent)' }}
-            >+</button>
+            <h2 className="serif" style={{ fontSize: 48, letterSpacing: '-0.02em', marginBottom: 20 }}>
+              {t('provisioningPage.successTitle')}
+            </h2>
+            <p className="lede" style={{ margin: '0 auto', maxWidth: 480 }}>
+              {t('provisioningPage.successLede', { ref: refNum })}
+            </p>
           </div>
         ) : (
-          /* Add button when not in cart */
-          <button
-            onClick={handleAdd}
-            className="mono"
-            style={{
-              marginTop: 10, padding: '17px 12px', /* M-5: was 10px 12px (32px) → 17px gives 44px tap height */
-              border: `1px solid ${flash ? 'var(--accent)' : 'var(--fg-15)'}`,
-              background: flash ? 'var(--accent-soft)' : 'transparent',
-              color: flash ? 'var(--accent)' : 'var(--fg)',
-              textAlign: 'center', cursor: 'pointer',
-              transition: 'all 0.3s var(--ease)',
-              fontSize: 10, letterSpacing: '0.18em',
-            }}
-            onMouseEnter={e => { if (!flash) { e.currentTarget.style.background = 'var(--fg)'; e.currentTarget.style.color = 'var(--bg)'; e.currentTarget.style.borderColor = 'var(--fg)'; }}}
-            onMouseLeave={e => { if (!flash) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--fg)'; e.currentTarget.style.borderColor = 'var(--fg-15)'; }}}
-          >
-            {flash ? t('provisioningPage.addedLabel') : t('provisioningPage.addToOrder')}
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
+          <div className="grid-contact" style={{ gap: 96, alignItems: 'start', marginBottom: 96 }}>
 
-// ---------- Cart Drawer ----------
-function CartDrawer({ cart, open, onClose, onCheckout }) {
-  const { cart: items, meta, setMeta, setQty, subtotal } = cart;
-  const { t } = useTranslation();
-  const setM = (k, v) => setMeta(m => ({ ...m, [k]: v }));
-  const stripAsterisk = s => s.replace(/\s*\*$/, '');
-  const requiredFields = [
-    { key: 'yacht',  label: stripAsterisk(t('provisioningPage.yachtNameLabel')) },
-    { key: 'email',  label: stripAsterisk(t('provisioningPage.emailLabel')) },
-    { key: 'marina', label: stripAsterisk(t('provisioningPage.marinaLabel')) },
-    { key: 'berth',  label: stripAsterisk(t('provisioningPage.berthLabel')) },
-    { key: 'date',   label: stripAsterisk(t('provisioningPage.dateLabel')) },
-  ];
-  const missingFields = requiredFields.filter(f => !meta[f.key]).map(f => f.label);
-  const canCheckout = items.length > 0 && missingFields.length === 0;
-
-  return (
-    <>
-      <div
-        onClick={onClose}
-        style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,23,48,0.4)', zIndex: 190,
-          opacity: open ? 1 : 0, pointerEvents: open ? 'auto' : 'none',
-          transition: 'opacity 0.4s var(--ease)', backdropFilter: 'blur(4px)',
-        }}
-      />
-      <aside style={{
-        position: 'fixed', top: 0, right: 0, bottom: 0, width: 'min(520px, 100vw)',
-        background: 'var(--bg-raised)', zIndex: 201, /* M-10: was 200 = nav z-index → 201 ensures drawer renders above nav glass */
-        transform: open ? 'translateX(0)' : 'translateX(100%)',
-        transition: 'transform 0.5s var(--ease)', display: 'flex', flexDirection: 'column',
-        borderLeft: '1px solid var(--fg-15)',
-      }}>
-        <div style={{ padding: '32px 32px 24px', borderBottom: '1px solid var(--fg-08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 6 }}>{t('provisioningPage.cartOrder')}</div>
-            <div className="serif" style={{ fontSize: 28, letterSpacing: '-0.01em' }}>{t('provisioningPage.cartTitle')}</div>
-          </div>
-          <button onClick={onClose} style={{ color: 'var(--fg-70)', padding: 13, margin: -13, lineHeight: 0 }}><Icons.Close size={18}/></button>
-        </div>
-
-        <div style={{ flex: 1, overflowY: 'auto', padding: 32 }}>
-          {items.length === 0 ? (
-            <div style={{ padding: '48px 0', textAlign: 'center' }}>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 12 }}>{t('provisioningPage.cartEmpty')}</div>
-              <div className="serif" style={{ fontSize: 22 }}>{t('provisioningPage.cartEmptyTitle')}</div>
-              <div style={{ color: 'var(--fg-70)', fontSize: 14, marginTop: 8 }}>{t('provisioningPage.cartEmptyBody')}</div>
+            {/* Left — categories */}
+            <div>
+              <Reveal>
+                <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 12 }}>
+                  {t('provisioningPage.categoriesLabel').toUpperCase()}
+                </div>
+                <p style={{ fontSize: 14, color: 'var(--fg-70)', marginBottom: 28, maxWidth: '44ch' }}>
+                  {t('provisioningPage.categoriesSub')}
+                </p>
+              </Reveal>
+              <Reveal delay={80}>
+                <div style={{ border: '1px solid var(--fg-15)' }}>
+                  {CATEGORY_IDS.map((id, i) => {
+                    const on = data.categories.includes(id);
+                    return (
+                      <div
+                        key={id}
+                        role="checkbox"
+                        aria-checked={on}
+                        tabIndex={0}
+                        onClick={() => toggleCategory(id)}
+                        onKeyDown={(e) => {
+                          if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggleCategory(id); }
+                        }}
+                        style={{
+                          padding: '18px 24px',
+                          cursor: 'pointer',
+                          borderBottom: i < CATEGORY_IDS.length - 1 ? '1px solid var(--fg-15)' : 'none',
+                          background: on ? 'var(--accent-soft)' : 'transparent',
+                          display: 'flex',
+                          gap: 16,
+                          alignItems: 'center',
+                          transition: 'background 0.3s var(--ease)',
+                        }}
+                      >
+                        <div style={{ width: 16, height: 16, flexShrink: 0, border: `1px solid ${on ? 'var(--accent)' : 'var(--fg-30)'}`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          {on && <Icons.Check size={10} stroke={2} />}
+                        </div>
+                        <div className="serif" style={{ fontSize: 19 }}>
+                          {t(`provisioningPage.cat_${id}`)}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </Reveal>
             </div>
-          ) : (
-            <>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-                {items.map(it => (
-                  <div key={it.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: 16, padding: '16px 0', borderBottom: '1px solid var(--fg-08)', alignItems: 'center' }}>
-                    <div>
-                      <div className="serif" style={{ fontSize: 17, letterSpacing: '-0.01em' }}>{it.name}</div>
-                      <div className="mono" style={{ color: 'var(--fg-50)', marginTop: 4, fontSize: 9.5 }}>€ {it.price.toFixed(2)} / {it.unit}{it.taxFree && ` · ${t('provisioningPage.taxFreeLabel')}`}</div>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--fg-15)' }}>
-                      <button onClick={() => setQty(it.id, it.qty - 1)} style={{ padding: '13px 16px', fontFamily: 'var(--mono)' }}>−</button>
-                      <span style={{ minWidth: 28, textAlign: 'center', fontFamily: 'var(--mono)', fontSize: 12 }}>{it.qty}</span>
-                      <button onClick={() => setQty(it.id, it.qty + 1)} style={{ padding: '13px 16px', fontFamily: 'var(--mono)' }}>+</button>
-                    </div>
-                    <div className="serif" style={{ fontSize: 17, minWidth: 70, textAlign: 'right' }}>€ {(it.price * it.qty).toFixed(2)}</div>
-                  </div>
-                ))}
-              </div>
 
-              <div style={{ marginTop: 40 }}>
-                <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 20 }}>{t('provisioningPage.vesselDelivery')}</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {/* Right — request form */}
+            <Reveal delay={120}>
+              <div style={{ border: '1px solid var(--fg-15)', padding: 'clamp(24px, 6vw, 56px)', background: 'var(--bg-raised)' }}>
+                <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 32 }}>
+                  {t('provisioningPage.formLabel')}
+                </div>
+
+                <div className="grid-2" style={{ gap: 32, marginBottom: 32 }}>
                   <div className="field">
-                    <label className="field-label" htmlFor="cd-yacht">{t('provisioningPage.yachtNameLabel')}</label>
-                    <input id="cd-yacht" className="field-input" autoComplete="organization" value={meta.yacht || ''} onChange={e => setM('yacht', e.target.value)} placeholder="M/Y Atlas"/>
-                  </div>
-                  <div className="field">
-                    <label className="field-label" htmlFor="cd-email">{t('provisioningPage.emailLabel')}</label>
-                    <input id="cd-email" className="field-input" type="email" autoComplete="email" value={meta.email || ''} onChange={e => setM('email', e.target.value)} placeholder="captain@vessel.com"/>
-                  </div>
-                  <div className="grid-2" style={{ gap: 16 }}>
-                    <div className="field">
-                      <label className="field-label" htmlFor="cd-marina">{t('provisioningPage.marinaLabel')}</label>
-                      <select id="cd-marina" className="field-select" autoComplete="off" value={meta.marina || ''} onChange={e => setM('marina', e.target.value)}>
-                        <option value="">{t('provisioningPage.selectMarina')}</option>
-                        <option>Porto Montenegro</option>
-                        <option>Portonovi</option>
-                        <option>Kotor</option>
-                        <option>Budva</option>
-                        <option>Bar</option>
-                      </select>
-                    </div>
-                    <div className="field">
-                      <label className="field-label" htmlFor="cd-berth">{t('provisioningPage.berthLabel')}</label>
-                      <input id="cd-berth" className="field-input" autoComplete="off" value={meta.berth || ''} onChange={e => setM('berth', e.target.value)} placeholder="B-14"/>
-                    </div>
-                  </div>
-                  <div className="grid-2" style={{ gap: 16 }}>
-                    <div className="field">
-                      <label className="field-label" htmlFor="cd-date">{t('provisioningPage.dateLabel')}</label>
-                      <input id="cd-date" className="field-input" type="date" autoComplete="off" value={meta.date || ''} onChange={e => setM('date', e.target.value)}/>
-                    </div>
-                    <div className="field">
-                      <label className="field-label" htmlFor="cd-time">{t('provisioningPage.timeLabel')}</label>
-                      <input id="cd-time" className="field-input" type="time" autoComplete="off" value={meta.time || ''} onChange={e => setM('time', e.target.value)}/>
-                    </div>
+                    <label className="field-label" htmlFor="pc-name">{t('provisioningPage.nameLabel')}</label>
+                    <input id="pc-name" className="field-input" autoComplete="name" value={data.name} onChange={e => update('name', e.target.value)} placeholder="Eleanor Vance" />
                   </div>
                   <div className="field">
-                    <label className="field-label" htmlFor="cd-notes">{t('provisioningPage.notesLabel')}</label>
-                    <textarea id="cd-notes" className="field-textarea" autoComplete="off" value={meta.notes || ''} onChange={e => setM('notes', e.target.value)} placeholder={t('provisioningPage.orderNotesPlaceholder')}/>
+                    <label className="field-label" htmlFor="pc-yacht">{t('provisioningPage.yachtLabel')}</label>
+                    <input id="pc-yacht" className="field-input" value={data.yacht} onChange={e => update('yacht', e.target.value)} placeholder="M/Y Atlas" />
                   </div>
                 </div>
+
+                <div className="grid-2" style={{ gap: 32, marginBottom: 32 }}>
+                  <div className="field">
+                    <label className="field-label" htmlFor="pc-email">{t('provisioningPage.emailLabel')}</label>
+                    <input id="pc-email" className="field-input" type="email" autoComplete="email" value={data.email} onChange={e => update('email', e.target.value)} placeholder="chef@atlas.example" />
+                  </div>
+                  <div className="field">
+                    <label className="field-label" htmlFor="pc-phone">{t('provisioningPage.phoneLabel')}</label>
+                    <input id="pc-phone" className="field-input" type="tel" autoComplete="tel" value={data.phone} onChange={e => update('phone', e.target.value)} placeholder="+44 7700 900 000" />
+                  </div>
+                </div>
+
+                <div className="field" style={{ marginBottom: 32 }}>
+                  <label className="field-label" htmlFor="pc-marina">{t('provisioningPage.marinaLabel')}</label>
+                  <select id="pc-marina" className="field-select" value={data.marina} onChange={e => update('marina', e.target.value)}>
+                    <option value="">{t('provisioningPage.marinaNone')}</option>
+                    {['Porto Montenegro', 'Herceg Novi', 'Kotor', 'Budva', 'Bar'].map(m => (
+                      <option key={m} value={m}>{m}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="field" style={{ marginBottom: 40 }}>
+                  <label className="field-label" htmlFor="pc-notes">{t('provisioningPage.notesLabel')}</label>
+                  <textarea id="pc-notes" className="field-textarea" value={data.notes} onChange={e => update('notes', e.target.value)} placeholder={t('provisioningPage.notesPlaceholder')} />
+                </div>
+
+                <button
+                  className="btn btn-primary"
+                  style={{ width: '100%', justifyContent: 'center', opacity: canSubmit && status !== 'sending' ? 1 : 0.4 }}
+                  disabled={!canSubmit || status === 'sending'}
+                  onClick={submit}
+                >
+                  {status === 'sending' ? t('provisioningPage.sending') : t('provisioningPage.submitBtn')} <Icons.Arrow size={14} />
+                </button>
+
+                {status === 'error' && (
+                  <div role="alert" aria-live="assertive" style={{ marginTop: 20, padding: '16px 20px', border: '1px solid rgba(192,57,43,0.4)', background: 'rgba(192,57,43,0.06)' }}>
+                    <div className="mono" style={{ color: '#c0392b', fontSize: 11, letterSpacing: '0.08em', marginBottom: 10 }}>
+                      ↳ {t('provisioningPage.errorMsg')}
+                    </div>
+                    <div style={{ fontSize: 13.5, display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center' }}>
+                      <a href={WA_CATALOGUE_URL} target="_blank" rel="noopener noreferrer" style={{ color: '#25D366', textDecoration: 'none', fontWeight: 500 }}>
+                        WhatsApp +382 67 144 555
+                      </a>
+                      <span style={{ color: 'var(--fg-50)' }}>·</span>
+                      <a href="mailto:info@yacht-concierge.me" style={{ color: 'var(--fg-70)' }}>
+                        info@yacht-concierge.me
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                <div style={{ marginTop: 28, display: 'flex', alignItems: 'center', gap: 14 }}>
+                  <span className="mono" style={{ color: 'var(--fg-50)', fontSize: 10, letterSpacing: '0.12em' }}>
+                    {t('provisioningPage.orLabel').toUpperCase()}
+                  </span>
+                  <a
+                    href={WA_CATALOGUE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: '#25D366', fontSize: 13.5, fontWeight: 500, textDecoration: 'none' }}
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    {t('provisioningPage.whatsappBtn')}
+                  </a>
+                </div>
               </div>
-            </>
-          )}
-        </div>
-
-        {items.length > 0 && (
-          <div style={{ padding: 32, borderTop: '1px solid var(--fg-08)', background: 'var(--bg)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
-              <span className="mono" style={{ color: 'var(--fg-50)' }}>{t('provisioningPage.subtotal')}</span>
-              <span className="serif" style={{ fontSize: 28, letterSpacing: '-0.01em' }}>€ {subtotal.toFixed(2)}</span>
-            </div>
-            <button
-              onClick={canCheckout ? onCheckout : null}
-              className="btn btn-primary"
-              style={{ width: '100%', justifyContent: 'center', opacity: canCheckout ? 1 : 0.4, pointerEvents: canCheckout ? 'auto' : 'none' }}
-            >
-              {t('provisioningPage.proceedToSummary')} <Icons.Arrow size={14}/>
-            </button>
-            {!canCheckout && missingFields.length > 0 && (
-              <div className="mono" style={{ color: 'var(--accent)', marginTop: 12, fontSize: 10, letterSpacing: '0.06em', lineHeight: 1.6 }}>
-                ↳ {t('provisioningPage.missingFields', { fields: missingFields.join(', ') })}
-              </div>
-            )}
-          </div>
-        )}
-      </aside>
-    </>
-  );
-}
-
-// ---------- Order Summary Page ----------
-function OrderSummaryPageContent() {
-  const { setRoute } = useApp();
-  const { t } = useTranslation();
-  const cart = useCart();
-  const [confirmed, setConfirmed] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState('');
-  const [refNum] = useState(() => {
-    // Reuse idempotency key for this session so page refreshes don't create duplicate orders
-    const saved = sessionStorage.getItem('yc-order-ref');
-    if (saved) return saved;
-    const now = new Date();
-    const date = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}`;
-    const rand = Math.random().toString(36).slice(2, 7).toUpperCase();
-    const ref = `YC-${date}-${rand}`;
-    sessionStorage.setItem('yc-order-ref', ref);
-    return ref;
-  });
-
-  // VAT depends on item category and tax-free status — confirmed on coordinator invoice.
-  const taxFreeTotal = cart.cart.filter(i => i.taxFree).reduce((s, i) => s + i.price * i.qty, 0);
-  const taxableTotal = cart.subtotal - taxFreeTotal;
-
-  if (cart.cart.length === 0 && !confirmed) {
-    return (
-      <main className="page-top">
-        <div className="container" style={{ textAlign: 'center', padding: '96px 0' }}>
-          <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>{t('provisioningPage.emptyOrder')}</div>
-          <div className="serif" style={{ fontSize: 40 }}>{t('provisioningPage.emptyOrderTitle')}</div>
-          <button onClick={() => setRoute({ page: 'provisioning' })} className="btn btn-primary mt-32">{t('provisioningPage.backBtn')}</button>
-        </div>
-      </main>
-    );
-  }
-
-  return (
-    <main className="page-top">
-      <div className="container">
-        <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 72 }}>
-          <div>
-            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('provisioningPage.orderSummaryLabel')} · №{refNum}</div></Reveal>
-            <Reveal delay={80}>
-              <h1 className="display" style={{ fontSize: 'clamp(48px, 6vw, 88px)' }}>
-                {t('provisioningPage.reviewTitle')}<br/>& <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('provisioningPage.reviewAccent')}</em>.
-              </h1>
             </Reveal>
           </div>
-          <Reveal delay={160}>
-            <p className="lede">{t('provisioningPage.reviewLede')}</p>
-          </Reveal>
-        </div>
-
-        {confirmed ? (
-          <div style={{ padding: '96px 32px', textAlign: 'center', border: '1px solid var(--accent-line)', background: 'var(--accent-soft)' }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 72, height: 72, border: '1px solid var(--accent)', color: 'var(--accent)', borderRadius: '50%', marginBottom: 32 }}>
-              <Icons.Check size={28} stroke={1.2}/>
-            </div>
-            <h2 className="serif" style={{ fontSize: 48, letterSpacing: '-0.02em' }}>{t('provisioningPage.orderReceived')}</h2>
-            <p className="lede" style={{ margin: '20px auto 0', maxWidth: 440 }}>
-              {t('provisioningPage.orderReceivedLede', { ref: refNum })}
-            </p>
-            <button onClick={() => { cart.clearItems(); setRoute({ page: 'provisioning' }); }} className="btn btn-ghost mt-48">{t('provisioningPage.backToCatalogue')}</button>
-          </div>
-        ) : (
-          <div className="grid-order-summary" style={{ gap: 56, alignItems: 'start' }}>
-            <div>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>{t('provisioningPage.itemsCount', { n: cart.count })}</div>
-              <div style={{ borderTop: '1px solid var(--fg-15)' }}>
-                {cart.cart.map(it => (
-                  <div key={it.id} style={{ display: 'grid', gridTemplateColumns: '1fr auto auto', gap: 24, padding: '20px 0', borderBottom: '1px solid var(--fg-08)' }}>
-                    <div>
-                      <div className="serif" style={{ fontSize: 18 }}>{it.name}{it.taxFree && <span className="mono" style={{ marginLeft: 10, fontSize: 9, color: 'var(--accent)' }}>{t('provisioningPage.taxFreeLabel')}</span>}</div>
-                      <div className="mono" style={{ color: 'var(--fg-50)', marginTop: 4 }}>€ {it.price.toFixed(2)} / {it.unit}</div>
-                    </div>
-                    <div className="mono" style={{ color: 'var(--fg-70)' }}>× {it.qty}</div>
-                    <div className="serif" style={{ fontSize: 18, minWidth: 80, textAlign: 'right' }}>€ {(it.price * it.qty).toFixed(2)}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <aside style={{ position: 'sticky', top: 120, border: '1px solid var(--fg-15)', padding: 32, background: 'var(--bg-raised)' }}>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>{t('provisioningPage.deliveryLabel')}</div>
-              <dl style={{ margin: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
-                <Row k={t('provisioningPage.yachtRow')} v={cart.meta.yacht}/>
-                <Row k={t('provisioningPage.marinaRow')} v={cart.meta.marina}/>
-                <Row k={t('provisioningPage.berthRow')} v={cart.meta.berth}/>
-                <Row k={t('provisioningPage.dateRow')} v={cart.meta.date}/>
-                {cart.meta.time && <Row k={t('provisioningPage.timeRow')} v={cart.meta.time}/>}
-                <Row k={t('provisioningPage.emailRow')} v={cart.meta.email}/>
-                {cart.meta.notes && <Row k={t('provisioningPage.notesRow')} v={cart.meta.notes}/>}
-              </dl>
-              <div className="rule" style={{ margin: '28px 0' }}/>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <RowMoney k={t('provisioningPage.taxableItems')} v={taxableTotal}/>
-                <RowMoney k={t('provisioningPage.taxFreeItems')} v={taxFreeTotal}/>
-                <div className="rule" style={{ margin: '8px 0' }}/>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                  <span className="mono">{t('provisioningPage.subtotal')}</span>
-                  <span className="serif" style={{ fontSize: 32, letterSpacing: '-0.02em' }}>€ {cart.subtotal.toFixed(2)}</span>
-                </div>
-                <div className="mono" style={{ color: 'var(--fg-50)', fontSize: 9.5, marginTop: 4 }}>
-                  {t('provisioningPage.vatNote')}
-                </div>
-              </div>
-              <button
-                onClick={async () => {
-                  setSubmitting(true);
-                  setSubmitError('');
-                  try {
-                    await submitOrder(cart.cart, cart.meta, refNum, cart.subtotal);
-                    sessionStorage.removeItem('yc-order-ref');
-                    setConfirmed(true);
-                    window.scrollTo({ top: 0 });
-                  } catch {
-                    setSubmitError(t('provisioningPage.orderError'));
-                  } finally {
-                    setSubmitting(false);
-                  }
-                }}
-                disabled={submitting}
-                className="btn btn-primary mt-32"
-                style={{ width: '100%', justifyContent: 'center', opacity: submitting ? 0.5 : 1 }}
-              >
-                {submitting ? t('provisioningPage.sending') : t('provisioningPage.confirmOrder')} <Icons.Arrow size={14}/>
-              </button>
-              {submitError && (
-                <div className="mono" style={{ color: '#c0392b', marginTop: 12, fontSize: 10.5, letterSpacing: '0.12em', textAlign: 'center' }}>
-                  ↳ {submitError}
-                </div>
-              )}
-              <button onClick={() => setRoute({ page: 'provisioning' })} className="mono mt-24" style={{ color: 'var(--fg-50)', width: '100%', textAlign: 'center' }}>{t('provisioningPage.backCatalogue')}</button>
-            </aside>
-          </div>
         )}
       </div>
     </main>
   );
 }
 
-function Row({ k, v }) {
-  return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16 }}>
-      <dt className="mono" style={{ color: 'var(--fg-50)' }}>{k}</dt>
-      <dd style={{ margin: 0, fontFamily: 'var(--serif)', fontSize: 16, textAlign: 'right' }}>{v || '—'}</dd>
-    </div>
-  );
-}
-function RowMoney({ k, v }) {
-  return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-      <span className="mono" style={{ color: 'var(--fg-50)' }}>{k}</span>
-      <span className="serif" style={{ fontSize: 18 }}>€ {v.toFixed(2)}</span>
-    </div>
-  );
-}
-
-function ProvisioningPage()  { return <CartProvider><ProvisioningPageContent /></CartProvider>; }
-function OrderSummaryPage()  { return <CartProvider><OrderSummaryPageContent /></CartProvider>; }
-
-export { ProvisioningPage, OrderSummaryPage };
+export { ProvisioningPage };

@@ -26,9 +26,8 @@ import '@fontsource/inter/600.css';
 // JetBrains Mono: 400 only (dropped 500 — unused in CSS)
 import '@fontsource/jetbrains-mono/400.css';
 
-// N6: Lazy-load heavy route components — provisioning ~40% of bundle, legal ~8%
+// N6: Lazy-load heavy route components
 const ProvisioningPage  = React.lazy(() => import('./components/provisioning').then(m => ({ default: m.ProvisioningPage })));
-const OrderSummaryPage  = React.lazy(() => import('./components/provisioning').then(m => ({ default: m.OrderSummaryPage })));
 const LegalNoticePage   = React.lazy(() => import('./components/legal').then(m => ({ default: m.LegalNoticePage })));
 const PrivacyPage       = React.lazy(() => import('./components/legal').then(m => ({ default: m.PrivacyPage })));
 const TermsPage         = React.lazy(() => import('./components/legal').then(m => ({ default: m.TermsPage })));
@@ -62,7 +61,6 @@ function routeToPath(r) {
     case 'fleet':         return '/fleet';
     case 'about':         return '/about';
     case 'provisioning':  return '/provisioning';
-    case 'order-summary': return '/order-summary';
     case 'legal':         return '/legal';
     case 'privacy':       return '/privacy';
     case 'terms':         return '/terms';
@@ -83,7 +81,6 @@ function pathToRoute(path) {
   if (p === '/fleet')                     return { page: 'fleet' };
   if (p === '/about')                     return { page: 'about' };
   if (p === '/provisioning')              return { page: 'provisioning' };
-  if (p === '/order-summary')             return { page: 'order-summary' };
   if (p === '/legal')                     return { page: 'legal' };
   if (p === '/privacy')                   return { page: 'privacy' };
   if (p === '/terms')                     return { page: 'terms' };
@@ -158,7 +155,6 @@ function App() {
   else if (route.page === 'fleet')    Page = <FleetPage/>;
   else if (route.page === 'about')    Page = <AboutPage/>;
   else if (route.page === 'provisioning')   Page = <ProvisioningPage/>;
-  else if (route.page === 'order-summary')  Page = <OrderSummaryPage/>;
   else if (route.page === 'legal')    Page = <LegalNoticePage/>;
   else if (route.page === 'privacy')  Page = <PrivacyPage/>;
   else if (route.page === 'terms')    Page = <TermsPage/>;
@@ -168,7 +164,7 @@ function App() {
     home: '01 Home', services: '02 Services', service: '03 Service Detail',
     process: '04 How It Works', contact: '05 Contact', fleet: '06 Berths',
     about: '07 About',
-    provisioning: '08 Provisioning', 'order-summary': '08 Order Summary',
+    provisioning: '08 Provisioning',
     legal: '09 Legal Notice', privacy: '10 Privacy Policy', terms: '11 Terms of Service',
   };
 

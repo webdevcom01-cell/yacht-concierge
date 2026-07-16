@@ -1,4 +1,4 @@
-// API_URL is baked in at build time from VITE_API_URL environment variable
+// API_URL is baked in at build time from the VITE_API_URL environment variable
 const API_URL = import.meta.env.VITE_API_URL;
 
 // Detect unconfigured or placeholder URL
@@ -10,20 +10,27 @@ function isApiConfigured() {
     API_URL.startsWith('https://');
 }
 
-// GAS web apps redirect exec→echo internally. fetch() no-cors gets CORB-blocked
-// at the echo step, preventing doGet from running. Using Image.src fires a plain
-// GET request with no CORS/CORB restrictions — the browser ignores the response
-// (not a valid image) but GAS receives and processes the request normally.
-function postJSON(payload) {
+// GAS web apps deployed with access "Anyone" return a readable CORS response
+// on GET (verified live 2026-07-16: fetch() → HTTP 200, body {"result":"ok"}).
+// We therefore await the real response and THROW on any failure, so forms can
+// show an honest error state instead of a false success.
+async function postJSON(payload) {
   if (!isApiConfigured()) {
-    // In development / before GAS is deployed: log to console and resolve gracefully
     console.warn('[submit] API endpoint not configured — set VITE_API_URL in your environment.');
-    console.info('[submit] Payload that would have been sent:', payload);
-    return Promise.resolve({ result: 'ok', _dev: true });
+    throw new Error('api-not-configured');
   }
   const url = API_URL + '?payload=' + encodeURIComponent(JSON.stringify(payload));
-  new Image().src = url;
-  return Promise.resolve({ result: 'ok' });
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 15000);
+  try {
+    const res = await fetch(url, { signal: ctrl.signal });
+    if (!res.ok) throw new Error('http-' + res.status);
+    const body = await res.json();
+    if (body.result !== 'ok') throw new Error('gas-' + (body.message || 'error'));
+    return body;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 export async function submitQuote(data, refNum) {
@@ -46,23 +53,17 @@ export async function submitQuote(data, refNum) {
   });
 }
 
-export async function submitOrder(cartItems, meta, refNum, total) {
+export async function submitCatalogueRequest(data, refNum) {
   return postJSON({
-    _sheet:     'Provisioning Orders',
-    _subject:   `Order №${refNum} — ${meta.yacht || 'Unknown'} — ${meta.marina || ''}`,
+    _sheet:     'Catalogue Requests',
+    _subject:   `[${refNum}] Catalogue request — ${data.yacht || data.name}`,
     ref:        refNum,
-    yacht:      meta.yacht || '—',
-    marina:     meta.marina || '—',
-    berth:      meta.berth || '—',
-    date:       meta.date || '—',
-    time:       meta.time || '—',
-    email:      meta.email || '—',
-    notes:      meta.notes || '—',
-    items:      cartItems.map(it =>
-                  `${it.name} x${it.qty} = €${(it.price * it.qty).toFixed(2)}${it.taxFree ? ' [TF]' : ''}`
-                ).join(' | '),
-    item_count: String(cartItems.reduce((s, x) => s + x.qty, 0)),
-    subtotal:   `€${cartItems.reduce((s, x) => s + x.price * x.qty, 0).toFixed(2)}`,
-    total:      `€${total.toFixed(2)}`,
+    name:       data.name,
+    yacht:      data.yacht || '—',
+    email:      data.email,
+    phone:      data.phone || '—',
+    marina:     data.marina || '—',
+    categories: data.categories.join(', '),
+    notes:      data.notes || '—',
   });
 }

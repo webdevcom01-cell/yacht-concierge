@@ -36,6 +36,13 @@ var SHEET_HEADERS = {
   'Provisioning Orders': [
     'Timestamp', 'Ref', 'Yacht', 'Marina', 'Berth',
     'Date', 'Time', 'Email', 'Notes', 'Items', 'Item Count', 'Subtotal', 'Total'
+  ],
+  // Catalogue requests from the simplified /provisioning page (2026-07).
+  // NOTE: writeRow() auto-creates this tab on first submission even on older
+  // deployments; redeploy this script to also enable the client auto-reply.
+  'Catalogue Requests': [
+    'Timestamp', 'Ref', 'Name', 'Yacht', 'Email', 'Phone',
+    'Marina', 'Categories', 'Notes'
   ]
 };
 
@@ -167,7 +174,42 @@ function sendAutoReply(sheetName, data) {
     sendQuoteAutoReply(data, clientEmail);
   } else if (sheetName === 'Provisioning Orders') {
     sendOrderAutoReply(data, clientEmail);
+  } else if (sheetName === 'Catalogue Requests') {
+    sendCatalogueAutoReply(data, clientEmail);
   }
+}
+
+function sendCatalogueAutoReply(data, toEmail) {
+  var ref  = data.ref  || 'N/A';
+  var name = data.name || 'Captain';
+
+  var subject = 'Your catalogue request — Ref. ' + ref;
+
+  var body = [
+    'Dear ' + name + ',',
+    '',
+    'Thank you for your request. We have logged the following:',
+    '',
+    '  Reference    ' + ref,
+    '  Vessel       ' + (data.yacht      || '—'),
+    '  Marina       ' + (data.marina     || '—'),
+    '  Categories   ' + (data.categories || '—'),
+    '',
+    'We will send you the current price catalogues for the selected categories shortly.',
+    '',
+    'For anything urgent, the fastest way to reach us is WhatsApp: +382 67 144 555.',
+    '',
+    'Kind regards,',
+    'Yacht Concierge Montenegro',
+    'info@yacht-concierge.me',
+  ].join('\n');
+
+  MailApp.sendEmail({
+    to:      toEmail,
+    subject: subject,
+    body:    body,
+    name:    REPLY_FROM,
+  });
 }
 
 function sendQuoteAutoReply(data, toEmail) {

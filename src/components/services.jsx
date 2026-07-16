@@ -126,6 +126,49 @@ function FleetTierSelector() {
   );
 }
 
+// ---------- Contextual CTA block on service detail pages ----------
+function DetailCTA({ label, title, body, btn, onClick }) {
+  return (
+    <Reveal>
+      <div
+        role="link"
+        tabIndex={0}
+        onClick={onClick}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } }}
+        style={{
+          marginBottom: 96,
+          padding: 'clamp(32px, 4vw, 56px) clamp(28px, 5vw, 72px)',
+          background: 'var(--navy, #001730)',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 48,
+          flexWrap: 'wrap',
+          transition: 'opacity 0.3s var(--ease)',
+        }}
+        onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
+        onMouseLeave={e => e.currentTarget.style.opacity = '1'}
+      >
+        <div>
+          <div className="mono" style={{ color: 'rgba(255,255,255,0.45)', marginBottom: 16, fontSize: 11, letterSpacing: '0.1em' }}>
+            {label}
+          </div>
+          <h3 className="serif" style={{ fontSize: 'clamp(28px, 3vw, 44px)', color: '#fff', margin: '0 0 14px', lineHeight: 1.1 }}>
+            {title}
+          </h3>
+          <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--sans)', lineHeight: 1.6, maxWidth: 440, margin: 0 }}>
+            {body}
+          </p>
+        </div>
+        <div className="mono" style={{ color: 'var(--accent, #D4B78F)', fontSize: 11, letterSpacing: '0.12em', whiteSpace: 'nowrap', display: 'flex', gap: 12, alignItems: 'center', flexShrink: 0 }}>
+          {btn} <Icons.Arrow size={13}/>
+        </div>
+      </div>
+    </Reveal>
+  );
+}
+
 // ---------- Service detail ----------
 function ServiceDetailPage({ id }) {
   const { setRoute } = useApp();
@@ -219,42 +262,25 @@ function ServiceDetailPage({ id }) {
           </div>
         </Reveal>
 
-        {/* Provisioning catalogue CTA — only shown on the provisioning service detail */}
+        {/* Contextual CTA — provisioning detail links to the catalogue request
+            page, berth detail links to the berths map & tier page */}
         {s.id === 'provisioning' && (
-          <Reveal>
-            <div
-              onClick={() => setRoute({ page: 'provisioning' })}
-              style={{
-                marginBottom: 96,
-                padding: 'clamp(32px, 4vw, 56px) clamp(28px, 5vw, 72px)',
-                background: 'var(--navy, #001730)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: 48,
-                flexWrap: 'wrap',
-                transition: 'opacity 0.3s var(--ease)',
-              }}
-              onMouseEnter={e => e.currentTarget.style.opacity = '0.88'}
-              onMouseLeave={e => e.currentTarget.style.opacity = '1'}
-            >
-              <div>
-                <div className="mono" style={{ color: 'rgba(255,255,255,0.45)', marginBottom: 16, fontSize: 11, letterSpacing: '0.1em' }}>
-                  {t('servicesPage.provShopLabel')}
-                </div>
-                <h3 className="serif" style={{ fontSize: 'clamp(28px, 3vw, 44px)', color: '#fff', margin: '0 0 14px', lineHeight: 1.1 }}>
-                  {t('servicesPage.provShopTitle')}
-                </h3>
-                <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--sans)', lineHeight: 1.6, maxWidth: 440, margin: 0 }}>
-                  {t('servicesPage.provShopBody')}
-                </p>
-              </div>
-              <div className="mono" style={{ color: 'var(--accent, #B8963E)', fontSize: 11, letterSpacing: '0.12em', whiteSpace: 'nowrap', display: 'flex', gap: 12, alignItems: 'center', flexShrink: 0 }}>
-                {t('servicesPage.provShopBtn')} <Icons.Arrow size={13}/>
-              </div>
-            </div>
-          </Reveal>
+          <DetailCTA
+            label={t('servicesPage.provCatLabel')}
+            title={t('servicesPage.provCatTitle')}
+            body={t('servicesPage.provCatBody')}
+            btn={t('servicesPage.provCatBtn')}
+            onClick={() => setRoute({ page: 'provisioning' })}
+          />
+        )}
+        {s.id === 'berth' && (
+          <DetailCTA
+            label={t('servicesPage.berthMapLabel')}
+            title={t('servicesPage.berthMapTitle')}
+            body={t('servicesPage.berthMapBody')}
+            btn={t('servicesPage.berthMapBtn')}
+            onClick={() => setRoute({ page: 'fleet' })}
+          />
         )}
 
         {/* Cross-sell */}
