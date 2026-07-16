@@ -134,11 +134,11 @@ function CoastMap() {
   const { t } = useTranslation();
   const [selected, setSelected] = useState('porto-montenegro');
   const ports = [
-    { id: 'herceg-novi', name: 'Herceg Novi', x: 16, y: 46, coords: '42.45°N 18.54°E', berths: 120 },
-    { id: 'porto-montenegro', name: 'Porto Montenegro', x: 50, y: 72, coords: '42.43°N 18.69°E', berths: 450 },
-    { id: 'kotor', name: 'Kotor', x: 56, y: 34, coords: '42.42°N 18.77°E', berths: 90 },
-    { id: 'budva', name: 'Budva', x: 78, y: 83, coords: '42.28°N 18.84°E', berths: 380 },
-    { id: 'bar', name: 'Bar', x: 92, y: 95, coords: '42.10°N 19.09°E', berths: 160 },
+    { id: 'herceg-novi', name: 'Herceg Novi', x: 16, y: 46, coords: '42.45°N 18.54°E' },
+    { id: 'porto-montenegro', name: 'Porto Montenegro', x: 50, y: 72, coords: '42.43°N 18.69°E' },
+    { id: 'kotor', name: 'Kotor', x: 56, y: 34, coords: '42.42°N 18.77°E' },
+    { id: 'budva', name: 'Budva', x: 78, y: 83, coords: '42.28°N 18.84°E' },
+    { id: 'bar', name: 'Bar', x: 92, y: 95, coords: '42.10°N 19.09°E' },
   ];
   const cur = ports.find(p => p.id === selected);
 
@@ -286,15 +286,9 @@ function CoastMap() {
                     <h3 className="serif" style={{ fontSize: 32, letterSpacing: '-0.01em', color: DARK.text }}>{cur.name}</h3>
                   </div>
                   <div style={{ height: 1, background: DARK.border, margin: '4px 0 24px' }}/>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 28 }}>
-                    <div>
-                      <div className="mono" style={{ color: DARK.muted, fontSize: 10, letterSpacing: '0.15em' }}>{t('map.totalBerths')}</div>
-                      <div className="serif" style={{ fontSize: 40, marginTop: 6, color: DARK.text }}>{cur.berths}</div>
-                    </div>
-                    <div>
-                      <div className="mono" style={{ color: DARK.muted, fontSize: 10, letterSpacing: '0.15em' }}>{t('map.availability')}</div>
-                      <div style={{ fontSize: 14, marginTop: 10, color: DARK.muted, lineHeight: 1.6, fontFamily: 'var(--serif)' }}>{t('map.availabilityText')}</div>
-                    </div>
+                  <div style={{ marginBottom: 28 }}>
+                    <div className="mono" style={{ color: DARK.muted, fontSize: 10, letterSpacing: '0.15em' }}>{t('map.availability')}</div>
+                    <div style={{ fontSize: 15, marginTop: 10, color: DARK.muted, lineHeight: 1.6, fontFamily: 'var(--serif)' }}>{t('map.availabilityText')}</div>
                   </div>
                   <button
                     style={{ width: '100%', padding: '14px 24px', border: `1px solid ${DARK.border}`, background: 'transparent', color: DARK.text, fontFamily: 'var(--mono)', fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, transition: 'border-color 0.2s, color 0.2s' }}
