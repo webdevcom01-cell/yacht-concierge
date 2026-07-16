@@ -5,22 +5,29 @@
  *   Execute as:       Me
  *   Who has access:   Anyone
  *
- * This script receives GET requests from the website contact form
- * and provisioning shop, writes rows to the appropriate Google Sheet
- * tab, sends an email notification to the operations inbox, and
- * sends an auto-reply confirmation to the client.
+ * This script receives GET requests from the website quote form
+ * and the catalogue request form, writes rows to the appropriate
+ * Google Sheet tab, sends an email notification to the operations
+ * inbox, and sends an auto-reply confirmation to the client.
  *
- * SETUP:
+ * SETUP (first deployment):
  * 1. Open your Google Sheet: "Yacht Concierge — Submissions"
- * 2. Create two tabs: "Quote Requests" and "Provisioning Orders"
+ * 2. Tabs "Quote Requests" and "Catalogue Requests" are auto-created on
+ *    first submission — no manual setup needed
  * 3. In the Sheet: Extensions → Apps Script
  * 4. Replace all existing code with this file
  * 5. Click Deploy → New Deployment → Web App
  *    - Execute as: Me
  *    - Who has access: Anyone
  * 6. Authorise and copy the Web App URL
- * 7. Paste the URL into Cloudflare Pages → Settings → Environment Variables
- *    as VITE_API_URL
+ * 7. Set the URL as VITE_API_URL (Railway → service → Variables,
+ *    and in the local .env for local builds)
+ *
+ * RE-DEPLOY (updating an existing deployment — keeps the same URL):
+ * 1. Extensions → Apps Script → replace all code with this file → Save
+ * 2. Deploy → Manage deployments → ✎ (edit) → Version: "New version" → Deploy
+ *    ⚠ Do NOT use "New deployment" — that would change the /exec URL
+ *    and break the VITE_API_URL already baked into the site build.
  */
 
 // ── Configuration ────────────────────────────────────────────────────────────
@@ -32,10 +39,6 @@ var SHEET_HEADERS = {
   'Quote Requests': [
     'Timestamp', 'Ref', 'Name', 'Role', 'Email', 'Phone',
     'Yacht', 'LOA', 'Flag', 'Port', 'ETA', 'ETD', 'Services', 'Notes'
-  ],
-  'Provisioning Orders': [
-    'Timestamp', 'Ref', 'Yacht', 'Marina', 'Berth',
-    'Date', 'Time', 'Email', 'Notes', 'Items', 'Item Count', 'Subtotal', 'Total'
   ],
   // Catalogue requests from the simplified /provisioning page (2026-07).
   // NOTE: writeRow() auto-creates this tab on first submission even on older
@@ -172,8 +175,6 @@ function sendAutoReply(sheetName, data) {
 
   if (sheetName === 'Quote Requests') {
     sendQuoteAutoReply(data, clientEmail);
-  } else if (sheetName === 'Provisioning Orders') {
-    sendOrderAutoReply(data, clientEmail);
   } else if (sheetName === 'Catalogue Requests') {
     sendCatalogueAutoReply(data, clientEmail);
   }
@@ -233,12 +234,11 @@ function sendQuoteAutoReply(data, toEmail) {
     '  Departure    ' + (data.etd      || '—'),
     '  Services     ' + (data.services || '—'),
     '',
-    'You will receive a full service proposal — berths, customs approach, provisioning',
-    'calendar, and an itemised budget — within 24 hours.',
+    'We will revert with a full service proposal — berths, customs approach, provisioning',
+    'calendar, and an itemised budget — as soon as possible.',
     '',
     'If anything changes on your end in the meantime, or if there is anything urgent,',
-    'the fastest way to reach me is WhatsApp: +382 67 144 555.',
-    'I am typically available 06:00 – 22:00 CET.',
+    'the fastest way to reach me is WhatsApp: +382 67 144 555 — we are available 24/7.',
     '',
     'Looking forward to having you in Montenegrin waters.',
     '',
@@ -263,55 +263,3 @@ function sendQuoteAutoReply(data, toEmail) {
   });
 }
 
-function sendOrderAutoReply(data, toEmail) {
-  var ref   = data.ref   || 'N/A';
-  var items = (data.items || '—').split(' | ');
-
-  var subject = 'Order №' + ref + ' confirmed — delivery to ' + (data.marina || 'your berth');
-
-  var body = [
-    'Your provisioning order has been received.',
-    '',
-    'Here is your confirmation:',
-    '',
-    '  Order №       ' + ref,
-    '  Vessel        ' + (data.yacht  || '—'),
-    '  Marina        ' + (data.marina || '—'),
-    '  Berth         ' + (data.berth  || '—'),
-    '  Delivery      ' + (data.date   || '—') + (data.time && data.time !== '—' ? ' at ' + data.time : ''),
-    '',
-    'Items ordered:',
-  ].concat(
-    items.map(function(line) { return '  · ' + line; })
-  ).concat([
-    '',
-    '  Subtotal      ' + (data.subtotal || '—'),
-    '  Total         ' + (data.total    || '—'),
-    '  (VAT will be itemised on the final invoice)',
-    '',
-    'A coordinator will confirm your exact delivery window within two operational hours.',
-    'If you need to add items, change the delivery time, or have any special instructions,',
-    'please reply to this email or contact us on WhatsApp.',
-    '',
-    'We look forward to having everything ready at the berth.',
-    '',
-    'Warm regards,',
-    '',
-    'Iva Erceg',
-    'Operations Director',
-    'Yacht Concierge Montenegro',
-    '',
-    'WhatsApp / Phone: +382 67 144 555',
-    'Email: orders@yacht-concierge.me',
-    'Pomorska ulica, Zgrada Baia · Porto Montenegro · Tivat 85320',
-    'yacht-concierge.me',
-  ]).join('\n');
-
-  MailApp.sendEmail({
-    to:       toEmail,
-    subject:  subject,
-    body:     body,
-    name:     REPLY_FROM,
-    replyTo:  'orders@yacht-concierge.me',
-  });
-}
