@@ -9,9 +9,7 @@
     "start": "serve -s dist -l $PORT"
   },
   "dependencies": {
-    "@fontsource/cormorant-garamond": "^5.2.11",
     "@fontsource/eb-garamond": "^5.2.7",
-    "@fontsource/fraunces": "^5.2.9",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@vitejs/plugin-react": "^4.4.1",

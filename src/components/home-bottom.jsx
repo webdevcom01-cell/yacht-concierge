@@ -402,4 +402,4 @@ function HomePage() {
   );
 }
 
-export { CoastMap, ProcessStrip, ClosingCTA, HomePage };
+export { CoastMap, ProcessStrip, HomePage };
