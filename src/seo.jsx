@@ -41,7 +41,7 @@ const SEO_DATA = {
   },
   about: {
     title: 'About — Yacht Concierge Montenegro',
-    description: 'The operational arm of Montenegro Charter. Nine seasons serving superyachts on the Adriatic — one dedicated desk for berths, customs, provisioning, and crew logistics.',
+    description: 'A dedicated shore-side desk for superyachts on the Adriatic, built on years of hands-on experience in Montenegrin waters — one team for berths, customs, provisioning, and crew logistics.',
     url: 'https://yacht-concierge.me/about',
     breadcrumb: [{ name: 'About', url: 'https://yacht-concierge.me/about' }],
   },
