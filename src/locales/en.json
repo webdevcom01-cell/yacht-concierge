@@ -10,28 +10,6 @@
     "requestQuote": "Request Quote",
     "chatWhatsapp": "Chat on WhatsApp"
   },
-  "hero": {
-    "eyebrow": "↳ EST. MMXVII",
-    "eyebrow2": "OPERATIONAL SEASON 2026",
-    "headline1": "Pure logistics.",
-    "headline2": "Pure reliability.",
-    "headline3": "For superyachts",
-    "headline4": "in Montenegro.",
-    "accentWord": "Pure reliability.",
-    "lede": "Berth, customs, provisioning, laundry, floristry, maintenance — coordinated discreetly from a single operational desk in Tivat.",
-    "btnQuote": "Request Quote",
-    "btnServices": "View Services",
-    "stripBase": "Porto Montenegro",
-    "stripCoords": "42.43°N · 18.69°E",
-    "stripMarinas": "HN · PM · KT · BV · BAR",
-    "stripSeason": "Apr – Oct",
-    "stripContact": "+382 67 144 555",
-    "labelBase": "Operational Base",
-    "labelCoords": "Coordinates",
-    "labelMarinas": "Five Marinas",
-    "labelSeason": "Season",
-    "labelContact": "Contact"
-  },
   "services": {
     "eyebrow": "01 / SERVICES",
     "title1": "Six disciplines.",
@@ -75,7 +53,6 @@
     "mapLabel": "ADRIATIC COAST · MONTENEGRO",
     "mapLabel2": "MONTENEGRIN COAST",
     "selectMarina": "SELECT A MARINA",
-    "totalBerths": "Total Berths",
     "availability": "Availability",
     "availabilityText": "Contact us for current berth availability",
     "enquire": "Enquire About Availability",
@@ -103,21 +80,6 @@
     "step4_label": "REVIEW",
     "step4_desc": "Post-call report, next-season recommendations."
   },
-  "testimonials": {
-    "eyebrow": "FROM THE LOG",
-    "title1": "What captains",
-    "title2": "say.",
-    "lede": "Nine seasons. The record speaks.",
-    "t1_quote": "We arrived with a last-minute crew change and a customs issue from our previous port. The desk had both resolved before we were tied up. I have never seen that kind of turnaround outside of Monaco.",
-    "t1_name": "Capt. R. Voss",
-    "t1_detail": "M/Y NORTHERN STAR · 58m · German flag",
-    "t2_quote": "Provisioning was ready on the berth, cold chain intact, exactly as specified — including three items I expected to have substituted. The coordinator had sourced them from Podgorica overnight.",
-    "t2_name": "Capt. S. Marin",
-    "t2_detail": "S/Y ALBA · 42m · Cayman Islands flag",
-    "t3_quote": "Three seasons in Montenegro, three seasons with this desk. Everything is simpler when the person you're calling knows your vessel file. I don't brief them anymore — they brief me.",
-    "t3_name": "Capt. J. Lindqvist",
-    "t3_detail": "M/Y AURELIA · 72m · Malta flag"
-  },
   "cta": {
     "engage": "↳ ENGAGE",
     "title1": "Arriving in Montenegro?",
@@ -131,8 +93,21 @@
     "services": "Services",
     "operations": "Operations",
     "office": "Office",
-    "servicesItems": ["Berth Reservations", "Customs & Immigration", "Provisioning", "Laundry", "Floristry", "Maintenance"],
-    "operationsItems": ["How it works", "Berth availability", "Fleet tiers", "SLA", "About us"],
+    "servicesItems": [
+      "Berth Reservations",
+      "Customs & Immigration",
+      "Provisioning",
+      "Laundry",
+      "Floristry",
+      "Maintenance"
+    ],
+    "operationsItems": [
+      "How it works",
+      "Berth availability",
+      "Fleet tiers",
+      "SLA",
+      "About us"
+    ],
     "copyright": "© MMXXVI YACHT CONCIERGE D.O.O.",
     "certifications": "ISO 9001 · MYBA · MLC 2017",
     "legal": "Legal",
@@ -151,40 +126,80 @@
     "principlesTitle2": "none negotiable.",
     "phases": [
       {
-        "n": "01", "code": "CONTACT",
+        "n": "01",
+        "code": "CONTACT",
         "title": "Intake.",
         "lede": "You arrive. We listen. No form-gated discovery — a voice call with a coordinator who will remain on your file.",
-        "meta": ["Voice call · 20 min", "Captain, manager, or owner", "No NDA required for intake"],
+        "meta": [
+          "Voice call · 20 min",
+          "Captain, manager, or owner",
+          "No NDA required for intake"
+        ],
         "detail": "Most relationships begin as a captain forwarding our number. The intake is unhurried: your itinerary, your guest profile, what you are expecting from Montenegro, and where the last port fell short. We don't circulate notes — one coordinator holds your file."
       },
       {
-        "n": "02", "code": "PLAN",
+        "n": "02",
+        "code": "PLAN",
         "title": "Brief.",
         "lede": "A written service brief, scoped to your stay. Itemised, SLA-anchored, no retainer padding.",
-        "meta": ["Delivered within 72h", "Itemised by discipline", "Rate-card transparency"],
+        "meta": [
+          "Delivered within 72h",
+          "Itemised by discipline",
+          "Rate-card transparency"
+        ],
         "detail": "We return a brief that reads like a flight plan: berths proposed, customs approach, provisioning calendar, laundry cadence, standing maintenance, and an operational budget. Each line is signed by the discipline lead who will execute it."
       },
       {
-        "n": "03", "code": "EXECUTE",
+        "n": "03",
+        "code": "EXECUTE",
         "title": "Operate.",
         "lede": "Your coordinator becomes your desk. One number, one email, one person who owns every outcome.",
-        "meta": ["Dedicated coordinator", "06:00 – 22:00 standard", "24h under Tier III"],
+        "meta": [
+          "Dedicated coordinator",
+          "06:00 – 22:00 standard",
+          "24h under Tier III"
+        ],
         "detail": "From the moment the yacht enters territorial waters, the file is active. Your coordinator is physically in Tivat, moves between marinas as needed, and is on-call for the duration. Escalation ladders are defined; no request sits in an inbox."
       },
       {
-        "n": "04", "code": "REVIEW",
+        "n": "04",
+        "code": "REVIEW",
         "title": "Report.",
         "lede": "A post-call operational report, returned to the owner or manager. Lessons captured for next season.",
-        "meta": ["Delivered 14 days after departure", "Owner-confidential", "Archived to your vessel file"],
+        "meta": [
+          "Delivered 14 days after departure",
+          "Owner-confidential",
+          "Archived to your vessel file"
+        ],
         "detail": "Every visit is closed with a written report: what was requested, what was delivered, what exceeded or fell short. Your file compounds — by the third season, we have met more of your crew than most of their own colleagues have."
       }
     ],
     "principles": [
-      { "n": "I",   "t": "One desk.",      "b": "Every request routes through your coordinator. Never a switchboard." },
-      { "n": "II",  "t": "No mark-up.",    "b": "Government fees, berthing, technician labour — passed through at invoice." },
-      { "n": "III", "t": "Silent on-site.","b": "We operate inside the rhythm of the yacht, not across it." },
-      { "n": "IV",  "t": "Documented.",    "b": "Every action logged, every parts ledger captured, every report filed." },
-      { "n": "V",   "t": "Closed file.",   "b": "Your stay lives in an encrypted record. Nothing leaves." }
+      {
+        "n": "I",
+        "t": "One desk.",
+        "b": "Every request routes through your coordinator. Never a switchboard."
+      },
+      {
+        "n": "II",
+        "t": "No mark-up.",
+        "b": "Government fees, berthing, technician labour — passed through at invoice."
+      },
+      {
+        "n": "III",
+        "t": "Silent on-site.",
+        "b": "We operate inside the rhythm of the yacht, not across it."
+      },
+      {
+        "n": "IV",
+        "t": "Documented.",
+        "b": "Every action logged, every parts ledger captured, every report filed."
+      },
+      {
+        "n": "V",
+        "t": "Closed file.",
+        "b": "Your stay lives in an encrypted record. Nothing leaves."
+      }
     ]
   },
   "contactPage": {
@@ -196,7 +211,14 @@
     "phoneSub": "Operational desk · 24h in season",
     "emailSub": "Encrypted channel available on request",
     "addressSub": "Porto Montenegro · Tivat 85320",
-    "stepLabels": ["Identity", "Vessel", "Visit", "Services", "Contact", "Submitted"],
+    "stepLabels": [
+      "Identity",
+      "Vessel",
+      "Visit",
+      "Services",
+      "Contact",
+      "Submitted"
+    ],
     "step0_title": "Who are we speaking with?",
     "step0_sub": "Your name and role. We keep this file confidential.",
     "step1_title": "Tell us about the vessel.",
@@ -256,15 +278,6 @@
     "story1": "Yacht Concierge is built on years of hands-on experience in Montenegrin waters. Long before this desk carried its name, our team was already on the docks — working alongside port captains, customs offices, provisioning suppliers, and the crews who return season after season. Those relationships are the real difference, and they cannot be improvised.",
     "story2": "This is the natural next step in our expansion. Superyacht captains needed someone on the dock who understood the water they came from — not just the regulations of the port they had arrived at. So we created a dedicated operations desk, staffed by people who have worked both sides of the gangway.",
     "story3": "Today we coordinate berth reservations, customs and immigration clearance, provisioning, crew logistics, laundry, floristry, and maintenance — for vessels of every size, up and down the Montenegrin coast.",
-    "visitCharter": "Visit Montenegro Charter",
-    "seasons_value": "9+",
-    "seasons_label": "Seasons operating",
-    "vessels_value": "450+",
-    "vessels_label": "Vessels served",
-    "marinas_value": "5",
-    "marinas_label": "Montenegrin marinas",
-    "desk_value": "1",
-    "desk_label": "Dedicated desk",
     "quote": "\"We built the kind of service we wanted when we were on the water ourselves — direct, accountable, and with no surprises in the invoice.\"",
     "quoteAuthor": "SANJA BOŽOVIĆ — FOUNDER & CEO",
     "teamEyebrow": "THE TEAM",
@@ -436,72 +449,198 @@
       "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
       "sla": "Confirmation within 90 minutes of request",
       "rateNote": "Berth costs billed at marina list rate, no mark-up. Service fee per night, LOA-dependent.",
-      "deliverables": ["Priority slot allocation", "Concessioned seasonal holds", "Shore-power & freshwater hook-up", "Security liaison"],
+      "deliverables": [
+        "Priority slot allocation",
+        "Concessioned seasonal holds",
+        "Shore-power & freshwater hook-up",
+        "Security liaison"
+      ],
       "protocol": [
-        { "n": "01", "step": "INTAKE", "body": "Captain or manager provides ETA, LOA, beam, draft, call sign, flag state, intended stay length." },
-        { "n": "02", "step": "MATCH", "body": "Coordinator confirms slot across our marina network based on current availability and historical berth preferences." },
-        { "n": "03", "step": "HOLD", "body": "Slot secured, confirmation issued with berth number, hook-up particulars, and arrival coordinates." },
-        { "n": "04", "step": "RECEIVE", "body": "Shore team present at berth on ETA. Lines, power, water, provisioning staging all handled." }
+        {
+          "n": "01",
+          "step": "INTAKE",
+          "body": "Captain or manager provides ETA, LOA, beam, draft, call sign, flag state, intended stay length."
+        },
+        {
+          "n": "02",
+          "step": "MATCH",
+          "body": "Coordinator confirms slot across our marina network based on current availability and historical berth preferences."
+        },
+        {
+          "n": "03",
+          "step": "HOLD",
+          "body": "Slot secured, confirmation issued with berth number, hook-up particulars, and arrival coordinates."
+        },
+        {
+          "n": "04",
+          "step": "RECEIVE",
+          "body": "Shore team present at berth on ETA. Lines, power, water, provisioning staging all handled."
+        }
       ]
     },
     "customs": {
       "coverage": "Montenegrin Ministry of Interior · Schengen adjacency",
       "sla": "Cleared on arrival, average 22 minutes",
       "rateNote": "Government fees at invoice. Service fee fixed per clearance event.",
-      "deliverables": ["TIP (Temporary Import Permit)", "Crew list processing", "Provisions manifest", "Flag-state liaison"],
+      "deliverables": [
+        "TIP (Temporary Import Permit)",
+        "Crew list processing",
+        "Provisions manifest",
+        "Flag-state liaison"
+      ],
       "protocol": [
-        { "n": "01", "step": "PRE-FILE", "body": "48 hours pre-arrival, documentation is pre-submitted to Port Authority and Customs. Any flags raised are resolved before the yacht is within territorial waters." },
-        { "n": "02", "step": "BOARD", "body": "Licensed clearing agent boards on arrival, typically anchored off the quay. Papers reviewed, stamps issued." },
-        { "n": "03", "step": "ISSUE", "body": "TIP issued, crew list endorsed, stores manifest filed. Captain receives originals and digital copies." },
-        { "n": "04", "step": "MONITOR", "body": "Agent on-call for the duration of stay. Crew changes, stores replenishment, flag changes handled without re-intake." }
+        {
+          "n": "01",
+          "step": "PRE-FILE",
+          "body": "48 hours pre-arrival, documentation is pre-submitted to Port Authority and Customs. Any flags raised are resolved before the yacht is within territorial waters."
+        },
+        {
+          "n": "02",
+          "step": "BOARD",
+          "body": "Licensed clearing agent boards on arrival, typically anchored off the quay. Papers reviewed, stamps issued."
+        },
+        {
+          "n": "03",
+          "step": "ISSUE",
+          "body": "TIP issued, crew list endorsed, stores manifest filed. Captain receives originals and digital copies."
+        },
+        {
+          "n": "04",
+          "step": "MONITOR",
+          "body": "Agent on-call for the duration of stay. Crew changes, stores replenishment, flag changes handled without re-intake."
+        }
       ]
     },
     "provisioning": {
       "coverage": "Tivat, Kotor, Budva markets · Adriatic fishing fleet · European specialty",
       "sla": "Same-day for items sourced locally; 48h for imports",
       "rateNote": "Produce at market rate, fully receipted. Coordination fee is a flat percentage of the invoice.",
-      "deliverables": ["Daily galley orders", "Dry-store stocking", "Wine cellar curation", "Charter-day fresh"],
+      "deliverables": [
+        "Daily galley orders",
+        "Dry-store stocking",
+        "Wine cellar curation",
+        "Charter-day fresh"
+      ],
       "protocol": [
-        { "n": "01", "step": "LIST", "body": "Chef or purser submits order via encrypted portal. Any substitution preferences noted and retained across visits." },
-        { "n": "02", "step": "SOURCE", "body": "Fresh sourced at dawn from local markets. Proteins from the Adriatic fleet. Specialty imports routed via Dubrovnik or Bari." },
-        { "n": "03", "step": "STAGE", "body": "Cold-chain maintained from source. Provisioning staged at shore base, quality-checked by coordinator before transfer." },
-        { "n": "04", "step": "DELIVER", "body": "Berth-side handoff to galley, typically in the two-hour window before service." }
+        {
+          "n": "01",
+          "step": "LIST",
+          "body": "Chef or purser submits order via encrypted portal. Any substitution preferences noted and retained across visits."
+        },
+        {
+          "n": "02",
+          "step": "SOURCE",
+          "body": "Fresh sourced at dawn from local markets. Proteins from the Adriatic fleet. Specialty imports routed via Dubrovnik or Bari."
+        },
+        {
+          "n": "03",
+          "step": "STAGE",
+          "body": "Cold-chain maintained from source. Provisioning staged at shore base, quality-checked by coordinator before transfer."
+        },
+        {
+          "n": "04",
+          "step": "DELIVER",
+          "body": "Berth-side handoff to galley, typically in the two-hour window before service."
+        }
       ]
     },
     "laundry": {
       "coverage": "On-site laundry partners in Tivat and Budva · MLC 2006 compliant",
       "sla": "Collected before 10:00 returned before 10:00 next day",
       "rateNote": "Billed per kg for linen, per item for uniforms and pressing. Volume tiers for stays over seven nights.",
-      "deliverables": ["Guest linen & towelling", "Crew uniforms", "Deck towelling", "Dry cleaning & pressing"],
+      "deliverables": [
+        "Guest linen & towelling",
+        "Crew uniforms",
+        "Deck towelling",
+        "Dry cleaning & pressing"
+      ],
       "protocol": [
-        { "n": "01", "step": "COLLECT", "body": "Berth-side collection with barcoded bags, logged against your vessel record." },
-        { "n": "02", "step": "PROCESS", "body": "Handled at marine-certified facility. Water hardness and detergent matched to your spec if given." },
-        { "n": "03", "step": "QC", "body": "Each bag hand-inspected on return. Any replacement items sourced before delivery." },
-        { "n": "04", "step": "RETURN", "body": "Returned folded or hanging to your preference, with a reconciliation slip against the original manifest." }
+        {
+          "n": "01",
+          "step": "COLLECT",
+          "body": "Berth-side collection with barcoded bags, logged against your vessel record."
+        },
+        {
+          "n": "02",
+          "step": "PROCESS",
+          "body": "Handled at marine-certified facility. Water hardness and detergent matched to your spec if given."
+        },
+        {
+          "n": "03",
+          "step": "QC",
+          "body": "Each bag hand-inspected on return. Any replacement items sourced before delivery."
+        },
+        {
+          "n": "04",
+          "step": "RETURN",
+          "body": "Returned folded or hanging to your preference, with a reconciliation slip against the original manifest."
+        }
       ]
     },
     "floristry": {
       "coverage": "Tivat growers · seasonal bloom calendar · European imports on 72h",
       "sla": "Arrangements in place by 14:00 on charter-start day",
       "rateNote": "Priced per arrangement, with tier pricing for full-vessel specifications.",
-      "deliverables": ["Welcome arrangements", "Mid-charter refresh", "Event installations", "Standing orders"],
+      "deliverables": [
+        "Welcome arrangements",
+        "Mid-charter refresh",
+        "Event installations",
+        "Standing orders"
+      ],
       "protocol": [
-        { "n": "01", "step": "BRIEF", "body": "Tone, palette, and any charter-specific notes. We retain preferences between visits." },
-        { "n": "02", "step": "SOURCE", "body": "Fresh cut from local growers on the morning of installation, or flown in for out-of-season requests." },
-        { "n": "03", "step": "INSTALL", "body": "On-board installation by our florist, using vessel-owned vases or ours. Discreet, usually within two hours." },
-        { "n": "04", "step": "REFRESH", "body": "Mid-stay refresh or full redo scheduled in advance, executed during a scheduled off-vessel window." }
+        {
+          "n": "01",
+          "step": "BRIEF",
+          "body": "Tone, palette, and any charter-specific notes. We retain preferences between visits."
+        },
+        {
+          "n": "02",
+          "step": "SOURCE",
+          "body": "Fresh cut from local growers on the morning of installation, or flown in for out-of-season requests."
+        },
+        {
+          "n": "03",
+          "step": "INSTALL",
+          "body": "On-board installation by our florist, using vessel-owned vases or ours. Discreet, usually within two hours."
+        },
+        {
+          "n": "04",
+          "step": "REFRESH",
+          "body": "Mid-stay refresh or full redo scheduled in advance, executed during a scheduled off-vessel window."
+        }
       ]
     },
     "maintenance": {
       "coverage": "Electrical, hydraulics, refrigeration, A/V, hull wash, tender service",
       "sla": "Vetted technician at berth within 4 working hours",
       "rateNote": "Labour at technician rate, full pass-through with ledger. Coordination fee per dispatch.",
-      "deliverables": ["Diagnostics", "Parts sourcing", "On-board work supervision", "Sea-trial coordination"],
+      "deliverables": [
+        "Diagnostics",
+        "Parts sourcing",
+        "On-board work supervision",
+        "Sea-trial coordination"
+      ],
       "protocol": [
-        { "n": "01", "step": "REPORT", "body": "Engineer or captain describes the fault. Where possible, a diagnostic is run on our in-house systems before dispatch." },
-        { "n": "02", "step": "DISPATCH", "body": "The right specialist, not the nearest. We maintain a vetted network of technicians across the Montenegrin coast." },
-        { "n": "03", "step": "SUPERVISE", "body": "Our coordinator is present for the visit. Notes are kept, parts reconciled, warranty captured." },
-        { "n": "04", "step": "DOCUMENT", "body": "Work report filed to the vessel log, with photographs and a parts ledger. Nothing left undocumented." }
+        {
+          "n": "01",
+          "step": "REPORT",
+          "body": "Engineer or captain describes the fault. Where possible, a diagnostic is run on our in-house systems before dispatch."
+        },
+        {
+          "n": "02",
+          "step": "DISPATCH",
+          "body": "The right specialist, not the nearest. We maintain a vetted network of technicians across the Montenegrin coast."
+        },
+        {
+          "n": "03",
+          "step": "SUPERVISE",
+          "body": "Our coordinator is present for the visit. Notes are kept, parts reconciled, warranty captured."
+        },
+        {
+          "n": "04",
+          "step": "DOCUMENT",
+          "body": "Work report filed to the vessel log, with photographs and a parts ledger. Nothing left undocumented."
+        }
       ]
     }
   }

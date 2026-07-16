@@ -10,28 +10,6 @@
     "requestQuote": "Richiedi preventivo",
     "chatWhatsapp": "Scrivici su WhatsApp"
   },
-  "hero": {
-    "eyebrow": "↳ FOND. MMXVII",
-    "eyebrow2": "STAGIONE OPERATIVA 2026",
-    "headline1": "Logistica pura.",
-    "headline2": "Affidabilità assoluta.",
-    "headline3": "Per superyacht",
-    "headline4": "in Montenegro.",
-    "accentWord": "Affidabilità assoluta.",
-    "lede": "Ormeggio, dogana, approvvigionamento, lavanderia, floristica, manutenzione — coordinati con discrezione da un unico desk operativo a Tivat.",
-    "btnQuote": "Richiedi preventivo",
-    "btnServices": "I nostri servizi",
-    "stripBase": "Porto Montenegro",
-    "stripCoords": "42.43°N · 18.69°E",
-    "stripMarinas": "HN · PM · KT · BV · BAR",
-    "stripSeason": "Apr – Ott",
-    "stripContact": "+382 67 144 555",
-    "labelBase": "Base operativa",
-    "labelCoords": "Coordinate",
-    "labelMarinas": "Cinque marine",
-    "labelSeason": "Stagione",
-    "labelContact": "Contatto"
-  },
   "services": {
     "eyebrow": "01 / SERVIZI",
     "title1": "Sei discipline.",
@@ -75,7 +53,6 @@
     "mapLabel": "COSTA ADRIATICA · MONTENEGRO",
     "mapLabel2": "COSTA MONTENEGRINA",
     "selectMarina": "SELEZIONA UNA MARINA",
-    "totalBerths": "Posti totali",
     "availability": "Disponibilità",
     "availabilityText": "Contattateci per la disponibilità attuale",
     "enquire": "Richiedi disponibilità",
@@ -103,21 +80,6 @@
     "step4_label": "REVISIONE",
     "step4_desc": "Report post-sosta, raccomandazioni per la prossima stagione."
   },
-  "testimonials": {
-    "eyebrow": "DAL GIORNALE DI BORDO",
-    "title1": "Cosa dicono",
-    "title2": "i comandanti.",
-    "lede": "Nove stagioni. Il record parla da solo.",
-    "t1_quote": "Siamo arrivati con un cambio equipaggio dell'ultimo minuto e un problema doganale dal porto precedente. Il desk aveva risolto entrambi prima che avessimo terminato l'ormeggio. Non ho mai visto una tale prontezza al di fuori di Monaco.",
-    "t1_name": "Cap. R. Voss",
-    "t1_detail": "M/Y NORTHERN STAR · 58m · Bandiera tedesca",
-    "t2_quote": "L'approvvigionamento era pronto all'ormeggio, la catena del freddo intatta, esattamente come specificato — incluse tre voci che mi aspettavo venissero sostituite. Il coordinatore le aveva procurate da Podgorica nella notte.",
-    "t2_name": "Cap. S. Marin",
-    "t2_detail": "S/Y ALBA · 42m · Bandiera Isole Cayman",
-    "t3_quote": "Tre stagioni in Montenegro, tre stagioni con questo desk. Tutto è più semplice quando chi chiami conosce il file della tua imbarcazione. Non li aggiorno più io — sono loro ad aggiornare me.",
-    "t3_name": "Cap. J. Lindqvist",
-    "t3_detail": "M/Y AURELIA · 72m · Bandiera Malta"
-  },
   "cta": {
     "engage": "↳ CONTATTACI",
     "title1": "In arrivo in Montenegro?",
@@ -131,8 +93,21 @@
     "services": "Servizi",
     "operations": "Operazioni",
     "office": "Ufficio",
-    "servicesItems": ["Prenotazione ormeggi", "Dogana e immigrazione", "Approvvigionamento", "Lavanderia", "Floristica", "Manutenzione"],
-    "operationsItems": ["Come funziona", "Disponibilità ormeggi", "Livelli di servizio", "SLA", "Chi siamo"],
+    "servicesItems": [
+      "Prenotazione ormeggi",
+      "Dogana e immigrazione",
+      "Approvvigionamento",
+      "Lavanderia",
+      "Floristica",
+      "Manutenzione"
+    ],
+    "operationsItems": [
+      "Come funziona",
+      "Disponibilità ormeggi",
+      "Livelli di servizio",
+      "SLA",
+      "Chi siamo"
+    ],
     "copyright": "© MMXXVI YACHT CONCIERGE D.O.O.",
     "certifications": "ISO 9001 · MYBA · MLC 2017",
     "legal": "Note legali",
@@ -151,40 +126,80 @@
     "principlesTitle2": "nessuna negoziabile.",
     "phases": [
       {
-        "n": "01", "code": "CONTATTO",
+        "n": "01",
+        "code": "CONTATTO",
         "title": "Accoglienza.",
         "lede": "Arrivate. Noi ascoltiamo. Nessun modulo — una chiamata vocale con un coordinatore che resterà sul vostro file.",
-        "meta": ["Chiamata vocale · 20 min", "Comandante, gestore o armatore", "NDA non richiesto per il contatto iniziale"],
+        "meta": [
+          "Chiamata vocale · 20 min",
+          "Comandante, gestore o armatore",
+          "NDA non richiesto per il contatto iniziale"
+        ],
         "detail": "La maggior parte delle relazioni inizia con un comandante che inoltra il nostro numero. Il colloquio è senza fretta: il vostro itinerario, il profilo degli ospiti, le aspettative dal Montenegro e i punti deboli dell'ultimo porto. Non condividiamo le note — un coordinatore gestisce il vostro file."
       },
       {
-        "n": "02", "code": "PIANIFICAZIONE",
+        "n": "02",
+        "code": "PIANIFICAZIONE",
         "title": "Brief.",
         "lede": "Un brief di servizio scritto, calibrato sulla vostra sosta. Dettagliato per voce, ancorato agli SLA, senza costi nascosti.",
-        "meta": ["Consegnato entro 72 ore", "Dettagliato per disciplina", "Trasparenza tariffaria"],
+        "meta": [
+          "Consegnato entro 72 ore",
+          "Dettagliato per disciplina",
+          "Trasparenza tariffaria"
+        ],
         "detail": "Restituiamo un brief che si legge come un piano di volo: ormeggi proposti, approccio doganale, calendario approvvigionamento, cadenza lavanderia, manutenzione ordinaria e budget operativo. Ogni voce è firmata dal responsabile della disciplina che la eseguirà."
       },
       {
-        "n": "03", "code": "ESECUZIONE",
+        "n": "03",
+        "code": "ESECUZIONE",
         "title": "Operatività.",
         "lede": "Il vostro coordinatore diventa il vostro desk. Un numero, un'email, una persona responsabile di ogni risultato.",
-        "meta": ["Coordinatore dedicato", "06:00 – 22:00 standard", "24h per il Livello III"],
+        "meta": [
+          "Coordinatore dedicato",
+          "06:00 – 22:00 standard",
+          "24h per il Livello III"
+        ],
         "detail": "Dal momento in cui lo yacht entra nelle acque territoriali, il file è attivo. Il coordinatore è fisicamente a Tivat, si sposta tra le marine secondo necessità ed è reperibile per tutta la durata. I percorsi di escalation sono definiti; nessuna richiesta resta senza risposta."
       },
       {
-        "n": "04", "code": "REVISIONE",
+        "n": "04",
+        "code": "REVISIONE",
         "title": "Report.",
         "lede": "Un report operativo post-sosta consegnato all'armatore o al gestore. Le lezioni apprese archiviate per la stagione successiva.",
-        "meta": ["Consegnato 14 giorni dopo la partenza", "Riservato all'armatore", "Archiviato nel file dell'imbarcazione"],
+        "meta": [
+          "Consegnato 14 giorni dopo la partenza",
+          "Riservato all'armatore",
+          "Archiviato nel file dell'imbarcazione"
+        ],
         "detail": "Ogni visita si chiude con un report scritto: cosa è stato richiesto, cosa consegnato, cosa ha superato o mancato le aspettative. Il vostro file cresce — alla terza stagione conosciamo il vostro equipaggio meglio di molti loro colleghi."
       }
     ],
     "principles": [
-      { "n": "I",   "t": "Un desk.",          "b": "Ogni richiesta passa per il vostro coordinatore. Mai un centralino." },
-      { "n": "II",  "t": "Nessun ricarico.",  "b": "Diritti governativi, ormeggio, manodopera tecnica — trasmessi a fattura." },
-      { "n": "III", "t": "Discrezione.",      "b": "Operiamo nel ritmo dello yacht, non contro di esso." },
-      { "n": "IV",  "t": "Documentazione.",  "b": "Ogni azione registrata, ogni partitario ricambi catturato, ogni report archiviato." },
-      { "n": "V",   "t": "File riservato.",   "b": "La vostra sosta vive in un archivio crittografato. Nulla trapela." }
+      {
+        "n": "I",
+        "t": "Un desk.",
+        "b": "Ogni richiesta passa per il vostro coordinatore. Mai un centralino."
+      },
+      {
+        "n": "II",
+        "t": "Nessun ricarico.",
+        "b": "Diritti governativi, ormeggio, manodopera tecnica — trasmessi a fattura."
+      },
+      {
+        "n": "III",
+        "t": "Discrezione.",
+        "b": "Operiamo nel ritmo dello yacht, non contro di esso."
+      },
+      {
+        "n": "IV",
+        "t": "Documentazione.",
+        "b": "Ogni azione registrata, ogni partitario ricambi catturato, ogni report archiviato."
+      },
+      {
+        "n": "V",
+        "t": "File riservato.",
+        "b": "La vostra sosta vive in un archivio crittografato. Nulla trapela."
+      }
     ]
   },
   "contactPage": {
@@ -196,7 +211,14 @@
     "phoneSub": "Desk operativo · 24h in stagione",
     "emailSub": "Canale crittografato disponibile su richiesta",
     "addressSub": "Porto Montenegro · Tivat 85320",
-    "stepLabels": ["Identità", "Imbarcazione", "Sosta", "Servizi", "Contatto", "Inviato"],
+    "stepLabels": [
+      "Identità",
+      "Imbarcazione",
+      "Sosta",
+      "Servizi",
+      "Contatto",
+      "Inviato"
+    ],
     "step0_title": "Con chi stiamo parlando?",
     "step0_sub": "Il vostro nome e ruolo. Il file è strettamente riservato.",
     "step1_title": "Parlateci dell'imbarcazione.",
@@ -256,15 +278,6 @@
     "story1": "Yacht Concierge nasce da anni di esperienza diretta nelle acque del Montenegro. Molto prima che questo desk avesse un nome, il nostro team era già sulle banchine — al fianco dei capitani di porto, degli uffici doganali, dei fornitori di approvvigionamento e degli equipaggi che tornano stagione dopo stagione. Sono queste relazioni a fare la differenza, e non si possono improvvisare.",
     "story2": "È il naturale passo successivo della nostra espansione. I comandanti di superyacht avevano bisogno sul molo di qualcuno che comprendesse le acque da cui provenivano — non solo le normative del porto in cui erano arrivati. Così abbiamo creato un desk operativo dedicato, gestito da persone che hanno lavorato su entrambi i lati del portellone.",
     "story3": "Oggi coordiniamo prenotazioni ormeggi, sdoganamento e pratiche di immigrazione, approvvigionamento, logistica dell'equipaggio, lavanderia, floricoltura e manutenzione — per imbarcazioni di ogni dimensione, lungo tutta la costa montenegrina.",
-    "visitCharter": "Visita Montenegro Charter",
-    "seasons_value": "9+",
-    "seasons_label": "Stagioni operative",
-    "vessels_value": "450+",
-    "vessels_label": "Imbarcazioni servite",
-    "marinas_value": "5",
-    "marinas_label": "Marine montenegrine",
-    "desk_value": "1",
-    "desk_label": "Desk dedicato",
     "quote": "«Abbiamo costruito il servizio che avremmo voluto ricevere quando eravamo noi sull'acqua — diretto, responsabile, senza sorprese in fattura.»",
     "quoteAuthor": "SANJA BOŽOVIĆ — FONDATRICE E CEO",
     "teamEyebrow": "IL TEAM",
@@ -436,72 +449,198 @@
       "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
       "sla": "Conferma entro 90 minuti dalla richiesta",
       "rateNote": "Costi di ormeggio fatturati alle tariffe di listino della marina, senza maggiorazione. Tariffa del servizio per notte, in base alla LOA.",
-      "deliverables": ["Assegnazione prioritaria del posto", "Prenotazioni stagionali concordate", "Allaccio corrente e acqua dolce", "Coordinamento con la sicurezza"],
+      "deliverables": [
+        "Assegnazione prioritaria del posto",
+        "Prenotazioni stagionali concordate",
+        "Allaccio corrente e acqua dolce",
+        "Coordinamento con la sicurezza"
+      ],
       "protocol": [
-        { "n": "01", "step": "ACCOGLIENZA", "body": "Il capitano o il gestore fornisce ETA, LOA, baglio, pescaggio, nominativo radio, bandiera e durata prevista della sosta." },
-        { "n": "02", "step": "ABBINAMENTO", "body": "Il coordinatore conferma il posto nella nostra rete di marine in base alla disponibilità attuale e alle preferenze storiche." },
-        { "n": "03", "step": "PRENOTAZIONE", "body": "Posto assicurato, conferma emessa con numero dell'ormeggio, dettagli degli allacci e coordinate di arrivo." },
-        { "n": "04", "step": "RICEZIONE", "body": "Il team a terra è presente all'ormeggio all'ETA. Cime, corrente, acqua e allestimento rifornimenti — tutto gestito." }
+        {
+          "n": "01",
+          "step": "ACCOGLIENZA",
+          "body": "Il capitano o il gestore fornisce ETA, LOA, baglio, pescaggio, nominativo radio, bandiera e durata prevista della sosta."
+        },
+        {
+          "n": "02",
+          "step": "ABBINAMENTO",
+          "body": "Il coordinatore conferma il posto nella nostra rete di marine in base alla disponibilità attuale e alle preferenze storiche."
+        },
+        {
+          "n": "03",
+          "step": "PRENOTAZIONE",
+          "body": "Posto assicurato, conferma emessa con numero dell'ormeggio, dettagli degli allacci e coordinate di arrivo."
+        },
+        {
+          "n": "04",
+          "step": "RICEZIONE",
+          "body": "Il team a terra è presente all'ormeggio all'ETA. Cime, corrente, acqua e allestimento rifornimenti — tutto gestito."
+        }
       ]
     },
     "customs": {
       "coverage": "Ministero degli Interni del Montenegro · Adiacenza Schengen",
       "sla": "Sdoganamento all'arrivo, media 22 minuti",
       "rateNote": "Tasse governative a fattura. Tariffa del servizio fissa per evento di sdoganamento.",
-      "deliverables": ["TIP (Permesso di Importazione Temporanea)", "Elaborazione lista equipaggio", "Manifesto delle provviste", "Collegamento con lo Stato di bandiera"],
+      "deliverables": [
+        "TIP (Permesso di Importazione Temporanea)",
+        "Elaborazione lista equipaggio",
+        "Manifesto delle provviste",
+        "Collegamento con lo Stato di bandiera"
+      ],
       "protocol": [
-        { "n": "01", "step": "PRE-FILING", "body": "48 ore prima dell'arrivo, la documentazione è pre-presentata all'Autorità Portuale e alla Dogana. Eventuali problemi vengono risolti prima che lo yacht entri nelle acque territoriali." },
-        { "n": "02", "step": "IMBARCO", "body": "L'agente di sdoganamento autorizzato sale a bordo all'arrivo, tipicamente all'ancora al largo della banchina. Documenti esaminati, timbri apposti." },
-        { "n": "03", "step": "EMISSIONE", "body": "TIP emesso, lista equipaggio controfirmata, manifesto delle provviste archiviato. Il capitano riceve originali e copie digitali." },
-        { "n": "04", "step": "MONITORAGGIO", "body": "L'agente è reperibile per tutta la durata della sosta. Cambi di equipaggio, rifornimento scorte, cambi di bandiera gestiti senza rinnovo delle pratiche." }
+        {
+          "n": "01",
+          "step": "PRE-FILING",
+          "body": "48 ore prima dell'arrivo, la documentazione è pre-presentata all'Autorità Portuale e alla Dogana. Eventuali problemi vengono risolti prima che lo yacht entri nelle acque territoriali."
+        },
+        {
+          "n": "02",
+          "step": "IMBARCO",
+          "body": "L'agente di sdoganamento autorizzato sale a bordo all'arrivo, tipicamente all'ancora al largo della banchina. Documenti esaminati, timbri apposti."
+        },
+        {
+          "n": "03",
+          "step": "EMISSIONE",
+          "body": "TIP emesso, lista equipaggio controfirmata, manifesto delle provviste archiviato. Il capitano riceve originali e copie digitali."
+        },
+        {
+          "n": "04",
+          "step": "MONITORAGGIO",
+          "body": "L'agente è reperibile per tutta la durata della sosta. Cambi di equipaggio, rifornimento scorte, cambi di bandiera gestiti senza rinnovo delle pratiche."
+        }
       ]
     },
     "provisioning": {
       "coverage": "Mercati di Tivat, Kotor, Budva · Flotta peschereccia adriatica · Specialità europee",
       "sla": "In giornata per articoli di provenienza locale; 48h per le importazioni",
       "rateNote": "Prodotti a prezzo di mercato, con ricevuta completa. La tariffa di coordinamento è una percentuale fissa sulla fattura.",
-      "deliverables": ["Ordini giornalieri per la cambusa", "Approvvigionamento magazzino secco", "Cura della cantina vini", "Prodotti freschi per il giorno del charter"],
+      "deliverables": [
+        "Ordini giornalieri per la cambusa",
+        "Approvvigionamento magazzino secco",
+        "Cura della cantina vini",
+        "Prodotti freschi per il giorno del charter"
+      ],
       "protocol": [
-        { "n": "01", "step": "LISTA", "body": "Lo chef o il commissario di bordo invia l'ordine tramite portale cifrato. Le preferenze di sostituzione vengono annotate e conservate tra le visite." },
-        { "n": "02", "step": "APPROVVIGIONAMENTO", "body": "Il fresco viene acquistato all'alba nei mercati locali. Le proteine dalla flotta adriatica. Le importazioni speciali vengono smistate via Dubrovnik o Bari." },
-        { "n": "03", "step": "PREPARAZIONE", "body": "La catena del freddo è mantenuta dalla fonte. I rifornimenti vengono allestiti alla base a terra e verificati dal coordinatore prima del trasferimento." },
-        { "n": "04", "step": "CONSEGNA", "body": "Consegna all'ormeggio in cambusa, tipicamente nella finestra di due ore prima del servizio." }
+        {
+          "n": "01",
+          "step": "LISTA",
+          "body": "Lo chef o il commissario di bordo invia l'ordine tramite portale cifrato. Le preferenze di sostituzione vengono annotate e conservate tra le visite."
+        },
+        {
+          "n": "02",
+          "step": "APPROVVIGIONAMENTO",
+          "body": "Il fresco viene acquistato all'alba nei mercati locali. Le proteine dalla flotta adriatica. Le importazioni speciali vengono smistate via Dubrovnik o Bari."
+        },
+        {
+          "n": "03",
+          "step": "PREPARAZIONE",
+          "body": "La catena del freddo è mantenuta dalla fonte. I rifornimenti vengono allestiti alla base a terra e verificati dal coordinatore prima del trasferimento."
+        },
+        {
+          "n": "04",
+          "step": "CONSEGNA",
+          "body": "Consegna all'ormeggio in cambusa, tipicamente nella finestra di due ore prima del servizio."
+        }
       ]
     },
     "laundry": {
       "coverage": "Partner di lavanderia a Tivat e Budva · Conformi MLC 2006",
       "sla": "Ritiro entro le 10:00, riconsegna entro le 10:00 del giorno successivo",
       "rateNote": "Fatturato a kg per la biancheria, a pezzo per divise e stiratura. Tariffe a volume per soste superiori a sette notti.",
-      "deliverables": ["Biancheria e asciugamani per gli ospiti", "Divise dell'equipaggio", "Asciugamani da coperta", "Lavaggio a secco e stiratura"],
+      "deliverables": [
+        "Biancheria e asciugamani per gli ospiti",
+        "Divise dell'equipaggio",
+        "Asciugamani da coperta",
+        "Lavaggio a secco e stiratura"
+      ],
       "protocol": [
-        { "n": "01", "step": "RITIRO", "body": "Ritiro all'ormeggio con borse con codice a barre, registrate nella scheda del vostro natante." },
-        { "n": "02", "step": "LAVORAZIONE", "body": "Gestita in struttura certificata marina. Durezza dell'acqua e detergente calibrati sulle vostre specifiche, se fornite." },
-        { "n": "03", "step": "CONTROLLO", "body": "Ogni borsa viene ispezionata manualmente al ritorno. Eventuali articoli da sostituire vengono reperiti prima della consegna." },
-        { "n": "04", "step": "RICONSEGNA", "body": "Restituita piegata o appesa secondo le vostre preferenze, con una distinta di riconciliazione rispetto al manifesto originale." }
+        {
+          "n": "01",
+          "step": "RITIRO",
+          "body": "Ritiro all'ormeggio con borse con codice a barre, registrate nella scheda del vostro natante."
+        },
+        {
+          "n": "02",
+          "step": "LAVORAZIONE",
+          "body": "Gestita in struttura certificata marina. Durezza dell'acqua e detergente calibrati sulle vostre specifiche, se fornite."
+        },
+        {
+          "n": "03",
+          "step": "CONTROLLO",
+          "body": "Ogni borsa viene ispezionata manualmente al ritorno. Eventuali articoli da sostituire vengono reperiti prima della consegna."
+        },
+        {
+          "n": "04",
+          "step": "RICONSEGNA",
+          "body": "Restituita piegata o appesa secondo le vostre preferenze, con una distinta di riconciliazione rispetto al manifesto originale."
+        }
       ]
     },
     "floristry": {
       "coverage": "Coltivatori di Tivat · calendario stagionale delle fioriture · importazioni europee in 72h",
       "sla": "Composizioni in loco entro le 14:00 del giorno di inizio charter",
       "rateNote": "Prezzo per composizione, con tariffe a livello per specifiche dell'intera imbarcazione.",
-      "deliverables": ["Composizioni di benvenuto", "Rinnovo a metà charter", "Allestimenti per eventi", "Ordini continuativi"],
+      "deliverables": [
+        "Composizioni di benvenuto",
+        "Rinnovo a metà charter",
+        "Allestimenti per eventi",
+        "Ordini continuativi"
+      ],
       "protocol": [
-        { "n": "01", "step": "BRIEFING", "body": "Stile, palette e note specifiche per il charter. Le preferenze vengono conservate tra le visite." },
-        { "n": "02", "step": "APPROVVIGIONAMENTO", "body": "Fiori freschi tagliati dai coltivatori locali la mattina dell'installazione, o importati per richieste fuori stagione." },
-        { "n": "03", "step": "INSTALLAZIONE", "body": "Installazione a bordo da parte del nostro fiorista, con vasi di bordo o nostri. Discreta, di solito entro due ore." },
-        { "n": "04", "step": "RINNOVO", "body": "Rinnovo a metà sosta o sostituzione completa programmati in anticipo, eseguiti durante una finestra prestabilita di assenza a bordo." }
+        {
+          "n": "01",
+          "step": "BRIEFING",
+          "body": "Stile, palette e note specifiche per il charter. Le preferenze vengono conservate tra le visite."
+        },
+        {
+          "n": "02",
+          "step": "APPROVVIGIONAMENTO",
+          "body": "Fiori freschi tagliati dai coltivatori locali la mattina dell'installazione, o importati per richieste fuori stagione."
+        },
+        {
+          "n": "03",
+          "step": "INSTALLAZIONE",
+          "body": "Installazione a bordo da parte del nostro fiorista, con vasi di bordo o nostri. Discreta, di solito entro due ore."
+        },
+        {
+          "n": "04",
+          "step": "RINNOVO",
+          "body": "Rinnovo a metà sosta o sostituzione completa programmati in anticipo, eseguiti durante una finestra prestabilita di assenza a bordo."
+        }
       ]
     },
     "maintenance": {
       "coverage": "Impianto elettrico, idraulica, refrigerazione, A/V, lavaggio scafo, assistenza tender",
       "sla": "Tecnico qualificato all'ormeggio entro 4 ore lavorative",
       "rateNote": "Manodopera alla tariffa del tecnico, con piena trasparenza e registro. Tariffa di coordinamento per intervento.",
-      "deliverables": ["Diagnostica", "Reperimento ricambi", "Supervisione lavori a bordo", "Coordinamento prove in mare"],
+      "deliverables": [
+        "Diagnostica",
+        "Reperimento ricambi",
+        "Supervisione lavori a bordo",
+        "Coordinamento prove in mare"
+      ],
       "protocol": [
-        { "n": "01", "step": "SEGNALAZIONE", "body": "L'ingegnere o il capitano descrive il guasto. Dove possibile, una diagnosi viene eseguita sui nostri sistemi interni prima dell'invio." },
-        { "n": "02", "step": "INTERVENTO", "body": "Lo specialista giusto, non il più vicino. Manteniamo una rete selezionata di tecnici lungo la costa montenegrina." },
-        { "n": "03", "step": "SUPERVISIONE", "body": "Il nostro coordinatore è presente durante la visita. Vengono prese note, ricambi riconciliati, garanzia acquisita." },
-        { "n": "04", "step": "DOCUMENTAZIONE", "body": "Rapporto di lavoro archiviato nel giornale di bordo, con fotografie e registro dei pezzi. Nulla viene lasciato senza documentazione." }
+        {
+          "n": "01",
+          "step": "SEGNALAZIONE",
+          "body": "L'ingegnere o il capitano descrive il guasto. Dove possibile, una diagnosi viene eseguita sui nostri sistemi interni prima dell'invio."
+        },
+        {
+          "n": "02",
+          "step": "INTERVENTO",
+          "body": "Lo specialista giusto, non il più vicino. Manteniamo una rete selezionata di tecnici lungo la costa montenegrina."
+        },
+        {
+          "n": "03",
+          "step": "SUPERVISIONE",
+          "body": "Il nostro coordinatore è presente durante la visita. Vengono prese note, ricambi riconciliati, garanzia acquisita."
+        },
+        {
+          "n": "04",
+          "step": "DOCUMENTAZIONE",
+          "body": "Rapporto di lavoro archiviato nel giornale di bordo, con fotografie e registro dei pezzi. Nulla viene lasciato senza documentazione."
+        }
       ]
     }
   }

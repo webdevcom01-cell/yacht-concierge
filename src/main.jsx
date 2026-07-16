@@ -37,7 +37,6 @@ const TWEAKS = {
   "theme": "light",
   "accent": "gold",
   "navStyle": "glass",
-  "heroVariant": "editorial",
   "serviceDensity": "standard",
   "headingFont": "garamond"
 };
@@ -147,7 +146,6 @@ function App() {
     setTheme: (t) => setTweak('theme', t),
     accent: tweaks.accent,
     navStyle: tweaks.navStyle,
-    heroVariant: tweaks.heroVariant,
     serviceDensity: tweaks.serviceDensity,
   };
 
