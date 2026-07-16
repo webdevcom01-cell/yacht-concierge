@@ -142,7 +142,6 @@ const LOCAL_BUSINESS_SCHEMA = {
     { '@type': 'City', name: 'Bar' },
     { '@type': 'Country', name: 'Montenegro' },
   ],
-  sameAs: ['https://montenegrocharter.com'],
 };
 
 const WEBSITE_SCHEMA = {

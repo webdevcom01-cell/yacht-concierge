@@ -446,8 +446,8 @@
   },
   "serviceDetail": {
     "berth": {
-      "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
-      "sla": "Conferma entro 90 minuti dalla richiesta",
+      "coverage": "Porto Montenegro · Herceg Novi · Bar",
+      "sla": "Conferma prioritaria, di norma in giornata",
       "rateNote": "Costi di ormeggio fatturati alle tariffe di listino della marina, senza maggiorazione. Tariffa del servizio per notte, in base alla LOA.",
       "deliverables": [
         "Assegnazione prioritaria del posto",
@@ -480,7 +480,7 @@
     },
     "customs": {
       "coverage": "Ministero degli Interni del Montenegro · Adiacenza Schengen",
-      "sla": "Sdoganamento all'arrivo, media 22 minuti",
+      "sla": "Sdoganamento all'arrivo, attesa minima",
       "rateNote": "Tasse governative a fattura. Tariffa del servizio fissa per evento di sdoganamento.",
       "deliverables": [
         "TIP (Permesso di Importazione Temporanea)",
@@ -513,7 +513,7 @@
     },
     "provisioning": {
       "coverage": "Mercati di Tivat, Kotor, Budva · Flotta peschereccia adriatica · Specialità europee",
-      "sla": "In giornata per articoli di provenienza locale; 48h per le importazioni",
+      "sla": "In giornata per articoli locali; importazioni in tempi brevi",
       "rateNote": "Prodotti a prezzo di mercato, con ricevuta completa. La tariffa di coordinamento è una percentuale fissa sulla fattura.",
       "deliverables": [
         "Ordini giornalieri per la cambusa",
@@ -546,7 +546,7 @@
     },
     "laundry": {
       "coverage": "Partner di lavanderia a Tivat e Budva · Conformi MLC 2006",
-      "sla": "Ritiro entro le 10:00, riconsegna entro le 10:00 del giorno successivo",
+      "sla": "Riconsegna il giorno successivo per articoli standard",
       "rateNote": "Fatturato a kg per la biancheria, a pezzo per divise e stiratura. Tariffe a volume per soste superiori a sette notti.",
       "deliverables": [
         "Biancheria e asciugamani per gli ospiti",
@@ -579,7 +579,7 @@
     },
     "floristry": {
       "coverage": "Coltivatori di Tivat · calendario stagionale delle fioriture · importazioni europee in 72h",
-      "sla": "Composizioni in loco entro le 14:00 del giorno di inizio charter",
+      "sla": "Composizioni pronte per l'inizio del charter",
       "rateNote": "Prezzo per composizione, con tariffe a livello per specifiche dell'intera imbarcazione.",
       "deliverables": [
         "Composizioni di benvenuto",
@@ -612,7 +612,7 @@
     },
     "maintenance": {
       "coverage": "Impianto elettrico, idraulica, refrigerazione, A/V, lavaggio scafo, assistenza tender",
-      "sla": "Tecnico qualificato all'ormeggio entro 4 ore lavorative",
+      "sla": "Tecnico qualificato inviato all'ormeggio su richiesta",
       "rateNote": "Manodopera alla tariffa del tecnico, con piena trasparenza e registro. Tariffa di coordinamento per intervento.",
       "deliverables": [
         "Diagnostica",

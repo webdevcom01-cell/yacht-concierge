@@ -446,8 +446,8 @@
   },
   "serviceDetail": {
     "berth": {
-      "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
-      "sla": "Confirmation within 90 minutes of request",
+      "coverage": "Porto Montenegro · Herceg Novi · Bar",
+      "sla": "Priority confirmation, typically same day",
       "rateNote": "Berth costs billed at marina list rate, no mark-up. Service fee per night, LOA-dependent.",
       "deliverables": [
         "Priority slot allocation",
@@ -480,7 +480,7 @@
     },
     "customs": {
       "coverage": "Montenegrin Ministry of Interior · Schengen adjacency",
-      "sla": "Cleared on arrival, average 22 minutes",
+      "sla": "Cleared on arrival, minimal wait",
       "rateNote": "Government fees at invoice. Service fee fixed per clearance event.",
       "deliverables": [
         "TIP (Temporary Import Permit)",
@@ -513,7 +513,7 @@
     },
     "provisioning": {
       "coverage": "Tivat, Kotor, Budva markets · Adriatic fishing fleet · European specialty",
-      "sla": "Same-day for items sourced locally; 48h for imports",
+      "sla": "Same-day for locally sourced items; imports on a short lead time",
       "rateNote": "Produce at market rate, fully receipted. Coordination fee is a flat percentage of the invoice.",
       "deliverables": [
         "Daily galley orders",
@@ -546,7 +546,7 @@
     },
     "laundry": {
       "coverage": "On-site laundry partners in Tivat and Budva · MLC 2006 compliant",
-      "sla": "Collected before 10:00 returned before 10:00 next day",
+      "sla": "Next-day return on standard items",
       "rateNote": "Billed per kg for linen, per item for uniforms and pressing. Volume tiers for stays over seven nights.",
       "deliverables": [
         "Guest linen & towelling",
@@ -579,7 +579,7 @@
     },
     "floristry": {
       "coverage": "Tivat growers · seasonal bloom calendar · European imports on 72h",
-      "sla": "Arrangements in place by 14:00 on charter-start day",
+      "sla": "Arrangements in place for charter-start day",
       "rateNote": "Priced per arrangement, with tier pricing for full-vessel specifications.",
       "deliverables": [
         "Welcome arrangements",
@@ -612,7 +612,7 @@
     },
     "maintenance": {
       "coverage": "Electrical, hydraulics, refrigeration, A/V, hull wash, tender service",
-      "sla": "Vetted technician at berth within 4 working hours",
+      "sla": "Vetted technician dispatched to the berth on request",
       "rateNote": "Labour at technician rate, full pass-through with ledger. Coordination fee per dispatch.",
       "deliverables": [
         "Diagnostics",
