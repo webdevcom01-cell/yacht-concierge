@@ -57,9 +57,15 @@
 }
 
 [data-accent="gold"] {
-  --accent: var(--gold);
+  /* A11y: text-safe antique gold — 4.62:1 on paper (the display gold #D4B78F
+     measures 1.82:1 and stays reserved for buttons/decoration via --gold). */
+  --accent: #8C6C3B;
   --accent-soft: var(--gold-soft);
   --accent-line: rgba(212, 183, 143, 0.45);
+}
+
+[data-theme="dark"][data-accent="gold"] {
+  --accent: var(--gold); /* original gold reads 9.4:1 on navy — keep it */
 }
 
 * { box-sizing: border-box; }

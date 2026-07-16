@@ -59,7 +59,7 @@ function ServicesPreview() {
                   onClick={() => setRoute({ page: 'service', id: s.id })}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-                    <span className="service-card-num" style={{ color: 'rgba(212,183,143,0.75)' }}>{s.num}</span>
+                    <span className="service-card-num" style={{ color: 'var(--accent)' }}>{s.num}</span>
                     <IconC size={28} stroke={1} color="var(--accent)" />
                   </div>
                   <h3 className="service-card-title" style={{ color: 'var(--fg)' }}>{t(`services.${s.id}_title`)}</h3>

@@ -164,7 +164,9 @@ function DetailCTA({ label, title, body, btn, onClick }) {
             {body}
           </p>
         </div>
-        <div className="mono" style={{ color: 'var(--accent, #D4B78F)', fontSize: 11, letterSpacing: '0.12em', whiteSpace: 'nowrap', display: 'flex', gap: 12, alignItems: 'center', flexShrink: 0 }}>
+        {/* Fixed display gold — this block always sits on navy, where the
+            light-theme text accent would lose contrast */}
+        <div className="mono" style={{ color: '#D4B78F', fontSize: 11, letterSpacing: '0.12em', whiteSpace: 'nowrap', display: 'flex', gap: 12, alignItems: 'center', flexShrink: 0 }}>
           {btn} <Icons.Arrow size={13}/>
         </div>
       </div>
