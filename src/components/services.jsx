@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal, SectionHeader } from './shared';
 import { SERVICES } from '../data/services';
+import { ServiceArt } from './service-art';
 
 // Services index page & Service detail page
 
@@ -220,6 +221,14 @@ function ServiceDetailPage({ id }) {
             <p className="lede">{t(`services.${s.id}_desc`)}</p>
           </Reveal>
         </div>
+
+        {/* Per-service hero illustration — original vector art in the brand
+            palette (see service-art.jsx), differentiating the six pages */}
+        <Reveal>
+          <div style={{ marginBottom: 96, border: '1px solid var(--fg-08)', overflow: 'hidden', height: 'clamp(200px, 28vw, 300px)' }}>
+            <ServiceArt id={s.id} label={t(`services.${s.id}_title`)}/>
+          </div>
+        </Reveal>
 
         {/* Coverage / SLA strip */}
         <Reveal>
