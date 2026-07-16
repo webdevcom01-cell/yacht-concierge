@@ -100,7 +100,7 @@ function WhatsAppFloat() {
           position: fixed;
           bottom: max(28px, calc(28px + env(safe-area-inset-bottom, 0px)));
           right: 28px;
-          z-index: 9001; /* above cookie banner (8999) */
+          z-index: 9001;
           width: 58px;
           height: 58px;
           background: #25D366;

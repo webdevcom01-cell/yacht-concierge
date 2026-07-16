@@ -225,7 +225,8 @@ export function PageSEO({ page, id }) {
     // Canonical
     setOrCreate('link[rel="canonical"]', { rel: 'canonical', href: data.url });
 
-    // Open Graph
+    // Open Graph — adopts the static tags shipped in index.html (updated in
+    // place per route; scrapers that don't run JS see the static site-wide set)
     [
       ['og:title',        data.title],
       ['og:description',  data.description],
@@ -236,11 +237,7 @@ export function PageSEO({ page, id }) {
       ['og:image:width',  '1200'],
       ['og:image:height', '630'],
     ].forEach(([prop, content]) => {
-      const el = document.createElement('meta');
-      el.setAttribute('property', prop);
-      el.setAttribute('content', content);
-      el.setAttribute(HELMET_ATTR, 'true');
-      document.head.appendChild(el);
+      setOrCreate(`meta[property="${prop}"]`, { property: prop, content });
     });
 
     // Twitter Card

@@ -286,12 +286,6 @@
     "btnHome": "Return home",
     "btnContact": "Contact us"
   },
-  "cookie": {
-    "body": "We use Google Analytics to understand how visitors use this site. No personal data is sold or shared with third parties.",
-    "accept": "Accept",
-    "decline": "Decline",
-    "privacyLink": "Privacy Policy"
-  },
   "servicesPage": {
     "eyebrow": "↳ SERVICES INDEX",
     "title1": "Operational",

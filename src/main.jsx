@@ -7,7 +7,6 @@ import { PageSEO } from './seo.jsx';
 import { HomePage } from './components/home-bottom';
 import { ServicesPage, ServiceDetailPage } from './components/services';
 import { ProcessPage, ContactPage, FleetPage, AboutPage, NotFoundPage } from './components/pages';
-import { CookieConsent } from './components/cookie-consent';
 import '../styles.css';
 // Fonts: EB Garamond (headings), Inter (body), JetBrains Mono (labels).
 // Cormorant Garamond and Fraunces were removed with the design-tweaks panel —
@@ -139,7 +138,6 @@ function App() {
         </React.Suspense>
         <Footer/>
         <WhatsAppFloat/>
-        <CookieConsent/>
       </div>
     </AppCtx.Provider>
 

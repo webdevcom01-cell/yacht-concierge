@@ -99,9 +99,9 @@ function LegalNoticePage() {
       </p>
       <p>
         This website uses Plausible Analytics, a cookie-less, privacy-first service, for
-        aggregated traffic measurement. Google Analytics 4 is loaded only after explicit
-        cookie consent. Analytics data does not identify individual visitors and is used
-        solely to understand how users navigate the site.
+        aggregated traffic measurement. No advertising or cross-site tracking cookies are
+        set. Analytics data does not identify individual visitors and is used solely to
+        understand how users navigate the site.
       </p>
 
       <h2>Online Dispute Resolution</h2>
@@ -165,8 +165,7 @@ function PrivacyPage() {
         <li>
           <strong>Technical data:</strong> IP address and browser type retained in server
           logs for security purposes for up to 30 days. Analytics data is collected in
-          aggregated, anonymised form using Plausible Analytics (cookie-less) and, subject
-          to your cookie consent, Google Analytics 4.
+          aggregated, anonymised form using Plausible Analytics (cookie-less).
         </li>
       </ul>
 
@@ -214,11 +213,6 @@ function PrivacyPage() {
         <li>
           <strong>Plausible Insights OÜ</strong> (Estonia, EU): Cookie-less, aggregated
           web analytics. Data is hosted and processed within the European Union.
-        </li>
-        <li>
-          <strong>Google LLC</strong> (United States — Google Analytics 4): Aggregated,
-          anonymised web analytics. Data is processed under Google's standard contractual
-          clauses and the EU–US Data Privacy Framework.
         </li>
       </ul>
 

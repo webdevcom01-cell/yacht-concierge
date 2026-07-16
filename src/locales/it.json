@@ -286,12 +286,6 @@
     "btnHome": "Torna alla home",
     "btnContact": "Contattaci"
   },
-  "cookie": {
-    "body": "Utilizziamo Google Analytics per capire come i visitatori usano questo sito. Nessun dato personale viene venduto o condiviso con terze parti.",
-    "accept": "Accetta",
-    "decline": "Rifiuta",
-    "privacyLink": "Informativa sulla privacy"
-  },
   "servicesPage": {
     "eyebrow": "↳ INDICE SERVIZI",
     "title1": "Discipline",
