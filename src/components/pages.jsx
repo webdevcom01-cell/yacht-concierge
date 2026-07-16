@@ -397,12 +397,6 @@ function AboutPage() {
   const { setRoute } = useApp();
   const { t } = useTranslation();
 
-  const stats = [
-    { value: t('aboutPage.seasons_value'),  label: t('aboutPage.seasons_label') },
-    { value: t('aboutPage.vessels_value'),  label: t('aboutPage.vessels_label') },
-    { value: t('aboutPage.marinas_value'),  label: t('aboutPage.marinas_label') },
-    { value: t('aboutPage.desk_value'),     label: t('aboutPage.desk_label') },
-  ];
 
   const team = [
     {
@@ -459,50 +453,7 @@ function AboutPage() {
               <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 28 }}>{t('aboutPage.story1')}</p>
               <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 28 }}>{t('aboutPage.story2')}</p>
               <p style={{ fontSize: 18, lineHeight: 1.75, color: 'var(--fg-80)', marginBottom: 40 }}>{t('aboutPage.story3')}</p>
-              <a
-                href="https://montenegrocharter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}
-              >
-                {t('aboutPage.visitCharter')}
-                <Icons.Arrow size={15}/>
-              </a>
             </div>
-          </div>
-        </Reveal>
-
-        {/* Stats — M-08: was inline repeat(4,1fr), now grid-4 class (collapses to 2-col at 768px) */}
-        <Reveal>
-          <div className="grid-4" style={{
-            background: 'var(--surface)',
-            borderRadius: 4,
-            padding: '64px 72px',
-            gap: 0,
-            marginBottom: 80,
-          }}>
-            {stats.map((s, i) => (
-              <div key={i} style={{
-                textAlign: 'center',
-                borderLeft: i > 0 ? '1px solid var(--border)' : 'none',
-                padding: '0 32px',
-              }}>
-                <div style={{
-                  fontSize: 52,
-                  fontFamily: 'var(--serif)',
-                  fontWeight: 300,
-                  color: 'var(--accent)',
-                  lineHeight: 1,
-                  marginBottom: 12,
-                }}>
-                  {s.value}
-                </div>
-                <div className="mono" style={{ fontSize: 11, color: 'var(--fg-50)', letterSpacing: '0.1em' }}>
-                  {s.label.toUpperCase()}
-                </div>
-              </div>
-            ))}
           </div>
         </Reveal>
 
