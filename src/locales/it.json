@@ -7,7 +7,12 @@
     "about": "Chi siamo",
     "contact": "Contatti",
     "requestQuote": "Richiedi preventivo",
-    "chatWhatsapp": "Scrivici su WhatsApp"
+    "chatWhatsapp": "Scrivici su WhatsApp",
+    "ariaHome": "Yacht Concierge — Home",
+    "ariaLang": "Cambia lingua in {{lang}}",
+    "ariaTheme": "Cambia tema",
+    "ariaMenuOpen": "Apri il menu",
+    "ariaMenuClose": "Chiudi il menu"
   },
   "services": {
     "eyebrow": "01 / SERVIZI",

@@ -158,7 +158,7 @@ function WhatsAppFloat() {
         target="_blank"
         rel="noopener noreferrer"
         className="wa-float"
-        aria-label="Chat with us on WhatsApp — +382 67 144 555"
+        aria-label={`${t('nav.chatWhatsapp')} — +382 67 144 555`}
       >
         <span className="wa-tooltip">{t('nav.chatWhatsapp')}</span>
         <WhatsAppIcon size={29} fill="white"/>
@@ -169,8 +169,9 @@ function WhatsAppFloat() {
 
 // ---------- Logo: Wordmark + compass rose ----------
 function Logo({ onClick }) {
+  const { t } = useTranslation();
   return (
-    <a className="logo" href="/" onClick={(e) => { if(onClick){ e.preventDefault(); onClick(); } }} aria-label="Yacht Concierge — Home">
+    <a className="logo" href="/" onClick={(e) => { if(onClick){ e.preventDefault(); onClick(); } }} aria-label={t('nav.ariaHome')}>
       <svg className="logo-mark" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="16" cy="16" r="14" strokeWidth="0.8"/>
         <circle cx="16" cy="16" r="10" strokeWidth="0.5" opacity="0.5"/>
@@ -188,7 +189,7 @@ function Logo({ onClick }) {
 
 // ---------- Language Switcher ----------
 function LangSwitcher() {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const langs = [
     { code: 'en', label: 'EN' },
     { code: 'ru', label: 'RU' },
@@ -202,7 +203,7 @@ function LangSwitcher() {
             className="nav-link"
             onClick={() => setLanguage(l.code)}
             aria-pressed={i18n.language === l.code} /* Mi-4: screen readers announce selected language */
-            aria-label={`Switch language to ${l.label}`}
+            aria-label={t('nav.ariaLang', { lang: l.label })}
             style={{
               padding: '16px 12px', /* M-4: was 10px 12px (33px) → 16px gives 45px tap height */
               fontFamily: 'var(--mono)',
@@ -295,7 +296,7 @@ function Nav() {
             <button
               className="nav-link nav-icon-btn"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              aria-label="Toggle theme"
+              aria-label={t('nav.ariaTheme')}
             >
               {theme === 'dark' ? <Icons.Sun size={14} /> : <Icons.Moon size={14} />}
             </button>
@@ -312,7 +313,7 @@ function Nav() {
             <button
               className="nav-menu-btn"
               onClick={() => setMenuOpen(v => !v)}
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={menuOpen ? t('nav.ariaMenuClose') : t('nav.ariaMenuOpen')}
               aria-expanded={menuOpen}
             >
               {menuOpen ? <Icons.Close size={20} /> : <Icons.Menu size={20} />}
@@ -346,7 +347,7 @@ function Nav() {
             <button
               onClick={() => setMenuOpen(false)}
               style={{ color: 'var(--fg-70)', display: 'flex', alignItems: 'center', padding: 12 }} /* M-03: was 6 → 44px target */
-              aria-label="Close menu"
+              aria-label={t('nav.ariaMenuClose')}
             >
               <Icons.Close size={22} />
             </button>

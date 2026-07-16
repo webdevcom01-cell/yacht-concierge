@@ -7,7 +7,12 @@
     "about": "О нас",
     "contact": "Контакты",
     "requestQuote": "Запросить предложение",
-    "chatWhatsapp": "Написать в WhatsApp"
+    "chatWhatsapp": "Написать в WhatsApp",
+    "ariaHome": "Yacht Concierge — Главная",
+    "ariaLang": "Переключить язык на {{lang}}",
+    "ariaTheme": "Переключить тему",
+    "ariaMenuOpen": "Открыть меню",
+    "ariaMenuClose": "Закрыть меню"
   },
   "services": {
     "eyebrow": "01 / УСЛУГИ",

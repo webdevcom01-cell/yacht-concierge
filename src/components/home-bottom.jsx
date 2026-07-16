@@ -221,7 +221,16 @@ function CoastMap() {
                 {ports.map(p => {
                   const isSel = selected===p.id;
                   return (
-                    <g key={p.id} onClick={()=>setSelected(p.id)} style={{cursor:'pointer'}}>
+                    <g
+                      key={p.id}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={p.name}
+                      aria-pressed={isSel}
+                      onClick={()=>setSelected(p.id)}
+                      onKeyDown={(e)=>{ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(p.id); } }}
+                      style={{cursor:'pointer'}}
+                    >
                       {/* Pulse ring (selected only) */}
                       {isSel && <circle cx={p.x} cy={p.y} r="2.5" fill="none" stroke="rgba(212,183,143,0.22)" strokeWidth="0.25"/>}
                       {/* Outer ring */}
@@ -343,7 +352,11 @@ function ProcessStrip() {
         </div>
         <Reveal delay={400}>
           <div style={{ marginTop: 48 }}>
-            <a className="btn-link mono" onClick={() => setRoute({ page: 'process' })}>
+            <a
+              className="btn-link mono"
+              href="/process"
+              onClick={(e) => { e.preventDefault(); setRoute({ page: 'process' }); }}
+            >
               {t('process.fullProtocol')} <Icons.Arrow size={12}/>
             </a>
           </div>

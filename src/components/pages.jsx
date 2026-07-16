@@ -243,7 +243,12 @@ function ContactPage() {
                         const on = data.services.includes(s.id);
                         return (
                           <div key={s.id}
+                            role="checkbox"
+                            aria-checked={on}
+                            tabIndex={0}
+                            aria-label={t(`services.${s.id}_title`)}
                             onClick={() => toggleService(s.id)}
+                            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleService(s.id); } }}
                             style={{
                               padding: 24,
                               cursor: 'pointer',
@@ -341,7 +346,7 @@ function ContactPage() {
                   {submitting ? t('contactPage.sending') : step === 4 ? t('contactPage.submit') : t('contactPage.continue')} <Icons.Arrow size={14}/>
                 </button>
                 {submitError && (
-                  <div className="mono" style={{ color: '#c0392b', marginTop: 12, fontSize: 10.5, letterSpacing: '0.12em' }}>
+                  <div role="alert" aria-live="assertive" className="mono" style={{ color: '#c0392b', marginTop: 12, fontSize: 10.5, letterSpacing: '0.12em' }}>
                     ↳ {submitError}
                   </div>
                 )}

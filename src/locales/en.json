@@ -7,7 +7,12 @@
     "about": "About",
     "contact": "Contact",
     "requestQuote": "Request Quote",
-    "chatWhatsapp": "Chat on WhatsApp"
+    "chatWhatsapp": "Chat on WhatsApp",
+    "ariaHome": "Yacht Concierge — Home",
+    "ariaLang": "Switch language to {{lang}}",
+    "ariaTheme": "Toggle dark/light theme",
+    "ariaMenuOpen": "Open menu",
+    "ariaMenuClose": "Close menu"
   },
   "services": {
     "eyebrow": "01 / SERVICES",

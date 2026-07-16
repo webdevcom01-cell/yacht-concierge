@@ -42,6 +42,10 @@ function ServicesPreview() {
               <Reveal key={s.id} delay={i * 60}>
                 <div
                   className="service-card"
+                  role="link"
+                  tabIndex={0}
+                  aria-label={t(`services.${s.id}_title`)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setRoute({ page: 'service', id: s.id }); } }}
                   style={{
                     border: 'none',
                     borderRight: isRight ? 'none' : '1px solid var(--border, var(--fg-08))',

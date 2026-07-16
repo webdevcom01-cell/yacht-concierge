@@ -34,7 +34,11 @@ function ServicesPage() {
             return (
               <Reveal key={s.id} delay={i * 60}>
                 <div
+                  role="link"
+                  tabIndex={0}
+                  aria-label={t(`services.${s.id}_title`)}
                   onClick={() => setRoute({ page: 'service', id: s.id })}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setRoute({ page: 'service', id: s.id }); } }}
                   className="service-row"
                   style={{
                     gap: 48,
@@ -188,7 +192,12 @@ function ServiceDetailPage({ id }) {
     <main className="page-top">
       <div className="container">
         <Reveal>
-          <a className="mono" onClick={() => setRoute({ page: 'services' })} style={{ display: 'inline-flex', gap: 10, color: 'var(--fg-70)', cursor: 'pointer', marginBottom: 64 }}>
+          <a
+            className="mono"
+            href="/services"
+            onClick={(e) => { e.preventDefault(); setRoute({ page: 'services' }); }}
+            style={{ display: 'inline-flex', gap: 10, color: 'var(--fg-70)', cursor: 'pointer', marginBottom: 64 }}
+          >
             {t('servicesPage.allServices')}
           </a>
         </Reveal>
@@ -294,7 +303,12 @@ function ServiceDetailPage({ id }) {
             {otherServices.map((o, i) => {
               const OIcon = Icons[o.icon];
               return (
-                <div key={o.id} onClick={() => setRoute({ page: 'service', id: o.id })}
+                <div key={o.id}
+                  role="link"
+                  tabIndex={0}
+                  aria-label={t(`services.${o.id}_title`)}
+                  onClick={() => setRoute({ page: 'service', id: o.id })}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setRoute({ page: 'service', id: o.id }); } }}
                   style={{ padding: 28, cursor: 'pointer', borderRight: i < otherServices.length - 1 ? '1px solid var(--fg-08)' : 'none', display: 'flex', flexDirection: 'column', gap: 16, transition: 'background 0.3s var(--ease)' }}
                   onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-warm)'}
                   onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
