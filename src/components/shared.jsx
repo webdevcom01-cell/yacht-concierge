@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, createContext, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SERVICES } from '../data/services';
+import { setLanguage } from '../i18n';
 
 // Shared primitives: Logo, Nav, Footer, icons, reveal hook
 
@@ -199,7 +200,7 @@ function LangSwitcher() {
         <React.Fragment key={l.code}>
           <button
             className="nav-link"
-            onClick={() => i18n.changeLanguage(l.code)}
+            onClick={() => setLanguage(l.code)}
             aria-pressed={i18n.language === l.code} /* Mi-4: screen readers announce selected language */
             aria-label={`Switch language to ${l.label}`}
             style={{

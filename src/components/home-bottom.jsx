@@ -147,7 +147,10 @@ function CoastMap() {
   return (
     <section style={{ background: DARK.bg, padding: '100px 0', position: 'relative', overflow: 'hidden' }}>
       {/* Subtle water texture overlay */}
-      <img src="/fleet-bg.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55, pointerEvents: 'none' }}/>
+      <picture>
+        <source srcSet="/fleet-bg.webp" type="image/webp"/>
+        <img src="/fleet-bg.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55, pointerEvents: 'none' }}/>
+      </picture>
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         {/* Header */}
         <div className="grid-2 services-preview-header" style={{ alignItems: 'end', marginBottom: 64 }}>
@@ -174,7 +177,10 @@ function CoastMap() {
           <Reveal>
             <div style={{ position: 'relative', aspectRatio: '4/3', background: DARK.card, border: `1px solid ${DARK.border}`, overflow: 'hidden' }}>
               {/* Hero photo background */}
-              <img src="/map-yacht.jpg" alt="Bay of Kotor" loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%', display: 'block' }}/>
+              <picture>
+                <source srcSet="/map-yacht.webp" type="image/webp"/>
+                <img src="/map-yacht.jpg" alt="Bay of Kotor" loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%', display: 'block' }}/>
+              </picture>
               {/* Subtle dark vignette */}
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(2,10,22,0.25) 0%, rgba(2,10,22,0.05) 45%, rgba(2,10,22,0.5) 100%)', pointerEvents: 'none' }}/>
               {/* SVG overlay — arcs + pins + labels */}
