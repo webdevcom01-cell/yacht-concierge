@@ -59,10 +59,10 @@ function LegalShell({ eyebrow, title, updated, children }) {
 // ─── Legal Notice ─────────────────────────────────────────────────────────────
 function LegalNoticePage() {
   return (
-    <LegalShell eyebrow="LEGAL NOTICE" title="Legal Notice." updated="April 2026">
+    <LegalShell eyebrow="LEGAL NOTICE" title="Legal Notice." updated="July 2026">
       <h2>Company Details</h2>
       <p>
-        <strong>YACHT CONCIERGE D.O.O.</strong><br />
+        <strong>Yacht Concierge Montenegro</strong><br />
         Pomorska ulica, Zgrada Baia<br />
         Porto Montenegro<br />
         Tivat 85320, Montenegro
@@ -72,10 +72,16 @@ function LegalNoticePage() {
         <a href="mailto:info@yacht-concierge.me">info@yacht-concierge.me</a><br />
         <strong>Phone:</strong> +382 67 144 555
       </p>
+      <p>
+        Registration of the operating company (d.o.o.) with the Central Register of
+        Business Entities (CRPS) of Montenegro is currently in progress. The company
+        registration number and tax identification number (PIB) will be published on
+        this page once registration is complete.
+      </p>
 
       <h2>Business Activity</h2>
       <p>
-        Yacht Concierge D.O.O. provides maritime concierge and logistics coordination
+        Yacht Concierge Montenegro provides maritime concierge and logistics coordination
         services for superyachts transiting Montenegrin waters. We act as a logistics
         coordinator and agent — not as a carrier, shipping agent, or maritime operator
         within the meaning of the Law on Maritime Navigation of Montenegro.
@@ -120,7 +126,7 @@ function LegalNoticePage() {
       <h2>Intellectual Property</h2>
       <p>
         All content on this website — including text, graphics, logos, and design — is the
-        property of Yacht Concierge D.O.O. and is protected under applicable copyright law.
+        property of Yacht Concierge Montenegro and is protected under applicable copyright law.
         Reproduction or distribution without prior written consent is prohibited.
       </p>
     </LegalShell>
@@ -130,10 +136,10 @@ function LegalNoticePage() {
 // ─── Privacy Policy ───────────────────────────────────────────────────────────
 function PrivacyPage() {
   return (
-    <LegalShell eyebrow="PRIVACY POLICY" title="Privacy Policy." updated="April 2026">
+    <LegalShell eyebrow="PRIVACY POLICY" title="Privacy Policy." updated="July 2026">
       <h2>1. Data Controller</h2>
       <p>
-        <strong>YACHT CONCIERGE D.O.O.</strong><br />
+        <strong>Yacht Concierge Montenegro</strong><br />
         Pomorska ulica, Zgrada Baia, Porto Montenegro, Tivat 85320, Montenegro<br />
         Email: <a href="mailto:info@yacht-concierge.me">info@yacht-concierge.me</a>
       </p>
@@ -259,10 +265,10 @@ function PrivacyPage() {
 // ─── Terms of Service ─────────────────────────────────────────────────────────
 function TermsPage() {
   return (
-    <LegalShell eyebrow="TERMS OF SERVICE" title="Terms of Service." updated="April 2026">
+    <LegalShell eyebrow="TERMS OF SERVICE" title="Terms of Service." updated="July 2026">
       <h2>1. Scope of Services</h2>
       <p>
-        Yacht Concierge D.O.O. ("we", "us", "the Company") provides maritime logistics
+        Yacht Concierge Montenegro ("we", "us", "the Company") provides maritime logistics
         coordination and concierge services for superyachts in Montenegrin waters. We act
         exclusively as a coordinator and agent. We are not a carrier, customs agent, ship
         chandler, or maritime operator within the meaning of Montenegrin maritime law.
