@@ -130,7 +130,7 @@
         "title": "Brief.",
         "lede": "Un brief di servizio scritto, calibrato sulla vostra sosta. Dettagliato per voce, ancorato agli SLA, senza costi nascosti.",
         "meta": [
-          "Consegnato entro 72 ore",
+          "Consegnato tempestivamente dopo il colloquio",
           "Dettagliato per disciplina",
           "Trasparenza tariffaria"
         ],
@@ -143,8 +143,8 @@
         "lede": "Il vostro coordinatore diventa il vostro desk. Un numero, un'email, una persona responsabile di ogni risultato.",
         "meta": [
           "Coordinatore dedicato",
-          "06:00 – 22:00 standard",
-          "24h per il Livello III"
+          "Reperibile per tutta la sosta",
+          "24/7 su richiesta"
         ],
         "detail": "Dal momento in cui lo yacht entra nelle acque territoriali, il file è attivo. Il coordinatore è fisicamente a Tivat, si sposta tra le marine secondo necessità ed è reperibile per tutta la durata. I percorsi di escalation sono definiti; nessuna richiesta resta senza risposta."
       },
@@ -154,7 +154,7 @@
         "title": "Report.",
         "lede": "Un report operativo post-sosta consegnato all'armatore o al gestore. Le lezioni apprese archiviate per la stagione successiva.",
         "meta": [
-          "Consegnato 14 giorni dopo la partenza",
+          "Consegnato dopo la partenza",
           "Riservato all'armatore",
           "Archiviato nel file dell'imbarcazione"
         ],
@@ -246,7 +246,7 @@
     "sending": "Invio in corso...",
     "successTitle": "Brief ricevuto.",
     "successLede": "Riferimento №{{ref}}. Un coordinatore restituirà un brief di servizio tempestivamente.",
-    "successMono": "↳ RISPOSTA ENTRO 4 ORE OPERATIVE · 06:00 – 22:00 CET",
+    "successMono": "↳ IL DESK OPERATIVO VI CONTATTERÀ A BREVE",
     "errorMsg": "Invio fallito — scrivete a info@yacht-concierge.me"
   },
   "fleetPage": {

@@ -130,7 +130,7 @@
         "title": "Brief.",
         "lede": "A written service brief, scoped to your stay. Itemised, SLA-anchored, no retainer padding.",
         "meta": [
-          "Delivered within 72h",
+          "Delivered promptly after intake",
           "Itemised by discipline",
           "Rate-card transparency"
         ],
@@ -143,8 +143,8 @@
         "lede": "Your coordinator becomes your desk. One number, one email, one person who owns every outcome.",
         "meta": [
           "Dedicated coordinator",
-          "06:00 – 22:00 standard",
-          "24h under Tier III"
+          "On-call throughout the stay",
+          "24/7 available on request"
         ],
         "detail": "From the moment the yacht enters territorial waters, the file is active. Your coordinator is physically in Tivat, moves between marinas as needed, and is on-call for the duration. Escalation ladders are defined; no request sits in an inbox."
       },
@@ -154,7 +154,7 @@
         "title": "Report.",
         "lede": "A post-call operational report, returned to the owner or manager. Lessons captured for next season.",
         "meta": [
-          "Delivered 14 days after departure",
+          "Delivered after departure",
           "Owner-confidential",
           "Archived to your vessel file"
         ],
@@ -246,7 +246,7 @@
     "sending": "Sending...",
     "successTitle": "Brief received.",
     "successLede": "Reference №{{ref}}. A coordinator will return a scoped service brief promptly.",
-    "successMono": "↳ RESPONSE WITHIN 4 OPERATIONAL HOURS · 06:00 – 22:00 CET",
+    "successMono": "↳ THE OPERATIONS DESK WILL BE IN TOUCH SHORTLY",
     "errorMsg": "Submission failed — please email info@yacht-concierge.me"
   },
   "fleetPage": {
