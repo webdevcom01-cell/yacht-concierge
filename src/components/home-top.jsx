@@ -58,8 +58,8 @@ function ServicesPreview() {
                     <span className="service-card-num" style={{ color: 'rgba(212,183,143,0.75)' }}>{s.num}</span>
                     <IconC size={28} stroke={1} color="var(--accent)" />
                   </div>
-                  <h3 className="service-card-title" style={{ color: 'var(--fg)' }}>{s.title}</h3>
-                  <p className="service-card-body" style={{ color: 'var(--fg-50)' }}>{s.desc}</p>
+                  <h3 className="service-card-title" style={{ color: 'var(--fg)' }}>{t(`services.${s.id}_title`)}</h3>
+                  <p className="service-card-body" style={{ color: 'var(--fg-50)' }}>{t(`services.${s.id}_desc`)}</p>
                   <div className="service-card-arrow" style={{ color: 'var(--accent)' }}>
                     {t('services.viewProtocol')} <Icons.Arrow size={12}/>
                   </div>

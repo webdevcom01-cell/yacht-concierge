@@ -17,13 +17,13 @@
     "lede": "Every request, from a late-arriving provisioning pallet to a hull wash before charter, routes through a single captain-facing coordinator.",
     "viewProtocol": "View protocol",
     "berth_title": "Berth Reservations",
-    "berth_desc": "Priority berth allocation across Porto Montenegro, Herceg Novi, and Bar. Negotiated seasonal rates and dedicated slip-holding.",
+    "berth_desc": "Priority berth allocation across Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar. Negotiated seasonal rates and dedicated slip-holding.",
     "customs_title": "Customs & Immigration",
     "customs_desc": "End-to-end clearance for crew and guests. TIP processing, Schengen coordination, and flag-state documentation.",
     "provisioning_title": "Provisioning",
     "provisioning_desc": "Galley-standard sourcing. Daily market runs, dry stores, wine cellar curation, and specialty imports.",
     "laundry_title": "Laundry & Linen",
-    "laundry_desc": "Certified marine laundry. Guest linen, crew uniforms, deck towels — tracked, returned within 24 hours.",
+    "laundry_desc": "Professional marine laundry. Guest linen, crew uniforms, deck towels — tracked, next-day return on standard items.",
     "floristry_title": "Floristry",
     "floristry_desc": "Arrangements from Tivat growers. Charter-day installations, refreshes, and seasonal standing orders.",
     "maintenance_title": "Maintenance Coordination",
@@ -89,7 +89,7 @@
     "btnServices": "View All Services"
   },
   "footer": {
-    "tagline": "Operational logistics for superyachts transiting the Adriatic. Porto Montenegro · Herceg Novi · Bar.",
+    "tagline": "Operational logistics for superyachts transiting the Adriatic. Porto Montenegro · Herceg Novi · Kotor · Budva · Bar.",
     "services": "Services",
     "operations": "Operations",
     "office": "Office",
@@ -109,7 +109,6 @@
       "About us"
     ],
     "copyright": "© MMXXVI YACHT CONCIERGE D.O.O.",
-    "certifications": "ISO 9001 · MYBA · MLC 2017",
     "legal": "Legal",
     "privacy": "Privacy",
     "terms": "Terms"
@@ -446,7 +445,7 @@
   },
   "serviceDetail": {
     "berth": {
-      "coverage": "Porto Montenegro · Herceg Novi · Bar",
+      "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
       "sla": "Priority confirmation, typically same day",
       "rateNote": "Berth costs billed at marina list rate, no mark-up. Service fee per night, LOA-dependent.",
       "deliverables": [
@@ -545,7 +544,7 @@
       ]
     },
     "laundry": {
-      "coverage": "On-site laundry partners in Tivat and Budva · MLC 2006 compliant",
+      "coverage": "On-site laundry partners in Tivat and Budva",
       "sla": "Next-day return on standard items",
       "rateNote": "Billed per kg for linen, per item for uniforms and pressing. Volume tiers for stays over seven nights.",
       "deliverables": [

@@ -457,7 +457,6 @@ function Footer() {
         <div className="rule" />
         <div className="footer-bar" style={{ marginTop: 28 }}>
           <span>{t('footer.copyright')}</span>
-          <span>{t('footer.certifications')}</span>
           <span style={{ display: 'flex', gap: 20 }}>
             <a href="/legal" onClick={(e) => { e.preventDefault(); setRoute({ page: 'legal' }); }}
               style={{ padding: '16px 4px', color: 'inherit', textDecoration: 'none', font: 'inherit', fontSize: 'inherit' }}

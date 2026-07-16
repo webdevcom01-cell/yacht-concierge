@@ -137,8 +137,8 @@ function CoastMap() {
     { id: 'herceg-novi', name: 'Herceg Novi', x: 16, y: 46, coords: '42.45°N 18.54°E' },
     { id: 'porto-montenegro', name: 'Porto Montenegro', x: 50, y: 72, coords: '42.43°N 18.69°E' },
     { id: 'kotor', name: 'Kotor', x: 56, y: 34, coords: '42.42°N 18.77°E' },
-    { id: 'budva', name: 'Budva', x: 78, y: 83, coords: '42.28°N 18.84°E' },
-    { id: 'bar', name: 'Bar', x: 92, y: 95, coords: '42.10°N 19.09°E' },
+    { id: 'budva', name: 'Budva', x: 74, y: 63, coords: '42.28°N 18.84°E' },
+    { id: 'bar', name: 'Bar', x: 88, y: 69, coords: '42.10°N 19.09°E' },
   ];
   const cur = ports.find(p => p.id === selected);
 
@@ -187,7 +187,7 @@ function CoastMap() {
                   </filter>
                 </defs>
                 {/* Coastline curves — subtle gold */}
-                <path d="M 0 38 Q 10 35 16 46 Q 26 58 42 65 Q 50 70 50 72 Q 62 76 78 83"
+                <path d="M 0 38 Q 10 35 16 46 Q 26 58 42 65 Q 50 70 50 72 Q 63 72 74 63 Q 82 64 88 69"
                   fill="none" stroke="rgba(212,183,143,0.18)" strokeWidth="0.35"/>
 
                 {/* Arc connecting lines — matching reference design */}
@@ -195,7 +195,8 @@ function CoastMap() {
                   { a:'herceg-novi', b:'kotor',            cx:36, cy:8  },
                   { a:'herceg-novi', b:'porto-montenegro',  cx:30, cy:45 },
                   { a:'kotor',       b:'porto-montenegro',  cx:53, cy:56 },
-                  { a:'porto-montenegro', b:'budva',        cx:64, cy:82 },
+                  { a:'porto-montenegro', b:'budva',        cx:63, cy:73 },
+                  { a:'budva',       b:'bar',               cx:81, cy:61 },
                 ].map(({ a, b, cx, cy }) => {
                   const pa = ports.find(p=>p.id===a), pb = ports.find(p=>p.id===b);
                   if (!pa||!pb) return null;
@@ -211,7 +212,7 @@ function CoastMap() {
                 })}
 
                 {/* Pins */}
-                {ports.filter(p=>p.id!=='bar').map(p => {
+                {ports.map(p => {
                   const isSel = selected===p.id;
                   return (
                     <g key={p.id} onClick={()=>setSelected(p.id)} style={{cursor:'pointer'}}>

@@ -9,3 +9,4 @@ dist
 .venv/
 scripts/test-voli.py
 scripts/voli-test-response.html
+chats/

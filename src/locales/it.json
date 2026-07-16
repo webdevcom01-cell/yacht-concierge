@@ -17,13 +17,13 @@
     "lede": "Ogni richiesta — da un pallet di approvvigionamento in ritardo al lavaggio dello scafo prima del charter — passa attraverso un unico coordinatore dedicato al comandante.",
     "viewProtocol": "Scopri il protocollo",
     "berth_title": "Prenotazione ormeggi",
-    "berth_desc": "Assegnazione prioritaria degli ormeggi a Porto Montenegro, Herceg Novi e Bar. Tariffe stagionali negoziate e riserva esclusiva del posto.",
+    "berth_desc": "Assegnazione prioritaria degli ormeggi a Porto Montenegro, Herceg Novi, Kotor, Budva e Bar. Tariffe stagionali negoziate e riserva esclusiva del posto.",
     "customs_title": "Dogana e immigrazione",
     "customs_desc": "Disbrigo completo per equipaggio e ospiti. Elaborazione TIP, coordinamento Schengen e documentazione per la bandiera.",
     "provisioning_title": "Approvvigionamento",
     "provisioning_desc": "Acquisti agli standard di cambusa. Forniture giornaliere dal mercato, dispensa a secco, selezione cantina e importazioni specializzate.",
     "laundry_title": "Lavanderia e biancheria",
-    "laundry_desc": "Lavanderia marina certificata. Biancheria degli ospiti, divise dell'equipaggio, asciugamani da coperta — tracciati e restituiti entro 24 ore.",
+    "laundry_desc": "Lavanderia marina professionale. Biancheria degli ospiti, divise dell'equipaggio, asciugamani da coperta — tracciati, riconsegna il giorno successivo per articoli standard.",
     "floristry_title": "Floristica",
     "floristry_desc": "Composizioni dai coltivatori di Tivat. Allestimenti per il giorno del charter, sostituzioni e ordini stagionali fissi.",
     "maintenance_title": "Coordinamento manutenzione",
@@ -89,7 +89,7 @@
     "btnServices": "Tutti i servizi"
   },
   "footer": {
-    "tagline": "Logistica operativa per superyacht in transito nell'Adriatico. Porto Montenegro · Herceg Novi · Bar.",
+    "tagline": "Logistica operativa per superyacht in transito nell'Adriatico. Porto Montenegro · Herceg Novi · Kotor · Budva · Bar.",
     "services": "Servizi",
     "operations": "Operazioni",
     "office": "Ufficio",
@@ -109,7 +109,6 @@
       "Chi siamo"
     ],
     "copyright": "© MMXXVI YACHT CONCIERGE D.O.O.",
-    "certifications": "ISO 9001 · MYBA · MLC 2017",
     "legal": "Note legali",
     "privacy": "Privacy",
     "terms": "Termini"
@@ -446,7 +445,7 @@
   },
   "serviceDetail": {
     "berth": {
-      "coverage": "Porto Montenegro · Herceg Novi · Bar",
+      "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
       "sla": "Conferma prioritaria, di norma in giornata",
       "rateNote": "Costi di ormeggio fatturati alle tariffe di listino della marina, senza maggiorazione. Tariffa del servizio per notte, in base alla LOA.",
       "deliverables": [
@@ -545,7 +544,7 @@
       ]
     },
     "laundry": {
-      "coverage": "Partner di lavanderia a Tivat e Budva · Conformi MLC 2006",
+      "coverage": "Partner di lavanderia a Tivat e Budva",
       "sla": "Riconsegna il giorno successivo per articoli standard",
       "rateNote": "Fatturato a kg per la biancheria, a pezzo per divise e stiratura. Tariffe a volume per soste superiori a sette notti.",
       "deliverables": [

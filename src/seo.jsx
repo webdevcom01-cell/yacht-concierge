@@ -5,13 +5,13 @@ import { useEffect } from 'react';
 const SEO_DATA = {
   home: {
     title: 'Yacht Concierge Montenegro — Superyacht Logistics, Adriatic',
-    description: 'Full-service concierge for superyachts in Montenegro. Berth reservations, customs, provisioning, and crew logistics at Porto Montenegro, Herceg Novi, and Bar.',
+    description: 'Full-service concierge for superyachts in Montenegro. Berth reservations, customs, provisioning, and crew logistics at Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar.',
     url: 'https://yacht-concierge.me/',
     breadcrumb: null,
   },
   services: {
     title: 'Services — Yacht Concierge Montenegro',
-    description: 'Comprehensive superyacht services: berth reservations, immigration clearance, provisioning, laundry, floristry, and maintenance in the Bay of Kotor.',
+    description: 'Comprehensive superyacht services: berth reservations, immigration clearance, provisioning, laundry, floristry, and maintenance along the Montenegrin coast.',
     url: 'https://yacht-concierge.me/services',
     breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }],
   },
@@ -23,19 +23,19 @@ const SEO_DATA = {
   },
   process: {
     title: 'How It Works — Yacht Concierge Montenegro',
-    description: 'A 4-phase operational protocol for seamless superyacht arrivals. From first contact to departure briefing — 24-hour response SLA guaranteed.',
+    description: 'A 4-phase operational protocol for seamless superyacht arrivals. From first contact to departure briefing — one named coordinator per vessel.',
     url: 'https://yacht-concierge.me/process',
     breadcrumb: [{ name: 'How It Works', url: 'https://yacht-concierge.me/process' }],
   },
   fleet: {
     title: 'Berths & Fleet Tiers — Yacht Concierge Montenegro',
-    description: 'Service tiers for superyachts from 30m to 120m+ in Montenegrin marinas. Berth availability and tailored packages at Porto Montenegro, Herceg Novi, and Bar.',
+    description: 'Service tiers for superyachts from 24m to 120m+ in Montenegrin marinas. Berth availability and tailored packages at Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar.',
     url: 'https://yacht-concierge.me/fleet',
     breadcrumb: [{ name: 'Berths', url: 'https://yacht-concierge.me/fleet' }],
   },
   contact: {
     title: 'Request a Quote — Yacht Concierge Montenegro',
-    description: 'Submit your vessel details and arrival date. Our operations team responds within 24 hours with a full service proposal.',
+    description: 'Submit your vessel details and arrival date. Our operations team responds promptly with a full service proposal.',
     url: 'https://yacht-concierge.me/contact',
     breadcrumb: [{ name: 'Contact', url: 'https://yacht-concierge.me/contact' }],
   },
@@ -65,7 +65,7 @@ const SEO_DATA = {
   },
   'service-berth': {
     title: 'Berth Reservations — Yacht Concierge Montenegro',
-    description: 'Priority berth reservations at Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar. 24-hour confirmation with customs coordination included.',
+    description: 'Priority berth reservations at Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar. Confirmation typically same day, with customs coordination included.',
     url: 'https://yacht-concierge.me/services/berth',
     breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Berth Reservations', url: 'https://yacht-concierge.me/services/berth' }],
   },
@@ -77,13 +77,13 @@ const SEO_DATA = {
   },
   'service-provisioning': {
     title: 'Provisioning — Yacht Concierge Montenegro',
-    description: 'Galley-standard provisioning for superyachts in Montenegro. Fresh produce, premium beverages, and duty-free procurement with same-day berth delivery.',
+    description: 'Galley-standard provisioning for superyachts in Montenegro. Fresh produce, premium beverages, and duty-free procurement — same-day berth delivery for locally sourced items.',
     url: 'https://yacht-concierge.me/services/provisioning',
     breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Provisioning', url: 'https://yacht-concierge.me/services/provisioning' }],
   },
   'service-laundry': {
     title: 'Laundry & Valeting — Yacht Concierge Montenegro',
-    description: 'Professional laundry, dry cleaning, and uniform care for superyacht crews. Berth collection and same-day return at Porto Montenegro and partner marinas.',
+    description: 'Professional laundry, dry cleaning, and uniform care for superyacht crews. Berth collection and next-day return at Porto Montenegro and partner marinas.',
     url: 'https://yacht-concierge.me/services/laundry',
     breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Laundry & Valeting', url: 'https://yacht-concierge.me/services/laundry' }],
   },
@@ -130,15 +130,15 @@ const LOCAL_BUSINESS_SCHEMA = {
   openingHoursSpecification: [{
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
-    opens: '06:00', closes: '22:00',
+    opens: '00:00', closes: '23:59',
   }],
   priceRange: '€€€€',
   currenciesAccepted: 'EUR',
   areaServed: [
     { '@type': 'City', name: 'Tivat' },
-    { '@type': 'City', name: 'Porto Montenegro' },
     { '@type': 'City', name: 'Herceg Novi' },
     { '@type': 'City', name: 'Kotor' },
+    { '@type': 'City', name: 'Budva' },
     { '@type': 'City', name: 'Bar' },
     { '@type': 'Country', name: 'Montenegro' },
   ],
