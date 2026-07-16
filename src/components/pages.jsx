@@ -405,11 +405,11 @@ function AboutPage() {
 
   const team = [
     {
-      name:  'Sanja Božović',
+      name:  'Zoran Nikolić',
       title: 'Founder & CEO',
-      bio:   t('aboutPage.teamBio_sanja'),
-      phone: '38267201655',
-      wa:    'Hello Sanja, I would like to enquire about your yacht concierge services in Montenegro.',
+      bio:   t('aboutPage.teamBio_zoran'),
+      phone: '38267088028',
+      wa:    'Hello Zoran, I would like to enquire about your yacht concierge services in Montenegro.',
     },
     {
       name:  'Iva Erceg',

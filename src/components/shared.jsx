@@ -181,7 +181,7 @@ function Logo({ onClick }) {
       </svg>
       <div className="logo-text">
         <div className="logo-text-main">YACHT CONCIERGE</div>
-        <div className="logo-text-sub">MONTENEGRO · EST. MMXVII</div>
+        <div className="logo-text-sub">MONTENEGRO · EST. MMXXV</div>
       </div>
     </a>
   );
