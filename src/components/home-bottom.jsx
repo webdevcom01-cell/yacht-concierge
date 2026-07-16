@@ -260,7 +260,6 @@ function CoastMap() {
 
                 {/* Corner labels */}
                 <text x="2" y="4.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em">{t('map.mapLabel')}</text>
-                <text x="98" y="4.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em" textAnchor="end">{t('map.mapLabel2')}</text>
                 <text x="2" y="72" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em">— ADRIATIC</text>
                 <text x="2" y="75.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em">{t('map.selectMarina')}</text>
                 <text x="98" y="75.5" fontFamily="var(--mono)" fontSize="2.4" fill="rgba(239,234,226,0.55)" letterSpacing="0.15em" textAnchor="end">ALBANIA →</text>
