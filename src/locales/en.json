@@ -69,9 +69,9 @@
   },
   "map": {
     "eyebrow": "BERTH AVAILABILITY",
-    "title1": "Five marinas.",
-    "title2": "One coast.",
-    "lede": "Our operational footprint spans five marinas along the Montenegrin coast. Contact us directly for current berth availability and seasonal rates.",
+    "title1": "The Montenegrin coast.",
+    "title2": "One desk.",
+    "lede": "We coordinate berths and moorings along the Montenegrin coast. Contact us directly for current availability and seasonal rates.",
     "mapLabel": "ADRIATIC COAST · MONTENEGRO",
     "mapLabel2": "MONTENEGRIN COAST",
     "selectMarina": "SELECT A MARINA",
@@ -245,7 +245,7 @@
     "title1": "Berths",
     "title2": "&",
     "titleAccent": "conditions",
-    "lede": "Our operational footprint spans five marinas along the Montenegrin coast. Contact us directly for current berth availability and seasonal rates."
+    "lede": "We coordinate berths and moorings along the Montenegrin coast. Contact us directly for current availability and seasonal rates."
   },
   "aboutPage": {
     "eyebrow": "↳ ABOUT",

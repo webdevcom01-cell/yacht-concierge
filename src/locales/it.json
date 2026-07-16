@@ -69,9 +69,9 @@
   },
   "map": {
     "eyebrow": "DISPONIBILITÀ ORMEGGI",
-    "title1": "Cinque marine.",
-    "title2": "Una costa.",
-    "lede": "La nostra rete operativa copre cinque marine lungo la costa montenegrina. Contattateci direttamente per la disponibilità attuale degli ormeggi e le tariffe stagionali.",
+    "title1": "La costa montenegrina.",
+    "title2": "Un solo desk.",
+    "lede": "Coordiniamo ormeggi e posti barca lungo la costa montenegrina. Contattateci direttamente per la disponibilità attuale e le tariffe stagionali.",
     "mapLabel": "COSTA ADRIATICA · MONTENEGRO",
     "mapLabel2": "COSTA MONTENEGRINA",
     "selectMarina": "SELEZIONA UNA MARINA",
@@ -245,7 +245,7 @@
     "title1": "Ormeggi",
     "title2": "e",
     "titleAccent": "condizioni",
-    "lede": "La nostra rete operativa copre cinque marine lungo la costa montenegrina. Contattateci direttamente per la disponibilità attuale degli ormeggi e le tariffe stagionali."
+    "lede": "Coordiniamo ormeggi e posti barca lungo la costa montenegrina. Contattateci direttamente per la disponibilità attuale e le tariffe stagionali."
   },
   "aboutPage": {
     "eyebrow": "↳ CHI SIAMO",
