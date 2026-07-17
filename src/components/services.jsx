@@ -223,8 +223,7 @@ function ServiceDetailPage({ id }) {
           </div>
         </Reveal>
 
-        {/* Contextual CTA — provisioning detail links to the catalogue request
-            page, berth detail links to the berths map & tier page */}
+        {/* Contextual CTA — provisioning detail links to the catalogue request page */}
         {s.id === 'provisioning' && (
           <DetailCTA
             label={t('servicesPage.provCatLabel')}
@@ -232,15 +231,6 @@ function ServiceDetailPage({ id }) {
             body={t('servicesPage.provCatBody')}
             btn={t('servicesPage.provCatBtn')}
             onClick={() => setRoute({ page: 'provisioning' })}
-          />
-        )}
-        {s.id === 'berth' && (
-          <DetailCTA
-            label={t('servicesPage.berthMapLabel')}
-            title={t('servicesPage.berthMapTitle')}
-            body={t('servicesPage.berthMapBody')}
-            btn={t('servicesPage.berthMapBtn')}
-            onClick={() => setRoute({ page: 'fleet' })}
           />
         )}
 

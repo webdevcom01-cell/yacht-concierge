@@ -292,11 +292,7 @@
     "provCatLabel": "CATALOGHI PREZZI",
     "provCatTitle": "Richiedete i cataloghi prezzi aggiornati.",
     "provCatBody": "Carne, pesce, latticini, panetteria, dispensa, specialità e surgelati da Tivat, Kotor e dalla flotta adriatica. Diteci cosa vi serve — inviamo i listini e consegniamo all'ormeggio.",
-    "provCatBtn": "RICHIEDI CATALOGO",
-    "berthMapLabel": "ORMEGGI E COPERTURA",
-    "berthMapTitle": "Esplora marine e livelli di servizio.",
-    "berthMapBody": "Mappa interattiva delle cinque marine che copriamo — Porto Montenegro, Herceg Novi, Kotor, Budva e Bar — con i livelli di servizio in base alla lunghezza dell'imbarcazione.",
-    "berthMapBtn": "MAPPA DEGLI ORMEGGI"
+    "provCatBtn": "RICHIEDI CATALOGO"
   },
   "provisioningPage": {
     "eyebrow": "↳ APPROVVIGIONAMENTO",

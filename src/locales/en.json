@@ -292,11 +292,7 @@
     "provCatLabel": "PRICE CATALOGUES",
     "provCatTitle": "Request the current price catalogues.",
     "provCatBody": "Meat, seafood, dairy, bakery, pantry, specialty and frozen lines sourced from Tivat, Kotor, and the Adriatic fleet. Tell us what you need — we send the price lists and deliver to your berth.",
-    "provCatBtn": "REQUEST A CATALOGUE",
-    "berthMapLabel": "BERTHS & COVERAGE",
-    "berthMapTitle": "Explore marinas & service tiers.",
-    "berthMapBody": "Interactive map of the five marinas we cover — Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar — with service tiers by vessel length.",
-    "berthMapBtn": "VIEW BERTHS MAP"
+    "provCatBtn": "REQUEST A CATALOGUE"
   },
   "provisioningPage": {
     "eyebrow": "↳ PROVISIONING",
