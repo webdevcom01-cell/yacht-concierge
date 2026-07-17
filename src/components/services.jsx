@@ -6,6 +6,18 @@ import { ServiceArt } from './service-art';
 
 // Services index page & Service detail page
 
+// Per-service hero photography — real photos for all six service detail pages
+// (Unsplash, free license). ServiceArt (service-art.jsx) remains as a
+// defensive SVG fallback for any service id not listed here.
+const SERVICE_PHOTOS = {
+  berth:        { src: '/service-berth.jpg',       position: 'center 22%' },
+  customs:      { src: '/service-customs.jpg',      position: 'center 45%' },
+  provisioning: { src: '/service-provisioning.jpg', position: 'center 65%' },
+  laundry:      { src: '/service-laundry.jpg',      position: 'center 42%' },
+  floristry:    { src: '/service-floristry.jpg',    position: 'center 45%' },
+  maintenance:  { src: '/service-maintenance.jpg',  position: 'center 40%' },
+};
+
 function ServicesPage() {
   const { setRoute } = useApp();
   const { t } = useTranslation();
@@ -164,14 +176,13 @@ function ServiceDetailPage({ id }) {
           </Reveal>
         </div>
 
-        {/* Per-service hero — photo for berth (dock cleat detail), original
-            vector art for the rest (see service-art.jsx) */}
+        {/* Per-service hero photography — see SERVICE_PHOTOS above */}
         <Reveal>
-          <div style={{ position: 'relative', marginBottom: 96, border: '1px solid var(--fg-08)', overflow: 'hidden', height: s.id === 'berth' ? 'clamp(220px, 30vw, 340px)' : 'clamp(200px, 28vw, 300px)' }}>
-            {s.id === 'berth' ? (
+          <div style={{ position: 'relative', marginBottom: 96, border: '1px solid var(--fg-08)', overflow: 'hidden', height: SERVICE_PHOTOS[s.id] ? 'clamp(220px, 30vw, 340px)' : 'clamp(200px, 28vw, 300px)' }}>
+            {SERVICE_PHOTOS[s.id] ? (
               <>
-                <img src="/service-berth.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"
-                     style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 22%' }}/>
+                <img src={SERVICE_PHOTOS[s.id].src} alt="" aria-hidden="true" loading="lazy" decoding="async"
+                     style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: SERVICE_PHOTOS[s.id].position }}/>
                 <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.20) 0%, rgba(0,23,48,0) 45%, rgba(0,23,48,0.30) 100%)' }}/>
                 <div className="mono" style={{ position: 'absolute', left: 20, bottom: 14, color: 'rgba(239,234,226,0.75)', letterSpacing: '0.18em', fontSize: 10, textTransform: 'uppercase' }}>
                   {t(`services.${s.id}_title`)}
