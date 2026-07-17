@@ -104,6 +104,21 @@ function StatsBlock() {
     <section className="section" style={{ paddingTop: 80 }}>
       <div className="container">
         <SectionHeader num="02" eyebrow={t('stats.eyebrow')} title={<>{t('stats.title')}</>} />
+
+        {/* Photo band — Bay of Kotor at dusk (Unsplash free license, photo by Dragiša Braunović) */}
+        <Reveal delay={200}>
+          <div style={{ position: 'relative', marginBottom: 64, overflow: 'hidden', height: 'clamp(200px, 24vw, 320px)', border: '1px solid var(--fg-08)' }}>
+            <picture>
+              <source srcSet="/stats-band.webp" type="image/webp"/>
+              <img src="/stats-band.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}/>
+            </picture>
+            <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.20) 0%, rgba(0,23,48,0) 45%, rgba(0,23,48,0.30) 100%)' }}/>
+            <div className="mono" style={{ position: 'absolute', left: 20, bottom: 14, color: 'rgba(239,234,226,0.75)', letterSpacing: '0.18em', fontSize: 10 }}>
+              42.42° N · 18.77° E — KOTOR
+            </div>
+          </div>
+        </Reveal>
+
         <div className="grid-4" style={{ gap: 0, borderTop: '1px solid var(--fg-08)', borderBottom: '1px solid var(--fg-08)' }}>
           {items.map((s, i) => (
             <Reveal key={i} delay={i * 80}>
