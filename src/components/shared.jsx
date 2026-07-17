@@ -508,15 +508,17 @@ function Nav() {
 
 // ---------- Footer ----------
 function Footer() {
-  const { setRoute } = useApp();
+  const { setRoute, theme } = useApp();
   const { t } = useTranslation();
 
-  // Permanent dark "bookend" — deliberately bespoke, not theme-driven (same
-  // approach as CoastMap's DARK object), so the footer stays navy regardless
-  // of the page's light/dark toggle. Values reuse the WCAG-vetted dark-mode
-  // tokens from styles.css (--fg / --fg-70 / --fg-50 / --fg-08) rather than
-  // inventing new ones.
-  const DARK = {
+  // Inverted "bookend" — the footer always contrasts with the page's current
+  // theme instead of tracking it 1:1: navy bg / cream text in light mode
+  // (original design, unchanged), paper bg / navy text in dark mode (fix —
+  // it was previously hardcoded navy in both modes, so it went invisible
+  // against the dark-mode page). Both palettes reuse the exact WCAG-vetted
+  // tokens from styles.css (:root for light, [data-theme="dark"] for dark)
+  // rather than inventing new colors.
+  const FOOTER_ON_LIGHT = {
     bg: '#001730',
     border: 'rgba(239,234,226,0.10)',
     divider: 'rgba(239,234,226,0.15)',
@@ -524,6 +526,15 @@ function Footer() {
     muted70: 'rgba(239,234,226,0.70)',
     muted50: 'rgba(239,234,226,0.55)',
   };
+  const FOOTER_ON_DARK = {
+    bg: '#FAF9F8',
+    border: 'rgba(0,23,48,0.08)',
+    divider: 'rgba(0,23,48,0.15)',
+    text: '#001730',
+    muted70: 'rgba(0,23,48,0.70)',
+    muted50: 'rgba(0,23,48,0.60)',
+  };
+  const DARK = theme === 'dark' ? FOOTER_ON_DARK : FOOTER_ON_LIGHT;
 
   return (
     <footer style={{ background: DARK.bg, padding: '72px 0 40px' }}>
