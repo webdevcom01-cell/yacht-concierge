@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal, SectionHeader, WhatsAppIcon } from './shared';
 import { SERVICES } from '../data/services';
 import { CoastMap } from './home-bottom';
-import { FleetTierSelector } from './services';
 import { submitQuote } from '../lib/submit';
 
 // How It Works page & Contact/Quote multi-step form
@@ -390,9 +389,6 @@ function FleetPage() {
         </div>
       </div>
       <CoastMap/>
-      <div className="container">
-        <FleetTierSelector/>
-      </div>
     </main>
   );
 }

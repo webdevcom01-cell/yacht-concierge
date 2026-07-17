@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal, SectionHeader } from './shared';
 import { SERVICES } from '../data/services';
@@ -67,66 +67,8 @@ function ServicesPage() {
           })}
         </div>
 
-        <div style={{ marginTop: 96 }}>
-          <FleetTierSelector/>
-        </div>
       </div>
     </main>
-  );
-}
-
-// ---------- Fleet Tier Selector ----------
-function FleetTierSelector() {
-  const [loa, setLoa] = useState(60);
-  const { t } = useTranslation();
-
-  const tier =
-    loa < 40 ? { name: t('servicesPage.tier1_name'), range: t('servicesPage.tier1_range'), price: t('servicesPage.tier1_price'), desc: t('servicesPage.tier1_desc') } :
-    loa < 70 ? { name: t('servicesPage.tier2_name'), range: t('servicesPage.tier2_range'), price: t('servicesPage.tier2_price'), desc: t('servicesPage.tier2_desc') } :
-               { name: t('servicesPage.tier3_name'), range: t('servicesPage.tier3_range'), price: t('servicesPage.tier3_price'), desc: t('servicesPage.tier3_desc') };
-
-  return (
-    <div style={{ padding: 48, border: '1px solid var(--fg-15)', background: 'var(--bg-raised)' }}>
-      <div className="grid-fleet-calc" style={{ gap: 72, alignItems: 'center' }}>
-        <div>
-          <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 20 }}>{t('servicesPage.fleetCalc')}</div>
-          <h3 className="serif" style={{ fontSize: 44, lineHeight: 1.05, letterSpacing: '-0.01em' }}>
-            {t('servicesPage.fleetTitle')} <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('servicesPage.fleetTitleAccent')}</em>.
-          </h3>
-          <p style={{ fontSize: 13.5, color: 'var(--fg-70)', marginTop: 20, maxWidth: '36ch' }}>
-            {t('servicesPage.fleetSub')}
-          </p>
-        </div>
-        <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
-            <span className="mono" style={{ color: 'var(--fg-50)' }}>24m</span>
-            <div className="serif" style={{ fontSize: 48, lineHeight: 1, letterSpacing: '-0.02em' }}>{loa}<span style={{ fontSize: 20, color: 'var(--fg-50)', marginLeft: 4 }}>m</span></div>
-            <span className="mono" style={{ color: 'var(--fg-50)' }}>120m</span>
-          </div>
-          <input
-            type="range"
-            min="24"
-            max="120"
-            value={loa}
-            onChange={e => setLoa(Number(e.target.value))}
-            style={{ width: '100%', accentColor: 'var(--accent)' }}
-          />
-          <div className="rule mt-32"/>
-          <div style={{ marginTop: 28, display: 'flex', justifyContent: 'space-between', alignItems: 'start', gap: 32 }}>
-            <div>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 8 }}>{t('servicesPage.recommended')}</div>
-              <div className="serif" style={{ fontSize: 24 }}>{tier.name}</div>
-              <div style={{ fontSize: 13, color: 'var(--fg-70)', marginTop: 4 }}>{tier.range}</div>
-              <div style={{ fontSize: 13, color: 'var(--fg-70)', marginTop: 16, maxWidth: '40ch' }}>{tier.desc}</div>
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 8 }}>{t('servicesPage.pricing')}</div>
-              <div className="serif" style={{ fontSize: 40, letterSpacing: '-0.02em' }}>{tier.price}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -337,4 +279,4 @@ function ServiceDetailPage({ id }) {
   );
 }
 
-export { ServicesPage, ServiceDetailPage, FleetTierSelector };
+export { ServicesPage, ServiceDetailPage };
