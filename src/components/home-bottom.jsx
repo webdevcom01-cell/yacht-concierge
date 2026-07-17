@@ -316,56 +316,6 @@ function CoastMap() {
   );
 }
 
-// ---------- Process preview strip ----------
-function ProcessStrip() {
-  const { setRoute } = useApp();
-  const { t } = useTranslation();
-  const steps = [
-    { n: t('process.step1_n'), label: t('process.step1_label'), desc: t('process.step1_desc') },
-    { n: t('process.step2_n'), label: t('process.step2_label'), desc: t('process.step2_desc') },
-    { n: t('process.step3_n'), label: t('process.step3_label'), desc: t('process.step3_desc') },
-    { n: t('process.step4_n'), label: t('process.step4_label'), desc: t('process.step4_desc') },
-  ];
-  return (
-    <section className="section" style={{ background: 'var(--bg-warm)' }}>
-      <div className="container">
-        <div className="grid-2" style={{ gap: 72, marginBottom: 72, alignItems: 'end' }}>
-          <div>
-            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('process.eyebrow')}</div></Reveal>
-            <Reveal delay={80}><h2 className="h2">{t('process.title')}</h2></Reveal>
-          </div>
-          <Reveal delay={160}>
-            <p className="lede lede-right">{t('process.lede')}</p>
-          </Reveal>
-        </div>
-        <div className="grid-4" style={{ gap: 0 }}>
-          {steps.map((s, i) => (
-            <Reveal key={s.n} delay={i * 80}>
-              <div style={{ padding: '32px 24px 32px 0', borderTop: '1px solid var(--fg)', position: 'relative' }}>
-                <div style={{ position: 'absolute', top: -6, left: 0, width: 12, height: 12, background: i === 2 ? 'var(--accent)' : 'var(--fg)', borderRadius: '50%' }}/>
-                <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 16 }}>{s.n}</div>
-                <div className="serif" style={{ fontSize: 28, letterSpacing: '-0.01em', marginBottom: 12 }}>{s.label}</div>
-                <div style={{ fontSize: 13.5, color: 'var(--fg-70)', maxWidth: '20ch' }}>{s.desc}</div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal delay={400}>
-          <div style={{ marginTop: 48 }}>
-            <a
-              className="btn-link mono"
-              href="/process"
-              onClick={(e) => { e.preventDefault(); setRoute({ page: 'process' }); }}
-            >
-              {t('process.fullProtocol')} <Icons.Arrow size={12}/>
-            </a>
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
 // ---------- Final CTA ----------
 function PlainReveal({ children }) { return <>{children}</>; }
 function ClosingCTA({ serviceId = null, hero = false }) {
@@ -426,9 +376,8 @@ function HomePage() {
       <ClosingCTA hero/>
       <ServicesPreview/>
       <StatsBlock/>
-      <ProcessStrip/>
     </main>
   );
 }
 
-export { CoastMap, ProcessStrip, HomePage };
+export { CoastMap, HomePage };

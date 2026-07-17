@@ -66,24 +66,6 @@
     "mood_budva": "MEZZOGIORNO AZZURRO",
     "mood_bar": "PREDAWN"
   },
-  "process": {
-    "eyebrow": "05 / PROTOCOLLO",
-    "title": "Un protocollo misurato.",
-    "lede": "Ogni yacht che serviamo segue quattro fasi precise. Nessun passaggio affrettato, nessuna perdita di contesto.",
-    "fullProtocol": "PROTOCOLLO COMPLETO",
-    "step1_n": "01",
-    "step1_label": "CONTATTO",
-    "step1_desc": "Chiamata iniziale con il comandante o il gestore.",
-    "step2_n": "02",
-    "step2_label": "PIANIFICAZIONE",
-    "step2_desc": "Brief itinerario, ambito servizi, SLA, preventivo.",
-    "step3_n": "03",
-    "step3_label": "ESECUZIONE",
-    "step3_desc": "Coordinatore dedicato e reperibile per tutta la sosta.",
-    "step4_n": "04",
-    "step4_label": "REVISIONE",
-    "step4_desc": "Report post-sosta, raccomandazioni per la prossima stagione."
-  },
   "cta": {
     "engage": "↳ CONTATTACI",
     "title1": "In arrivo in Montenegro?",

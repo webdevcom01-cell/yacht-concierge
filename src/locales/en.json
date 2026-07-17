@@ -66,24 +66,6 @@
     "mood_budva": "AZURE NOON",
     "mood_bar": "PRE-DAWN"
   },
-  "process": {
-    "eyebrow": "05 / PROTOCOL",
-    "title": "A considered protocol.",
-    "lede": "Every yacht we serve moves through four measured steps. No rushed handoffs, no lost context.",
-    "fullProtocol": "FULL PROTOCOL",
-    "step1_n": "01",
-    "step1_label": "CONTACT",
-    "step1_desc": "Intake call with your captain or manager.",
-    "step2_n": "02",
-    "step2_label": "PLAN",
-    "step2_desc": "Itinerary brief, service scope, SLAs, quote.",
-    "step3_n": "03",
-    "step3_label": "EXECUTE",
-    "step3_desc": "Dedicated coordinator on-call for the stay.",
-    "step4_n": "04",
-    "step4_label": "REVIEW",
-    "step4_desc": "Post-call report, next-season recommendations."
-  },
   "cta": {
     "engage": "↳ ENGAGE",
     "title1": "Arriving in Montenegro?",
