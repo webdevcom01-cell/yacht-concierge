@@ -164,11 +164,22 @@ function ServiceDetailPage({ id }) {
           </Reveal>
         </div>
 
-        {/* Per-service hero illustration — original vector art in the brand
-            palette (see service-art.jsx), differentiating the six pages */}
+        {/* Per-service hero — photo for berth (dock cleat detail), original
+            vector art for the rest (see service-art.jsx) */}
         <Reveal>
-          <div style={{ marginBottom: 96, border: '1px solid var(--fg-08)', overflow: 'hidden', height: 'clamp(200px, 28vw, 300px)' }}>
-            <ServiceArt id={s.id} label={t(`services.${s.id}_title`)}/>
+          <div style={{ position: 'relative', marginBottom: 96, border: '1px solid var(--fg-08)', overflow: 'hidden', height: 'clamp(200px, 28vw, 300px)' }}>
+            {s.id === 'berth' ? (
+              <>
+                <img src="/service-berth.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async"
+                     style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 38%' }}/>
+                <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.20) 0%, rgba(0,23,48,0) 45%, rgba(0,23,48,0.30) 100%)' }}/>
+                <div className="mono" style={{ position: 'absolute', left: 20, bottom: 14, color: 'rgba(239,234,226,0.75)', letterSpacing: '0.18em', fontSize: 10, textTransform: 'uppercase' }}>
+                  {t(`services.${s.id}_title`)}
+                </div>
+              </>
+            ) : (
+              <ServiceArt id={s.id} label={t(`services.${s.id}_title`)}/>
+            )}
           </div>
         </Reveal>
 
