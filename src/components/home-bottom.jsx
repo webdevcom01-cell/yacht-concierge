@@ -353,18 +353,18 @@ function ClosingCTA({ serviceId = null, hero = false }) {
             <button className="btn btn-ghost" onClick={() => setRoute({ page: 'services' })}>{t('cta.btnServices')}</button>
           </div>
         </R>
+        {hero && (
+          <div style={{ position: 'relative', marginTop: 72, height: 'clamp(240px, 38vh, 460px)', overflow: 'hidden', border: '1px solid var(--fg-08)' }}>
+            {/* Hero photo — superyacht at dusk (Unsplash free license, photo by nikldn) */}
+            <picture>
+              <source srcSet="/hero-dusk.webp" type="image/webp"/>
+              <img src="/hero-dusk.jpg" alt="" aria-hidden="true" decoding="async"
+                   style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 45%' }}/>
+            </picture>
+            <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.10) 0%, rgba(0,23,48,0) 35%, rgba(0,23,48,0.22) 100%)' }}/>
+          </div>
+        )}
       </div>
-      {hero && (
-        <div style={{ position: 'relative', marginTop: 72, height: 'clamp(240px, 38vh, 460px)', overflow: 'hidden' }}>
-          {/* Hero photo — superyacht at dusk (Unsplash free license, photo by nikldn) */}
-          <picture>
-            <source srcSet="/hero-dusk.webp" type="image/webp"/>
-            <img src="/hero-dusk.jpg" alt="" aria-hidden="true" decoding="async"
-                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 45%' }}/>
-          </picture>
-          <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.10) 0%, rgba(0,23,48,0) 35%, rgba(0,23,48,0.22) 100%)' }}/>
-        </div>
-      )}
     </section>
   );
 }
