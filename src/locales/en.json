@@ -10,6 +10,7 @@
     "chatWhatsapp": "Chat on WhatsApp",
     "ariaHome": "Yacht Concierge — Home",
     "ariaLang": "Switch language to {{lang}}",
+    "ariaLangMenu": "Choose language",
     "ariaTheme": "Toggle dark/light theme",
     "ariaMenuOpen": "Open menu",
     "ariaMenuClose": "Close menu"

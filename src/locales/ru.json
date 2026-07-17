@@ -10,6 +10,7 @@
     "chatWhatsapp": "Написать в WhatsApp",
     "ariaHome": "Yacht Concierge — Главная",
     "ariaLang": "Переключить язык на {{lang}}",
+    "ariaLangMenu": "Выбор языка",
     "ariaTheme": "Переключить тему",
     "ariaMenuOpen": "Открыть меню",
     "ariaMenuClose": "Закрыть меню"

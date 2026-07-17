@@ -188,16 +188,18 @@ function Logo({ onClick }) {
 }
 
 // ---------- Language Switcher ----------
-function LangSwitcher() {
+const LANGS = [
+  { code: 'en', label: 'EN' },
+  { code: 'ru', label: 'RU' },
+  { code: 'it', label: 'IT' },
+];
+
+// Inline row of language buttons — used in the mobile overlay header.
+function LangSwitcherInline() {
   const { i18n, t } = useTranslation();
-  const langs = [
-    { code: 'en', label: 'EN' },
-    { code: 'ru', label: 'RU' },
-    { code: 'it', label: 'IT' },
-  ];
   return (
     <div style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-      {langs.map((l, idx) => (
+      {LANGS.map((l, idx) => (
         <React.Fragment key={l.code}>
           <button
             className="nav-link"
@@ -205,9 +207,9 @@ function LangSwitcher() {
             aria-pressed={i18n.language === l.code} /* Mi-4: screen readers announce selected language */
             aria-label={t('nav.ariaLang', { lang: l.label })}
             style={{
-              padding: '16px 12px', /* M-4: was 10px 12px (33px) → 16px gives 45px tap height */
+              padding: '16px 12px', /* M-4: 45px tap height */
               fontFamily: 'var(--mono)',
-              fontSize: 11, /* C-03: was 10 */
+              fontSize: 11,
               letterSpacing: '0.1em',
               opacity: i18n.language === l.code ? 1 : 0.4,
               fontWeight: i18n.language === l.code ? 600 : 400,
@@ -220,11 +222,118 @@ function LangSwitcher() {
           >
             {l.label}
           </button>
-          {idx < langs.length - 1 && (
+          {idx < LANGS.length - 1 && (
             <span style={{ color: 'var(--fg-15)', fontSize: 9 }}>·</span>
           )}
         </React.Fragment>
       ))}
+    </div>
+  );
+}
+
+// Single-button dropdown — used in the desktop nav.
+function LangSwitcher({ inline = false }) {
+  const { i18n, t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e) => { if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false); };
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  if (inline) return <LangSwitcherInline/>;
+
+  const current = LANGS.find((l) => i18n.language === l.code) || LANGS[0];
+  return (
+    <div ref={wrapRef} style={{ position: 'relative' }}>
+      <button
+        className="nav-link"
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={t('nav.ariaLangMenu')}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 6,
+          padding: '16px 12px', /* 45px tap height */
+          fontFamily: 'var(--mono)',
+          fontSize: 11,
+          letterSpacing: '0.1em',
+          fontWeight: 600,
+          color: open ? 'var(--accent)' : 'inherit',
+          border: 'none',
+          background: 'none',
+          cursor: 'pointer',
+          transition: 'color 0.2s',
+        }}
+      >
+        {current.label}
+        <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.4"
+             aria-hidden="true"
+             style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.25s var(--ease)', opacity: 0.6 }}>
+          <path d="M1.5 3.5 L5 7 L8.5 3.5"/>
+        </svg>
+      </button>
+      {open && (
+        <div
+          role="listbox"
+          aria-label={t('nav.ariaLangMenu')}
+          style={{
+            position: 'absolute',
+            top: 'calc(100% + 2px)',
+            right: 0,
+            minWidth: 92,
+            background: 'var(--bg-raised)',
+            border: '1px solid var(--fg-15)',
+            boxShadow: '0 16px 40px rgba(0, 23, 48, 0.14)',
+            padding: '6px 0',
+            zIndex: 300,
+          }}
+        >
+          {LANGS.map((l) => {
+            const active = i18n.language === l.code;
+            return (
+              <button
+                key={l.code}
+                role="option"
+                aria-selected={active}
+                aria-label={t('nav.ariaLang', { lang: l.label })}
+                onClick={() => { setLanguage(l.code); setOpen(false); }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--fg-05)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  width: '100%',
+                  padding: '11px 16px',
+                  fontFamily: 'var(--mono)',
+                  fontSize: 11,
+                  letterSpacing: '0.1em',
+                  fontWeight: active ? 600 : 400,
+                  color: active ? 'var(--accent)' : 'var(--fg-70)',
+                  border: 'none',
+                  background: 'none',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                {l.label}
+                {active && <span aria-hidden="true" style={{ fontSize: 10 }}>✓</span>}
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -343,7 +452,7 @@ function Nav() {
 
           {/* Overlay header */}
           <div className="nav-overlay-header">
-            <LangSwitcher />
+            <LangSwitcher inline />
             <button
               onClick={() => setMenuOpen(false)}
               style={{ color: 'var(--fg-70)', display: 'flex', alignItems: 'center', padding: 12 }} /* M-03: was 6 → 44px target */
