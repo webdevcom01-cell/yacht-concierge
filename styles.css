@@ -332,6 +332,13 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   height: 28px;
   color: var(--fg);
 }
+/* Footer's Logo sits on a permanent navy background regardless of theme —
+   .logo-mark's own `color: var(--fg)` above would otherwise resolve to the
+   LIGHT theme's dark --fg in light mode and vanish. #EFEAE2 mirrors the
+   Footer's local DARK.text constant (== dark-mode --fg). */
+footer .logo-mark {
+  color: #EFEAE2;
+}
 .logo-text {
   display: flex;
   flex-direction: column;
