@@ -332,12 +332,17 @@ h1, h2, h3 { margin: 0; font-weight: 400; }
   height: 28px;
   color: var(--fg);
 }
-/* Footer's Logo sits on a permanent navy background regardless of theme —
-   .logo-mark's own `color: var(--fg)` above would otherwise resolve to the
-   LIGHT theme's dark --fg in light mode and vanish. #EFEAE2 mirrors the
-   Footer's local DARK.text constant (== dark-mode --fg). */
+/* Footer's Logo inverts opposite the page theme (see Footer's
+   FOOTER_ON_LIGHT/FOOTER_ON_DARK in shared.jsx) — .logo-mark's own
+   `color: var(--fg)` above would otherwise just track the page theme 1:1
+   and vanish against the footer's inverted background. #EFEAE2 mirrors
+   FOOTER_ON_LIGHT.text (footer on light-mode pages, unchanged); #001730
+   mirrors FOOTER_ON_DARK.text (footer on dark-mode pages). */
 footer .logo-mark {
   color: #EFEAE2;
+}
+[data-theme="dark"] footer .logo-mark {
+  color: #001730;
 }
 .logo-text {
   display: flex;
@@ -357,12 +362,16 @@ footer .logo-mark {
   color: var(--fg-50);
   margin-top: 4px;
 }
-/* Same fix as footer .logo-mark above — .logo-text-sub's own `color: var(--fg-50)`
-   resolves to the LIGHT theme's dark value in light mode and vanishes on the
-   Footer's permanent navy background, leaving only "YACHT CONCIERGE" visible
-   with no subtitle line. rgba(239,234,226,0.55) mirrors Footer's DARK.muted50. */
+/* Same inversion as footer .logo-mark above — .logo-text-sub's own
+   `color: var(--fg-50)` would otherwise just track the page theme 1:1 and
+   vanish against the footer's inverted background. rgba(239,234,226,0.55)
+   mirrors FOOTER_ON_LIGHT.muted50; rgba(0,23,48,0.60) mirrors
+   FOOTER_ON_DARK.muted50. */
 footer .logo-text-sub {
   color: rgba(239, 234, 226, 0.55);
+}
+[data-theme="dark"] footer .logo-text-sub {
+  color: rgba(0, 23, 48, 0.60);
 }
 
 /* ============ Cards / Services ============ */
