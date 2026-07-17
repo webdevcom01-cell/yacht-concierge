@@ -101,7 +101,7 @@ function StatsBlock() {
     { value: t('stats.coordinator_value'), label: t('stats.coordinator_label'), sub: t('stats.coordinator_sub') },
   ];
   return (
-    <section className="section" style={{ paddingTop: 80 }}>
+    <section className="section" style={{ paddingTop: 80, paddingBottom: 80 }}>
       <div className="container">
         <SectionHeader num="02" eyebrow={t('stats.eyebrow')} title={<>{t('stats.title')}</>} />
 

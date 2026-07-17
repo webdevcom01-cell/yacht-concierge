@@ -510,29 +510,46 @@ function Nav() {
 function Footer() {
   const { setRoute } = useApp();
   const { t } = useTranslation();
+
+  // Permanent dark "bookend" — deliberately bespoke, not theme-driven (same
+  // approach as CoastMap's DARK object), so the footer stays navy regardless
+  // of the page's light/dark toggle. Values reuse the WCAG-vetted dark-mode
+  // tokens from styles.css (--fg / --fg-70 / --fg-50 / --fg-08) rather than
+  // inventing new ones.
+  const DARK = {
+    bg: '#001730',
+    border: 'rgba(239,234,226,0.10)',
+    divider: 'rgba(239,234,226,0.15)',
+    text: '#EFEAE2',
+    muted70: 'rgba(239,234,226,0.70)',
+    muted50: 'rgba(239,234,226,0.55)',
+  };
+
   return (
-    <footer style={{ borderTop: '1px solid var(--fg-08)', padding: '72px 0 40px', marginTop: 80 }}>
+    <footer style={{ background: DARK.bg, padding: '72px 0 40px' }}>
       <div className="container">
         <div className="grid-footer" style={{ gap: 48, marginBottom: 64 }}>
           <div>
-            <Logo onClick={() => setRoute({ page: 'home' })} />
-            <p className="lede" style={{ marginTop: 28, fontSize: 14 }}>
+            <div style={{ color: DARK.text }}>
+              <Logo onClick={() => setRoute({ page: 'home' })} />
+            </div>
+            <p className="lede" style={{ marginTop: 28, fontSize: 14, color: DARK.muted70 }}>
               {t('footer.tagline')}
             </p>
-            <div className="mono mt-24" style={{ color: 'var(--fg-50)' }}>
+            <div className="mono mt-24" style={{ color: DARK.muted50 }}>
               42.4330° N · 18.6881° E
             </div>
           </div>
           {/* Services column — real links to service detail pages */}
           <div>
-            <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 18 }}>{t('footer.services')}</div>
+            <div className="mono" style={{ color: DARK.muted50, marginBottom: 18 }}>{t('footer.services')}</div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {SERVICES.map(s => (
                 <li key={s.id}>
                   <a
                     href={`/services/${s.id}`}
                     onClick={(e) => { e.preventDefault(); setRoute({ page: 'service', id: s.id }); }}
-                    style={{ fontSize: 13.5, color: 'var(--fg-70)', textDecoration: 'none' }}
+                    style={{ fontSize: 13.5, color: DARK.muted70, textDecoration: 'none' }}
                   >{t(`services.${s.id}_title`)}</a>
                 </li>
               ))}
@@ -540,7 +557,7 @@ function Footer() {
           </div>
           {/* Operations column — real links to the remaining pages */}
           <div>
-            <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 18 }}>{t('footer.operations')}</div>
+            <div className="mono" style={{ color: DARK.muted50, marginBottom: 18 }}>{t('footer.operations')}</div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
                 { page: 'process',      path: '/process',      label: t('nav.process') },
@@ -553,17 +570,17 @@ function Footer() {
                   <a
                     href={l.path}
                     onClick={(e) => { e.preventDefault(); setRoute({ page: l.page }); }}
-                    style={{ fontSize: 13.5, color: 'var(--fg-70)', textDecoration: 'none' }}
+                    style={{ fontSize: 13.5, color: DARK.muted70, textDecoration: 'none' }}
                   >{l.label}</a>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 18 }}>{t('footer.office')}</div>
+            <div className="mono" style={{ color: DARK.muted50, marginBottom: 18 }}>{t('footer.office')}</div>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {['Pomorska ulica, Zgrada Baia', 'Porto Montenegro', 'Tivat 85320'].map(i => (
-                <li key={i} style={{ fontSize: 13.5, color: 'var(--fg-70)' }}>{i}</li>
+                <li key={i} style={{ fontSize: 13.5, color: DARK.muted70 }}>{i}</li>
               ))}
               <li style={{ fontSize: 13.5 }}>
                 <a
@@ -577,15 +594,15 @@ function Footer() {
                 </a>
               </li>
               <li style={{ fontSize: 13.5 }}>
-                <a href="mailto:info@yacht-concierge.me" style={{ color: 'var(--fg-70)', textDecoration: 'none' }}>
+                <a href="mailto:info@yacht-concierge.me" style={{ color: DARK.muted70, textDecoration: 'none' }}>
                   info@yacht-concierge.me
                 </a>
               </li>
             </ul>
           </div>
         </div>
-        <div className="rule" />
-        <div className="footer-bar" style={{ marginTop: 28 }}>
+        <div className="rule" style={{ background: DARK.divider }} />
+        <div className="footer-bar" style={{ marginTop: 28, color: DARK.muted50 }}>
           <span>{t('footer.copyright')}</span>
           <span style={{ display: 'flex', gap: 20 }}>
             <a href="/legal" onClick={(e) => { e.preventDefault(); setRoute({ page: 'legal' }); }}
