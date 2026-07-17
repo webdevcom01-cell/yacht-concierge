@@ -33,6 +33,20 @@ function ServicesPreview() {
           </Reveal>
         </div>
 
+        {/* Photo band — superyacht aerial (Unsplash free license, photo by Lidija Jakovljevic) */}
+        <Reveal delay={200}>
+          <div style={{ position: 'relative', marginBottom: 64, overflow: 'hidden', height: 'clamp(200px, 24vw, 320px)', border: '1px solid var(--fg-08)' }}>
+            <picture>
+              <source srcSet="/services-band.webp" type="image/webp"/>
+              <img src="/services-band.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}/>
+            </picture>
+            <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.20) 0%, rgba(0,23,48,0) 45%, rgba(0,23,48,0.30) 100%)' }}/>
+            <div className="mono" style={{ position: 'absolute', left: 20, bottom: 14, color: 'rgba(239,234,226,0.75)', letterSpacing: '0.18em', fontSize: 10 }}>
+              42.4330° N · 18.6881° E — ADRIATIC
+            </div>
+          </div>
+        </Reveal>
+
         <div className={`services-grid services-grid--${serviceDensity === 'dense' ? 'dense' : serviceDensity === 'loose' ? 'loose' : 'standard'}`} style={{ gap: 0, border: '1px solid var(--border, var(--fg-08))' }}>
           {SERVICES.map((s, i) => {
             const IconC = Icons[s.icon];
