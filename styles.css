@@ -357,6 +357,13 @@ footer .logo-mark {
   color: var(--fg-50);
   margin-top: 4px;
 }
+/* Same fix as footer .logo-mark above — .logo-text-sub's own `color: var(--fg-50)`
+   resolves to the LIGHT theme's dark value in light mode and vanishes on the
+   Footer's permanent navy background, leaving only "YACHT CONCIERGE" visible
+   with no subtitle line. rgba(239,234,226,0.55) mirrors Footer's DARK.muted50. */
+footer .logo-text-sub {
+  color: rgba(239, 234, 226, 0.55);
+}
 
 /* ============ Cards / Services ============ */
 
