@@ -86,6 +86,19 @@ function ServicesPage() {
 
 // ---------- Contextual CTA block on service detail pages ----------
 function DetailCTA({ label, title, body, btn, onClick }) {
+  const { theme } = useApp();
+  // Inverted "bookend" — same pattern as Footer (shared.jsx): this callout
+  // always contrasts with the page's current theme instead of tracking it
+  // 1:1, so it stays a distinct navy block in light mode (unchanged) but
+  // flips to a light block in dark mode rather than vanishing into the
+  // page's own navy background. #8C6C3B is the site's existing a11y-safe
+  // gold-on-paper accent token (styles.css [data-accent="gold"]).
+  const isDark = theme === 'dark';
+  const bg = isDark ? '#FAF9F8' : 'var(--navy, #001730)';
+  const labelColor = isDark ? 'rgba(0,23,48,0.45)' : 'rgba(255,255,255,0.45)';
+  const titleColor = isDark ? '#001730' : '#fff';
+  const bodyColor = isDark ? 'rgba(0,23,48,0.6)' : 'rgba(255,255,255,0.6)';
+  const accentColor = isDark ? '#8C6C3B' : '#D4B78F';
   return (
     <Reveal>
       <div
@@ -96,7 +109,7 @@ function DetailCTA({ label, title, body, btn, onClick }) {
         style={{
           marginBottom: 96,
           padding: 'clamp(32px, 4vw, 56px) clamp(28px, 5vw, 72px)',
-          background: 'var(--navy, #001730)',
+          background: bg,
           cursor: 'pointer',
           display: 'flex',
           alignItems: 'center',
@@ -109,19 +122,17 @@ function DetailCTA({ label, title, body, btn, onClick }) {
         onMouseLeave={e => e.currentTarget.style.opacity = '1'}
       >
         <div>
-          <div className="mono" style={{ color: 'rgba(255,255,255,0.45)', marginBottom: 16, fontSize: 11, letterSpacing: '0.1em' }}>
+          <div className="mono" style={{ color: labelColor, marginBottom: 16, fontSize: 11, letterSpacing: '0.1em' }}>
             {label}
           </div>
-          <h3 className="serif" style={{ fontSize: 'clamp(28px, 3vw, 44px)', color: '#fff', margin: '0 0 14px', lineHeight: 1.1 }}>
+          <h3 className="serif" style={{ fontSize: 'clamp(28px, 3vw, 44px)', color: titleColor, margin: '0 0 14px', lineHeight: 1.1 }}>
             {title}
           </h3>
-          <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--sans)', lineHeight: 1.6, maxWidth: 440, margin: 0 }}>
+          <p style={{ fontSize: 15, color: bodyColor, fontFamily: 'var(--sans)', lineHeight: 1.6, maxWidth: 440, margin: 0 }}>
             {body}
           </p>
         </div>
-        {/* Fixed display gold — this block always sits on navy, where the
-            light-theme text accent would lose contrast */}
-        <div className="mono" style={{ color: '#D4B78F', fontSize: 11, letterSpacing: '0.12em', whiteSpace: 'nowrap', display: 'flex', gap: 12, alignItems: 'center', flexShrink: 0 }}>
+        <div className="mono" style={{ color: accentColor, fontSize: 11, letterSpacing: '0.12em', whiteSpace: 'nowrap', display: 'flex', gap: 12, alignItems: 'center', flexShrink: 0 }}>
           {btn} <Icons.Arrow size={13}/>
         </div>
       </div>
