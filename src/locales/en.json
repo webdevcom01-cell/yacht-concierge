@@ -39,9 +39,9 @@
   "stats": {
     "eyebrow": "OPERATIONAL STANDARDS",
     "title": "Discretion, by design.",
-    "disciplines_value": "6",
+    "disciplines_value": "7",
     "disciplines_label": "Coordinated disciplines",
-    "disciplines_sub": "Berth · Customs · Provisioning · Laundry · Floristry · Maintenance",
+    "disciplines_sub": "Berth · Customs · Fuel · Provisioning · Laundry · Floristry · Maintenance",
     "sla_value": "24/7",
     "sla_label": "Availability",
     "sla_sub": "Round-the-clock service available on request",

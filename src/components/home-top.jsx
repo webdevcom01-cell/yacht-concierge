@@ -52,7 +52,8 @@ function ServicesPreview() {
             const IconC = Icons[s.icon];
             const isLast = i === SERVICES.length - 1;
             const isRight = (i + 1) % colCount === 0 || isLast;
-            const isBottom = i >= SERVICES.length - colCount;
+            const itemsInLastRow = SERVICES.length % colCount || colCount;
+            const isBottom = i >= SERVICES.length - itemsInLastRow;
             return (
               <Reveal key={s.id} delay={i * 60}>
                 <div

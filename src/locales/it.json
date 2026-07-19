@@ -39,9 +39,9 @@
   "stats": {
     "eyebrow": "STANDARD OPERATIVI",
     "title": "Discrezione, per principio.",
-    "disciplines_value": "6",
+    "disciplines_value": "7",
     "disciplines_label": "Discipline coordinate",
-    "disciplines_sub": "Ormeggio · Dogana · Approvvigionamento · Lavanderia · Floristica · Manutenzione",
+    "disciplines_sub": "Ormeggio · Dogana · Carburante · Approvvigionamento · Lavanderia · Floristica · Manutenzione",
     "sla_value": "24/7",
     "sla_label": "Disponibilità",
     "sla_sub": "Servizio 24 ore su 24 disponibile su richiesta",

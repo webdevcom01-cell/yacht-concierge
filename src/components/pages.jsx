@@ -251,8 +251,8 @@ function ContactPage() {
                             style={{
                               padding: 24,
                               cursor: 'pointer',
-                              borderRight: i % 2 === 0 ? '1px solid var(--fg-15)' : 'none',
-                              borderBottom: i < SERVICES.length - 2 ? '1px solid var(--fg-15)' : 'none',
+                              borderRight: (i % 2 === 0 && i !== SERVICES.length - 1) ? '1px solid var(--fg-15)' : 'none',
+                              borderBottom: i < SERVICES.length - (SERVICES.length % 2 || 2) ? '1px solid var(--fg-15)' : 'none',
                               background: on ? 'var(--accent-soft)' : 'transparent',
                               display: 'flex',
                               gap: 16,
