@@ -6,9 +6,10 @@ import { ServiceArt } from './service-art';
 
 // Services index page & Service detail page
 
-// Per-service hero photography — real photos for all six service detail pages
-// (Unsplash, free license). ServiceArt (service-art.jsx) remains as a
-// defensive SVG fallback for any service id not listed here.
+// Per-service hero photography — real photos (Unsplash, free license) for
+// six of the seven service detail pages. ServiceArt (service-art.jsx) is the
+// SVG fallback for any service id not listed here — currently 'fuel', whose
+// photo is sourced in a later pass.
 const SERVICE_PHOTOS = {
   berth:        { src: '/service-berth.jpg',       position: 'center 22%' },
   customs:      { src: '/service-customs.jpg',      position: 'center 45%' },
@@ -272,10 +273,10 @@ function ServiceDetailPage({ id }) {
           <Reveal>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 48 }}>
               <h3 className="serif" style={{ fontSize: 32 }}>{t('servicesPage.adjacentTitle')}</h3>
-              <span className="mono" style={{ color: 'var(--fg-50)' }}>05 / {t('servicesPage.adjacentLabel')}</span>
+              <span className="mono" style={{ color: 'var(--fg-50)' }}>{String(otherServices.length).padStart(2, '0')} / {t('servicesPage.adjacentLabel')}</span>
             </div>
           </Reveal>
-          <div className="grid-5" style={{ gap: 0, border: '1px solid var(--fg-08)' }}>
+          <div className="grid-6" style={{ gap: 0, border: '1px solid var(--fg-08)' }}>
             {otherServices.map((o, i) => {
               const OIcon = Icons[o.icon];
               return (

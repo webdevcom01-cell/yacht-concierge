@@ -17,7 +17,7 @@
   },
   "services": {
     "eyebrow": "01 / SERVICES",
-    "title1": "Six disciplines.",
+    "title1": "Seven disciplines.",
     "title2": "One desk.",
     "lede": "Every request, from a late-arriving provisioning pallet to a hull wash before charter, routes through a single captain-facing coordinator.",
     "viewProtocol": "View protocol",
@@ -25,6 +25,8 @@
     "berth_desc": "Priority berth allocation across Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar. Negotiated seasonal rates and dedicated slip-holding.",
     "customs_title": "Customs & Immigration",
     "customs_desc": "End-to-end clearance for crew and guests. TIP processing, Schengen coordination, and flag-state documentation.",
+    "fuel_title": "Fuel & Bunkering",
+    "fuel_desc": "Duty-free diesel bunkering at Porto Montenegro, Portonovi, and Bar, plus petrol and standard-rate fuel network-wide.",
     "provisioning_title": "Provisioning",
     "provisioning_desc": "Galley-standard sourcing. Daily market runs, dry stores, wine cellar curation, and specialty imports.",
     "laundry_title": "Laundry & Linen",
@@ -277,7 +279,7 @@
     "eyebrow": "↳ SERVICES INDEX",
     "title1": "Operational",
     "titleAccent": "disciplines.",
-    "lede": "Six services coordinated from a single desk in Tivat. Each carries a documented protocol, a named coordinator, and a measured SLA. Select any discipline for the full brief.",
+    "lede": "Seven services coordinated from a single desk in Tivat. Each carries a documented protocol, a named coordinator, and a measured SLA. Select any discipline for the full brief.",
     "openBtn": "OPEN",
     "allServices": "← ALL SERVICES",
     "serviceBrief": "SERVICE BRIEF",
@@ -390,6 +392,39 @@
           "n": "04",
           "step": "MONITOR",
           "body": "Agent on-call for the duration of stay. Crew changes, stores replenishment, flag changes handled without re-intake."
+        }
+      ]
+    },
+    "fuel": {
+      "coverage": "Porto Montenegro · Portonovi · Bar · Budva · Kotor",
+      "sla": "24-hour standard notice; same-day where slot, vessel size, and dock availability allow",
+      "rateNote": "Diesel bunkered duty-free where eligible; petrol and standard-rate fuel at pump price — fully receipted. Coordination fee is a flat percentage of the invoice.",
+      "deliverables": [
+        "Duty-free diesel bunkering",
+        "Petrol & standard-rate fuel",
+        "Licensed agent documentation",
+        "Fully receipted invoicing"
+      ],
+      "protocol": [
+        {
+          "n": "01",
+          "step": "REQUEST",
+          "body": "Captain or purser submits fuel type (diesel, petrol, or both), estimated quantity, and charter status via encrypted portal."
+        },
+        {
+          "n": "02",
+          "step": "CONFIRM",
+          "body": "Coordinator confirms duty-free diesel at Porto Montenegro, Portonovi, or Bar; standard-rate pumps at Budva and Kotor suit smaller yachts. Luštica Bay is routed to the nearest duty-free dock. Standard window is 24 hours, often same day."
+        },
+        {
+          "n": "03",
+          "step": "BUNKER",
+          "body": "Fuel delivered berth-side at the marina's own dock, or dockside at the local pump for smaller vessels. Duty-free documentation for eligible diesel prepared and filed by our licensed agent before transfer."
+        },
+        {
+          "n": "04",
+          "step": "RECONCILE",
+          "body": "Delivery ticket and duty-free paperwork issued with the invoice; coordination fee applied as a flat percentage."
         }
       ]
     },

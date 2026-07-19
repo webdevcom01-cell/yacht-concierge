@@ -11,7 +11,7 @@ const SEO_DATA = {
   },
   services: {
     title: 'Services — Yacht Concierge Montenegro',
-    description: 'Comprehensive superyacht services: berth reservations, immigration clearance, provisioning, laundry, floristry, and maintenance along the Montenegrin coast.',
+    description: 'Comprehensive superyacht services: berth reservations, immigration clearance, fuel & bunkering, provisioning, laundry, floristry, and maintenance along the Montenegrin coast.',
     url: 'https://yacht-concierge.me/services',
     breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }],
   },
@@ -74,6 +74,12 @@ const SEO_DATA = {
     description: 'Full Montenegrin customs and immigration clearance for superyachts. All documentation handled from your berth — no agent handoffs, no delays.',
     url: 'https://yacht-concierge.me/services/customs',
     breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Customs & Immigration', url: 'https://yacht-concierge.me/services/customs' }],
+  },
+  'service-fuel': {
+    title: 'Fuel & Bunkering — Yacht Concierge Montenegro',
+    description: 'Duty-free diesel bunkering for superyachts in Montenegro at Porto Montenegro, Portonovi, and Bar. Petrol and standard-rate fuel coordinated at Budva and Kotor, with Luštica Bay routed to the nearest duty-free dock.',
+    url: 'https://yacht-concierge.me/services/fuel',
+    breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Fuel & Bunkering', url: 'https://yacht-concierge.me/services/fuel' }],
   },
   'service-provisioning': {
     title: 'Provisioning — Yacht Concierge Montenegro',

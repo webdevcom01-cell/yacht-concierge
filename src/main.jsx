@@ -28,7 +28,7 @@ const TermsPage         = React.lazy(() => import('./components/legal').then(m =
 
 // ── URL ↔ Route helpers ──────────────────────────────────────────────────────
 
-const SERVICE_IDS = ['berth', 'customs', 'provisioning', 'laundry', 'floristry', 'maintenance'];
+const SERVICE_IDS = ['berth', 'customs', 'fuel', 'provisioning', 'laundry', 'floristry', 'maintenance'];
 
 function routeToPath(r) {
   if (!r) return '/';

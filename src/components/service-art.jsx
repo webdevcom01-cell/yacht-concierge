@@ -1,6 +1,6 @@
 import React from 'react';
 
-// Per-service hero illustrations for the six service detail pages.
+// Per-service hero illustrations for the seven service detail pages.
 // Same construction language as the marina scenes on the coast map
 // (MarinaSVG in home-bottom.jsx): gradient sky, horizon, sea reflections,
 // cream silhouette motif, corner mono label. Everything is original vector
@@ -16,6 +16,11 @@ const SCENES = {
     skyTop: '#0A1420', skyMid: '#1E3A50', skyBot: '#3A5A72',
     seaTop: '#1A3648', seaBot: '#0A1E2C',
     glow: '#B0C4D8', glowR: 22,
+  },
+  fuel: {
+    skyTop: '#0C1418', skyMid: '#243842', skyBot: '#3E5A64',
+    seaTop: '#1C2E34', seaBot: '#0A1618',
+    glow: '#D8C468', glowR: 24,
   },
   provisioning: {
     skyTop: '#1C1008', skyMid: '#5A3517', skyBot: '#A6672C',
@@ -83,6 +88,25 @@ function CustomsMotif() {
       {/* Stamp ring framing the orb */}
       <circle cx="120" cy="70" r="34" fill="none" stroke={CREAM(0.35)} strokeWidth="1.2" strokeDasharray="5 4"/>
       <circle cx="120" cy="70" r="25" fill="none" stroke={CREAM(0.2)} strokeWidth="0.8"/>
+    </g>
+  );
+}
+
+function FuelMotif() {
+  return (
+    <g>
+      {/* Dock edge on the right */}
+      <rect x="252" y="146" width="148" height="5" fill={CREAM(0.5)}/>
+      {/* Fuel pump silhouette */}
+      <g transform="translate(280, 90)">
+        <rect x="0" y="0" width="34" height="56" rx="2" fill={CREAM(0.5)}/>
+        <rect x="6" y="8" width="22" height="14" fill="rgba(10,20,32,0.55)"/>
+        <path d="M34 20 h14 a8 8 0 0 1 8 8 v20 a5 5 0 0 0 10 0 v-24 l-8 -10" fill="none" stroke={CREAM(0.55)} strokeWidth="2.4"/>
+      </g>
+      {/* Gauge ring around the orb */}
+      <circle cx="112" cy="66" r="28" fill="none" stroke={CREAM(0.35)} strokeWidth="1.4" strokeDasharray="4 5"/>
+      <circle cx="112" cy="66" r="19" fill="none" stroke={CREAM(0.2)} strokeWidth="0.8"/>
+      <line x1="112" y1="66" x2="122" y2="52" stroke={CREAM(0.55)} strokeWidth="1.6"/>
     </g>
   );
 }
@@ -184,6 +208,7 @@ function MaintenanceMotif() {
 const MOTIFS = {
   berth: BerthMotif,
   customs: CustomsMotif,
+  fuel: FuelMotif,
   provisioning: ProvisioningMotif,
   laundry: LaundryMotif,
   floristry: FloristryMotif,

@@ -50,7 +50,8 @@ function ServicesPreview() {
         <div className={`services-grid services-grid--${serviceDensity === 'dense' ? 'dense' : serviceDensity === 'loose' ? 'loose' : 'standard'}`} style={{ gap: 0, border: '1px solid var(--border, var(--fg-08))' }}>
           {SERVICES.map((s, i) => {
             const IconC = Icons[s.icon];
-            const isRight = (i + 1) % colCount === 0;
+            const isLast = i === SERVICES.length - 1;
+            const isRight = (i + 1) % colCount === 0 || isLast;
             const isBottom = i >= SERVICES.length - colCount;
             return (
               <Reveal key={s.id} delay={i * 60}>

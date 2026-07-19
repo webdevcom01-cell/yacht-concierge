@@ -17,7 +17,7 @@
   },
   "services": {
     "eyebrow": "01 / SERVIZI",
-    "title1": "Sei discipline.",
+    "title1": "Sette discipline.",
     "title2": "Un desk.",
     "lede": "Ogni richiesta — da un pallet di approvvigionamento in ritardo al lavaggio dello scafo prima del charter — passa attraverso un unico coordinatore dedicato al comandante.",
     "viewProtocol": "Scopri il protocollo",
@@ -25,6 +25,8 @@
     "berth_desc": "Assegnazione prioritaria degli ormeggi a Porto Montenegro, Herceg Novi, Kotor, Budva e Bar. Tariffe stagionali negoziate e riserva esclusiva del posto.",
     "customs_title": "Dogana e immigrazione",
     "customs_desc": "Disbrigo completo per equipaggio e ospiti. Elaborazione TIP, coordinamento Schengen e documentazione per la bandiera.",
+    "fuel_title": "Carburante e Bunkeraggio",
+    "fuel_desc": "Bunkeraggio diesel duty-free a Porto Montenegro, Portonovi e Bar, oltre a benzina e carburante a tariffa standard in tutta la rete.",
     "provisioning_title": "Approvvigionamento",
     "provisioning_desc": "Acquisti agli standard di cambusa. Forniture giornaliere dal mercato, dispensa a secco, selezione cantina e importazioni specializzate.",
     "laundry_title": "Lavanderia e biancheria",
@@ -277,7 +279,7 @@
     "eyebrow": "↳ INDICE SERVIZI",
     "title1": "Discipline",
     "titleAccent": "operative.",
-    "lede": "Sei servizi coordinati da un unico desk a Tivat. Ognuno include un protocollo documentato, un coordinatore nominato e uno SLA misurato. Seleziona una disciplina per il briefing completo.",
+    "lede": "Sette servizi coordinati da un unico desk a Tivat. Ognuno include un protocollo documentato, un coordinatore nominato e uno SLA misurato. Seleziona una disciplina per il briefing completo.",
     "openBtn": "APRI",
     "allServices": "← TUTTI I SERVIZI",
     "serviceBrief": "BRIEFING SERVIZIO",
@@ -390,6 +392,39 @@
           "n": "04",
           "step": "MONITORAGGIO",
           "body": "L'agente è reperibile per tutta la durata della sosta. Cambi di equipaggio, rifornimento scorte, cambi di bandiera gestiti senza rinnovo delle pratiche."
+        }
+      ]
+    },
+    "fuel": {
+      "coverage": "Porto Montenegro · Portonovi · Bar · Budva · Kotor",
+      "sla": "Preavviso standard di 24 ore; in giornata quando disponibilità di slot, dimensioni dell'imbarcazione e banchina lo consentono",
+      "rateNote": "Diesel rifornito in esenzione doganale dove applicabile; benzina e carburante a tariffa standard al prezzo di pompa — con ricevuta completa. La tariffa di coordinamento è una percentuale fissa sulla fattura.",
+      "deliverables": [
+        "Bunkeraggio diesel duty-free",
+        "Benzina e carburante a tariffa standard",
+        "Documentazione a cura dell'agente autorizzato",
+        "Fatturazione con ricevuta completa"
+      ],
+      "protocol": [
+        {
+          "n": "01",
+          "step": "RICHIESTA",
+          "body": "Il capitano o il commissario di bordo invia il tipo di carburante (diesel, benzina o entrambi), la quantità stimata e lo stato del charter tramite portale cifrato."
+        },
+        {
+          "n": "02",
+          "step": "CONFERMA",
+          "body": "Il coordinatore conferma il diesel duty-free a Porto Montenegro, Portonovi o Bar; le pompe a tariffa standard a Budva e Kotor sono adatte a imbarcazioni più piccole. Le imbarcazioni a Luštica Bay vengono indirizzate alla banchina duty-free più vicina. La finestra standard è di 24 ore, spesso in giornata."
+        },
+        {
+          "n": "03",
+          "step": "BUNKERAGGIO",
+          "body": "Il carburante viene consegnato all'ormeggio presso la banchina della marina, oppure presso la pompa locale per le imbarcazioni più piccole. La documentazione duty-free per il diesel idoneo viene preparata e depositata dal nostro agente autorizzato prima del trasferimento."
+        },
+        {
+          "n": "04",
+          "step": "SALDO",
+          "body": "La bolla di consegna e la documentazione duty-free vengono emesse con la fattura; la tariffa di coordinamento viene applicata come percentuale fissa."
         }
       ]
     },

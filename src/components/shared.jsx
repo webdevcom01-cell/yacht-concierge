@@ -74,6 +74,7 @@ const Icons = {
   Droplet: (p) => <Icon {...p}><path d="M12 3s6 6 6 11a6 6 0 0 1-12 0c0-5 6-11 6-11z"/></Icon>,
   Leaf: (p) => <Icon {...p}><path d="M4 20c0-8 6-14 16-14 0 10-6 16-14 16"/><path d="M4 20s4-4 10-6"/></Icon>,
   Gear: (p) => <Icon {...p}><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.2-1.7l2-1.4-2-3.4-2.3.9a7 7 0 0 0-2.9-1.7L13 2h-4l-.6 2.7a7 7 0 0 0-2.9 1.7l-2.3-.9-2 3.4 2 1.4A7 7 0 0 0 3 12c0 .6.1 1.1.2 1.7l-2 1.4 2 3.4 2.3-.9a7 7 0 0 0 2.9 1.7L9 22h4l.6-2.7a7 7 0 0 0 2.9-1.7l2.3.9 2-3.4-2-1.4c.1-.6.2-1.1.2-1.7z"/></Icon>,
+  Fuel: (p) => <Icon {...p}><rect x="4" y="4" width="9" height="17" rx="1"/><path d="M4 9h9"/><path d="M13 10h3a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0v-6l-2-3"/></Icon>,
   Arrow: (p) => <Icon {...p}><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></Icon>,
   ArrowDown: (p) => <Icon {...p}><path d="M12 5v14"/><path d="M6 13l6 6 6-6"/></Icon>,
   Check: (p) => <Icon {...p}><path d="M4 12l5 5L20 6"/></Icon>,

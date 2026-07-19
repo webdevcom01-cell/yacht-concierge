@@ -602,8 +602,12 @@ html { scroll-behavior: smooth; }
 /* 3-column — coverage/SLA strip */
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); }
 
-/* 5-column — principles, cross-sell related services */
+/* 5-column — principles (About page, always exactly 5 items) */
 .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); }
+
+/* 6-column — service detail "Adjacent services" cross-sell (always
+   SERVICES.length - 1 items; currently 6, with 7 total services) */
+.grid-6 { display: grid; grid-template-columns: repeat(6, 1fr); }
 
 /* M-12: filter toggle hidden on desktop; shown only inside ≤768px breakpoint */
 .shop-mobile-filters { display: none; }
@@ -924,8 +928,11 @@ html { scroll-behavior: smooth; }
   /* Coverage/SLA strip: 3-col → 1-col (full-width stacked cards) */
   .grid-3 { grid-template-columns: 1fr; }
 
-  /* Principles / cross-sell: 5-col → 2-col */
+  /* Principles: 5-col → 2-col */
   .grid-5 { grid-template-columns: 1fr 1fr; }
+
+  /* Adjacent services cross-sell: 6-col → 2-col */
+  .grid-6 { grid-template-columns: 1fr 1fr; }
 
   /* Stats strip: 5 → 2-col */
   .grid-stats-strip { grid-template-columns: 1fr 1fr; }
@@ -991,6 +998,7 @@ html { scroll-behavior: smooth; }
 
   /* M-8: grid-5 single-column on small phones */
   .grid-5 { grid-template-columns: 1fr; }
+  .grid-6 { grid-template-columns: 1fr; }
 
   /* Mi-7: stats strip 2-col → 1-col on small phones — 5 items side-by-side crush to ~60px each */
   .grid-stats-strip { grid-template-columns: 1fr; }
