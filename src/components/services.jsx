@@ -19,6 +19,11 @@ const SERVICE_PHOTOS = {
   maintenance:  { src: '/service-maintenance.jpg',  position: 'center 40%' },
 };
 
+// Hero photo for the /services index page (below the intro, above the list) —
+// same real-photo treatment as the per-service detail pages. Unsplash, free
+// license: brass-and-teak ship's wheel, photo by Pierre Goiffon.
+const SERVICES_HERO_PHOTO = { src: '/services-hero.jpg', position: '46% 58%' };
+
 function ServicesPage() {
   const { setRoute } = useApp();
   const { t } = useTranslation();
@@ -41,6 +46,18 @@ function ServicesPage() {
             </p>
           </Reveal>
         </div>
+
+        {/* Hero photography — see SERVICES_HERO_PHOTO above */}
+        <Reveal>
+          <div style={{ position: 'relative', marginBottom: 96, border: '1px solid var(--fg-08)', overflow: 'hidden', height: 'clamp(220px, 30vw, 340px)' }}>
+            <img src={SERVICES_HERO_PHOTO.src} alt="" aria-hidden="true" loading="lazy" decoding="async"
+                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: SERVICES_HERO_PHOTO.position }}/>
+            <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.20) 0%, rgba(0,23,48,0) 45%, rgba(0,23,48,0.30) 100%)' }}/>
+            <div className="mono" style={{ position: 'absolute', left: 20, bottom: 14, color: 'rgba(239,234,226,0.75)', letterSpacing: '0.18em', fontSize: 10, textTransform: 'uppercase' }}>
+              {t('servicesPage.heroCaption')}
+            </div>
+          </div>
+        </Reveal>
 
         <div style={{ borderTop: '1px solid var(--fg-15)' }}>
           {SERVICES.map((s, i) => {
