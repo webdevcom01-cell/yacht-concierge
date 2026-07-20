@@ -580,6 +580,7 @@ function Footer() {
                 { page: 'process',      path: '/process',      label: t('nav.process') },
                 { page: 'fleet',        path: '/fleet',        label: t('nav.fleet') },
                 { page: 'provisioning', path: '/provisioning', label: t('nav.provisioning') },
+                { page: 'bunkering',    path: '/bunkering',    label: t('nav.bunkering') },
                 { page: 'about',        path: '/about',        label: t('nav.about') },
                 { page: 'contact',      path: '/contact',      label: t('nav.contact') },
               ].map(l => (

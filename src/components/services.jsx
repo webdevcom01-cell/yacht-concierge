@@ -268,6 +268,17 @@ function ServiceDetailPage({ id }) {
           />
         )}
 
+        {/* Contextual CTA — fuel detail links to the bunkering request page */}
+        {s.id === 'fuel' && (
+          <DetailCTA
+            label={t('servicesPage.fuelCtaLabel')}
+            title={t('servicesPage.fuelCtaTitle')}
+            body={t('servicesPage.fuelCtaBody')}
+            btn={t('servicesPage.fuelCtaBtn')}
+            onClick={() => setRoute({ page: 'bunkering' })}
+          />
+        )}
+
         {/* Cross-sell */}
         <div style={{ marginBottom: 96 }}>
           <Reveal>

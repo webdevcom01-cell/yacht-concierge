@@ -21,6 +21,12 @@ const SEO_DATA = {
     url: 'https://yacht-concierge.me/provisioning',
     breadcrumb: [{ name: 'Provisioning', url: 'https://yacht-concierge.me/provisioning' }],
   },
+  bunkering: {
+    title: 'Fuel & Bunkering Request — Yacht Concierge Montenegro',
+    description: 'Request duty-free diesel bunkering or standard-rate fuel for your superyacht in Montenegro — Porto Montenegro, Portonovi, Bar, Budva, and Kotor, with Luštica Bay routed to the nearest duty-free dock.',
+    url: 'https://yacht-concierge.me/bunkering',
+    breadcrumb: [{ name: 'Fuel & Bunkering', url: 'https://yacht-concierge.me/bunkering' }],
+  },
   process: {
     title: 'How It Works — Yacht Concierge Montenegro',
     description: 'A 4-phase operational protocol for seamless superyacht arrivals. From first contact to departure briefing — one named coordinator per vessel.',

@@ -67,3 +67,20 @@ export async function submitCatalogueRequest(data, refNum) {
     notes:      data.notes || '—',
   });
 }
+
+export async function submitBunkeringRequest(data, refNum) {
+  return postJSON({
+    _sheet:        'Bunkering Requests',
+    _subject:      `[${refNum}] Fuel & bunkering — ${data.yacht || data.name}`,
+    ref:           refNum,
+    name:          data.name,
+    yacht:         data.yacht || '—',
+    email:         data.email,
+    phone:         data.phone || '—',
+    marina:        data.marina || '—',
+    fuelTypes:     data.fuelTypes.join(', '),
+    quantity:      data.quantity || '—',
+    charterStatus: data.charterStatus,
+    notes:         data.notes || '—',
+  });
+}
