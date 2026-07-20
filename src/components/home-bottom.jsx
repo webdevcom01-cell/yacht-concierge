@@ -355,11 +355,11 @@ function ClosingCTA({ serviceId = null, hero = false }) {
         </R>
         {hero && (
           <div style={{ position: 'relative', marginTop: 72, height: 'clamp(240px, 38vh, 460px)', overflow: 'hidden', border: '1px solid var(--fg-08)' }}>
-            {/* Hero photo — AI-rendered concept superyacht at dusk (client-supplied render) */}
+            {/* Hero photo — Porto Montenegro marina, Tivat (Unsplash free license, photo by Alex Chernenko) */}
             <picture>
-              <source srcSet="/hero-render.webp" type="image/webp"/>
-              <img src="/hero-render.jpg" alt="" aria-hidden="true" decoding="async"
-                   style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 55%' }}/>
+              <source srcSet="/hero-porto.webp" type="image/webp"/>
+              <img src="/hero-porto.jpg" alt="" aria-hidden="true" decoding="async"
+                   style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 45%' }}/>
             </picture>
             <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.10) 0%, rgba(0,23,48,0) 35%, rgba(0,23,48,0.22) 100%)' }}/>
           </div>
