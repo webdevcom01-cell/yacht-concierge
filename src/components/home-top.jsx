@@ -33,12 +33,12 @@ function ServicesPreview() {
           </Reveal>
         </div>
 
-        {/* Photo band — superyacht aerial, dockside (Unsplash free license, photo by Kaleb Duperre) */}
+        {/* Photo band — Bay of Kotor, panoramic vista (Unsplash free license, photo by Sergei Shershen) */}
         <Reveal delay={200}>
           <div style={{ position: 'relative', marginBottom: 64, overflow: 'hidden', height: 'clamp(200px, 24vw, 320px)', border: '1px solid var(--fg-08)' }}>
             <picture>
               <source srcSet="/services-band.webp" type="image/webp"/>
-              <img src="/services-band.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}/>
+              <img src="/services-band.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%' }}/>
             </picture>
             <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.20) 0%, rgba(0,23,48,0) 45%, rgba(0,23,48,0.30) 100%)' }}/>
             <div className="mono" style={{ position: 'absolute', left: 20, bottom: 14, color: 'rgba(239,234,226,0.75)', letterSpacing: '0.18em', fontSize: 10 }}>
