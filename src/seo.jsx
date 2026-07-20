@@ -94,10 +94,10 @@ const SEO_DATA = {
     breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Provisioning', url: 'https://yacht-concierge.me/services/provisioning' }],
   },
   'service-laundry': {
-    title: 'Laundry & Valeting — Yacht Concierge Montenegro',
+    title: 'Laundry & Linen — Yacht Concierge Montenegro',
     description: 'Professional laundry, dry cleaning, and uniform care for superyacht crews. Berth collection and next-day return at Porto Montenegro and partner marinas.',
     url: 'https://yacht-concierge.me/services/laundry',
-    breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Laundry & Valeting', url: 'https://yacht-concierge.me/services/laundry' }],
+    breadcrumb: [{ name: 'Services', url: 'https://yacht-concierge.me/services' }, { name: 'Laundry & Linen', url: 'https://yacht-concierge.me/services/laundry' }],
   },
   'service-floristry': {
     title: 'Floristry — Yacht Concierge Montenegro',
