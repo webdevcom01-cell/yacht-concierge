@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, createContext, useContext } from 'r
 import { useTranslation } from 'react-i18next';
 import { SERVICES } from '../data/services';
 import { setLanguage } from '../i18n';
+import { persistThemeOverride } from '../lib/theme';
 
 // Shared primitives: Logo, Nav, Footer, icons, reveal hook
 
@@ -405,7 +406,11 @@ function Nav() {
             {/* Theme toggle */}
             <button
               className="nav-link nav-icon-btn"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              onClick={() => {
+                const next = theme === 'dark' ? 'light' : 'dark';
+                setTheme(next);
+                persistThemeOverride(next);
+              }}
               aria-label={t('nav.ariaTheme')}
             >
               {theme === 'dark' ? <Icons.Sun size={14} /> : <Icons.Moon size={14} />}

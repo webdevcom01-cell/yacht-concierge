@@ -3,6 +3,24 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!-- Timezone-aware theme, applied before first paint to avoid a light-theme
+     flash. Mirrors the logic in src/lib/theme.js — kept in sync manually
+     since this must run standalone, before the app bundle loads. -->
+<script>
+(function () {
+  try {
+    var ov = sessionStorage.getItem('yc-theme-override');
+    var theme;
+    if (ov === 'light' || ov === 'dark') {
+      theme = ov;
+    } else {
+      var h = new Date().getHours();
+      theme = (h >= 19 || h < 7) ? 'dark' : 'light';
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {}
+})();
+</script>
 <title>Yacht Concierge Montenegro — Superyacht Logistics, Adriatic</title>
 <meta name="description" content="Full-service concierge for superyachts in Montenegro. Berth reservations, customs, provisioning, and crew logistics at Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar."/>
 <!-- Static Open Graph / Twitter tags — social scrapers (WhatsApp, iMessage,

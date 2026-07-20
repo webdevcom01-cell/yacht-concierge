@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 
 import './i18n';
 import { AppCtx, Nav, Footer, WhatsAppFloat, ErrorBoundary } from './components/shared';
+import { getInitialTheme } from './lib/theme';
 import { PageSEO } from './seo.jsx';
 import { HomePage } from './components/home-bottom';
 import { ServicesPage, ServiceDetailPage } from './components/services';
@@ -91,7 +92,11 @@ function App() {
 
   // Theme is the only runtime-adjustable design token (nav toggle);
   // accent, nav style and grid density are fixed design decisions.
-  const [theme, setTheme] = useState('light');
+  // Initial value is timezone-aware (dark in the evening/night, light by
+  // day) with a per-visit manual override — see src/lib/theme.js. The
+  // index.html inline script already applied this same theme before first
+  // paint; this just brings React's state in sync with what's on screen.
+  const [theme, setTheme] = useState(getInitialTheme);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
