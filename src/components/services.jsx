@@ -7,12 +7,12 @@ import { ServiceArt } from './service-art';
 // Services index page & Service detail page
 
 // Per-service hero photography — real photos (Unsplash, free license) for
-// six of the seven service detail pages. ServiceArt (service-art.jsx) is the
-// SVG fallback for any service id not listed here — currently 'fuel', whose
-// photo is sourced in a later pass.
+// all seven service detail pages. ServiceArt (service-art.jsx) is the SVG
+// fallback for any service id not listed here.
 const SERVICE_PHOTOS = {
   berth:        { src: '/service-berth.jpg',       position: 'center 22%' },
   customs:      { src: '/service-customs.jpg',      position: 'center 45%' },
+  fuel:         { src: '/service-fuel.jpg',         position: '61% 55%' },
   provisioning: { src: '/service-provisioning.jpg', position: 'center 65%' },
   laundry:      { src: '/service-laundry.jpg',      position: 'center 42%' },
   floristry:    { src: '/service-floristry.jpg',    position: 'center 45%' },
