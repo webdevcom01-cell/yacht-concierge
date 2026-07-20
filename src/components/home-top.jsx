@@ -33,7 +33,7 @@ function ServicesPreview() {
           </Reveal>
         </div>
 
-        {/* Photo band — superyacht aerial (Unsplash free license, photo by Lidija Jakovljevic) */}
+        {/* Photo band — superyacht aerial, dockside (Unsplash free license, photo by Kaleb Duperre) */}
         <Reveal delay={200}>
           <div style={{ position: 'relative', marginBottom: 64, overflow: 'hidden', height: 'clamp(200px, 24vw, 320px)', border: '1px solid var(--fg-08)' }}>
             <picture>
