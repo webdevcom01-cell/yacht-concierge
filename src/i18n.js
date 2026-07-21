@@ -11,11 +11,6 @@ const LAZY_LOCALES = {
 
 const LANG_KEY = 'yc-lang';
 
-const savedLang = (() => {
-  try { return localStorage.getItem(LANG_KEY) || 'en'; }
-  catch { return 'en'; }
-})();
-
 i18n
   .use(initReactI18next)
   .init({
@@ -40,12 +35,6 @@ export async function setLanguage(lng) {
   await i18n.changeLanguage(lng);
   document.documentElement.lang = lng;
   try { localStorage.setItem(LANG_KEY, lng); } catch {}
-}
-
-// Restore the visitor's saved language (async — EN renders until the
-// locale chunk arrives, typically imperceptible on a warm connection)
-if (savedLang !== 'en') {
-  setLanguage(savedLang);
 }
 
 export default i18n;

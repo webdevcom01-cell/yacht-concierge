@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 
-import './i18n';
+import { setLanguage } from './i18n';
 import { AppCtx, Nav, Footer, WhatsAppFloat, ErrorBoundary } from './components/shared';
 import { getInitialTheme } from './lib/theme';
 import { PageSEO } from './seo.jsx';
@@ -32,43 +32,66 @@ const TermsPage         = React.lazy(() => import('./components/legal').then(m =
 
 const SERVICE_IDS = ['berth', 'customs', 'fuel', 'provisioning', 'laundry', 'floristry', 'maintenance'];
 
+// N7 (Phase 1 — i18n URLs): English is the default, unprefixed language;
+// ru/it get a leading /ru or /it path segment. Adding a language here later
+// means: add to this list, add the locale bundle in i18n.js, and translate
+// SEO_DATA in seo.jsx — none of that is automatic from this array alone.
+const SUPPORTED_LANGS = ['ru', 'it'];
+
 function routeToPath(r) {
   if (!r) return '/';
-  switch (r.page) {
-    case 'home':          return '/';
-    case 'services':      return '/services';
-    case 'service':       return `/services/${r.id}`;
-    case 'process':       return '/process';
-    case 'contact':       return '/contact';
-    case 'fleet':         return '/fleet';
-    case 'about':         return '/about';
-    case 'provisioning':  return '/provisioning';
-    case 'bunkering':     return '/bunkering';
-    case 'legal':         return '/legal';
-    case 'privacy':       return '/privacy';
-    case 'terms':         return '/terms';
-    default:              return '/';
-  }
+  const base = (() => {
+    switch (r.page) {
+      case 'home':          return '/';
+      case 'services':      return '/services';
+      case 'service':       return `/services/${r.id}`;
+      case 'process':       return '/process';
+      case 'contact':       return '/contact';
+      case 'fleet':         return '/fleet';
+      case 'about':         return '/about';
+      case 'provisioning':  return '/provisioning';
+      case 'bunkering':     return '/bunkering';
+      case 'legal':         return '/legal';
+      case 'privacy':       return '/privacy';
+      case 'terms':         return '/terms';
+      default:              return '/';
+    }
+  })();
+  if (!r.lang || !SUPPORTED_LANGS.includes(r.lang)) return base;
+  return base === '/' ? `/${r.lang}` : `/${r.lang}${base}`;
 }
 
 function pathToRoute(path) {
-  const p = path.replace(/\/$/, '') || '/';
-  if (p === '/' || p === '')              return { page: 'home' };
-  if (p === '/services')                  return { page: 'services' };
-  if (p.startsWith('/services/')) {
-    const id = p.slice('/services/'.length);
-    if (SERVICE_IDS.includes(id))         return { page: 'service', id };
+  // Strip a leading /ru or /it segment, if present, before parsing the rest
+  // of the path with the same logic as before. `lang` is null for English
+  // (unprefixed) — never the string 'en'; routeToPath relies on that.
+  let lang = null;
+  let rest = path;
+  for (const l of SUPPORTED_LANGS) {
+    if (path === `/${l}`) { lang = l; rest = '/'; break; }
+    if (path.startsWith(`/${l}/`)) { lang = l; rest = path.slice(l.length + 1); break; }
   }
-  if (p === '/process')                   return { page: 'process' };
-  if (p === '/contact')                   return { page: 'contact' };
-  if (p === '/fleet')                     return { page: 'fleet' };
-  if (p === '/about')                     return { page: 'about' };
-  if (p === '/provisioning')              return { page: 'provisioning' };
-  if (p === '/bunkering')                 return { page: 'bunkering' };
-  if (p === '/legal')                     return { page: 'legal' };
-  if (p === '/privacy')                   return { page: 'privacy' };
-  if (p === '/terms')                     return { page: 'terms' };
-  return { page: '404' };
+
+  const p = rest.replace(/\/$/, '') || '/';
+  let route;
+  if (p === '/' || p === '')              route = { page: 'home' };
+  else if (p === '/services')             route = { page: 'services' };
+  else if (p.startsWith('/services/')) {
+    const id = p.slice('/services/'.length);
+    route = SERVICE_IDS.includes(id) ? { page: 'service', id } : { page: '404' };
+  }
+  else if (p === '/process')              route = { page: 'process' };
+  else if (p === '/contact')              route = { page: 'contact' };
+  else if (p === '/fleet')                route = { page: 'fleet' };
+  else if (p === '/about')                route = { page: 'about' };
+  else if (p === '/provisioning')         route = { page: 'provisioning' };
+  else if (p === '/bunkering')            route = { page: 'bunkering' };
+  else if (p === '/legal')                route = { page: 'legal' };
+  else if (p === '/privacy')              route = { page: 'privacy' };
+  else if (p === '/terms')                route = { page: 'terms' };
+  else                                     route = { page: '404' };
+
+  return { ...route, lang };
 }
 
 // ── App ──────────────────────────────────────────────────────────────────────
@@ -77,10 +100,23 @@ function App() {
   const [route, setRouteState] = useState(() => pathToRoute(window.location.pathname));
 
   const setRoute = (r) => {
-    const path = routeToPath(r);
-    window.history.pushState(r, '', path);
-    setRouteState(r);
+    // Internal nav (nav links, cards, buttons) never specifies a language —
+    // carry the current one forward so switching pages doesn't reset it.
+    const next = { lang: route.lang, ...r };
+    const path = routeToPath(next);
+    window.history.pushState(next, '', path);
+    setRouteState(next);
     window.scrollTo({ top: 0, behavior: 'instant' });
+  };
+
+  // Changes only the language segment of the URL, keeping the current page.
+  // Called by the LangSwitcher — does not touch i18next directly; the
+  // useEffect below is the single place that does, reacting to route.lang.
+  const setLang = (lang) => {
+    const next = { ...route, lang: SUPPORTED_LANGS.includes(lang) ? lang : null };
+    const path = routeToPath(next);
+    window.history.pushState(next, '', path);
+    setRouteState(next);
   };
 
   // Handle browser back / forward
@@ -92,6 +128,14 @@ function App() {
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
   }, []);
+
+  // URL is the single source of truth for language (never localStorage —
+  // see i18n.js). This runs on first mount (derives from the URL the page
+  // was loaded with) and again whenever route.lang changes via setLang or
+  // browser back/forward.
+  useEffect(() => {
+    setLanguage(route.lang || 'en');
+  }, [route.lang]);
 
   // Theme is the only runtime-adjustable design token (nav toggle);
   // accent, nav style and grid density are fixed design decisions.
@@ -106,7 +150,7 @@ function App() {
   }, [theme]);
 
   const ctx = {
-    route, setRoute,
+    route, setRoute, setLang,
     theme, setTheme,
     accent: 'gold',
     navStyle: 'glass',

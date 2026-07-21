@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, createContext, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SERVICES } from '../data/services';
-import { setLanguage } from '../i18n';
 import { persistThemeOverride } from '../lib/theme';
 
 // Shared primitives: Logo, Nav, Footer, icons, reveal hook
@@ -199,13 +198,14 @@ const LANGS = [
 // Inline row of language buttons — used in the mobile overlay header.
 function LangSwitcherInline() {
   const { i18n, t } = useTranslation();
+  const { setLang } = useApp();
   return (
     <div style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
       {LANGS.map((l, idx) => (
         <React.Fragment key={l.code}>
           <button
             className="nav-link"
-            onClick={() => setLanguage(l.code)}
+            onClick={() => setLang(l.code)}
             aria-pressed={i18n.language === l.code} /* Mi-4: screen readers announce selected language */
             aria-label={t('nav.ariaLang', { lang: l.label })}
             style={{
@@ -236,6 +236,7 @@ function LangSwitcherInline() {
 // Single-button dropdown — used in the desktop nav.
 function LangSwitcher({ inline = false }) {
   const { i18n, t } = useTranslation();
+  const { setLang } = useApp();
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
 
@@ -309,7 +310,7 @@ function LangSwitcher({ inline = false }) {
                 role="option"
                 aria-selected={active}
                 aria-label={t('nav.ariaLang', { lang: l.label })}
-                onClick={() => { setLanguage(l.code); setOpen(false); }}
+                onClick={() => { setLang(l.code); setOpen(false); }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--fg-05)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
                 style={{
