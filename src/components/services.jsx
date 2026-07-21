@@ -9,20 +9,24 @@ import { ServiceArt } from './service-art';
 // Per-service hero photography — real photos (Unsplash, free license) for
 // all seven service detail pages. ServiceArt (service-art.jsx) is the SVG
 // fallback for any service id not listed here.
+// webp siblings (Phase 3, retroactive) generated from these exact jpg files
+// at quality 80 via sharp — same treatment as fleet-bg/hero-porto/map-yacht/
+// services-band/stats-band elsewhere on the site. jpg stays as the <img>
+// fallback; browsers that support webp use the smaller <source> instead.
 const SERVICE_PHOTOS = {
-  berth:        { src: '/service-berth.jpg',       position: 'center 22%' },
-  customs:      { src: '/service-customs.jpg',      position: 'center 45%' },
-  fuel:         { src: '/service-fuel.jpg',         position: '61% 55%' },
-  provisioning: { src: '/service-provisioning.jpg', position: 'center 65%' },
-  laundry:      { src: '/service-laundry.jpg',      position: 'center 42%' },
-  floristry:    { src: '/service-floristry.jpg',    position: 'center 45%' },
-  maintenance:  { src: '/service-maintenance.jpg',  position: 'center 40%' },
+  berth:        { src: '/service-berth.jpg',       webp: '/service-berth.webp',       position: 'center 22%' },
+  customs:      { src: '/service-customs.jpg',      webp: '/service-customs.webp',      position: 'center 45%' },
+  fuel:         { src: '/service-fuel.jpg',         webp: '/service-fuel.webp',         position: '61% 55%' },
+  provisioning: { src: '/service-provisioning.jpg', webp: '/service-provisioning.webp', position: 'center 65%' },
+  laundry:      { src: '/service-laundry.jpg',      webp: '/service-laundry.webp',      position: 'center 42%' },
+  floristry:    { src: '/service-floristry.jpg',    webp: '/service-floristry.webp',    position: 'center 45%' },
+  maintenance:  { src: '/service-maintenance.jpg',  webp: '/service-maintenance.webp',  position: 'center 40%' },
 };
 
 // Hero photo for the /services index page (below the intro, above the list) —
 // same real-photo treatment as the per-service detail pages. Unsplash, free
 // license: brass-and-teak ship's wheel, photo by Pierre Goiffon.
-const SERVICES_HERO_PHOTO = { src: '/services-hero.jpg', position: '46% 58%' };
+const SERVICES_HERO_PHOTO = { src: '/services-hero.jpg', webp: '/services-hero.webp', position: '46% 58%' };
 
 function ServicesPage() {
   const { setRoute } = useApp();
@@ -50,8 +54,11 @@ function ServicesPage() {
         {/* Hero photography — see SERVICES_HERO_PHOTO above */}
         <Reveal>
           <div style={{ position: 'relative', marginBottom: 96, border: '1px solid var(--fg-08)', overflow: 'hidden', height: 'clamp(220px, 30vw, 340px)' }}>
-            <img src={SERVICES_HERO_PHOTO.src} alt="" aria-hidden="true" loading="lazy" decoding="async"
-                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: SERVICES_HERO_PHOTO.position }}/>
+            <picture>
+              <source srcSet={SERVICES_HERO_PHOTO.webp} type="image/webp"/>
+              <img src={SERVICES_HERO_PHOTO.src} alt="" aria-hidden="true" loading="lazy" decoding="async"
+                   style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: SERVICES_HERO_PHOTO.position }}/>
+            </picture>
             <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.20) 0%, rgba(0,23,48,0) 45%, rgba(0,23,48,0.30) 100%)' }}/>
             <div className="mono" style={{ position: 'absolute', left: 20, bottom: 14, color: 'rgba(239,234,226,0.75)', letterSpacing: '0.18em', fontSize: 10, textTransform: 'uppercase' }}>
               {t('servicesPage.heroCaption')}
@@ -210,8 +217,11 @@ function ServiceDetailPage({ id }) {
           <div style={{ position: 'relative', marginBottom: 96, border: '1px solid var(--fg-08)', overflow: 'hidden', height: SERVICE_PHOTOS[s.id] ? 'clamp(220px, 30vw, 340px)' : 'clamp(200px, 28vw, 300px)' }}>
             {SERVICE_PHOTOS[s.id] ? (
               <>
-                <img src={SERVICE_PHOTOS[s.id].src} alt="" aria-hidden="true" loading="lazy" decoding="async"
-                     style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: SERVICE_PHOTOS[s.id].position }}/>
+                <picture>
+                  <source srcSet={SERVICE_PHOTOS[s.id].webp} type="image/webp"/>
+                  <img src={SERVICE_PHOTOS[s.id].src} alt="" aria-hidden="true" loading="lazy" decoding="async"
+                       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: SERVICE_PHOTOS[s.id].position }}/>
+                </picture>
                 <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,23,48,0.20) 0%, rgba(0,23,48,0) 45%, rgba(0,23,48,0.30) 100%)' }}/>
                 <div className="mono" style={{ position: 'absolute', left: 20, bottom: 14, color: 'rgba(239,234,226,0.75)', letterSpacing: '0.18em', fontSize: 10, textTransform: 'uppercase' }}>
                   {t(`services.${s.id}_title`)}
