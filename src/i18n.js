@@ -33,7 +33,9 @@ async function ensureLoaded(lng) {
 export async function setLanguage(lng) {
   await ensureLoaded(lng);
   await i18n.changeLanguage(lng);
-  document.documentElement.lang = lng;
+  // Guarded: this module is also imported by scripts/prerender.mjs, which
+  // runs in Node (no `document`) to build static HTML at build time.
+  if (typeof document !== 'undefined') document.documentElement.lang = lng;
   try { localStorage.setItem(LANG_KEY, lng); } catch {}
 }
 

@@ -278,20 +278,13 @@ function buildBreadcrumb(crumbs, lang) {
   };
 }
 
-// hreflang alternates tell crawlers every language version of the current
-// page exists and how they relate — a prerequisite for the ru/it URLs (Phase
-// 1) to be picked up as intentional translations rather than duplicate
-// content. x-default points at the unprefixed English URL (site default).
-function setHreflangLinks(key) {
-  HREFLANG_VALUES.forEach(l => {
-    setOrCreate(`link[rel="alternate"][hreflang="${l}"]`, { rel: 'alternate', hreflang: l, href: pageUrl(key, l) });
-  });
-  setOrCreate('link[rel="alternate"][hreflang="x-default"]', { rel: 'alternate', hreflang: 'x-default', href: pageUrl(key, 'en') });
-}
-
-// ── PageSEO component ─────────────────────────────────────────────────────────
-
-export function PageSEO({ page, id, lang = 'en' }) {
+// ── computeHeadTags — pure, no DOM ──────────────────────────────────────────
+// Everything PageSEO needs to put in <head>, as plain data. Used by the
+// browser (PageSEO's effect below applies it via setOrCreate) AND by
+// scripts/prerender.mjs (Node/SSR — builds a <head> string directly from
+// this same data, so the two can never drift apart, same principle as
+// routeToPath being the single source of truth for URLs).
+export function computeHeadTags({ page, id, lang = 'en' }) {
   const key      = page === 'service' ? `service-${id}` : page;
   const entry    = SEO_DATA[key];
   const notFound = !entry;
@@ -299,58 +292,108 @@ export function PageSEO({ page, id, lang = 'en' }) {
   const url      = notFound ? SITE_URL : pageUrl(key, lang);
   const breadcrumb = notFound ? null : buildBreadcrumb(entry.breadcrumb, lang);
 
+  if (notFound) {
+    // Unknown route: the SPA host returns 200, so tell crawlers explicitly
+    // not to index this soft-404 — and skip canonical/hreflang/OG/schema entirely.
+    return {
+      notFound: true,
+      title: data.title,
+      description: data.description,
+      robots: 'noindex',
+      canonical: null,
+      hreflangs: [],
+      og: [],
+      twitter: [],
+      schemas: [],
+    };
+  }
+
+  // hreflang alternates tell crawlers every language version of the current
+  // page exists and how they relate — a prerequisite for the ru/it URLs (Phase
+  // 1) to be picked up as intentional translations rather than duplicate
+  // content. x-default points at the unprefixed English URL (site default).
+  const hreflangs = [
+    ...HREFLANG_VALUES.map(l => ({ hreflang: l, href: pageUrl(key, l) })),
+    { hreflang: 'x-default', href: pageUrl(key, 'en') },
+  ];
+
+  const og = [
+    ['og:title',        data.title],
+    ['og:description',  data.description],
+    ['og:url',          url],
+    ['og:type',         'website'],
+    ['og:site_name',    SITE_NAME],
+    ['og:image',        OG_IMAGE],
+    ['og:image:width',  '1200'],
+    ['og:image:height', '630'],
+  ];
+
+  const twitter = [
+    ['twitter:card',        'summary_large_image'],
+    ['twitter:title',       data.title],
+    ['twitter:description', data.description],
+    ['twitter:image',       OG_IMAGE],
+  ];
+
+  // Schema.org — LocalBusiness + WebSite (every page, English only — see
+  // note at top of file) + BreadcrumbList (localized, when present)
+  const schemas = [LOCAL_BUSINESS_SCHEMA, WEBSITE_SCHEMA, ...(breadcrumb ? [breadcrumb] : [])];
+
+  return {
+    notFound: false,
+    title: data.title,
+    description: data.description,
+    robots: null,
+    canonical: url,
+    hreflangs,
+    og,
+    twitter,
+    schemas,
+  };
+}
+
+// ── PageSEO component (browser) ─────────────────────────────────────────────
+
+export function PageSEO({ page, id, lang = 'en' }) {
   useEffect(() => {
+    const tags = computeHeadTags({ page, id, lang });
+
     // Title
-    document.title = data.title;
+    document.title = tags.title;
 
     // Remove all previously managed tags
     removeHelmetTags();
 
     // Meta description
-    setOrCreate('meta[name="description"]', { name: 'description', content: data.description });
+    setOrCreate('meta[name="description"]', { name: 'description', content: tags.description });
 
-    if (notFound) {
-      // Unknown route: the SPA host returns 200, so tell crawlers explicitly
-      // not to index this soft-404 — and skip canonical/hreflang/OG/schema entirely.
-      setOrCreate('meta[name="robots"]', { name: 'robots', content: 'noindex' });
+    if (tags.notFound) {
+      setOrCreate('meta[name="robots"]', { name: 'robots', content: tags.robots });
       return () => removeHelmetTags();
     }
 
     // Canonical — points at the CURRENT language's own URL (not always
     // English), since each language version is now a distinct, indexable URL.
-    setOrCreate('link[rel="canonical"]', { rel: 'canonical', href: url });
+    setOrCreate('link[rel="canonical"]', { rel: 'canonical', href: tags.canonical });
 
     // hreflang alternates — one per supported language plus x-default
-    setHreflangLinks(key);
+    tags.hreflangs.forEach(({ hreflang, href }) => {
+      setOrCreate(`link[rel="alternate"][hreflang="${hreflang}"]`, { rel: 'alternate', hreflang, href });
+    });
 
     // Open Graph — adopts the static tags shipped in index.html (updated in
     // place per route; scrapers that don't run JS see the static site-wide set)
-    [
-      ['og:title',        data.title],
-      ['og:description',  data.description],
-      ['og:url',          url],
-      ['og:type',         'website'],
-      ['og:site_name',    SITE_NAME],
-      ['og:image',        OG_IMAGE],
-      ['og:image:width',  '1200'],
-      ['og:image:height', '630'],
-    ].forEach(([prop, content]) => {
+    tags.og.forEach(([prop, content]) => {
       setOrCreate(`meta[property="${prop}"]`, { property: prop, content });
     });
 
     // Twitter Card
-    [
-      ['twitter:card',        'summary_large_image'],
-      ['twitter:title',       data.title],
-      ['twitter:description', data.description],
-      ['twitter:image',       OG_IMAGE],
-    ].forEach(([name, content]) => {
+    tags.twitter.forEach(([name, content]) => {
       setOrCreate(`meta[name="${name}"]`, { name, content });
     });
 
-    // Schema.org — LocalBusiness + WebSite (every page, English only — see
-    // note at top of file) + BreadcrumbList (localized, when present)
-    [LOCAL_BUSINESS_SCHEMA, WEBSITE_SCHEMA, ...(breadcrumb ? [breadcrumb] : [])].forEach(schema => {
+    // Schema.org
+    tags.schemas.forEach(schema => {
       const el = document.createElement('script');
       el.setAttribute('type', 'application/ld+json');
       el.setAttribute(HELMET_ATTR, 'true');
