@@ -290,6 +290,8 @@
     "deliverablesLabel": "DELIVERABLES",
     "protocolLabel": "PROTOCOLLO",
     "protocolTitle": "Come viene erogato questo servizio.",
+    "faqLabel": "FAQ",
+    "faqTitle": "Domande frequenti.",
     "ratesLabel": "¶ TARIFFE",
     "adjacentTitle": "Servizi correlati.",
     "adjacentLabel": "CORRELATI",
@@ -400,6 +402,28 @@
           "step": "RICEZIONE",
           "body": "Il team a terra è presente all'ormeggio all'ETA. Cime, corrente, acqua e allestimento rifornimenti — tutto gestito."
         }
+      ],
+      "faq": [
+        {
+          "q": "Quanto velocemente potete confermare una prenotazione di ormeggio?",
+          "a": "La conferma prioritaria viene di norma rilasciata in giornata rispetto alla richiesta. Il nostro coordinatore individua un posto disponibile nella rete di marine ed emette una prenotazione con numero dell'ormeggio, dettagli degli allacci e coordinate di arrivo."
+        },
+        {
+          "q": "Quali marine coprite per le prenotazioni di ormeggio?",
+          "a": "Porto Montenegro, Herceg Novi, Kotor, Budva e Bar."
+        },
+        {
+          "q": "Come è strutturato il prezzo dell'ormeggio?",
+          "a": "I costi di ormeggio sono fatturati alla tariffa di listino della marina stessa, senza maggiorazione. Si applica inoltre una tariffa di servizio per notte, in base alla LOA dell'imbarcazione."
+        },
+        {
+          "q": "Quali informazioni servono per richiedere un ormeggio?",
+          "a": "ETA, LOA, baglio, pescaggio, nominativo radio, bandiera e durata prevista della sosta — forniti dal capitano o dal gestore."
+        },
+        {
+          "q": "Cosa è incluso una volta confermato l'ormeggio?",
+          "a": "Assegnazione prioritaria del posto, prenotazioni stagionali concordate, allaccio corrente e acqua dolce, e coordinamento con la sicurezza — con il nostro team a terra presente all'ormeggio all'ETA per gestire cime, corrente, acqua e allestimento rifornimenti."
+        }
       ]
     },
     "customs": {
@@ -432,6 +456,28 @@
           "n": "04",
           "step": "MONITORAGGIO",
           "body": "L'agente è reperibile per tutta la durata della sosta. Cambi di equipaggio, rifornimento scorte, cambi di bandiera gestiti senza rinnovo delle pratiche."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Quanto tempo richiede lo sdoganamento doganale e di immigrazione?",
+          "a": "La documentazione viene pre-presentata all'Autorità Portuale e alla Dogana 48 ore prima dell'arrivo, così eventuali problemi vengono risolti prima che lo yacht entri nelle acque territoriali — lo sdoganamento all'arrivo è pensato per un'attesa minima."
+        },
+        {
+          "q": "Chi si occupa della documentazione all'arrivo dello yacht?",
+          "a": "Un agente di sdoganamento autorizzato sale a bordo all'arrivo, tipicamente all'ancora al largo della banchina, esamina i documenti e appone direttamente i timbri — senza passaggi tra agenti diversi."
+        },
+        {
+          "q": "Quali documenti vengono rilasciati durante lo sdoganamento?",
+          "a": "Un Permesso di Importazione Temporanea (TIP), una lista equipaggio controfirmata e un manifesto delle provviste archiviato. Il capitano riceve sia gli originali sia le copie digitali."
+        },
+        {
+          "q": "Cosa succede in caso di cambio equipaggio o rifornimento durante la sosta?",
+          "a": "L'agente di sdoganamento resta reperibile per tutta la durata della sosta, gestendo cambi di equipaggio, rifornimento scorte e cambi di bandiera senza richiedere un nuovo iter completo."
+        },
+        {
+          "q": "Come vengono addebitate le tasse doganali?",
+          "a": "Le tasse governative vengono trasferite in fattura senza maggiorazione; il servizio stesso prevede una tariffa fissa per ogni evento di sdoganamento."
         }
       ]
     },
@@ -466,6 +512,28 @@
           "step": "SALDO",
           "body": "La bolla di consegna e la documentazione duty-free vengono emesse con la fattura; la tariffa di coordinamento viene applicata come percentuale fissa."
         }
+      ],
+      "faq": [
+        {
+          "q": "Con quanto preavviso serve richiedere il bunkeraggio?",
+          "a": "Il preavviso standard è di 24 ore; il bunkeraggio in giornata è spesso possibile in base a disponibilità di slot, dimensioni dell'imbarcazione e banchina."
+        },
+        {
+          "q": "Dove posso rifornirmi di diesel duty-free?",
+          "a": "Il bunkeraggio diesel duty-free è disponibile a Porto Montenegro, Portonovi e Bar. Le imbarcazioni a Luštica Bay vengono indirizzate alla banchina duty-free più vicina."
+        },
+        {
+          "q": "E per la benzina o le imbarcazioni che non rientrano nel regime duty-free?",
+          "a": "Benzina e carburante a tariffa standard vengono coordinati a Budva e Kotor, adatti a imbarcazioni più piccole, al prezzo di pompa e con ricevuta completa."
+        },
+        {
+          "q": "Come viene consegnato il carburante?",
+          "a": "Per le imbarcazioni più grandi viene consegnato all'ormeggio presso la banchina della marina, per quelle più piccole presso la pompa locale. Il nostro agente autorizzato prepara e deposita la documentazione duty-free prima del trasferimento."
+        },
+        {
+          "q": "Come viene applicata la tariffa di coordinamento?",
+          "a": "Come percentuale fissa sulla fattura del carburante, indicata insieme alla bolla di consegna e alla documentazione duty-free, se presente."
+        }
       ]
     },
     "provisioning": {
@@ -498,6 +566,28 @@
           "n": "04",
           "step": "CONSEGNA",
           "body": "Consegna all'ormeggio in cambusa, tipicamente nella finestra di due ore prima del servizio."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Quanto velocemente potete evadere un ordine di approvvigionamento?",
+          "a": "Gli articoli di provenienza locale vengono tipicamente consegnati in giornata; le importazioni speciali (smistate via Dubrovnik o Bari) vengono evase in tempi brevi."
+        },
+        {
+          "q": "Da dove provengono i prodotti?",
+          "a": "Il fresco viene acquistato ogni mattina nei mercati di Tivat, Kotor e Budva, le proteine dalla flotta peschereccia adriatica, e le specialità importate dall'Europa quando necessario."
+        },
+        {
+          "q": "Come si effettua un ordine?",
+          "a": "Lo chef o il commissario di bordo invia la lista tramite il nostro portale cifrato; le preferenze di sostituzione vengono annotate e conservate per le visite future."
+        },
+        {
+          "q": "Viene mantenuta la catena del freddo?",
+          "a": "Sì — l'approvvigionamento mantiene la catena del freddo dalla fonte; i prodotti vengono allestiti e verificati dal coordinatore presso la nostra base a terra prima della consegna all'ormeggio, tipicamente nella finestra di due ore prima del servizio."
+        },
+        {
+          "q": "Posso vedere i prezzi prima di ordinare?",
+          "a": "Sì — richiedete i nostri cataloghi prezzi aggiornati (carne, pesce, latticini, panetteria, dispensa, specialità e surgelati) per pianificare in anticipo; vi invieremo i listini e consegneremo all'ormeggio."
         }
       ]
     },
@@ -532,6 +622,28 @@
           "step": "RICONSEGNA",
           "body": "Restituita piegata o appesa secondo le vostre preferenze, con una distinta di riconciliazione rispetto al manifesto originale."
         }
+      ],
+      "faq": [
+        {
+          "q": "Quanto tempo richiede la lavanderia?",
+          "a": "Gli articoli standard vengono riconsegnati il giorno successivo. Il ritiro avviene all'ormeggio con borse con codice a barre, registrate nella scheda del vostro natante."
+        },
+        {
+          "q": "Quali articoli gestite?",
+          "a": "Biancheria e asciugamani per gli ospiti, divise dell'equipaggio, asciugamani da coperta, oltre a lavaggio a secco e stiratura."
+        },
+        {
+          "q": "Dove viene lavorata la biancheria?",
+          "a": "Presso strutture certificate marine dei nostri partner di lavanderia a Tivat e Budva; durezza dell'acqua e detergente vengono calibrati sulle vostre specifiche, se fornite."
+        },
+        {
+          "q": "Come viene controllata la qualità prima della riconsegna?",
+          "a": "Ogni borsa viene ispezionata manualmente al ritorno, gli eventuali articoli da sostituire vengono reperiti prima della consegna, e viene emessa una distinta di riconciliazione rispetto al manifesto originale."
+        },
+        {
+          "q": "Come viene fatturata la lavanderia?",
+          "a": "A kg per la biancheria, a pezzo per divise e stiratura, con tariffe a volume disponibili per soste superiori a sette notti."
+        }
       ]
     },
     "floristry": {
@@ -565,6 +677,28 @@
           "step": "RINNOVO",
           "body": "Rinnovo a metà sosta o sostituzione completa programmati in anticipo, eseguiti durante una finestra prestabilita di assenza a bordo."
         }
+      ],
+      "faq": [
+        {
+          "q": "Quando saranno pronti i fiori?",
+          "a": "Le composizioni sono programmate per essere pronte all'inizio del charter."
+        },
+        {
+          "q": "Da dove provengono i fiori?",
+          "a": "Fiori freschi tagliati dai coltivatori locali di Tivat la mattina dell'installazione, secondo il calendario stagionale delle fioriture; per richieste fuori stagione o specifiche è possibile l'importazione in 72 ore."
+        },
+        {
+          "q": "Potete abbinare uno stile o una palette di colori specifici?",
+          "a": "Sì — raccogliamo un briefing su stile, palette e note specifiche per il charter, e conserviamo le preferenze tra le visite."
+        },
+        {
+          "q": "Rinnovate le composizioni durante il charter?",
+          "a": "Sì — un rinnovo a metà sosta o una sostituzione completa possono essere programmati in anticipo ed eseguiti durante una finestra prestabilita di assenza a bordo."
+        },
+        {
+          "q": "Come viene fissato il prezzo della floristica?",
+          "a": "Per composizione, con tariffe a livello disponibili per specifiche dell'intera imbarcazione."
+        }
       ]
     },
     "maintenance": {
@@ -597,6 +731,28 @@
           "n": "04",
           "step": "DOCUMENTAZIONE",
           "body": "Rapporto di lavoro archiviato nel giornale di bordo, con fotografie e registro dei pezzi. Nulla viene lasciato senza documentazione."
+        }
+      ],
+      "faq": [
+        {
+          "q": "Quanto velocemente può arrivare un tecnico sul mio yacht?",
+          "a": "Un tecnico qualificato viene inviato all'ormeggio su richiesta; dove possibile, una diagnosi viene eseguita sui nostri sistemi interni prima dell'invio, così da inviare subito lo specialista giusto."
+        },
+        {
+          "q": "Che tipo di interventi coordinate?",
+          "a": "Impianto elettrico, idraulica, refrigerazione, sistemi A/V, lavaggio scafo e assistenza tender."
+        },
+        {
+          "q": "Qualcuno è presente durante l'intervento?",
+          "a": "Sì — il nostro coordinatore è presente durante la visita, prendendo nota, riconciliando i ricambi e acquisendo la garanzia."
+        },
+        {
+          "q": "Come viene documentato il lavoro?",
+          "a": "Ogni intervento viene archiviato nel giornale di bordo con fotografie e registro dei pezzi, così che nulla resti senza documentazione."
+        },
+        {
+          "q": "Come viene fatturata la manutenzione?",
+          "a": "La manodopera viene fatturata alla tariffa del tecnico, con piena trasparenza tramite registro, più una tariffa di coordinamento per intervento."
         }
       ]
     }

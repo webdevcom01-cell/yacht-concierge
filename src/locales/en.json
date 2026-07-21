@@ -290,6 +290,8 @@
     "deliverablesLabel": "DELIVERABLES",
     "protocolLabel": "PROTOCOL",
     "protocolTitle": "How this service is delivered.",
+    "faqLabel": "FAQ",
+    "faqTitle": "Frequently asked questions.",
     "ratesLabel": "¶ RATES",
     "adjacentTitle": "Adjacent services.",
     "adjacentLabel": "RELATED",
@@ -400,6 +402,28 @@
           "step": "RECEIVE",
           "body": "Shore team present at berth on ETA. Lines, power, water, provisioning staging all handled."
         }
+      ],
+      "faq": [
+        {
+          "q": "How quickly can you confirm a berth reservation?",
+          "a": "Priority confirmation is typically issued the same day the request is submitted. Our coordinator matches available slots across the marina network and issues a hold with berth number, hook-up particulars, and arrival coordinates."
+        },
+        {
+          "q": "Which marinas do you cover for berth reservations?",
+          "a": "Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar."
+        },
+        {
+          "q": "How is berth pricing structured?",
+          "a": "Berth costs are billed at the marina's own list rate, with no mark-up. A separate service fee applies per night, based on the vessel's LOA (length overall)."
+        },
+        {
+          "q": "What information do you need to request a berth?",
+          "a": "ETA, LOA, beam, draft, call sign, flag state, and intended length of stay — submitted by the captain or manager."
+        },
+        {
+          "q": "What's included once a berth is confirmed?",
+          "a": "Priority slot allocation, concessioned seasonal holds, shore-power and freshwater hook-up, and a security liaison — with our shore team present at the berth on ETA to handle lines, power, water, and provisioning staging."
+        }
       ]
     },
     "customs": {
@@ -432,6 +456,28 @@
           "n": "04",
           "step": "MONITOR",
           "body": "Agent on-call for the duration of stay. Crew changes, stores replenishment, flag changes handled without re-intake."
+        }
+      ],
+      "faq": [
+        {
+          "q": "How long does customs and immigration clearance take?",
+          "a": "Documentation is pre-filed with Port Authority and Customs 48 hours before arrival, so any issues are resolved before the yacht reaches territorial waters — clearance on arrival is designed for a minimal wait."
+        },
+        {
+          "q": "Who handles the paperwork when the yacht arrives?",
+          "a": "A licensed clearing agent boards the vessel on arrival, typically at anchor off the quay, reviews papers, and issues stamps directly — no handoffs between agents."
+        },
+        {
+          "q": "What documents are issued during clearance?",
+          "a": "A Temporary Import Permit (TIP), an endorsed crew list, and a filed provisions manifest. The captain receives both originals and digital copies."
+        },
+        {
+          "q": "What happens if there's a crew change or restocking during the stay?",
+          "a": "The clearing agent stays on-call for the duration of the stay, handling crew changes, stores replenishment, and flag changes without requiring a full re-intake."
+        },
+        {
+          "q": "How are customs fees charged?",
+          "a": "Government fees are passed through at invoice with no mark-up; the service itself carries a fixed fee per clearance event."
         }
       ]
     },
@@ -466,6 +512,28 @@
           "step": "RECONCILE",
           "body": "Delivery ticket and duty-free paperwork issued with the invoice; coordination fee applied as a flat percentage."
         }
+      ],
+      "faq": [
+        {
+          "q": "How much notice do you need for bunkering?",
+          "a": "Standard notice is 24 hours; same-day bunkering is often possible depending on slot, vessel size, and dock availability."
+        },
+        {
+          "q": "Where can I get duty-free diesel?",
+          "a": "Duty-free diesel bunkering is available at Porto Montenegro, Portonovi, and Bar. Vessels at Luštica Bay are routed to the nearest duty-free dock."
+        },
+        {
+          "q": "What about petrol, or vessels that don't qualify for duty-free?",
+          "a": "Petrol and standard-rate fuel are coordinated at Budva and Kotor, suited to smaller yachts, priced at pump rate and fully receipted."
+        },
+        {
+          "q": "How is the fuel delivered?",
+          "a": "Delivered berth-side at the marina's own dock for larger vessels, or dockside at the local pump for smaller ones. Our licensed agent prepares and files duty-free documentation before transfer."
+        },
+        {
+          "q": "How is the coordination fee charged?",
+          "a": "As a flat percentage of the fuel invoice, itemized alongside the delivery ticket and any duty-free paperwork."
+        }
       ]
     },
     "provisioning": {
@@ -498,6 +566,28 @@
           "n": "04",
           "step": "DELIVER",
           "body": "Berth-side handoff to galley, typically in the two-hour window before service."
+        }
+      ],
+      "faq": [
+        {
+          "q": "How quickly can you fulfill a provisioning order?",
+          "a": "Locally sourced items are typically delivered same-day; specialty imports (routed via Dubrovnik or Bari) are fulfilled on a short lead time."
+        },
+        {
+          "q": "Where does the produce come from?",
+          "a": "Fresh items are sourced each morning from the Tivat, Kotor, and Budva markets, proteins from the Adriatic fishing fleet, and specialty items imported from Europe when needed."
+        },
+        {
+          "q": "How do I place an order?",
+          "a": "The chef or purser submits the list through our encrypted portal; substitution preferences are noted and retained for future visits."
+        },
+        {
+          "q": "Is the cold chain maintained?",
+          "a": "Yes — provisioning is cold-chain maintained from source, staged and quality-checked by the coordinator at our shore base before berth-side handoff, typically within the two-hour window before service."
+        },
+        {
+          "q": "Can I see prices before ordering?",
+          "a": "Yes — request our current price catalogues (meat, seafood, dairy, bakery, pantry, specialty, and frozen lines) for advance planning; we send the price lists and deliver to your berth."
         }
       ]
     },
@@ -532,6 +622,28 @@
           "step": "RETURN",
           "body": "Returned folded or hanging to your preference, with a reconciliation slip against the original manifest."
         }
+      ],
+      "faq": [
+        {
+          "q": "How long does laundry take?",
+          "a": "Standard items are returned next-day. Collection is berth-side with barcoded bags, logged against your vessel record."
+        },
+        {
+          "q": "What items do you handle?",
+          "a": "Guest linen and towelling, crew uniforms, deck towelling, plus dry cleaning and pressing."
+        },
+        {
+          "q": "Where is the laundry processed?",
+          "a": "At marine-certified facilities in Tivat and Budva; water hardness and detergent can be matched to your specification if provided."
+        },
+        {
+          "q": "How is quality checked before return?",
+          "a": "Each bag is hand-inspected on return, with any replacement items sourced before delivery, and a reconciliation slip issued against the original manifest."
+        },
+        {
+          "q": "How is laundry billed?",
+          "a": "Per kilogram for linen, per item for uniforms and pressing, with volume tiers available for stays over seven nights."
+        }
       ]
     },
     "floristry": {
@@ -565,6 +677,28 @@
           "step": "REFRESH",
           "body": "Mid-stay refresh or full redo scheduled in advance, executed during a scheduled off-vessel window."
         }
+      ],
+      "faq": [
+        {
+          "q": "When will the flowers be ready?",
+          "a": "Arrangements are timed to be in place for charter-start day."
+        },
+        {
+          "q": "Where do the flowers come from?",
+          "a": "Fresh cut from local Tivat growers on the morning of installation, following the seasonal bloom calendar; out-of-season or specific requests can be flown in on a 72-hour lead time."
+        },
+        {
+          "q": "Can you match a specific style or color palette?",
+          "a": "Yes — we take a brief on tone, palette, and any charter-specific notes, and retain preferences between visits."
+        },
+        {
+          "q": "Do you refresh arrangements during a charter?",
+          "a": "Yes — a mid-stay refresh or full redo can be scheduled in advance and is executed during a scheduled off-vessel window."
+        },
+        {
+          "q": "How is floristry priced?",
+          "a": "Per arrangement, with tier pricing available for full-vessel specifications."
+        }
       ]
     },
     "maintenance": {
@@ -597,6 +731,28 @@
           "n": "04",
           "step": "DOCUMENT",
           "body": "Work report filed to the vessel log, with photographs and a parts ledger. Nothing left undocumented."
+        }
+      ],
+      "faq": [
+        {
+          "q": "How fast can a technician reach my yacht?",
+          "a": "A vetted technician is dispatched to the berth on request; where possible, a diagnostic is run on our in-house systems before dispatch, so the right specialist is sent first time."
+        },
+        {
+          "q": "What kind of work do you coordinate?",
+          "a": "Electrical, hydraulic, refrigeration, and A/V systems, hull washing, and tender service."
+        },
+        {
+          "q": "Is someone present during the repair?",
+          "a": "Yes — our coordinator is present for the visit, keeping notes, reconciling parts, and capturing warranty information."
+        },
+        {
+          "q": "How is the work documented?",
+          "a": "Every job is filed to the vessel log with photographs and a parts ledger, so nothing is left undocumented."
+        },
+        {
+          "q": "How is maintenance billed?",
+          "a": "Labour is billed at the technician's rate, fully passed through with a ledger, plus a coordination fee per dispatch."
         }
       ]
     }

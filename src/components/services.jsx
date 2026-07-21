@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal, SectionHeader } from './shared';
 import { SERVICES } from '../data/services';
@@ -165,6 +165,51 @@ function DetailCTA({ label, title, body, btn, onClick }) {
   );
 }
 
+// ---------- FAQ accordion (Phase 4) ----------
+// Same disclosure pattern already used elsewhere on the site (LangSwitcher,
+// shared.jsx): useState open/closed + aria-expanded + a rotating chevron.
+// The answer stays in the DOM at all times (only visually collapsed via
+// max-height, never unmounted) so prerendered HTML always contains the full
+// text regardless of default open/closed state — matches Google's FAQPage
+// guidance, and means this on-page text and the FAQPage schema built from
+// the identical serviceDetail.<id>.faq array (src/seo.jsx buildFaqSchema)
+// can never disagree with each other.
+function FaqItem({ q, a }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ borderBottom: '1px solid var(--fg-15)' }}>
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        className="mono"
+        style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: 24,
+          padding: '28px 0',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          textAlign: 'left',
+          font: 'inherit',
+          color: 'inherit',
+        }}
+      >
+        <span className="serif" style={{ fontSize: 19, letterSpacing: '-0.01em', fontFamily: 'var(--serif)' }}>{q}</span>
+        <span style={{ flexShrink: 0, display: 'inline-flex', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.25s var(--ease)', color: 'var(--fg-50)' }}>
+          <Icons.ArrowDown size={16} stroke={1.2}/>
+        </span>
+      </button>
+      <div style={{ maxHeight: open ? 400 : 0, overflow: 'hidden', transition: 'max-height 0.35s var(--ease)' }}>
+        <p style={{ margin: '0 0 28px', fontSize: 15, color: 'var(--fg-70)', lineHeight: 1.6, maxWidth: 640, fontFamily: 'var(--sans)' }}>{a}</p>
+      </div>
+    </div>
+  );
+}
+
 // ---------- Service detail ----------
 function ServiceDetailPage({ id }) {
   const { setRoute } = useApp();
@@ -179,6 +224,10 @@ function ServiceDetailPage({ id }) {
     deliverables: t(`serviceDetail.${s.id}.deliverables`, { returnObjects: true }),
     protocol:    t(`serviceDetail.${s.id}.protocol`, { returnObjects: true }),
     rateNote:    t(`serviceDetail.${s.id}.rateNote`),
+    // Phase 4 — identical array also read by src/seo.jsx (SSR: i18n.t()
+    // directly; browser: PageSEO's useTranslation()) to build the FAQPage
+    // schema, so the accordion below and the structured data always match.
+    faq:         t(`serviceDetail.${s.id}.faq`, { returnObjects: true }),
   };
 
   return (
@@ -305,6 +354,19 @@ function ServiceDetailPage({ id }) {
             onClick={() => setRoute({ page: 'bunkering' })}
           />
         )}
+
+        {/* FAQ (Phase 4) */}
+        <div style={{ marginBottom: 96 }}>
+          <Reveal>
+            <div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('servicesPage.faqLabel')}</div>
+          </Reveal>
+          <Reveal delay={80}>
+            <h2 className="h2" style={{ marginBottom: 32 }}>{t('servicesPage.faqTitle')}</h2>
+          </Reveal>
+          <div style={{ borderTop: '1px solid var(--fg-15)' }}>
+            {detail.faq.map((item) => <FaqItem key={item.q} q={item.q} a={item.a}/>)}
+          </div>
+        </div>
 
         {/* Cross-sell */}
         <div style={{ marginBottom: 96 }}>

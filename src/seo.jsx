@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { routeToPath } from './routes.js';
 
 // ── SEO data per page, per language ────────────────────────────────────────────
@@ -10,6 +11,14 @@ import { routeToPath } from './routes.js';
 // intentionally NOT translated — that content was not part of the translated
 // set and stays English-only on every language version, per an explicit
 // scope decision confirmed with the client.
+//
+// BreadcrumbList (buildBreadcrumb) and FAQPage (buildFaqSchema, Phase 4) are
+// the exception — both are LOCALIZED per language, because they mirror text
+// that is actually visible on that page in that language (breadcrumb labels,
+// FAQ question/answer text). Structured data must match visible content
+// (Google's own guidance) — an English FAQPage schema next to a translated
+// Russian/Italian FAQ accordion would be a mismatch, unlike LocalBusiness/
+// WebSite which describe the business itself, not on-page text.
 
 const SEO_KEY_TO_ROUTE = {
   home:                  { page: 'home' },
@@ -261,6 +270,25 @@ function removeHelmetTags() {
   document.head.querySelectorAll(`[${HELMET_ATTR}]`).forEach(el => el.remove());
 }
 
+// FAQPage schema (Phase 4) — faqEntries is [{q, a}, ...] already resolved in
+// the CURRENT page language by the caller (see computeHeadTags below for why
+// this function does not fetch translations itself). Mirrors the exact
+// question/answer text rendered by the on-page accordion
+// (src/components/services.jsx) so structured data never disagrees with
+// visible content.
+function buildFaqSchema(faqEntries) {
+  if (!Array.isArray(faqEntries) || faqEntries.length === 0) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqEntries.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+}
+
 function buildBreadcrumb(crumbs, lang) {
   if (!crumbs || crumbs.length === 0) return null;
   return {
@@ -284,13 +312,29 @@ function buildBreadcrumb(crumbs, lang) {
 // scripts/prerender.mjs (Node/SSR — builds a <head> string directly from
 // this same data, so the two can never drift apart, same principle as
 // routeToPath being the single source of truth for URLs).
-export function computeHeadTags({ page, id, lang = 'en' }) {
+//
+// faqEntries (Phase 4) is deliberately a CALLER-SUPPLIED argument rather than
+// something this function fetches itself via the i18n singleton. Reading
+// i18next directly from here would make this "pure" function silently depend
+// on whether the current language's resource bundle has finished loading —
+// ru/it are lazy-loaded (src/i18n.js) — and PageSEO's effect below runs
+// synchronously on mount, before that load can complete. Reading a
+// not-yet-loaded bundle would either return the raw i18next key or silently
+// fall back to English, producing an English FAQPage schema on top of a
+// Russian/Italian page — exactly the visible/structured-data mismatch this
+// schema exists to avoid. Pushing the fetch to each caller lets each one use
+// the mechanism that's already correct for its context: entry-server.jsx
+// awaits setLanguage() before calling this, so a plain i18n.t() there is
+// safe; PageSEO uses react-i18next's useTranslation() `ready` flag, which is
+// specifically designed to signal "this language's bundle is loaded."
+export function computeHeadTags({ page, id, lang = 'en', faqEntries = null }) {
   const key      = page === 'service' ? `service-${id}` : page;
   const entry    = SEO_DATA[key];
   const notFound = !entry;
   const data     = notFound ? (NOT_FOUND_DATA[lang] || NOT_FOUND_DATA.en) : (entry[lang] || entry.en);
   const url      = notFound ? SITE_URL : pageUrl(key, lang);
   const breadcrumb = notFound ? null : buildBreadcrumb(entry.breadcrumb, lang);
+  const faq      = notFound ? null : (page === 'service' ? buildFaqSchema(faqEntries) : null);
 
   if (notFound) {
     // Unknown route: the SPA host returns 200, so tell crawlers explicitly
@@ -337,7 +381,12 @@ export function computeHeadTags({ page, id, lang = 'en' }) {
 
   // Schema.org — LocalBusiness + WebSite (every page, English only — see
   // note at top of file) + BreadcrumbList (localized, when present)
-  const schemas = [LOCAL_BUSINESS_SCHEMA, WEBSITE_SCHEMA, ...(breadcrumb ? [breadcrumb] : [])];
+  // + FAQPage (Phase 4, localized, service detail pages only, when present)
+  const schemas = [
+    LOCAL_BUSINESS_SCHEMA, WEBSITE_SCHEMA,
+    ...(breadcrumb ? [breadcrumb] : []),
+    ...(faq ? [faq] : []),
+  ];
 
   return {
     notFound: false,
@@ -355,8 +404,23 @@ export function computeHeadTags({ page, id, lang = 'en' }) {
 // ── PageSEO component (browser) ─────────────────────────────────────────────
 
 export function PageSEO({ page, id, lang = 'en' }) {
+  // `ready` (react-i18next) reflects whether the CURRENT language's resource
+  // bundle has finished loading — true immediately for English (ships in the
+  // main bundle) but briefly false for ru/it right after navigating to them
+  // for the first time (src/i18n.js lazy-loads those). Included in the effect
+  // deps below so FAQ schema is recomputed once the bundle lands, instead of
+  // being embedded from a not-yet-loaded (English-fallback) translation — see
+  // the comment on computeHeadTags' faqEntries param for why this matters.
+  const { t, ready } = useTranslation();
+
   useEffect(() => {
-    const tags = computeHeadTags({ page, id, lang });
+    const faqEntries = (page === 'service' && ready)
+      ? t(`serviceDetail.${id}.faq`, { returnObjects: true })
+      : null;
+    const tags = computeHeadTags({
+      page, id, lang,
+      faqEntries: Array.isArray(faqEntries) ? faqEntries : null,
+    });
 
     // Title
     document.title = tags.title;
@@ -405,7 +469,7 @@ export function PageSEO({ page, id, lang = 'en' }) {
       // Cleanup on unmount
       removeHelmetTags();
     };
-  }, [page, id, lang]);
+  }, [page, id, lang, ready]);
 
   return null;
 }

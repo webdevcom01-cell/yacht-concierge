@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { App } from './App.jsx';
-import { setLanguage } from './i18n.js';
+import i18n, { setLanguage } from './i18n.js';
 import { computeHeadTags } from './seo.jsx';
 import { SERVICE_IDS, SUPPORTED_LANGS, routeToPath } from './routes.js';
 
@@ -21,7 +21,17 @@ export async function renderPage(route) {
   renderToString(React.createElement(App, { initialRoute: route }));
   await new Promise(resolve => setTimeout(resolve, 0));
   const html = renderToString(React.createElement(App, { initialRoute: route }));
-  const head = computeHeadTags({ page: route.page, id: route.id, lang: route.lang || 'en' });
+  // FAQ (Phase 4): read AFTER setLanguage has resolved, so the correct
+  // language's resource bundle is guaranteed loaded — safe to call i18n.t()
+  // directly here, unlike the browser (see PageSEO in seo.jsx for why that
+  // side needs the `ready` flag instead).
+  const faqEntries = route.page === 'service'
+    ? i18n.t(`serviceDetail.${route.id}.faq`, { returnObjects: true })
+    : null;
+  const head = computeHeadTags({
+    page: route.page, id: route.id, lang: route.lang || 'en',
+    faqEntries: Array.isArray(faqEntries) ? faqEntries : null,
+  });
   return { html, head };
 }
 
