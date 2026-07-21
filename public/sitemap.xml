@@ -1,21 +1,543 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://yacht-concierge.me/</loc><lastmod>2026-05-05</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://yacht-concierge.me/services</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://yacht-concierge.me/services/berth</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yacht-concierge.me/services/customs</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yacht-concierge.me/services/fuel</loc><lastmod>2026-07-19</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yacht-concierge.me/services/provisioning</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yacht-concierge.me/services/laundry</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://yacht-concierge.me/services/floristry</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://yacht-concierge.me/services/maintenance</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://yacht-concierge.me/provisioning</loc><lastmod>2026-07-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yacht-concierge.me/bunkering</loc><lastmod>2026-07-20</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yacht-concierge.me/process</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://yacht-concierge.me/fleet</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://yacht-concierge.me/contact</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://yacht-concierge.me/about</loc><lastmod>2026-05-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://yacht-concierge.me/legal</loc><lastmod>2026-05-05</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://yacht-concierge.me/privacy</loc><lastmod>2026-05-05</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://yacht-concierge.me/terms</loc><lastmod>2026-05-05</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://yacht-concierge.me/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/services</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/services</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/services</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/services/berth</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/berth"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/berth"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/berth"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/berth"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/services/berth</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/berth"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/berth"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/berth"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/berth"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/services/berth</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/berth"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/berth"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/berth"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/berth"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/services/customs</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/customs"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/customs"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/customs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/customs"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/services/customs</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/customs"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/customs"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/customs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/customs"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/services/customs</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/customs"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/customs"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/customs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/customs"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/services/fuel</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/fuel"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/fuel"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/fuel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/fuel"/>
+    <lastmod>2026-07-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/services/fuel</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/fuel"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/fuel"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/fuel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/fuel"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/services/fuel</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/fuel"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/fuel"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/fuel"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/fuel"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/services/provisioning</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/provisioning"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/services/provisioning</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/provisioning"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/services/provisioning</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/provisioning"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/services/laundry</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/laundry"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/laundry"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/laundry"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/laundry"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/services/laundry</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/laundry"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/laundry"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/laundry"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/laundry"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/services/laundry</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/laundry"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/laundry"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/laundry"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/laundry"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/services/floristry</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/floristry"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/floristry"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/floristry"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/floristry"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/services/floristry</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/floristry"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/floristry"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/floristry"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/floristry"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/services/floristry</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/floristry"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/floristry"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/floristry"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/floristry"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/services/maintenance</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/maintenance"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/maintenance"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/maintenance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/maintenance"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/services/maintenance</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/maintenance"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/maintenance"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/maintenance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/maintenance"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/services/maintenance</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/services/maintenance"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/services/maintenance"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/services/maintenance"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/services/maintenance"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/provisioning</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/provisioning"/>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/provisioning</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/provisioning"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/provisioning</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/provisioning"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/provisioning"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/bunkering</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/bunkering"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/bunkering"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/bunkering"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/bunkering"/>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/bunkering</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/bunkering"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/bunkering"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/bunkering"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/bunkering"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/bunkering</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/bunkering"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/bunkering"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/bunkering"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/bunkering"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/process</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/process"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/process"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/process"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/process"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/process</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/process"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/process"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/process"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/process"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/process</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/process"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/process"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/process"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/process"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/fleet</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/fleet"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/fleet"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/fleet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/fleet"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/fleet</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/fleet"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/fleet"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/fleet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/fleet"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/fleet</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/fleet"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/fleet"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/fleet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/fleet"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/contact"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/contact"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/contact"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/contact"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/contact"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/contact"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/about"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/about"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/about"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/legal</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/legal"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/legal"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/legal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/legal"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/legal</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/legal"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/legal"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/legal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/legal"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/legal</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/legal"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/legal"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/legal"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/legal"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/privacy"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/privacy"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/privacy"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/terms</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/terms"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/terms"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/terms"/>
+    <lastmod>2026-05-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/ru/terms</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/terms"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/terms"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/terms"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://yacht-concierge.me/it/terms</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://yacht-concierge.me/terms"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://yacht-concierge.me/ru/terms"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://yacht-concierge.me/it/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://yacht-concierge.me/terms"/>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>

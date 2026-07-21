@@ -123,7 +123,7 @@ function App() {
 
     <AppCtx.Provider value={ctx}>
       <div data-screen-label={labelMap[route.page] || 'Page'}>
-        <PageSEO page={route.page} id={route.id} />
+        <PageSEO page={route.page} id={route.id} lang={route.lang || 'en'} />
         <Nav/>
         <React.Suspense fallback={<div style={{ minHeight: '60vh' }}/>}>
           {Page}
