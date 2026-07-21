@@ -537,7 +537,7 @@
       ]
     },
     "provisioning": {
-      "coverage": "Mercati di Tivat, Kotor, Budva · Flotta peschereccia adriatica · Specialità europee",
+      "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
       "sla": "In giornata per articoli locali; importazioni in tempi brevi",
       "rateNote": "Prodotti a prezzo di mercato, con ricevuta completa. La tariffa di coordinamento è una percentuale fissa sulla fattura.",
       "deliverables": [
@@ -592,7 +592,7 @@
       ]
     },
     "laundry": {
-      "coverage": "Partner di lavanderia a Tivat e Budva",
+      "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
       "sla": "Riconsegna il giorno successivo per articoli standard",
       "rateNote": "Fatturato a kg per la biancheria, a pezzo per divise e stiratura. Tariffe a volume per soste superiori a sette notti.",
       "deliverables": [
@@ -647,7 +647,7 @@
       ]
     },
     "floristry": {
-      "coverage": "Coltivatori di Tivat · calendario stagionale delle fioriture · importazioni europee in 72h",
+      "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
       "sla": "Composizioni pronte per l'inizio del charter",
       "rateNote": "Prezzo per composizione, con tariffe a livello per specifiche dell'intera imbarcazione.",
       "deliverables": [

@@ -537,7 +537,7 @@
       ]
     },
     "provisioning": {
-      "coverage": "Tivat, Kotor, Budva markets · Adriatic fishing fleet · European specialty",
+      "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
       "sla": "Same-day for locally sourced items; imports on a short lead time",
       "rateNote": "Produce at market rate, fully receipted. Coordination fee is a flat percentage of the invoice.",
       "deliverables": [
@@ -592,7 +592,7 @@
       ]
     },
     "laundry": {
-      "coverage": "On-site laundry partners in Tivat and Budva",
+      "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
       "sla": "Next-day return on standard items",
       "rateNote": "Billed per kg for linen, per item for uniforms and pressing. Volume tiers for stays over seven nights.",
       "deliverables": [
@@ -647,7 +647,7 @@
       ]
     },
     "floristry": {
-      "coverage": "Tivat growers · seasonal bloom calendar · European imports on 72h",
+      "coverage": "Porto Montenegro · Herceg Novi · Kotor · Budva · Bar",
       "sla": "Arrangements in place for charter-start day",
       "rateNote": "Priced per arrangement, with tier pricing for full-vessel specifications.",
       "deliverables": [
