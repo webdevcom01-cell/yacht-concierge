@@ -1,10 +1,11 @@
 import React from 'react';
 
 // Per-service hero illustrations for the seven service detail pages.
-// Same construction language as the marina scenes on the coast map
-// (MarinaSVG in home-bottom.jsx): gradient sky, horizon, sea reflections,
-// cream silhouette motif, corner mono label. Everything is original vector
+// Construction language: gradient sky, horizon, sea reflections, cream
+// silhouette motif, corner mono label. Everything is original vector
 // art in the brand palette — no stock photography, no licensing exposure.
+// (The same visual language was shared with the marina scenes on the old
+// /fleet coast map, removed from the site.)
 
 const SCENES = {
   berth: {

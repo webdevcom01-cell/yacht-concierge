@@ -7,7 +7,7 @@ import { getInitialTheme } from './lib/theme';
 import { PageSEO } from './seo.jsx';
 import { HomePage } from './components/home-bottom';
 import { ServicesPage, ServiceDetailPage } from './components/services';
-import { ProcessPage, ContactPage, FleetPage, AboutPage, NotFoundPage } from './components/pages';
+import { ProcessPage, ContactPage, AboutPage, NotFoundPage } from './components/pages';
 
 // N6: Lazy-load heavy route components
 const ProvisioningPage  = React.lazy(() => import('./components/provisioning').then(m => ({ default: m.ProvisioningPage })));
@@ -91,7 +91,6 @@ export function App({ initialRoute } = {}) {
   else if (route.page === 'service')  Page = <ServiceDetailPage id={route.id}/>;
   else if (route.page === 'process')  Page = <ProcessPage/>;
   else if (route.page === 'contact')  Page = <ContactPage/>;
-  else if (route.page === 'fleet')    Page = <FleetPage/>;
   else if (route.page === 'about')    Page = <AboutPage/>;
   else if (route.page === 'provisioning')   Page = <ProvisioningPage/>;
   else if (route.page === 'bunkering')      Page = <BunkeringPage/>;
@@ -102,11 +101,11 @@ export function App({ initialRoute } = {}) {
 
   const labelMap = {
     home: '01 Home', services: '02 Services', service: '03 Service Detail',
-    process: '04 How It Works', contact: '05 Contact', fleet: '06 Berths',
-    about: '07 About',
-    provisioning: '08 Provisioning',
-    bunkering: '09 Fuel & Bunkering',
-    legal: '10 Legal Notice', privacy: '11 Privacy Policy', terms: '12 Terms of Service',
+    process: '04 How It Works', contact: '05 Contact',
+    about: '06 About',
+    provisioning: '07 Provisioning',
+    bunkering: '08 Fuel & Bunkering',
+    legal: '09 Legal Notice', privacy: '10 Privacy Policy', terms: '11 Terms of Service',
   };
 
   return (

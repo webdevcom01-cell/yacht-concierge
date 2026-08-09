@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApp, Icons, Reveal, SectionHeader, WhatsAppIcon } from './shared';
 import { SERVICES } from '../data/services';
-import { CoastMap } from './home-bottom';
 import { submitQuote } from '../lib/submit';
 
 // How It Works page & Contact/Quote multi-step form
@@ -370,29 +369,6 @@ function StepWrap({ title, sub, children }) {
   );
 }
 
-// ---------- Berths / Fleet page (simple) ----------
-function FleetPage() {
-  const { t } = useTranslation();
-  return (
-    <main className="page-top">
-      <div className="container">
-        <div className="grid-2" style={{ gap: 72, alignItems: 'end', marginBottom: 96 }}>
-          <div>
-            <Reveal><div className="mono" style={{ color: 'var(--fg-50)', marginBottom: 24 }}>{t('fleetPage.eyebrow')}</div></Reveal>
-            <Reveal delay={80}>
-              <h1 className="display">{t('fleetPage.title1')}<br/>{t('fleetPage.title2')} <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>{t('fleetPage.titleAccent')}</em>.</h1>
-            </Reveal>
-          </div>
-          <Reveal delay={160}>
-            <p className="lede">{t('fleetPage.lede')}</p>
-          </Reveal>
-        </div>
-      </div>
-      <CoastMap/>
-    </main>
-  );
-}
-
 // ---------- About page ----------
 function AboutPage() {
   const { setRoute } = useApp();
@@ -627,4 +603,4 @@ function NotFoundPage() {
   );
 }
 
-export { ProcessPage, ContactPage, FleetPage, AboutPage, NotFoundPage };
+export { ProcessPage, ContactPage, AboutPage, NotFoundPage };

@@ -579,7 +579,6 @@ function Footer() {
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
               {[
                 { page: 'process',      path: '/process',      label: t('nav.process') },
-                { page: 'fleet',        path: '/fleet',        label: t('nav.fleet') },
                 { page: 'provisioning', path: '/provisioning', label: t('nav.provisioning') },
                 { page: 'bunkering',    path: '/bunkering',    label: t('nav.bunkering') },
                 { page: 'about',        path: '/about',        label: t('nav.about') },

@@ -4,7 +4,6 @@
     "provisioning": "Approvvigionamento",
     "bunkering": "Carburante e Bunkeraggio",
     "process": "Come funziona",
-    "fleet": "Ormeggi",
     "about": "Chi siamo",
     "contact": "Contatti",
     "requestQuote": "Richiedi preventivo",
@@ -52,22 +51,6 @@
     "coordinator_value": "1",
     "coordinator_label": "Coordinatore per imbarcazione",
     "coordinator_sub": "Un referente nominato · nessun centralino · nessun trasferimento"
-  },
-  "map": {
-    "eyebrow": "DISPONIBILITÀ ORMEGGI",
-    "title1": "La costa montenegrina.",
-    "title2": "Un solo desk.",
-    "lede": "Coordiniamo ormeggi e posti barca lungo la costa montenegrina. Contattateci direttamente per la disponibilità attuale e le tariffe stagionali.",
-    "mapLabel": "COSTA ADRIATICA · MONTENEGRO",
-    "selectMarina": "SELEZIONA UNA MARINA",
-    "availability": "Disponibilità",
-    "availabilityText": "Contattateci per la disponibilità attuale",
-    "enquire": "Richiedi disponibilità",
-    "mood_herceg_novi": "ORA D'ORO",
-    "mood_porto_montenegro": "MEZZANOTTE",
-    "mood_kotor": "NEBBIA MATTUTINA",
-    "mood_budva": "MEZZOGIORNO AZZURRO",
-    "mood_bar": "PREDAWN"
   },
   "cta": {
     "engage": "↳ CONTATTACI",
@@ -234,13 +217,6 @@
     "successLede": "Riferimento №{{ref}}. Un coordinatore restituirà un brief di servizio tempestivamente.",
     "successMono": "↳ IL DESK OPERATIVO VI CONTATTERÀ A BREVE",
     "errorMsg": "Invio fallito — scrivete a info@yacht-concierge.me"
-  },
-  "fleetPage": {
-    "eyebrow": "↳ COPERTURA OPERATIVA",
-    "title1": "Ormeggi",
-    "title2": "e",
-    "titleAccent": "condizioni",
-    "lede": "Coordiniamo ormeggi e posti barca lungo la costa montenegrina. Contattateci direttamente per la disponibilità attuale e le tariffe stagionali."
   },
   "aboutPage": {
     "eyebrow": "↳ CHI SIAMO",

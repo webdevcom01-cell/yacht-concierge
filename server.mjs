@@ -29,6 +29,25 @@ const serve = sirv('dist', {
   },
 });
 
-createServer((req, res) => serve(req, res)).listen(PORT, () => {
+// Permanent redirects for retired routes. The /fleet page (interactive coast
+// map) was removed from the site; without this, sirv's SPA fallback would
+// serve the root index.html with a 200 for /fleet — a soft-404. A real 301
+// points crawlers and old links at the closest surviving content instead.
+const REDIRECTS = {
+  '/fleet':    '/services/berth',
+  '/ru/fleet': '/ru/services/berth',
+  '/it/fleet': '/it/services/berth',
+};
+
+createServer((req, res) => {
+  const path = (req.url || '/').split('?')[0].replace(/\/+$/, '') || '/';
+  const target = REDIRECTS[path];
+  if (target) {
+    res.writeHead(301, { Location: target, 'Cache-Control': 'no-cache' });
+    res.end();
+    return;
+  }
+  serve(req, res);
+}).listen(PORT, () => {
   console.log(`yacht-concierge server listening on ${PORT}`);
 });

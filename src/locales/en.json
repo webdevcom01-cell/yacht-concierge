@@ -4,7 +4,6 @@
     "provisioning": "Provisioning",
     "bunkering": "Fuel & Bunkering",
     "process": "How it works",
-    "fleet": "Berths",
     "about": "About",
     "contact": "Contact",
     "requestQuote": "Request Quote",
@@ -52,22 +51,6 @@
     "coordinator_value": "1",
     "coordinator_label": "Coordinator per vessel",
     "coordinator_sub": "One named contact · no switchboard · no transfers"
-  },
-  "map": {
-    "eyebrow": "BERTH AVAILABILITY",
-    "title1": "The Montenegrin coast.",
-    "title2": "One desk.",
-    "lede": "We coordinate berths and moorings along the Montenegrin coast. Contact us directly for current availability and seasonal rates.",
-    "mapLabel": "ADRIATIC COAST · MONTENEGRO",
-    "selectMarina": "SELECT A MARINA",
-    "availability": "Availability",
-    "availabilityText": "Contact us for current berth availability",
-    "enquire": "Enquire About Availability",
-    "mood_herceg_novi": "GOLDEN HOUR",
-    "mood_porto_montenegro": "MIDNIGHT",
-    "mood_kotor": "MORNING MIST",
-    "mood_budva": "AZURE NOON",
-    "mood_bar": "PRE-DAWN"
   },
   "cta": {
     "engage": "↳ ENGAGE",
@@ -234,13 +217,6 @@
     "successLede": "Reference №{{ref}}. A coordinator will return a scoped service brief promptly.",
     "successMono": "↳ THE OPERATIONS DESK WILL BE IN TOUCH SHORTLY",
     "errorMsg": "Submission failed — please email info@yacht-concierge.me"
-  },
-  "fleetPage": {
-    "eyebrow": "↳ OPERATIONAL FOOTPRINT",
-    "title1": "Berths",
-    "title2": "&",
-    "titleAccent": "conditions",
-    "lede": "We coordinate berths and moorings along the Montenegrin coast. Contact us directly for current availability and seasonal rates."
   },
   "aboutPage": {
     "eyebrow": "↳ ABOUT",

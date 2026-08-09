@@ -7,7 +7,7 @@ import { SERVICE_IDS, SUPPORTED_LANGS, routeToPath } from './routes.js';
 
 // Node/SSR entry — built separately from the browser bundle (see
 // scripts/prerender.mjs, which runs `vite build --ssr` against this file)
-// and imported by that same script to render each of the 18 pages × 3
+// and imported by that same script to render each of the 17 pages × 3
 // languages ahead of time into static HTML.
 //
 // Two renderToString passes: this app uses React.lazy() for 5 of the 18

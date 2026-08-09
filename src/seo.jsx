@@ -26,7 +26,6 @@ const SEO_KEY_TO_ROUTE = {
   provisioning:          { page: 'provisioning' },
   bunkering:             { page: 'bunkering' },
   process:               { page: 'process' },
-  fleet:                 { page: 'fleet' },
   contact:               { page: 'contact' },
   about:                 { page: 'about' },
   legal:                 { page: 'legal' },
@@ -87,12 +86,6 @@ const SEO_DATA = {
     ru: { title: 'Как это работает — Yacht Concierge Montenegro', description: 'Операционный протокол из 4 этапов для безупречного прибытия суперъяхты. От первого контакта до брифинга перед отходом — один именной координатор на каждое судно.' },
     it: { title: 'Come funziona — Yacht Concierge Montenegro', description: 'Un protocollo operativo in 4 fasi per arrivi impeccabili dei superyacht. Dal primo contatto al briefing di partenza — un coordinatore dedicato per ogni imbarcazione.' },
     breadcrumb: [{ key: 'process', name: { en: 'How It Works', ru: 'Как это работает', it: 'Come funziona' } }],
-  },
-  fleet: {
-    en: { title: 'Berths & Fleet Tiers — Yacht Concierge Montenegro', description: 'Service tiers for superyachts from 24m to 120m+ in Montenegrin marinas. Berth availability and tailored packages at Porto Montenegro, Herceg Novi, Kotor, Budva, and Bar.' },
-    ru: { title: 'Причалы и уровни флота — Yacht Concierge Montenegro', description: 'Уровни обслуживания для суперъяхт от 24 до 120+ метров в маринах Черногории. Наличие причалов и индивидуальные пакеты в Порто Монтенегро, Херцег-Нови, Которе, Будве и Баре.' },
-    it: { title: 'Ormeggi e categorie flotta — Yacht Concierge Montenegro', description: 'Livelli di servizio per superyacht da 24m a 120m+ nelle marine montenegrine. Disponibilità di ormeggi e pacchetti su misura a Porto Montenegro, Herceg Novi, Kotor, Budva e Bar.' },
-    breadcrumb: [{ key: 'fleet', name: { en: 'Berths', ru: 'Причалы', it: 'Ormeggi' } }],
   },
   contact: {
     en: { title: 'Request a Quote — Yacht Concierge Montenegro', description: 'Submit your vessel details and arrival date. Our operations team responds promptly with a full service proposal.' },

@@ -10,7 +10,7 @@ import { ServiceArt } from './service-art';
 // all seven service detail pages. ServiceArt (service-art.jsx) is the SVG
 // fallback for any service id not listed here.
 // webp siblings (Phase 3, retroactive) generated from these exact jpg files
-// at quality 80 via sharp — same treatment as fleet-bg/hero-porto/map-yacht/
+// at quality 80 via sharp — same treatment as hero-porto/
 // services-band/stats-band elsewhere on the site. jpg stays as the <img>
 // fallback; browsers that support webp use the smaller <source> instead.
 const SERVICE_PHOTOS = {

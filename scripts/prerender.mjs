@@ -1,6 +1,6 @@
 // Runs after `vite build` (see package.json's "build" script). Builds a
 // Node-targeted SSR bundle of src/entry-server.jsx, uses it to render all
-// 18 pages × 3 languages (54 routes total — same enumeration as
+// 17 pages × 3 languages (51 routes total — same enumeration as
 // public/sitemap.xml), and writes each as a static dist/<path>/index.html
 // so crawlers that don't execute JavaScript see real, per-route,
 // per-language content — not just the empty SPA shell.
@@ -60,7 +60,7 @@ async function main() {
     { page: 'home' }, { page: 'services' },
     ...SERVICE_IDS.map(id => ({ page: 'service', id })),
     { page: 'provisioning' }, { page: 'bunkering' },
-    { page: 'process' }, { page: 'fleet' }, { page: 'contact' }, { page: 'about' },
+    { page: 'process' }, { page: 'contact' }, { page: 'about' },
     { page: 'legal' }, { page: 'privacy' }, { page: 'terms' },
   ];
 
@@ -70,8 +70,8 @@ async function main() {
       routes.push({ ...p, lang });
     }
   }
-  if (routes.length !== 54) {
-    throw new Error(`prerender: expected 54 routes (18 pages x 3 langs), got ${routes.length} — page list or SUPPORTED_LANGS drifted, check before shipping`);
+  if (routes.length !== 51) {
+    throw new Error(`prerender: expected 51 routes (17 pages x 3 langs), got ${routes.length} — page list or SUPPORTED_LANGS drifted, check before shipping`);
   }
 
   // 3. Snapshot the client build's index.html ONCE — it's the template for
@@ -115,8 +115,8 @@ async function main() {
 
   fs.rmSync(SSR_OUT, { recursive: true, force: true });
 
-  console.log(`prerender: wrote ${written}/54 static pages`);
-  if (written !== 54) throw new Error(`prerender: only wrote ${written}/54 pages — aborting build`);
+  console.log(`prerender: wrote ${written}/51 static pages`);
+  if (written !== 51) throw new Error(`prerender: only wrote ${written}/51 pages — aborting build`);
 }
 
 main().catch(err => {

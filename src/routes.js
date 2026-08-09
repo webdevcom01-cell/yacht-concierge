@@ -19,7 +19,6 @@ export function routeToPath(r) {
       case 'service':       return `/services/${r.id}`;
       case 'process':       return '/process';
       case 'contact':       return '/contact';
-      case 'fleet':         return '/fleet';
       case 'about':         return '/about';
       case 'provisioning':  return '/provisioning';
       case 'bunkering':     return '/bunkering';
@@ -54,7 +53,6 @@ export function pathToRoute(path) {
   }
   else if (p === '/process')              route = { page: 'process' };
   else if (p === '/contact')              route = { page: 'contact' };
-  else if (p === '/fleet')                route = { page: 'fleet' };
   else if (p === '/about')                route = { page: 'about' };
   else if (p === '/provisioning')         route = { page: 'provisioning' };
   else if (p === '/bunkering')            route = { page: 'bunkering' };
